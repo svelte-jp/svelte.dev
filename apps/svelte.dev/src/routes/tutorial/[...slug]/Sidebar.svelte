@@ -115,7 +115,7 @@
 
 	.text {
 		flex: 1 1 auto;
-		padding: 2.2rem var(--sk-page-padding-side);
+		padding: 2.2rem var(--sk-sidebar-padding-side);
 		background: var(--sk-back-1);
 
 		:global {

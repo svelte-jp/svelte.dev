@@ -1,18 +1,18 @@
 ---
-title: Introduction
+title: イントロダクション
 ---
 
 ## Before we begin
 
-> [!NOTE] If you're new to Svelte or SvelteKit we recommend checking out the [interactive tutorial](https://learn.svelte.dev).
+> [!NOTE] Svelte や SvelteKit が初めてなら、こちらの[インタラクティブなチュートリアル](/tutorial)をチェックしてみることをおすすめします。
 >
-> If you get stuck, reach out for help in the [Discord chatroom](https://svelte.dev/chat).
+> 行き詰まったら、[Discord chatroom](https://svelte.dev/chat) でヘルプを求めてください。
 
 ## What is SvelteKit?
 
-SvelteKit is a framework for rapidly developing robust, performant web applications using [Svelte](https://svelte.dev/). If you're coming from React, SvelteKit is similar to Next. If you're coming from Vue, SvelteKit is similar to Nuxt.
+SvelteKit は、[Svelte](https://svelte.dev/) を使用して堅牢でハイパフォーマンスな web アプリケーションを迅速に開発するためのフレームワークです。もしあなたが React 界隈から来たのであれば、SvelteKit は Next に似ているものです。Vue 界隈から来たのであれば、Nuxt に似ています。
 
-To learn more about the kinds of applications you can build with SvelteKit, see the [FAQ](faq#What-can-I-make-with-SvelteKit).
+SvelteKit で構築することのできるアプリケーションの種類については、[FAQ](faq#What-can-I-make-with-SvelteKit) をご覧ください。
 
 ## What is Svelte?
 

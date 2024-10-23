@@ -57,42 +57,42 @@
 </script>
 
 <div class="page">
-	<h1>Documentation</h1>
+	<h1>ドキュメント</h1>
 	<p>
-		Head to the <a href="/docs/svelte">Svelte</a> or <a href="/docs/kit">SvelteKit</a> reference docs,
-		or choose your adventure:
+		<a href="/docs/svelte">Svelte</a> または <a href="/docs/kit">SvelteKit</a> のリファレンスドキュメントに移動するか、
+		<br/>あなたに合った冒険を以下から選択してください:
 	</p>
 
 	<div class="options">
 		<a href="/tutorial">
-			<h2>I&rsquo;m brand new here</h2>
+			<h2>初めての方</h2>
 			<p>
-				We recommend starting with the interactive tutorial, which will teach you how to use Svelte
-				right here in your browser.
+				インタラクティブなチュートリアルから始めることをおすすめします。
+				今すぐブラウザで Svelte の使い方を学ぶことができます。
 			</p>
 		</a>
 
 		<a href="/docs/svelte/v5-migration-guide">
-			<h2>I&rsquo;m migrating an app from Svelte 4</h2>
+			<h2>アプリを Svelte 4 から移行される方</h2>
 			<p>
-				If you&rsquo;re already experienced with an older version of Svelte, the migration guide
-				will bring you up to speed on the changes in Svelte 5.
+				既に Svelte の旧バージョンをお使いの場合は、
+				移行ガイドで Svelte 5 の変更点を迅速に把握することができます。
 			</p>
 		</a>
 
 		<a href="/playground">
-			<h2>I just want to try it out</h2>
+			<h2>とりあえず試してみたい方</h2>
 			<p>
-				Head over to the playground to see examples, create your own Svelte apps in the browser, and
-				share them with other people.
+				Playground に移動し、example を確認したり、Svelte アプリをブラウザ上で作ったり、
+				それを他の人にシェアすることができます。
 			</p>
 		</a>
 
 		<a href="/chat" class="external">
-			<h2>Help! I'm stuck</h2>
+			<h2>助けて！行き詰まった！という方</h2>
 			<p>
-				Join our Discord server where you can hang out with fellow Svelte users and ask them
-				questions. It's like an LLM but with people.
+				私たちの Discord サーバーで他の Svelte ユーザーたちと一緒に過ごしたり、質問したりしましょう。
+				まるで LLM のように思えるかもしれませんが、ちゃんと人間が答えてくれますよ。
 			</p>
 		</a>
 	</div>
@@ -105,6 +105,11 @@
 		box-sizing: content-box;
 		margin: auto;
 		text-wrap: balance;
+	}
+
+	p {
+		font: var(--sk-font-body-small);
+		word-break: auto-phrase;
 	}
 
 	.options a {

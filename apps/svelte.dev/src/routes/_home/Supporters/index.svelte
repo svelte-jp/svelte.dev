@@ -9,8 +9,8 @@
 </script>
 
 <p class="intro">
-	Backed by <a href="https://vercel.com" target="_blank" rel="noreferrer">Vercel</a> and countless donors,
-	developed by full-time and part-time maintainers, Svelte is here to stay.
+	<a href="https://vercel.com" target="_blank" rel="noreferrer">Vercel</a> と数え切れない貢献者による支援、
+	そしてフルタイムまたはパートタイムのメンテナーによる開発のおかげで、Svelte はここに存在しています。
 </p>
 
 <div class="wrapper">
@@ -51,6 +51,8 @@
 		text-align: center;
 		max-width: 27em;
 		padding: 0 var(--sk-page-padding-side);
+		font: var(--sk-font-body-small);
+		word-break: auto-phrase;
 	}
 
 	.layout {

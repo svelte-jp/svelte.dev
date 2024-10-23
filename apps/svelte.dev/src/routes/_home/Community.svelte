@@ -3,12 +3,11 @@
 </script>
 
 <Section --max-width="200rem">
-	<h2>join our friendly community</h2>
+	<h2>私たちのフレンドリーなコミュニティに参加しませんか</h2>
 	<p>
-		Our sister organisation, <a href="https://www.sveltesociety.dev/">Svelte Society</a>, organises
-		events around the globe.
+		私たちの姉妹組織である <a href="https://www.sveltesociety.dev/">Svelte Society</a> は、世界中でイベントを運営しています。
 	</p>
-	<p>Find your chapter and join us in <a href="/chat">our Discord server</a>.</p>
+	<p>あなたが所属する支部を見つけに、<a href="/chat">Discord サーバー</a>に参加しましょう。</p>
 
 	<figure>
 		<enhanced:img

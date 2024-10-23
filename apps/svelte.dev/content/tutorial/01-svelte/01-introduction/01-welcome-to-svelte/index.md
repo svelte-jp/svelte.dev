@@ -2,9 +2,9 @@
 title: Welcome to Svelte
 ---
 
-Welcome to the Svelte tutorial! This will teach you everything you need to know to easily build web applications of all sizes, with high performance and a small footprint.
+Svelte チュートリアルにようこそ！ ここでは、高速でフットプリントが小さい、あらゆるサイズの Web アプリケーションを簡単に構築するために必要なこと全てを学ぶことができます。
 
-You can also consult the [API docs](https://svelte.dev/docs) and visit the [playground](https://svelte.dev/playground), or — if you're impatient to start hacking on your machine locally — create a project with `npx sv create`.
+[API ドキュメント](/docs) や [Playground](/playground) を参照することもできます。また、すぐにローカルで動かしたい場合は、`npx sv create` を実行してプロジェクトを作成してください。
 
 ## What is Svelte?
 

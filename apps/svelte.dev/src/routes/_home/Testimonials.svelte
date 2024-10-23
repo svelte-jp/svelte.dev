@@ -7,20 +7,19 @@
 		/>
 
 		<span class="description">
-			<span class="adjective"></span> attractively thin, graceful and stylish
+			<span class="adjective"></span> 魅力的でスリム、優雅でスタイリッシュ
 		</span>
 	</p>
 
 	<div class="blurb">
 		<p>
-			Svelte is a UI framework that uses a compiler to let you write breathtakingly concise
-			components that do minimal work in the browser, using languages you already know — HTML, CSS
-			and JavaScript. <strong>It’s a love letter to web development.</strong>
+			Svelte はコンパイラを使用する UI フレームワークで、息を呑むほど簡潔にコンポーネントを記述でき、
+			ブラウザで最小限の動作となるようにしてくれます。開発者には既知の言語である HTML、CSS、JavaScript を使うことができます。
+			<strong>これは、web 開発へのラブレターです。</strong>
 		</p>
 
 		<p>
-			But don’t take our word for it. Developers consistently rank Svelte as the framework they’re
-			most excited about using.
+			私たちだけでなく、常に開発者たちからも、Svelte は使用する上で最もエキサイティングなフレームワークとしてランク付けされています。
 		</p>
 	</div>
 
@@ -149,6 +148,7 @@
 		.description {
 			position: relative;
 			font: var(--sk-font-ui-medium);
+			font-feature-settings: "palt";
 			bottom: 0.2em;
 			text-wrap: balance;
 			width: 16rem;
@@ -182,7 +182,7 @@
 			}
 
 			.adjective::after {
-				content: 'adjective';
+				content: '形容詞';
 			}
 		}
 	}
@@ -191,7 +191,7 @@
 		.outer {
 			display: grid;
 			margin: 4em auto;
-			grid-template-columns: 1fr 1fr;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 			column-gap: 4rem;
 			grid-template-areas:
 				'definition definition'
