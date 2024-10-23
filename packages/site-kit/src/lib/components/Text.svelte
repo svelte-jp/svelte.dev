@@ -71,6 +71,18 @@
 </div>
 
 <style>
+
+	:global section > div > div > .text {
+
+		p {
+			font-size: 1.9rem;
+		}
+
+		code {
+			font-size: initial;
+		}
+	}
+
 	.text :global {
 		h2,
 		h3 {
@@ -346,7 +358,7 @@
 			}
 
 			@media (min-width: 768px) {
-				left: 1.6rem;
+				left: 2.4rem;
 				opacity: 0;
 				transition: opacity 0.2s;
 

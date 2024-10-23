@@ -107,11 +107,6 @@
 		text-wrap: balance;
 	}
 
-	p {
-		font: var(--sk-font-body-small);
-		word-break: auto-phrase;
-	}
-
 	.options a {
 		display: block;
 		color: var(--sk-text-2);

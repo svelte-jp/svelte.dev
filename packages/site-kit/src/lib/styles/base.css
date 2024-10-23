@@ -45,6 +45,8 @@ p,
 ul,
 ol {
 	font: var(--sk-font-body);
+	font-feature-settings: "palt";
+	word-break: auto-phrase;
 	margin: 1em 0;
 
 	&:first-child {
@@ -84,6 +86,7 @@ h2,
 h3 {
 	position: relative;
 	text-wrap: balance;
+	word-break: auto-phrase;
 	color: var(--sk-text-1);
 }
 
