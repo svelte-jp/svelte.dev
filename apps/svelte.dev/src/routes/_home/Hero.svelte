@@ -9,7 +9,7 @@
 <div class="hero">
 	<div class="hero-content">
 		<h1>web development for the rest of us</h1>
-		<a href="/docs" class="cta">get started <Icon name="arrow-right" /></a>
+		<a href="/docs" class="cta">始める <Icon name="arrow-right" /></a>
 	</div>
 
 	<picture class="machine">

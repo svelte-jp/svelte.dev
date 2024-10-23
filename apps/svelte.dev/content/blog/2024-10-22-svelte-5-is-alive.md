@@ -1,15 +1,15 @@
 ---
-title: Svelte 5 is alive
-description: Our biggest release yet
+title: Svelte 5 誕生
+description: 最も大きなリリース
 author: The Svelte team
 authorURL: https://svelte.dev/
 ---
 
-After almost 18 months of development, comprising thousands of commits from dozens of contributors, Svelte 5 is finally stable.
+およそ18ヶ月の開発を経て、そしてたくさんのコントリビューターによる数千ものコミットによって、ついに Svelte 5 は安定版(stable)になりました。
 
-It’s the most significant release in the project’s history. Svelte 5 is a ground-up rewrite: your apps will be faster, smaller and more reliable. You’ll be able to write more consistent and idiomatic code. For newcomers to the framework, there’s less stuff to learn.
+このプロジェクトの歴史上、最も重要なリリースとなります。Svelte 5 は根本から書き直されました: あなたのアプリはより高速に、よりサイズが小さく、そしてより信頼性が高くなります。あなたはより一貫性があり、よりイディオマティックなコードを書くことができます。Svelte を使用したことがない方からすると、学ぶべきことがより少なくなりました。
 
-Despite all that, Svelte is almost completely backwards-compatible with Svelte 4 — for the majority of users, the initial upgrade will be completely seamless:
+それにもかかわらず、Svelte はほぼ完全に Svelte 4 と後方互換性があります。ユーザーの多くは、最初のアップグレードを完全にシームレスに行うことができるでしょう:
 
 ```json
 {

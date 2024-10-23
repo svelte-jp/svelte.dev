@@ -31,7 +31,7 @@
 			<Video />
 			<figcaption>
 				<a href="https://www.offerzen.com/community/svelte-origins-documentary"
-					>Watch the full Svelte Origins documentary</a
+					>Svelte Origins ドキュメンタリーをフルで視聴する</a
 				>
 			</figcaption>
 		</figure>

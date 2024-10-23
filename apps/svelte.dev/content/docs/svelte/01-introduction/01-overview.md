@@ -1,8 +1,8 @@
 ---
-title: Overview
+title: 概要
 ---
 
-Svelte is a framework for building user interfaces on the web. It uses a compiler to turn declarative components written in HTML, CSS and JavaScript...
+Svelte は Web 上のユーザーインターフェースを構築するためのフレームワークです。Svelte はコンパイラを使用し、HTML、CSS、JavaScript で記述された宣言的なコンポーネントを...
 
 ```svelte
 <!--- file: App.svelte --->
@@ -21,10 +21,10 @@ Svelte is a framework for building user interfaces on the web. It uses a compile
 </style>
 ```
 
-...into lean, tightly optimized JavaScript.
+...無駄のない、タイトで最適化された JavaScript に変換します。
 
-You can use it to build anything on the web, from standalone components to ambitious full stack apps (using Svelte's companion application framework, [SvelteKit](../kit)) and everything in between.
+これにより、スタンドアローンなコンポーネントからフルスタックアプリ (Svelte のアプリケーションフレームワークである [SvelteKit](../kit) を使用) まで、お望みのものをなんでも構築することができます。
 
-These pages serve as reference documentation. If you're new to Svelte, we recommend starting with the [interactive tutorial](/tutorial) and coming back here when you have questions.
+こちらのページはリファレンスドキュメントとして提供されています。もしあなたが Svelte の初心者なら、先に[インタラクティブなチュートリアル](/tutorial)から始めて、わからないことがあるときにこちらに戻ってくることをおすすめします。
 
-You can also try Svelte online in the [playground](/playground) or, if you need a more fully-featured environment, on [StackBlitz](https://sveltekit.new).
+また、[Playground](/playground) を使ってオンラインで Svelte を試すこともできますし、より高機能な環境が必要なら [StackBlitz](https://sveltekit.new) で試すこともできます。
