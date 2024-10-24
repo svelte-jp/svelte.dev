@@ -4,19 +4,19 @@ title: イントロダクション
 
 ## Before we begin
 
-> [!NOTE] Svelte や SvelteKit が初めてなら、こちらの[インタラクティブなチュートリアル](/tutorial)をチェックしてみることをおすすめします。
+> [!NOTE] Svelte や SvelteKit が初めてなら、こちらの[インタラクティブなチュートリアル](/tutorial/kit)をチェックしてみることをおすすめします。
 >
 > 行き詰まったら、[Discord chatroom](https://svelte.dev/chat) でヘルプを求めてください。
 
 ## What is SvelteKit?
 
-SvelteKit は、[Svelte](https://svelte.dev/) を使用して堅牢でハイパフォーマンスな web アプリケーションを迅速に開発するためのフレームワークです。もしあなたが React 界隈から来たのであれば、SvelteKit は Next に似ているものです。Vue 界隈から来たのであれば、Nuxt に似ています。
+SvelteKit は、[Svelte](../svelte) を使用して堅牢でハイパフォーマンスな web アプリケーションを迅速に開発するためのフレームワークです。もしあなたが React 界隈から来たのであれば、SvelteKit は Next に似ているものです。Vue 界隈から来たのであれば、Nuxt に似ています。
 
 SvelteKit で構築することのできるアプリケーションの種類については、[FAQ](faq#What-can-I-make-with-SvelteKit) をご覧ください。
 
 ## What is Svelte?
 
-In short, Svelte is a way of writing user interface components — like a navigation bar, comment section, or contact form — that users see and interact with in their browsers. The Svelte compiler converts your components to JavaScript that can be run to render the HTML for the page and to CSS that styles the page. You don't need to know Svelte to understand the rest of this guide, but it will help. If you'd like to learn more, check out [the Svelte tutorial](https://svelte.dev/tutorial).
+In short, Svelte is a way of writing user interface components — like a navigation bar, comment section, or contact form — that users see and interact with in their browsers. The Svelte compiler converts your components to JavaScript that can be run to render the HTML for the page and to CSS that styles the page. You don't need to know Svelte to understand the rest of this guide, but it will help. If you'd like to learn more, check out [the Svelte tutorial](/tutorial).
 
 ## SvelteKit vs Svelte
 
