@@ -31,14 +31,14 @@ export async function create_index(
 				'<code>$1</code>'
 			);
 
-		const sections = Array.from(body.matchAll(/^##\s+(.*)$/gm)).map((match) => {
+		const sections = Array.from(body.matchAll(/^##\s+(.*?)(?:\s(<!--(.*?)-->))?$/gm)).map((match) => {
 			const title = smart_quotes(match[1])
 				// replace < and > inside code spans
 				.replace(/`(.+?)`/, (_, contents) => contents.replace(/</g, '&lt;').replace(/>/g, '&gt;'))
 				// turn e.g. `class:_name_` into `class:<em>name</em>`
 				.replace(/_(.+)_/g, (_, contents) => `<em>${contents}</em>`);
 
-			const slug = slugify(title);
+			const slug = match[3] || slugify(title);
 
 			return { slug, title };
 		});

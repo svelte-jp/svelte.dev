@@ -315,9 +315,14 @@ export async function render_content_markdown(
 		},
 		heading({ tokens, depth }) {
 			const text = this.parser!.parseInline(tokens);
-			const html = text.replace(/<\/?code>/g, '');
 
-			headings[depth - 1] = slugify(text);
+			const match = text.match(/(.*?)(?:\s(<!--(.*?)-->))?$/);
+
+			const title = (match && match[2]) ? match[1] : text;
+
+			const html = title.replace(/<\/?code>/g, '');
+
+			headings[depth - 1] = (match && match[2]) ? match[3] : slugify(html);
 			headings.length = depth;
 			const slug = headings.filter(Boolean).join('-');
 

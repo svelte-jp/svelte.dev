@@ -44,6 +44,8 @@ async function content() {
 			rank
 		});
 
+		const headingRegex = /(.*?)(?:\s(<!--(.*?)-->))?$/;
+
 		for (const section of sections) {
 			const lines = section.split('\n');
 			const h2 = lines.shift();
@@ -52,13 +54,17 @@ async function content() {
 				continue;
 			}
 
+			const h2match = headingRegex.exec(h2);
+			const h2text = h2match && h2match[1] || h2;
+			const h2slug = h2match && h2match[3] || slugify(h2);
+
 			const content = lines.join('\n');
 			const subsections = content.trim().split('## ');
 			const intro = subsections?.shift()?.trim();
 			if (intro) {
 				blocks.push({
-					breadcrumbs: [...breadcrumbs, clean(metadata.title), clean(h2)],
-					href: get_href([slug, slugify(h2)]),
+					breadcrumbs: [...breadcrumbs, clean(metadata.title), clean(h2text)],
+					href: get_href([slug, slugify(h2slug)]),
 					content: await plaintext(intro),
 					rank
 				});
@@ -72,9 +78,13 @@ async function content() {
 					continue;
 				}
 
+				const h3match = headingRegex.exec(h3);
+				const h3text = h3match && h3match[1] || h3;
+				const h3slug = h3match && h3match[3] || slugify(h3);
+
 				blocks.push({
-					breadcrumbs: [...breadcrumbs, clean(metadata.title), clean(h2), clean(h3)],
-					href: get_href([slug, slugify(h2) + '-' + slugify(h3)]),
+					breadcrumbs: [...breadcrumbs, clean(metadata.title), clean(h2text), clean(h3text)],
+					href: get_href([slug, slugify(h2slug) + '-' + slugify(h3slug)]),
 					content: await plaintext(lines.join('\n').trim()),
 					rank
 				});
