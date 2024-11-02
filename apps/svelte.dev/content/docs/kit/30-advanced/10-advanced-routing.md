@@ -87,9 +87,8 @@ export function match(param) {
 
 …そしてルート(routes)を拡張します:
 
-```diff
--src/routes/fruits/[page]
-+src/routes/fruits/[page=fruit]
+```
+src/routes/fruits/[page+++=fruit+++]
 ```
 
 もしパス名がマッチしない場合、SvelteKit は (後述のソート順の指定に従って) 他のルートでマッチするか試行し、どれにもマッチしない場合は最終的に 404 を返します。
