@@ -2,17 +2,17 @@
 title: Form actions
 ---
 
-A `+page.server.js` file can export _actions_, which allow you to `POST` data to the server using the `<form>` element.
+`+page.server.js` ファイルは _actions_ をエクスポートできます。これによって、`<form>` 要素を使用することでサーバーにデータを `POST` することができます。
 
-When using `<form>`, client-side JavaScript is optional, but you can easily _progressively enhance_ your form interactions with JavaScript to provide the best user experience.
+`<form>` を使用する場合、クライアントサイドの JavaScript はオプションですが、JavaScript によって form のインタラクションを簡単にプログレッシブに強化(_progressively enhance_)することができ、最高のユーザーエクスペリエンスを提供することができます。
 
 ## Default actions
 
-In the simplest case, a page declares a `default` action:
+最もシンプルなケースでは、ページは `default` の action を宣言します:
 
 ```js
 /// file: src/routes/login/+page.server.js
-/** @satisfies {import('./$types').Actions} */
+/** @type {import('./$types').Actions} */
 export const actions = {
 	default: async (event) => {
 		// TODO log the user in
@@ -20,7 +20,7 @@ export const actions = {
 };
 ```
 
-To invoke this action from the `/login` page, just add a `<form>` — no JavaScript needed:
+`/login` ページからこの action を呼び出すには、`<form>` を追加します。JavaScript は必要ありません:
 
 ```svelte
 <!--- file: src/routes/login/+page.svelte --->
@@ -37,11 +37,11 @@ To invoke this action from the `/login` page, just add a `<form>` — no JavaScr
 </form>
 ```
 
-If someone were to click the button, the browser would send the form data via `POST` request to the server, running the default action.
+もし誰かがボタンをクリックしたら、ブラウザは form のデータを `POST` リクエストでサーバーに送信し、デフォルトの action が実行されます。
 
-> [!NOTE] Actions always use `POST` requests, since `GET` requests should never have side-effects.
+> [!NOTE] Action は常に `POST` リクエストを使用します。`GET` リクエストには決して副作用があってはならないからです。
 
-We can also invoke the action from other pages (for example if there's a login widget in the nav in the root layout) by adding the `action` attribute, pointing to the page:
+また、`action` 属性を追加し、リクエスト先のページを指し示すことで、他のページから action を呼び出すこともできます (例えば、最上位のレイアウト(root layout)にある nav にログイン用の widget がある場合):
 
 ```html
 /// file: src/routes/+layout.svelte
@@ -52,7 +52,7 @@ We can also invoke the action from other pages (for example if there's a login w
 
 ## Named actions
 
-Instead of one `default` action, a page can have as many named actions as it needs:
+単一の `default` の action の代わりに、名前付きの action (named action) を必要なだけ持つことができます:
 
 ```js
 /// file: src/routes/login/+page.server.js
@@ -68,7 +68,7 @@ export const actions = {
 };
 ```
 
-To invoke a named action, add a query parameter with the name prefixed by a `/` character:
+名前付きの action (named action) を呼び出すには、クエリパラメータに `/` を接頭辞に付与したその action の名前を追加します:
 
 ```svelte
 <!--- file: src/routes/login/+page.svelte --->
@@ -80,7 +80,7 @@ To invoke a named action, add a query parameter with the name prefixed by a `/` 
 <form method="POST" action="/login?/register">
 ```
 
-As well as the `action` attribute, we can use the `formaction` attribute on a button to `POST` the same form data to a different action than the parent `<form>`:
+`action` 属性と同じように、button の `formaction` 属性を使用することができ、こうすると親の `<form>` とは別の action に同じ form のデータを `POST` することができます:
 
 ```svelte
 /// file: src/routes/login/+page.svelte
@@ -98,11 +98,11 @@ As well as the `action` attribute, we can use the `formaction` attribute on a bu
 </form>
 ```
 
-> [!NOTE] We can't have default actions next to named actions, because if you POST to a named action without a redirect, the query parameter is persisted in the URL, which means the next default POST would go through the named action from before.
+> [!NOTE] 名前付き action (named action) の隣にデフォルトの action を置くことはできません。なぜなら リダイレクト無しで名前付き action (named action) に POST をすると、クエリパラメータが URL に保持され、それ以降デフォルトの POST をしようとしても以前 POST した名前付き action (named action) を通ってしまうからです。
 
-## Anatomy of an action
+## action の解剖学 <!--Anatomy-of-an-action-->
 
-Each action receives a `RequestEvent` object, allowing you to read the data with `request.formData()`. After processing the request (for example, logging the user in by setting a cookie), the action can respond with data that will be available through the `form` property on the corresponding page and through `$page.form` app-wide until the next update.
+action はそれぞれ `RequestEvent` オブジェクトを受け取って、`request.formData()` でデータを読み込むことができます。リクエスト (例えば、cookie をセットしてユーザーをログインさせるなど) を処理したあと、action は次の更新まで、対応するページでは `form` プロパティで、アプリ全体では `$page.form` で利用可能なデータで応答することができます。
 
 ```js
 /// file: src/routes/login/+page.server.js
@@ -148,15 +148,15 @@ export const actions = {
 </script>
 
 {#if form?.success}
-	<!-- this message is ephemeral; it exists because the page was rendered in
-	       response to a form submission. it will vanish if the user reloads -->
+	<!-- このメッセージは一時的なものです; form 送信に対するレスポンスとしてページがレンダリングされたため、存在しています。
+	       ユーザーがリロードすると消えます。 -->
 	<p>Successfully logged in! Welcome back, {data.user.name}</p>
 {/if}
 ```
 
 ### Validation errors
 
-If the request couldn't be processed because of invalid data, you can return validation errors — along with the previously submitted form values — back to the user so that they can try again. The `fail` function lets you return an HTTP status code (typically 400 or 422, in the case of validation errors) along with the data. The status code is available through `$page.status` and the data through `form`:
+無効なデータが原因でリクエストが処理できなかった場合、再試行できるようにするために、直前に送信した form の値とともに validation error をユーザーに返すことができます。`fail` 関数は、HTTP ステータスコード (通常、validation error の場合は 400 か 422) をデータとともに返します。ステータスコードは `$page.status` から使用することができ、data は `form` から使用することができます:
 
 ```js
 /// file: src/routes/login/+page.server.js
@@ -195,7 +195,7 @@ export const actions = {
 };
 ```
 
-> [!NOTE] Note that as a precaution, we only return the email back to the page — not the password.
+> [!NOTE] 念のため、password は返さず、email のみをページに返していることにご注意ください。
 
 ```svelte
 /// file: src/routes/login/+page.svelte
@@ -215,11 +215,11 @@ export const actions = {
 </form>
 ```
 
-The returned data must be serializable as JSON. Beyond that, the structure is entirely up to you. For example, if you had multiple forms on the page, you could distinguish which `<form>` the returned `form` data referred to with an `id` property or similar.
+戻り値は JSON としてシリアライズ可能でなければなりません。その上で、構造は完全にあなた次第です。例えば、もしページに複数の form がある場合、返された `form` データがどの `<form>` を参照しているかを `id` プロパティなどで区別することができます。
 
 ### Redirects
 
-Redirects (and errors) work exactly the same as in [`load`](load#Redirects):
+redirect (と error) は [`load`](load#Redirects) のそれと同じように機能します:
 
 ```js
 // @errors: 2345
@@ -264,9 +264,9 @@ export const actions = {
 
 ## Loading data
 
-After an action runs, the page will be re-rendered (unless a redirect or an unexpected error occurs), with the action's return value available to the page as the `form` prop. This means that your page's `load` functions will run after the action completes.
+action の実行後、そのページは (リダイレクトや予期せぬエラーが発生しない限り) 再レンダリングされ、action の戻り値が `form` プロパティとしてそのページで使用できるようになります。つまり、ページの `load` 関数は、action が完了したあとに実行されるということです。
 
-Note that `handle` runs before the action is invoked, and does not rerun before the `load` functions. This means that if, for example, you use `handle` to populate `event.locals` based on a cookie, you must update `event.locals` when you set or delete the cookie in an action:
+`handle` は action が呼び出される前に実行され、`load` 関数より前に再実行されることはないことに注意してください。つまり、例えば `handle` を使用して cookie を元に `event.locals` に値を入れる場合、action で cookie を設定したり削除したりするときは `event.locals` を更新しなければなりません:
 
 ```js
 /// file: src/hooks.server.js
@@ -328,11 +328,11 @@ export const actions = {
 
 ## Progressive enhancement
 
-In the preceding sections we built a `/login` action that [works without client-side JavaScript](https://kryogenix.org/code/browser/everyonehasjs.html) — not a `fetch` in sight. That's great, but when JavaScript _is_ available we can progressively enhance our form interactions to provide a better user experience.
+前のセクションでは [クライアントサイドの JavaScriptなしで動作する](https://kryogenix.org/code/browser/everyonehasjs.html) `/login` action を構築しました — `fetch` は見当たりません。これは素晴らしいことですが、JavaScript が利用可能な場合は、より良いユーザーエクスペリンスを提供するために form のインタラクションをプログレッシブに強化 (progressively enhance) することができます。
 
 ### use:enhance
 
-The easiest way to progressively enhance a form is to add the `use:enhance` action:
+form をプログレッシブに強化する最も簡単な方法は、`use:enhance` action を追加することです:
 
 ```svelte
 /// file: src/routes/login/+page.svelte
@@ -348,42 +348,42 @@ The easiest way to progressively enhance a form is to add the `use:enhance` acti
 
 > [!NOTE] `use:enhance` can only be used with forms that have `method="POST"`. It will not work with `method="GET"`, which is the default for forms without a specified method. Attempting to use `use:enhance` on forms without `method="POST"` will result in an error.
 
-> [!NOTE] Yes, it's a little confusing that the `enhance` action and `<form action>` are both called 'action'. These docs are action-packed. Sorry.
+> [!NOTE] ええ、`enhance` action と `<form action>` をどちらも 'action' と呼んでいて、少し紛らわしいですよね。このドキュメントは action でいっぱいです。申し訳ありません。
 
-Without an argument, `use:enhance` will emulate the browser-native behaviour, just without the full-page reloads. It will:
+引数が無い場合、`use:enhance` は、ブラウザネイティブの動作を、フルページリロードを除いてエミュレートします。それは:
 
-- update the `form` property, `$page.form` and `$page.status` on a successful or invalid response, but only if the action is on the same page you're submitting from. For example, if your form looks like `<form action="/somewhere/else" ..>`, `form` and `$page` will _not_ be updated. This is because in the native form submission case you would be redirected to the page the action is on. If you want to have them updated either way, use [`applyAction`](#Progressive-enhancement-Customising-use:enhance)
-- reset the `<form>` element
-- invalidate all data using `invalidateAll` on a successful response
-- call `goto` on a redirect response
-- render the nearest `+error` boundary if an error occurs
-- [reset focus](accessibility#Focus-management) to the appropriate element
+- action が送信元のページと同じ場所にある場合に限り、成功レスポンスまたは不正なレスポンスに応じて、`form` プロパティと `$page.form` と `$page.status` を更新します。例えば、`<form action="/somewhere/else" ..>` というようなフォームの場合、`form` と `$page` は更新されません。これは、ネイティブのフォーム送信では action があるページにリダイレクトされるからです。どちらにしても更新させたい場合は、[`applyAction`](#Progressive-enhancement-Customising-use:enhance) を使用してください
+- `<form>` 要素をリセットします
+- 成功レスポンスの場合は `invalidateAll` で全てのデータを無効化・最新化(invalidate)します
+- リダイレクトレスポンスの場合は `goto` を呼び出します
+- エラーが発生した場合はもっとも近くにある `+error` 境界をレンダリングします
+- 適切な要素に [フォーカスをリセット](accessibility#Focus-management) します
 
-### Customising use:enhance
+### use:enhance をカスタマイズする <!--Customising-use:enhance-->
 
-To customise the behaviour, you can provide a `SubmitFunction` that runs immediately before the form is submitted, and (optionally) returns a callback that runs with the `ActionResult`. Note that if you return a callback, the default behavior mentioned above is not triggered. To get it back, call `update`.
+この挙動をカスタマイズするために、form が送信される直前に実行される `SubmitFunction` 関数を提供することができます。そして (オプションで) `ActionResult` を引数に取るコールバックを返すことができます。もしコールバックを返す場合、上述のデフォルトの動作はトリガーされません。元に戻すには、`update` を呼び出してください。
 
 ```svelte
 <form
 	method="POST"
 	use:enhance={({ formElement, formData, action, cancel, submitter }) => {
-		// `formElement` is this `<form>` element
-		// `formData` is its `FormData` object that's about to be submitted
-		// `action` is the URL to which the form is posted
-		// calling `cancel()` will prevent the submission
-		// `submitter` is the `HTMLElement` that caused the form to be submitted
+		// `formElement` はこの `<form>` 要素です
+		// `formData` は送信される予定の `FormData` オブジェクトです
+		// `action` はフォームが POST される URL です
+		// `cancel()` を呼び出すと送信(submission)を中止します
+		// `submitter` は、フォームの送信を実行した `HTMLElement` です
 
 		return async ({ result, update }) => {
-			// `result` is an `ActionResult` object
-			// `update` is a function which triggers the default logic that would be triggered if this callback wasn't set
+			// `result` は `ActionResult` オブジェクトです
+			// `update` は、このコールバックが設定されていない場合に起動されるデフォルトのロジックを起動する関数です
 		};
 	}}
 >
 ```
 
-You can use these functions to show and hide loading UI, and so on.
+これらの関数を、ロード中の UI (loading UI) を表示したり隠したりすることなどに使用できます。
 
-If you return a callback, you may need to reproduce part of the default `use:enhance` behaviour, but without invalidating all data on a successful response. You can do so with `applyAction`:
+コールバックを返す場合は `use:enhance` のデフォルトの動作の一部を再現させる必要があるかもしれませんが、成功レスポンスで全てのデータを無効化・最新化(invalidate)する必要はありません。このような場合には `applyAction` を使用するとよいでしょう:
 
 ```svelte
 /// file: src/routes/login/+page.svelte
@@ -398,7 +398,7 @@ If you return a callback, you may need to reproduce part of the default `use:enh
 	method="POST"
 	use:enhance={({ formElement, formData, action, cancel }) => {
 		return async ({ result }) => {
-			// `result` is an `ActionResult` object
+			// `result` は `ActionResult` オブジェクトです
 +++			if (result.type === 'redirect') {
 				goto(result.location);
 			} else {
@@ -409,17 +409,17 @@ If you return a callback, you may need to reproduce part of the default `use:enh
 >
 ```
 
-The behaviour of `applyAction(result)` depends on `result.type`:
+`applyAction(result)` の挙動は `result.type` に依存しています:
 
-- `success`, `failure` — sets `$page.status` to `result.status` and updates `form` and `$page.form` to `result.data` (regardless of where you are submitting from, in contrast to `update` from `enhance`)
-- `redirect` — calls `goto(result.location, { invalidateAll: true })`
-- `error` — renders the nearest `+error` boundary with `result.error`
+- `success`, `failure` — `$page.status` を `result.status` に設定し、`form` と `$page.form` を `result.data` で更新します (`enhance` の `update` とは対照的に、送信元がどこかは関係ありません)
+- `redirect` — `goto(result.location, { invalidateAll: true })` を呼び出します
+- `error` — もっとも近くにある `+error` 境界を `result.error` でレンダリングします
 
-In all cases, [focus will be reset](accessibility#Focus-management).
+いずれの場合でも、[フォーカスはリセットされます](accessibility#Focus-management)。
 
 ### Custom event listener
 
-We can also implement progressive enhancement ourselves, without `use:enhance`, with a normal event listener on the `<form>`:
+`use:enhance` ではなく、`<form>` の通常のイベントリスナーを使うことで、ご自身でプログレッシブ・エンハンスメント(progressive enhancement)を実装することもできます:
 
 ```svelte
 <!--- file: src/routes/login/+page.svelte --->
@@ -459,9 +459,9 @@ We can also implement progressive enhancement ourselves, without `use:enhance`, 
 </form>
 ```
 
-Note that you need to `deserialize` the response before processing it further using the corresponding method from `$app/forms`. `JSON.parse()` isn't enough because form actions - like `load` functions - also support returning `Date` or `BigInt` objects.
+処理を進める前に、`$app/forms` の `deserialize` でレスポンスをデシリアライズする必要があることにご注意ください。`JSON.parse()` では不十分です。なぜなら、例えば `load` 関数のような form action は、`Date` や `BigInt` オブジェクトも戻り値としてサポートしているからです。
 
-If you have a `+server.js` alongside your `+page.server.js`, `fetch` requests will be routed there by default. To `POST` to an action in `+page.server.js` instead, use the custom `x-sveltekit-action` header:
+もし `+page.server.js` と `+server.js` のどちらも存在する場合、デフォルトでは、`fetch` リクエストは `+server.js` のほうにルーティングされます。`+page.server.js` の action に `POST` をするには、カスタムの `x-sveltekit-action` ヘッダーを使用します:
 
 ```js
 const response = await fetch(this.action, {
@@ -475,7 +475,7 @@ const response = await fetch(this.action, {
 
 ## Alternatives
 
-Form actions are the preferred way to send data to the server, since they can be progressively enhanced, but you can also use [`+server.js`](routing#server) files to expose (for example) a JSON API. Here's how such an interaction could look like:
+サーバーにデータを送信する方法として、プログレッシブな強化(progressively enhance)を行うことができるため Form actions は望ましい方法ですが、[`+server.js`](routing#server) ファイルを使用して (例えば) JSON API を公開することもできます。それは例えばこのように行います:
 
 ```svelte
 <!--- file: src/routes/send-message/+page.svelte --->
@@ -501,9 +501,9 @@ export function POST() {
 
 ## GET vs POST
 
-As we've seen, to invoke a form action you must use `method="POST"`.
+これまで見てきたように、フォームアクションを使うには、`method="POST"` を使用する必要があります。
 
-Some forms don't need to `POST` data to the server — search inputs, for example. For these you can use `method="GET"` (or, equivalently, no `method` at all), and SvelteKit will treat them like `<a>` elements, using the client-side router instead of a full page navigation:
+サーバーにデータを `POST` する必要がないフォームもあるでしょう — 例えば検索入力(search inputs)です。これに対応するには `method="GET"` (または、`method` を全く書かないのも同等です) を使うことができ、そして SvelteKit はそれを `<a>` 要素のように扱い、フルページナビゲーションの代わりにクライアントサイドルーターを使用します。:
 
 ```html
 <form action="/search">
@@ -514,8 +514,8 @@ Some forms don't need to `POST` data to the server — search inputs, for exampl
 </form>
 ```
 
-Submitting this form will navigate to `/search?q=...` and invoke your load function but will not invoke an action. As with `<a>` elements, you can set the [`data-sveltekit-reload`](link-options#data-sveltekit-reload), [`data-sveltekit-replacestate`](link-options#data-sveltekit-replacestate), [`data-sveltekit-keepfocus`](link-options#data-sveltekit-keepfocus) and [`data-sveltekit-noscroll`](link-options#data-sveltekit-noscroll) attributes on the `<form>` to control the router's behaviour.
+この form を送信すると `/search?q=...` に移動して load 関数が実行されますが、action は実行されません。`<a>` 要素と同じように、[`data-sveltekit-reload`](link-options#data-sveltekit-reload) 属性、 [`data-sveltekit-replacestate`](link-options#data-sveltekit-replacestate) 属性、[`data-sveltekit-keepfocus`](link-options#data-sveltekit-keepfocus) 属性、 [`data-sveltekit-noscroll`](link-options#data-sveltekit-noscroll) 属性を `<form>` に設定することができ、ルーターの挙動をコントロールすることができます。
 
-## Further reading
+## その他の参考資料 <!--Further-reading-->
 
 - [Tutorial: Forms](/tutorial/kit/the-form-element)

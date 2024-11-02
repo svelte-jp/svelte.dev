@@ -2,25 +2,25 @@
 title: Hooks
 ---
 
-'Hooks' are app-wide functions you declare that SvelteKit will call in response to specific events, giving you fine-grained control over the framework's behaviour.
+'Hooks' は、特定のイベントに対して SvelteKit がレスポンスを呼び出すことを宣言するアプリ全体の関数で、これによってフレームワークの動作をきめ細やかに制御できるようになります。
 
-There are three hooks files, all optional:
+hooks ファイルは2つあり、どちらもオプションです:
 
-- `src/hooks.server.js` — your app's server hooks
-- `src/hooks.client.js` — your app's client hooks
-- `src/hooks.js` — your app's hooks that run on both the client and server
+- `src/hooks.server.js` — アプリのサーバーの hooks
+- `src/hooks.client.js` — アプリのクライアントの hooks
+- `src/hooks.js` — サーバーとクライアントの両方で実行される hooks
 
-Code in these modules will run when the application starts up, making them useful for initializing database clients and so on.
+これらのモジュールのコードはアプリケーションの起動時に実行されるので、データベースクライアントの初期化などに有用です。
 
-> [!NOTE] You can configure the location of these files with [`config.kit.files.hooks`](configuration#files).
+> [!NOTE] これらのファイルの場所は [`config.kit.files.hooks`](configuration#files) で設定できます。
 
 ## Server hooks
 
-The following hooks can be added to `src/hooks.server.js`:
+以下の hooks は `src/hooks.server.js` に追加することができます:
 
 ### handle
 
-This function runs every time the SvelteKit server receives a [request](web-standards#Fetch-APIs-Request) — whether that happens while the app is running, or during [prerendering](page-options#prerender) — and determines the [response](web-standards#Fetch-APIs-Response). It receives an `event` object representing the request and a function called `resolve`, which renders the route and generates a `Response`. This allows you to modify response headers or bodies, or bypass SvelteKit entirely (for implementing routes programmatically, for example).
+この関数は SvelteKit のサーバーが [リクエスト](web-standards#Fetch-APIs-Request) を受けるたびに (アプリの実行中であろうと、[プリレンダリング](page-options#prerender)であろうと) 実行され、[レスポンス](web-standards#Fetch-APIs-Response) を決定します。リクエストを表す `event` オブジェクトと、ルート(route)をレンダリングしレスポンスを生成する `resolve` という関数を受け取ります。これにより、レスポンスのヘッダーやボディを変更したり、SvelteKitを完全にバイパスすることができます (例えば、プログラムでルート(routes)を実装する場合など)。
 
 ```js
 /// file: src/hooks.server.js
@@ -35,9 +35,9 @@ export async function handle({ event, resolve }) {
 }
 ```
 
-> [!NOTE] Requests for static assets — which includes pages that were already prerendered — are _not_ handled by SvelteKit.
+> [!NOTE] 静的アセット(プリレンダリング済みのページを含む)に対するリクエストは SvelteKit では処理されません。
 
-If unimplemented, defaults to `({ event, resolve }) => resolve(event)`. To add custom data to the request, which is passed to handlers in `+server.js` and server `load` functions, populate the `event.locals` object, as shown below.
+未実装の場合、デフォルトは `({ event, resolve }) => resolve(event)` となります。カスタムデータをリクエストに追加し、`+server.js` のハンドラーやサーバー(server) `load` 関数に渡すには、以下のように `event.locals` オブジェクトに埋め込んでください。
 
 ```js
 /// file: src/hooks.server.js
@@ -67,13 +67,13 @@ export async function handle({ event, resolve }) {
 }
 ```
 
-You can define multiple `handle` functions and execute them with [the `sequence` helper function](@sveltejs-kit-hooks).
+[`sequence` ヘルパー関数](@sveltejs-kit-hooks)を使用すると、複数の `handle` 関数を定義することができます。
 
-`resolve` also supports a second, optional parameter that gives you more control over how the response will be rendered. That parameter is an object that can have the following fields:
+`resolve` はオプションの第2引数をサポートしており、レスポンスのレンダリング方法をより詳細にコントロールすることができます。そのパラメータは、以下のフィールドを持つオブジェクトです:
 
-- `transformPageChunk(opts: { html: string, done: boolean }): MaybePromise<string | undefined>` — applies custom transforms to HTML. If `done` is true, it's the final chunk. Chunks are not guaranteed to be well-formed HTML (they could include an element's opening tag but not its closing tag, for example) but they will always be split at sensible boundaries such as `%sveltekit.head%` or layout/page components.
-- `filterSerializedResponseHeaders(name: string, value: string): boolean` — determines which headers should be included in serialized responses when a `load` function loads a resource with `fetch`. By default, none will be included.
-- `preload(input: { type: 'js' | 'css' | 'font' | 'asset', path: string }): boolean` — determines what files should be added to the `<head>` tag to preload it. The method is called with each file that was found at build time while constructing the code chunks — so if you for example have `import './styles.css` in your `+page.svelte`, `preload` will be called with the resolved path to that CSS file when visiting that page. Note that in dev mode `preload` is _not_ called, since it depends on analysis that happens at build time. Preloading can improve performance by downloading assets sooner, but it can also hurt if too much is downloaded unnecessarily. By default, `js` and `css` files will be preloaded. `asset` files are not preloaded at all currently, but we may add this later after evaluating feedback.
+- `transformPageChunk(opts: { html: string, done: boolean }): MaybePromise<string | undefined>` — カスタムの変換を HTML に適用します。`done` が true である場合、それは最後のチャンクです。チャンクが整形された HTML であることは保証されませんが (例えば、要素の開始タグは含むが終了タグは含まれない、など)、常に `%sveltekit.head%` やレイアウト(layout)/ページ(page)コンポーネントなどのような理にかなった境界 (sensible boundaries) で分割されます。
+- `filterSerializedResponseHeaders(name: string, value: string): boolean` — `load` 関数が `fetch` でリソースを読み込むときに、シリアライズされるレスポンスにどのヘッダーを含めるかを決定します。デフォルトでは何も含まれません。
+- `preload(input: { type: 'js' | 'css' | 'font' | 'asset', path: string }): boolean` — `<head>` タグにどのファイルをプリロードの対象として追加するか決定します。このメソッドはビルド時、コードチャンクを構築している際に見つかったファイルごとに呼び出されます。これにより、例えば `+page.svelte` に `import './styles.css` がある場合、そのページに訪れたときにその CSS ファイルへの解決されたパスを以て `preload` が呼び出されるようになります。これはビルド時の分析によって行われるため、開発モードでは `preload` が呼ばれないことにご注意ください。プリロードによってその対象がより早くダウンロードされるようになるためパフォーマンスが改善しますが、不必要に多くのものをダウンロードしてしまうと、core web vitals を悪化させてしまいます。デフォルトでは、`js`、`css` ファイルがプリロードされます。現時点では `asset` ファイルはプリロードされませんが、フィードバックによっては追加されるかもしれません。
 
 ```js
 /// file: src/hooks.server.js
@@ -89,13 +89,13 @@ export async function handle({ event, resolve }) {
 }
 ```
 
-Note that `resolve(...)` will never throw an error, it will always return a `Promise<Response>` with the appropriate status code. If an error is thrown elsewhere during `handle`, it is treated as fatal, and SvelteKit will respond with a JSON representation of the error or a fallback error page — which can be customised via `src/error.html` — depending on the `Accept` header. You can read more about error handling [here](errors).
+`resolve(...)` は決してエラーをスローせず、適切なステータスコードと `Promise<Response>` を返すことにご注意ください。もし `handle` 中に他の場所でエラーがスローされた場合、それは致命的(fatal)なものとして扱われ、SvelteKit は `Accept` ヘッダーに応じて、そのエラーの JSON 表現か、`src/error.html` でカスタマイズ可能なフォールバックエラーページをレスポンスとして返します。エラーハンドリングの詳細は [こちら](errors) からお読み頂けます。
 
 ### handleFetch
 
-This function allows you to modify (or replace) a `fetch` request that happens inside a `load` or `action` function that runs on the server (or during pre-rendering).
+この関数は、サーバー上で (またはプリレンダリング中に) 実行される `load` 関数や `action` 関数の中で発生する `fetch` リクエストを変更 (または置換) することできます。
 
-For example, your `load` function might make a request to a public URL like `https://api.yourapp.com` when the user performs a client-side navigation to the respective page, but during SSR it might make sense to hit the API directly (bypassing whatever proxies and load balancers sit between it and the public internet).
+例えば、ユーザーがクライアントサイドでそれぞれのページに移動する際に、`load` 関数で `https://api.yourapp.com` のようなパブリックな URL にリクエストを行うかもしれませんが、SSR の場合には (パブリックなインターネットとの間にあるプロキシやロードバランサーをバイパスして) API を直接呼ぶほうが理にかなっているでしょう。
 
 ```js
 /// file: src/hooks.server.js
@@ -115,11 +115,11 @@ export async function handleFetch({ request, fetch }) {
 
 **Credentials**
 
-For same-origin requests, SvelteKit's `fetch` implementation will forward `cookie` and `authorization` headers unless the `credentials` option is set to `"omit"`.
+同一オリジン(same-origin)リクエストの場合、SvelteKit の `fetch` 実装は、`credentials` オプションを `"omit"` にしない限り、 `cookie` と `authorization` ヘッダーを転送します。
 
-For cross-origin requests, `cookie` will be included if the request URL belongs to a subdomain of the app — for example if your app is on `my-domain.com`, and your API is on `api.my-domain.com`, cookies will be included in the request.
+クロスオリジン(cross-origin)リクエストの場合、リクエスト URL がアプリのサブドメインに属するときは `cookie` はリクエストに含まれます。例えば、あなたのアプリが `my-domain.com` にあり、あなたの API が `api.my-domain.com` にある場合、cookie はリクエストに含まれることになります。
 
-If your app and your API are on sibling subdomains — `www.my-domain.com` and `api.my-domain.com` for example — then a cookie belonging to a common parent domain like `my-domain.com` will _not_ be included, because SvelteKit has no way to know which domain the cookie belongs to. In these cases you will need to manually include the cookie using `handleFetch`:
+もしあなたのアプリと API が兄弟関係にあるサブドメイン (例えば `www.my-domain.com` と `api.my-domain.com`) の場合は、`my-domain.com` のような共通の親ドメインに属する cookie は含まれません、なぜなら SvelteKit にはその cookie がどのドメインに属するか判断する方法がないからです。こういったケースでは、`handleFetch` を使って手動で cookie を含める必要があります:
 
 ```js
 /// file: src/hooks.server.js
@@ -136,18 +136,18 @@ export async function handleFetch({ event, request, fetch }) {
 
 ## Shared hooks
 
-The following can be added to `src/hooks.server.js` _and_ `src/hooks.client.js`:
+以下は `src/hooks.server.js` _と_ `src/hooks.client.js` のどちらにも追加できます:
 
 ### handleError
 
-If an [unexpected error](errors#Unexpected-errors) is thrown during loading or rendering, this function will be called with the `error`, `event`, `status` code and `message`. This allows for two things:
+[予期せぬエラー](errors#Unexpected-errors)がロード中またはレンダリング中にスローされると、この関数が `error`、`event`、`status` コード、`message` を引数にとって呼び出されます。これによって以下の2つのことが可能になります:
 
-- you can log the error
-- you can generate a custom representation of the error that is safe to show to users, omitting sensitive details like messages and stack traces. The returned value, which defaults to `{ message }`, becomes the value of `$page.error`.
+- エラーをログに残すことができます
+- エラーからメッセージやスタックトレースなどの機密情報を省略し、ユーザーに見せても安全なカスタムの表現を生成することができます。戻り値のデフォルトは `{ message }` で、`$page.error` の値となります。
 
-For errors thrown from your code (or library code called by your code) the status will be 500 and the message will be "Internal Error". While `error.message` may contain sensitive information that should not be exposed to users, `message` is safe (albeit meaningless to the average user).
+あなたのコード (またはあなたのコードから呼び出されたライブラリのコード) からスローされたエラーの場合、ステータスは 500 となり、message は "Internal Error" になります。`error.message` にはユーザーに公開されるべきではない機密情報が含まれている可能性がありますが、`message` は安全です (一般的なユーザーにとっては無意味ではありますが)。
 
-To add more information to the `$page.error` object in a type-safe way, you can customize the expected shape by declaring an `App.Error` interface (which must include `message: string`, to guarantee sensible fallback behavior). This allows you to — for example — append a tracking ID for users to quote in correspondence with your technical support staff:
+`$page.error` オブジェクトに型安全な方法で情報を追加するには、`App.Error` interface を宣言することで想定する形にすることができます (適切なフォールバックの動作を保証するため、`message: string` を含む必要があります)。これにより、例えばユーザーがテクニカルサポートスタッフとの対応の際に引用することができるトラッキング ID を付加することができます:
 
 ```ts
 /// file: src/app.d.ts
@@ -225,23 +225,23 @@ export async function handleError({ error, event, status, message }) {
 }
 ```
 
-> [!NOTE] In `src/hooks.client.js`, the type of `handleError` is `HandleClientError` instead of `HandleServerError`, and `event` is a `NavigationEvent` rather than a `RequestEvent`.
+> [!NOTE] `src/hooks.client.js` では、`handleError` の型は `HandleServerError` ではなく `HandleClientError` で、`event` は `RequestEvent` ではなく `NavigationEvent` です。 
 
-This function is not called for _expected_ errors (those thrown with the [`error`](@sveltejs-kit#error) function imported from `@sveltejs/kit`).
+この関数は _想定される_ エラー (`@sveltejs/kit` からインポートされる [`error`](@sveltejs-kit#error) 関数でスローされるエラー) の場合は呼び出されません。
 
-During development, if an error occurs because of a syntax error in your Svelte code, the passed in error has a `frame` property appended highlighting the location of the error.
+開発中、Svelte のコードの構文エラーでエラーが発生した場合、渡される error には、エラーの場所のハイライトが付与された `frame` プロパティがあります。
 
-> [!NOTE] Make sure that `handleError` _never_ throws an error
+> [!NOTE] `handleError` 自体が決してエラーをスローしないようにしてください。
 
 ## Universal hooks
 
-The following can be added to `src/hooks.js`. Universal hooks run on both server and client (not to be confused with shared hooks, which are environment-specific).
+以下は `src/hooks.js` に追加することができます。universal hooks はサーバーとクライアントの両方で実行されます (shared hooks と混同しないようにしてください、shared hooks は環境依存です)。
 
 ### reroute
 
-This function runs before `handle` and allows you to change how URLs are translated into routes. The returned pathname (which defaults to `url.pathname`) is used to select the route and its parameters.
+この関数は `handle` より前に実行され、URL をルート(route)に変換する方法を変更することができます。戻り値の pathname (デフォルトは `url.pathname`) はルート(route)パラメータを選択するのに使用されます。
 
-For example, you might have a `src/routes/[[lang]]/about/+page.svelte` page, which should be accessible as `/en/about` or `/de/ueber-uns` or `/fr/a-propos`. You could implement this with `reroute`:
+例えば、`src/routes/[[lang]]/about/+page.svelte` というページがあるとして、`/en/about` や `/de/ueber-uns` や `/fr/a-propos` でアクセスできるようにしたいとします。この場合は `reroute` を使用して実装することができます:
 
 ```js
 /// file: src/hooks.js
@@ -263,11 +263,11 @@ export function reroute({ url }) {
 }
 ```
 
-The `lang` parameter will be correctly derived from the returned pathname.
+`lang` パラメータは戻り値の pathname から正しく導くことができます。
 
-Using `reroute` will _not_ change the contents of the browser's address bar, or the value of `event.url`.
+`reroute` を使用してもブラウザのアドレスバーの内容や `event.url` の値は変更されません。
 
 
-## Further reading
+## その他の参考資料 <!--Further-reading-->
 
 - [Tutorial: Hooks](/tutorial/kit/handle)

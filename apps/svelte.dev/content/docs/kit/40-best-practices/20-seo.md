@@ -2,35 +2,35 @@
 title: SEO
 ---
 
-The most important aspect of SEO is to create high-quality content that is widely linked to from around the web. However, there are a few technical considerations for building sites that rank well.
+SEO で最も重要なのは、高品質なコンテンツを作ること、そしてそれが web 上で広くリンクされることです。しかし、ランクが高いサイトを構築するためにいくつか技術的に考慮すべきこともあります。
 
 ## Out of the box
 
 ### SSR
 
-While search engines have got better in recent years at indexing content that was rendered with client-side JavaScript, server-side rendered content is indexed more frequently and reliably. SvelteKit employs SSR by default, and while you can disable it in [`handle`](hooks#Server-hooks-handle), you should leave it on unless you have a good reason not to.
+近年、検索エンジンはクライアントサイドの JavaScript でレンダリングされたコンテンツのインデックスを改善してきましたが、サーバーサイドレンダリングされたコンテンツのほうがより頻繁に、より確実にインデックスされます。SvelteKit はデフォルトで SSR を採用しています。[`handle`](hooks#Server-hooks-handle) で無効にすることもできますが、適切な理由がない場合はそのままにしておきましょう。
 
-> [!NOTE] SvelteKit's rendering is highly configurable and you can implement [dynamic rendering](https://developers.google.com/search/docs/advanced/javascript/dynamic-rendering) if necessary. It's not generally recommended, since SSR has other benefits beyond SEO.
+> [!NOTE] SvelteKit のレンダリングは高度な設定が可能です。必要であれば、[動的なレンダリング(dynamic rendering)](https://developers.google.com/search/docs/advanced/javascript/dynamic-rendering) を実装することも可能です。一般的には推奨されません、SSR には SEO 以外のメリットもあるからです。
 
-### Performance
+### パフォーマンス <!--Performance-->
 
-Signals such as [Core Web Vitals](https://web.dev/vitals/#core-web-vitals) impact search engine ranking. Because Svelte and SvelteKit introduce minimal overhead, it's easier to build high performance sites. You can test your site's performance using Google's [PageSpeed Insights](https://pagespeed.web.dev/) or [Lighthouse](https://developers.google.com/web/tools/lighthouse). Read [the performance page](performance) for more details.
+[Core Web Vitals](https://web.dev/vitals/#core-web-vitals) のような指標は検索エンジンのランクに影響を与えます。Svelte と SvelteKit はオーバーヘッドが最小限であるため、ハイパフォーマンスなサイトを簡単に構築できです。Google の [PageSpeed Insights](https://pagespeed.web.dev/) や [Lighthouse](https://developers.google.com/web/tools/lighthouse) で、ご自身のサイトをテストすることができます。詳細は [パフォーマンスのページ](performance) をお読みください。
 
-### Normalized URLs
+### URLの正規化 <!--Normalized-urls-->
 
-SvelteKit redirects pathnames with trailing slashes to ones without (or vice versa depending on your [configuration](page-options#trailingSlash)), as duplicate URLs are bad for SEO.
+SvelteKit は、末尾のスラッシュ(trailing slash)付きのパス名から、末尾のスラッシュが無いパス名にリダイレクトします ([設定](page-options#trailingSlash) で逆にできます)。URLの重複は、SEOに悪影響を与えます。
 
 ## Manual setup
 
-### &lt;title&gt; and &lt;meta&gt;
+### &lt;title&gt; と &lt;meta&gt; <!--title-and-meta-->
 
-Every page should have well-written and unique `<title>` and `<meta name="description">` elements inside a [`<svelte:head>`](../svelte/svelte-head). Guidance on how to write descriptive titles and descriptions, along with other suggestions on making content understandable by search engines, can be found on Google's [Lighthouse SEO audits](https://web.dev/lighthouse-seo/) documentation.
+全てのページで、よく練られたユニークな `<title>` と `<meta name="description">` を [`<svelte:head>`](../svelte/svelte-head) の内側に置くべきです。説明的な title と description の書き方に関するガイダンスと、検索エンジンにとってわかりやすいコンテンツを作るためのその他の方法については、Google の [Lighthouse SEO audits](https://web.dev/lighthouse-seo/) のドキュメントで見つけることができます。
 
-> [!NOTE] A common pattern is to return SEO-related `data` from page [`load`](load) functions, then use it (as [`$page.data`]($app-stores)) in a `<svelte:head>` in your root [layout](routing#layout).
+> [!NOTE] よくあるパターンとしては、ページの [`load`](load) 関数から SEO 関連の `data` を返し、それを最上位の[レイアウト](routing#layout)の `<svelte:head>` で ([`$page.data`]($app-stores) として) 使用することです。
 
-### Sitemaps
+### サイトマップ <!--Sitemaps-->
 
-[Sitemaps](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap) help search engines prioritize pages within your site, particularly when you have a large amount of content. You can create a sitemap dynamically using an endpoint:
+[サイトマップ](https://developers.google.com/search/docs/advanced/sitemaps/build-sitemap) は、検索エンジンがサイト内のページの優先順位付けをするのに役立ちます、特にコンテンツの量が多い場合は。エンドポイントを使用してサイトマップを動的に作成できます:
 
 ```js
 /// file: src/routes/sitemap.xml/+server.js
@@ -59,7 +59,7 @@ export async function GET() {
 
 ### AMP
 
-An unfortunate reality of modern web development is that it is sometimes necessary to create an [Accelerated Mobile Pages (AMP)](https://amp.dev/) version of your site. In SvelteKit this can be done by setting the [`inlineStyleThreshold`](configuration#inlineStyleThreshold) option...
+現代の web 開発における不幸な現実として、サイトの [Accelerated Mobile Pages (AMP)](https://amp.dev/) バージョンを作らなければならないときがある、というのがあります。SvelteKit では、[`inlineStyleThreshold`](configuration#inlineStyleThreshold) オプションを設定することでこれを実現することができます…
 
 ```js
 /// file: svelte.config.js
@@ -75,21 +75,21 @@ const config = {
 export default config;
 ```
 
-...disabling `csr` in your root `+layout.js`/`+layout.server.js`...
+…最上位(root)の `+layout.js`/`+layout.server.js` の `csr` を無効にします…
 
 ```js
 /// file: src/routes/+layout.server.js
 export const csr = false;
 ```
 
-...adding `amp` to your `app.html`
+…`amp` を `app.html` に追加します
 
 ```html
 <html amp>
 ...
 ```
 
-...and transforming the HTML using `transformPageChunk` along with `transform` imported from `@sveltejs/amp`:
+…そして、`transformPageChunk` と、`@sveltejs/amp` からインポートできる `transform` を使用して、HTML を変換します:
 
 ```js
 /// file: src/hooks.server.js
@@ -107,7 +107,7 @@ export async function handle({ event, resolve }) {
 }
 ```
 
-To prevent shipping any unused CSS as a result of transforming the page to amp, we can use [`dropcss`](https://www.npmjs.com/package/dropcss):
+ページを amp に変換した結果として未使用の CSS が配布されてしまうのを防ぎたければ、[`dropcss`](https://www.npmjs.com/package/dropcss) を使用すると良いでしょう:
 
 ```js
 // @filename: ambient.d.ts
@@ -147,4 +147,4 @@ export async function handle({ event, resolve }) {
 
 ```
 
-> [!NOTE] It's a good idea to use the `handle` hook to validate the transformed HTML using `amphtml-validator`, but only if you're prerendering pages since it's very slow.
+> [!NOTE] `amphtml-validator` を使用して変換された HTML を検証するのに、`handle` hook を利用するのは良いアイデアですが、非常に遅くなってしまうので、ページをプリレンダリングするときだけにしてください。

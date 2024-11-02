@@ -1,99 +1,98 @@
 ---
-title: Migrating from Sapper
+title: Sapper からの移行
 rank: 1
 ---
 
-SvelteKit is the successor to Sapper and shares many elements of its design.
+SvelteKit は Sapper の後継であり、その設計の多くの要素を共有しています。
 
-If you have an existing Sapper app that you plan to migrate to SvelteKit, there are a number of changes you will need to make. You may find it helpful to view [some examples](additional-resources#Examples) while migrating.
+もし、既存の Sapper アプリを SvelteKit に移行する予定がある場合、いくつかの変更が必要になります。移行する際には、[examples](additional-resources#Examples) を見ていただくと参考になると思います。
 
 ## package.json
 
 ### type: "module"
 
-Add `"type": "module"` to your `package.json`. You can do this step separately from the rest as part of an incremental migration if you are using Sapper 0.29.3
-or newer.
+`package.json` に `"type": "module"` を追加します。もし Sapper 0.29.3 以降を使用している場合は、インクリメンタルマイグレーションの一部として、このステップを他のステップとは別に行うことができます。
 
 ### dependencies
 
-Remove `polka` or `express`, if you're using one of those, and any middleware such as `sirv` or `compression`.
+`polka` や `express` を使用している場合はそれを削除し、`sirv` や `compression` などのミドルウェア(middleware)も削除します。
 
 ### devDependencies
 
-Remove `sapper` from your `devDependencies` and replace it with `@sveltejs/kit` and whichever [adapter](adapters) you plan to use (see [next section](migrating#Project-files-Configuration)).
+`devDependencies` から `sapper` を削除し、`@sveltejs/kit` と使用予定の [adapter](adapters)に置き換えます([次のセクション](migrating#Project-files-Configuration)をご覧ください)。
 
 ### scripts
 
-Any scripts that reference `sapper` should be updated:
+`sapper` を参照しているスクリプトを全て更新します:
 
-- `sapper build` should become `vite build` using the Node [adapter](adapters)
-- `sapper export` should become `vite build` using the static [adapter](adapters)
-- `sapper dev` should become `vite dev`
-- `node __sapper__/build` should become `node build`
+- `sapper build` は、Node [adapter](adapters) を使用した `vite build` に更新します 
+- `sapper export` は、static [adapter](adapters) を使用した `vite build` に更新します 
+- `sapper dev` は `vite dev` に更新します
+- `node __sapper__/build` は `node build` に更新します
 
-## Project files
+## プロジェクトファイル <!--Project-files-->
 
-The bulk of your app, in `src/routes`, can be left where it is, but several project files will need to be moved or updated.
+アプリの大部分を占める `src/routes` の中はそのままで大丈夫ですが、いくつかのプロジェクトファイルを移動または更新する必要があります。
 
 ### Configuration
 
-Your `webpack.config.js` or `rollup.config.js` should be replaced with a `svelte.config.js`, as documented [here](configuration). Svelte preprocessor options should be moved to `config.preprocess`.
+[こちら](configuration)に記載されている通り、`webpack.config.js` または `rollup.config.js` を `svelte.config.js` に置き換えてください。Svelte の preprocessor オプション は `config.preprocess` に移動してください。
 
-You will need to add an [adapter](adapters). `sapper build` is roughly equivalent to [adapter-node](https://github.com/sveltejs/kit/tree/main/packages/adapter-node) while `sapper export` is roughly equivalent to [adapter-static](https://github.com/sveltejs/kit/tree/main/packages/adapter-static), though you might prefer to use an adapter designed for the platform you're deploying to.
+[adapter](adapters) を追加する必要があります。`sapper build` は [adapter-node](https://github.com/sveltejs/kit/tree/main/packages/adapter-node) とおおよそ同じで、`sapper export` は [adapter-static](https://github.com/sveltejs/kit/tree/main/packages/adapter-static) とおおよそ同じですが、デプロイ先のプラットフォーム向けにデザインされた adapter を使用するのも良いでしょう。
 
-If you were using plugins for filetypes that are not automatically handled by [Vite](https://vitejs.dev), you will need to find Vite equivalents and add them to the [Vite config](project-structure#Project-files-vite.config.js).
+[Vite](https://vitejs.dev) では自動的に処理されないファイルタイプのプラグインを使用している場合は、Vite において同等なことを行う方法を探し、[Vite config](project-structure#Project-files-vite.config.js) に追加する必要があります。
 
 ### src/client.js
 
-This file has no equivalent in SvelteKit. Any custom logic (beyond `sapper.start(...)`) should be expressed in your `+layout.svelte` file, inside an `onMount` callback.
+SvelteKit にはこのファイルに相当するものはありません。カスタムロジック(`sapper.start(...)` 以降) は、`+layout.svelte` ファイルで、`onMount` コールバック内に記述してくさい。
 
 ### src/server.js
 
-When using `adapter-node` the equivalent is a [custom server](adapter-node#Custom-server). Otherwise, this file has no direct equivalent, since SvelteKit apps can run in serverless environments.
+`adapter-node` を使用する場合は、[custom server](adapter-node#Custom-server) がこれと同等のものです。それ以外の場合は、同等のものに該当するものはありません。なぜなら SvelteKit アプリはサーバーレス環境でも実行可能だからです。
 
 ### src/service-worker.js
 
-Most imports from `@sapper/service-worker` have equivalents in [`$service-worker`]($service-worker):
+`@sapper/service-worker` からインポートするほとんどのものは、[`$service-worker`]($service-worker) に同等なものがあります:
 
-- `files` is unchanged
-- `routes` has been removed
-- `shell` is now `build`
-- `timestamp` is now `version`
+- `files` は変更されていません
+- `routes` は削除されました
+- `shell` は現在 `build` になりました
+- `timestamp` は現在 `version` になりました
 
 ### src/template.html
 
-The `src/template.html` file should be renamed `src/app.html`.
+`src/template.html` は `src/app.html` にリネームする必要があります。
 
-Remove `%sapper.base%`, `%sapper.scripts%` and `%sapper.styles%`. Replace `%sapper.head%` with `%sveltekit.head%` and `%sapper.html%` with `%sveltekit.body%`. The `<div id="sapper">` is no longer necessary.
+`%sapper.base%`、`%sapper.scripts%`、`%sapper.styles%` を削除します。`%sapper.head%` を `%sveltekit.head%` に、`%sapper.html%` を `%sveltekit.body%` にそれぞれ置き換えます。`<div id="sapper">` はもう必要ありません。
 
 ### src/node_modules
 
-A common pattern in Sapper apps is to put your internal library in a directory inside `src/node_modules`. This doesn't work with Vite, so we use [`src/lib`]($lib) instead.
+Sapper アプリでよくあるパターンとして、内部ライブラリを `src/node_modules` 内のディレクトリに配置する、というものがあります。これは Vite だと動作しないため、代わりに [`src/lib`]($lib) を使用します。
 
-## Pages and layouts
+## ページとレイアウト <!--Pages-and-layouts-->
 
-### Renamed files
+### 名前が変わったファイル <!--Renamed-files-->
 
-Routes now are made up of the folder name exclusively to remove ambiguity, the folder names leading up to a `+page.svelte` correspond to the route. See [the routing docs](routing) for an overview. The following shows a old/new comparison:
+ルート(Routes)は曖昧さをなくすためフォルダ名のみで構成されるようになり、`+page.svelte` までのフォルダ名がルート(route)に対応するようになりました。概要は [ルーティングのドキュメント](routing) をご参照ください。以下は 新/旧 の比較です:
 
 | Old                       | New                       |
 | ------------------------- | ------------------------- |
 | routes/about/index.svelte | routes/about/+page.svelte |
 | routes/about.svelte       | routes/about/+page.svelte |
 
-Your custom error page component should be renamed from `_error.svelte` to `+error.svelte`. Any `_layout.svelte` files should likewise be renamed `+layout.svelte`. [Any other files are ignored](routing#Other-files).
+カスタムのエラーページコンポーネントは `_error.svelte` から `+error.svelte` にリネームしてください。また、どの `_layout.svelte` ファイルも、同様に `+layout.svelte` にリネームしてください。[その他のファイルは無視されます](routing#Other-files).
 
 ### Imports
 
-The `goto`, `prefetch` and `prefetchRoutes` imports from `@sapper/app` should be replaced with `goto`, `preloadData` and `preloadCode` imports respectively from [`$app/navigation`]($app-navigation).
+`@sapper/app` からインポートしていた `goto`、`prefetch`、`prefetchRoutes` は、[`$app/navigation`]($app-navigation) からインポートする `goto`、`preloadData`、`preloadCode` にそれぞれ置き換えてください。
 
-The `stores` import from `@sapper/app` should be replaced — see the [Stores](migrating#Pages-and-layouts-Stores) section below.
+`@sapper/app` からインポートしていた `stores` については置き換える必要があります — 以下の [Stores](migrating#Pages-and-layouts-Stores) をご覧ください。
 
-Any files you previously imported from directories in `src/node_modules` will need to be replaced with [`$lib`]($lib) imports.
+`src/node_modules` にあるディレクトリからインポートしてたファイルは、[`$lib`]($lib) からのインポートに置き換えてください。
 
 ### Preload
 
-As before, pages and layouts can export a function that allows data to be loaded before rendering takes place.
+以前と同様に、ページやレイアウトではレンダリングが行われる前にデータをロードできる関数をエクスポートすることができます。
 
 This function has been renamed from `preload` to [`load`](load), it now lives in a `+page.js` (or `+layout.js`) next to its `+page.svelte` (or `+layout.svelte`), and its API has changed. Instead of two arguments — `page` and `session` — there is a single `event` argument.
 
@@ -101,7 +100,7 @@ There is no more `this` object, and consequently no `this.fetch`, `this.error` o
 
 ### Stores
 
-In Sapper, you would get references to provided stores like so:
+Sapper では、提供されるストアをこのように参照していたかと思います:
 
 ```js
 // @filename: ambient.d.ts
@@ -113,44 +112,44 @@ import { stores } from '@sapper/app';
 const { preloading, page, session } = stores();
 ```
 
-The `page` store still exists; `preloading` has been replaced with a `navigating` store that contains `from` and `to` properties. `page` now has `url` and `params` properties, but no `path` or `query`.
+`page` と `session` ストアはまだ存在しています。`preloading` は、`from` プロパティと `to` プロパティを含む `navigating` ストアに置き換えられました。`page` は `url`、`params` を持つようになりましたが、`path` と `query` はありません。
 
-You access them differently in SvelteKit. `stores` is now `getStores`, but in most cases it is unnecessary since you can import `navigating`, and `page` directly from [`$app/stores`]($app-stores).
+SvelteKit では、それらにアクセスする方法が異なります。`stores` は `getStores` になりましたが、[`$app/stores`]($app-stores) から直接 `navigating`、`page`、`session` をインポートできるので、ほとんどの場合は必要ありません。
 
-### Routing
+### ルーティング <!--Routing-->
 
-Regex routes are no longer supported. Instead, use [advanced route matching](advanced-routing#Matching).
+ルート(routes) の正規表現はもうサポートされていません。代わりに、[advanced route matching](advanced-routing#matching) をお使いください。
 
 ### Segments
 
-Previously, layout components received a `segment` prop indicating the child segment. This has been removed; you should use the more flexible `$page.url.pathname` value to derive the segment you're interested in.
+以前までは、レイアウトコンポーネントは子のセグメントを表す `segment` プロパティを受け取っていましたが、この機能は削除されました。より柔軟な `$page.url.pathname` の値を使用し、お望みのセグメントを取得してください。
 
 ### URLs
 
-In Sapper, all relative URLs were resolved against the base URL — usually `/`, unless the `basepath` option was used — rather than against the current page.
+Sapper では、相対 URL は、現在のページに対してではなく、base URL (`basepath` オプションが使用されていない限り、大抵の場合は `/`) に対して解決されていました。
 
-This caused problems and is no longer the case in SvelteKit. Instead, relative URLs are resolved against the current page (or the destination page, for `fetch` URLs in `load` functions) instead. In most cases, it's easier to use root-relative (i.e. starts with `/`) URLs, since their meaning is not context-dependent.
+これによって問題が発生していましたが、SvelteKit ではもうそのようなことはありません。相対 URL が現在のページ (または `load` 関数の `fetch` URL の場合は移動先のページ) に対して解決されるようになりました。多くの場合、(例えば、`/` 始まるような) ルート相対な URL を使用するほうが簡単です。なぜなら、それらの意図がコンテキストに依存しないからです。
 
 ### &lt;a&gt; attributes
 
-- `sapper:prefetch` is now `data-sveltekit-preload-data`
-- `sapper:noscroll` is now `data-sveltekit-noscroll`
+- `sapper:prefetch` は `data-sveltekit-preload-data` になりました
+- `sapper:noscroll` は `data-sveltekit-noscroll` になりました
 
 ## Endpoints
 
-In Sapper, [server routes](routing#server) received the `req` and `res` objects exposed by Node's `http` module (or the augmented versions provided by frameworks like Polka and Express).
+Sapper では、[サーバールート(server routes)](routing#server) は、Node の `http` モジュール によって公開される `req` と `res` オブジェクト(または Polka や Express などのフレームワークが提供するその拡張版) を受け取っていました。
 
-SvelteKit is designed to be agnostic as to where the app is running — it could be running on a Node server, but could equally be running on a serverless platform or in a Cloudflare Worker. For that reason, you no longer interact directly with `req` and `res`. Your endpoints will need to be updated to match the new signature.
+SvelteKit は、アプリが動作する場所に依存しないように設計されています(Node サーバーで動作し、サーバーレスプラットフォームや Cloudflare Worker でも同様に動作します)。そのため、もう `req` と `res` を直接扱いません。エンドポイントを、新しいシグネチャに合わせて更新する必要があります。
 
-To support this environment-agnostic behavior, `fetch` is now available in the global context, so you don't need to import `node-fetch`, `cross-fetch`, or similar server-side fetch implementations in order to use it.
+環境非依存な動作をサポートするため、グローバルコンテキストで `fetch` が利用できるようになり、`node-fetch` や `cross-fetch` などのサーバーサイドの fetch 実装をインポートする必要がなくなりました。
 
-## Integrations
+## インテグレーション <!--Integrations-->
 
-See [integrations](./integrations) for detailed information about integrations.
+インテグレーションに関する詳細情報については [インテグレーション](./integrations) をご参照ください。
 
 ### HTML minifier
 
-Sapper includes `html-minifier` by default. SvelteKit does not include this, but you can add it as a prod dependency and then use it through a [hook](hooks#Server-hooks-handle):
+Sapper はデフォルトで `html-minifier` を含んでいました。SvelteKit はこれを含まないのですが、本番環境向けの依存関係(prod dependency)としてこれを追加し、[hook](hooks#Server-hooks-handle) で使用することができます:
 
 ```js
 // @filename: ambient.d.ts
@@ -196,4 +195,4 @@ export async function handle({ event, resolve }) {
 }
 ```
 
-Note that `prerendering` is `false` when using `vite preview` to test the production build of the site, so to verify the results of minifying, you'll need to inspect the built HTML files directly.
+サイトのプロダクションビルドをテストするのに `vite preview` を使用しているときは、`prerendering` が `false` となることにご注意ください。そのため、minify の結果を検証するには、ビルド済の HTML を直接確認する必要があります。

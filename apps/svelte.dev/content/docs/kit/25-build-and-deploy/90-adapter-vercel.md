@@ -2,13 +2,13 @@
 title: Vercel
 ---
 
-To deploy to Vercel, use [`adapter-vercel`](https://github.com/sveltejs/kit/tree/main/packages/adapter-vercel).
+Vercel にデプロイする場合は、[`adapter-vercel`](https://github.com/sveltejs/kit/tree/main/packages/adapter-vercel) を使用します。
 
-This adapter will be installed by default when you use [`adapter-auto`](adapter-auto), but adding it to your project allows you to specify Vercel-specific options.
+[`adapter-auto`](adapter-auto) を使用している場合、この adapter は自動でインストールされますが、この adapter 自体をプロジェクトに追加すれば Vercel 固有のオプションを指定できるようになります。
 
-## Usage
+## 使い方 <!--Usage-->
 
-Install with `npm i -D @sveltejs/adapter-vercel`, then add the adapter to your `svelte.config.js`:
+`npm i -D @sveltejs/adapter-vercel` を実行してインストールし、`svelte.config.js` にこの adapter を追加します:
 
 ```js
 // @errors: 2307 2345
@@ -18,17 +18,17 @@ import adapter from '@sveltejs/adapter-vercel';
 export default {
 	kit: {
 		adapter: adapter({
-			// see below for options that can be set here
+			// ここで設定できるオプションについては以下を参照
 		})
 	}
 };
 ```
 
-## Deployment configuration
+## デプロイメントの設定 <!--Deployment-configuration-->
 
-To control how your routes are deployed to Vercel as functions, you can specify deployment configuration, either through the option shown above or with [`export const config`](page-options#config) inside `+server.js`, `+page(.server).js` and `+layout(.server).js` files.
+Vercel にルート(routes)を function としてデプロイする方法をコントロールするには、デプロイメントの設定を、上記に示すオプションか、`+server.js`、`+page(.server).js`、`+layout(.server).js` ファイルの中の [`export const config`](page-options#config) を使用して、行うことができます。
 
-For example you could deploy some parts of your app as [Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions)...
+例えば、アプリの一部を [Edge Functions](https://vercel.com/docs/concepts/functions/edge-functions) としてデプロイして…
 
 ```js
 /// file: about/+page.js
@@ -38,7 +38,7 @@ export const config = {
 };
 ```
 
-...and others as [Serverless Functions](https://vercel.com/docs/concepts/functions/serverless-functions) (note that by specifying `config` inside a layout, it applies to all child pages):
+…他の部分を [Serverless Functions](https://vercel.com/docs/concepts/functions/serverless-functions) としてデプロイすることができます (layout の内側の `config` は、すべての子ページに適用されます):
 
 ```js
 /// file: admin/+layout.js
@@ -48,21 +48,21 @@ export const config = {
 };
 ```
 
-The following options apply to all functions:
+以下のオプションはすべての function に適用されます:
 
-- `runtime`: `'edge'`, `'nodejs18.x'` or `'nodejs20.x'`. By default, the adapter will select the `'nodejs<version>.x'` corresponding to the Node version your project is configured to use on the Vercel dashboard
-- `regions`: an array of [edge network regions](https://vercel.com/docs/concepts/edge-network/regions) (defaulting to `["iad1"]` for serverless functions) or `'all'` if `runtime` is `edge` (its default). Note that multiple regions for serverless functions are only supported on Enterprise plans
-- `split`: if `true`, causes a route to be deployed as an individual function. If `split` is set to `true` at the adapter level, all routes will be deployed as individual functions
+- `runtime`: `'edge'`、`'nodejs18.x'`、`'nodejs20.x'`。デフォルトでは、adapter はプロジェクトの Node のバージョンに対応した `'nodejs<version>.x'` を選択します。プロジェクトの Node バージョンは Vercel のダッシュボードから設定することができます。
+- `regions`: [edge network regions](https://vercel.com/docs/concepts/edge-network/regions) の配列 (serverless functions のデフォルトは `["iad1"]`) か、`runtime` が `edge` (デフォルト) の場合は `'all'` です。serverless functions の場合の複数の regions のサポートは Enterprise Plan のみです。
+- `split`: `true` の場合、ルート(route)は個別の function としてデプロイされます。`split` を adapter レベルで `true` にする場合、すべてのルート(route)が個別の function としてデプロイされます。
 
-Additionally, the following option applies to edge functions:
-- `external`: an array of dependencies that esbuild should treat as external when bundling functions. This should only be used to exclude optional dependencies that will not run outside Node
+加えて、以下のオプションは edge function に適用されます:
+- `external`: esbuild が function をバンドルする際に外部(external)として扱う依存関係(dependencies)の配列です。Node の外側で実行されないオプションの依存関係(optional dependencies)を除外したいときにのみ使用してください
 
-And the following option apply to serverless functions:
-- `memory`: the amount of memory available to the function. Defaults to `1024` Mb, and can be decreased to `128` Mb or [increased](https://vercel.com/docs/concepts/limits/overview#serverless-function-memory) in 64Mb increments up to `3008` Mb on Pro or Enterprise accounts
-- `maxDuration`: [maximum execution duration](https://vercel.com/docs/functions/runtimes#max-duration) of the function. Defaults to `10` seconds for Hobby accounts, `15` for Pro and `900` for Enterprise
-- `isr`: configuration Incremental Static Regeneration, described below
+そして以下のオプションは serverless function に適用されます:
+- `memory`: function で利用できるメモリ量です。デフォルトは `1024` Mb で、`128` Mb まで減らすことができます。また、Pro または Enterprise アカウントの場合は、`3008` Mb まで[増やす](https://vercel.com/docs/concepts/limits/overview#serverless-function-memory)ことができます。間隔は 64Mb 単位です。
+- `maxDuration`: function の [最大実行時間(maximum execution duration)](https://vercel.com/docs/functions/runtimes#max-duration)。デフォルトで、Hobby アカウントの場合は `10` 秒、Pro の場合は `15`、Enterprise の場合は `900` です。
+- `isr`: Incremental Static Regeneration の設定、詳細は後述
 
-If your functions need to access data in a specific region, it's recommended that they be deployed in the same region (or close to it) for optimal performance.
+function から特定の region のデータにアクセスする必要がある場合は、パフォーマンスを最適化するためそれと同じ region (またはその知覚) にデプロイすることをおすすめします。
 
 ## Image Optimization
 
@@ -89,9 +89,9 @@ export default {
 
 ## Incremental Static Regeneration
 
-Vercel supports [Incremental Static Regeneration](https://vercel.com/docs/incremental-static-regeneration) (ISR), which provides the performance and cost advantages of prerendered content with the flexibility of dynamically rendered content.
+Vercel は [Incremental Static Regeneration](https://vercel.com/docs/incremental-static-regeneration) (ISR) をサポートしており、これにより、プリレンダリングコンテンツが持つパフォーマンスとコストの利点と、ダイナミックレンダリングコンテンツが持つ柔軟性の両方を提供することができます。
 
-To add ISR to a route, include the `isr` property in your `config` object:
+ISR をルート(route)に追加するには、`config` オブジェクトに `isr` プロパティを含めます:
 
 ```js
 // @errors: 2664
@@ -99,30 +99,30 @@ import { BYPASS_TOKEN } from '$env/static/private';
 
 export const config = {
 	isr: {
-		// Expiration time (in seconds) before the cached asset will be re-generated by invoking the Serverless Function.
-		// Setting the value to `false` means it will never expire.
+		// キャッシュされたアセットが Serverless Function を呼び出して再生成されるまでの有効期限 (秒単位)。
+		// 値に `false` を設定すると、無期限になります。
 		expiration: 60,
 
-		// Random token that can be provided in the URL to bypass the cached version of the asset, by requesting the asset
-		// with a __prerender_bypass=<token> cookie.
+		// URL で提供されるランダムな token で、アセットへのリクエストに 
+		// __prerender_bypass=<token> cookie を用いることで、アセットのキャッシュされたバージョンを回避することができます。
 		//
-		// Making a `GET` or `HEAD` request with `x-prerender-revalidate: <token>` will force the asset to be re-validated.
+		// `GET` や `HEAD` リクエストに `x-prerender-revalidate: <token>` を付けると、アセットの再バリデート(re-validated)を強制することができます。
 		bypassToken: BYPASS_TOKEN,
 
-		// List of valid query parameters. Other parameters (such as utm tracking codes) will be ignored,
-		// ensuring that they do not result in content being regenerated unnecessarily
+		// 有効なクエリパラメータのリストです。他のパラメータ (例えば utm tracking codes) は無視され、
+		// コンテンツが不必要に再生成されないようにします
 		allowQuery: ['search']
 	}
 };
 ```
 
-The `expiration` property is required; all others are optional.
+`expiration` プロパティは必須で、その他は任意です。
 
 > Pages that are  [prerendered](page-options#prerender) will ignore ISR configuration.
 
-## Environment variables
+## 環境変数 <!--Environment-variables-->
 
-Vercel makes a set of [deployment-specific environment variables](https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables) available. Like other environment variables, these are accessible from `$env/static/private` and `$env/dynamic/private` (sometimes — more on that later), and inaccessible from their public counterparts. To access one of these variables from the client:
+Vercel では[デプロイメント固有の環境変数](https://vercel.com/docs/concepts/projects/environment-variables#system-environment-variables)一式を使用できます。他の環境変数と同様、`$env/static/private` と `$env/dynamic/private` からアクセスでき (詳細は後述)、public のほうからはアクセスできません。クライアントからこれらの変数にアクセスするには:
 
 ```js
 // @errors: 2305
@@ -147,7 +147,7 @@ export function load() {
 <p>This staging environment was deployed from {data.deploymentGitBranch}.</p>
 ```
 
-Since all of these variables are unchanged between build time and run time when building on Vercel, we recommend using `$env/static/private` — which will statically replace the variables, enabling optimisations like dead code elimination — rather than `$env/dynamic/private`.
+Vercel でビルドする場合、これらの変数は全てビルド時と実行時で変わらないため、`$env/dynamic/private` ではなく、変数を静的に置換しデッドコードの削除などの最適化ができる `$env/static/private` の使用をおすすめします。
 
 ## Skew protection
 
@@ -161,18 +161,18 @@ Cookie-based skew protection comes with one caveat: if a user has multiple versi
 
 ### Vercel functions
 
-If you have Vercel functions contained in the `api` directory at the project's root, any requests for `/api/*` will _not_ be handled by SvelteKit. You should implement these as [API routes](routing#server) in your SvelteKit app instead, unless you need to use a non-JavaScript language in which case you will need to ensure that you don't have any `/api/*` routes in your SvelteKit app.
+プロジェクトの root の `api` ディレクトリに Vercel functions がある場合、`/api/*` に対するリクエストは SvelteKit で処理されません。Vercel functions に JavaScript 以外の言語を使用する必要が無いのであれば、SvelteKit アプリの [API ルート(routes)](/routing#server) として実装すると良いでしょう。逆に Vercel functions に JavaScript 以外の言語を使用する必要がある場合は、SvelteKit アプリに `/api/*` ルート(routes)を含めないようにしてください。
 
 ### Node version
 
-Projects created before a certain date may default to using an older Node version than what SvelteKit currently requires. You can [change the Node version in your project settings](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/node-js#node.js-version).
+ある時期より前に作成されたプロジェクトは、SvelteKit に必要な Node バージョンより古い Node バージョンを使用しているかもしれません。[プロジェクトの設定で Node のバージョンを変更する](https://vercel.com/docs/concepts/functions/serverless-functions/runtimes/node-js#node.js-version)ことができます。
 
-## Troubleshooting
+## トラブルシューティング <!--Troubleshooting-->
 
-### Accessing the file system
+### ファイルシステムにアクセスする <!--Accessing-the-file-system-->
 
-You can't use `fs` in edge functions.
+edge functions では `fs` を使用することはできません。
 
-You _can_ use it in serverless functions, but it won't work as expected, since files are not copied from your project into your deployment. Instead, use the `read` function from `$app/server` to access your files. `read` does not work inside routes deployed as edge functions (this may change in future).
+serverless functions では `fs` を使用できますが、ファイルがプロジェクトからデプロイメントにコピーされないため、期待通りには動作しないでしょう。代わりに `$app/server` の `read` 関数を使用してファイルにアクセスしてください。edge functions にデプロイされたルート(route)では `read` は動作しません（将来的に変更される可能性があります）。
 
-Alternatively, you can [prerender](page-options#prerender) the routes in question.
+その代わりに、`fs` を使用する必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。

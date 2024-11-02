@@ -1,16 +1,16 @@
 ---
-title: Routing
+title: ルーティング
 ---
 
-At the heart of SvelteKit is a _filesystem-based router_. The routes of your app — i.e. the URL paths that users can access — are defined by the directories in your codebase:
+SvelteKit の中心は、 _ファイルシステムベースのルーター_ です。アプリのルート(routes) — 例えばユーザーがアクセスできる URL パス — は、コードベースのディレクトリによって定義されます:
 
-- `src/routes` is the root route
-- `src/routes/about` creates an `/about` route
-- `src/routes/blog/[slug]` creates a route with a _parameter_, `slug`, that can be used to load data dynamically when a user requests a page like `/blog/hello-world`
+- `src/routes` は最上位のルート(the root route)です 
+- `src/routes/about` は `/about` ルート(route)を作成します
+- `src/routes/blog/[slug]` は _パラメータ_ `slug` を使ったルート(route)を作成します。パラメータは、ユーザーからのリクエストが `/blog/hello-world` のようなページに行われた場合に、動的にデータを読み込むために使用することができます
 
-> [!NOTE] You can change `src/routes` to a different directory by editing the [project config](configuration).
+> [!NOTE] [プロジェクトの設定](configuration) を編集することで、`src/routes` から別のディレクトリに変更することができます。
 
-Each route directory contains one or more _route files_, which can be identified by their `+` prefix.
+ルート(route)のディレクトリはそれぞれ1つ以上の _ルートファイル(route files)_ を格納します。ルートファイル(route files)には `+` という接頭辞が付いているので、それで見分けることができます。
 
 We'll introduce these files in a moment in more detail, but here are a few simple rules to help you remember how SvelteKit's routing works:
 
@@ -22,7 +22,7 @@ We'll introduce these files in a moment in more detail, but here are a few simpl
 
 ### +page.svelte
 
-A `+page.svelte` component defines a page of your app. By default, pages are rendered both on the server ([SSR](glossary#SSR)) for the initial request and in the browser ([CSR](glossary#CSR)) for subsequent navigation.
+`+page.svelte` コンポーネントはアプリのページを定義します。デフォルトでは、ページは最初のリクエストではサーバー ([SSR](glossary#SSR)) でレンダリングされ、その後のナビゲーションではブラウザ ([CSR](glossary#CSR)) でレンダリングされます。
 
 ```svelte
 <!--- file: src/routes/+page.svelte --->
@@ -48,11 +48,11 @@ A `+page.svelte` component defines a page of your app. By default, pages are ren
 <div>{@html data.content}</div>
 ```
 
-> [!NOTE] Note that SvelteKit uses `<a>` elements to navigate between routes, rather than a framework-specific `<Link>` component.
+> [!NOTE] SvelteKit では、ルート(routes)間のナビゲーションに、フレームワーク固有の `<Link>` コンポーネントではなく、`<a>` 要素を使用します。
 
 ### +page.js
 
-Often, a page will need to load some data before it can be rendered. For this, we add a `+page.js` module that exports a `load` function:
+ページではたびたび、レンダリングの前になんらかのデータを読み込む必要があります。これに対応するため、`load` 関数をエクスポートする `+page.js` モジュールを追加しています:
 
 ```js
 /// file: src/routes/blog/[slug]/+page.js
@@ -71,19 +71,19 @@ export function load({ params }) {
 }
 ```
 
-This function runs alongside `+page.svelte`, which means it runs on the server during server-side rendering and in the browser during client-side navigation. See [`load`](load) for full details of the API.
+この関数は `+page.svelte` とともに実行されます。サーバーサイドレンダリング中はサーバーで実行され、クライアントサイドナビゲーション中はブラウザで実行されます。API の詳細は [`load`](load) をご参照ください。
 
-As well as `load`, `+page.js` can export values that configure the page's behaviour:
+`+page.js` では、`load` だけでなくページの動作(behaviour)を設定するための値をエクスポートすることができます:
 
-- `export const prerender = true` or `false` or `'auto'`
-- `export const ssr = true` or `false`
-- `export const csr = true` or `false`
+- `export const prerender = true` または `false` または `'auto'`
+- `export const ssr = true` または `false`
+- `export const csr = true` または `false`
 
-You can find more information about these in [page options](page-options).
+これらに関するより詳しい情報は [page options](page-options) をご覧ください。
 
 ### +page.server.js
 
-If your `load` function can only run on the server — for example, if it needs to fetch data from a database or you need to access private [environment variables]($env-static-private) like API keys — then you can rename `+page.js` to `+page.server.js` and change the `PageLoad` type to `PageServerLoad`.
+`load` 関数をサーバー上でのみ実行できるようにしたい場合 — 例えば、データベースからデータを取得したり、API キーのようなプライベートな[環境変数]($env-static-private)にアクセスしたりする必要がある場合 — `+page.js` を `+page.server.js` にリネームし、`PageLoad` 型を `PageServerLoad` に変更します。
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -114,15 +114,15 @@ export async function load({ params }) {
 }
 ```
 
-During client-side navigation, SvelteKit will load this data from the server, which means that the returned value must be serializable using [devalue](https://github.com/rich-harris/devalue). See [`load`](load) for full details of the API.
+クライアントサイドナビゲーション中は、SvelteKit はサーバーからこのデータを読み込みます。つまり、その戻り値は [devalue](https://github.com/rich-harris/devalue) によってシリアライズできなければならないということです。この API の詳細については [`load`](load) をご参照ください。
 
-Like `+page.js`, `+page.server.js` can export [page options](page-options) — `prerender`, `ssr` and `csr`.
+`+page.js` のように、`+page.server.js` は [page options](page-options) (`prerender`、`ssr`、`csr`) をエクスポートできます。
 
-A `+page.server.js` file can also export _actions_. If `load` lets you read data from the server, `actions` let you write data _to_ the server using the `<form>` element. To learn how to use them, see the [form actions](form-actions) section.
+また、`+page.server.js` ファイルは _actions_ をエクスポートできます。`load` がサーバーからデータを読み取る場合、`actions` は `<form>` 要素を使用してサーバーにデータを書き込むことができます。これらの使い方を学ぶには、[form actions](form-actions) セクションをご参照ください。
 
 ## +error
 
-If an error occurs during `load`, SvelteKit will render a default error page. You can customise this error page on a per-route basis by adding an `+error.svelte` file:
+`load` 中にエラーが発生した場合、SvelteKit はデフォルトのエラーページをレンダリングします。`+error.svelte` を追加することで、ルート(route) ごとにエラーページをカスタマイズすることができます:
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+error.svelte --->
@@ -133,31 +133,31 @@ If an error occurs during `load`, SvelteKit will render a default error page. Yo
 <h1>{$page.status}: {$page.error.message}</h1>
 ```
 
-SvelteKit will 'walk up the tree' looking for the closest error boundary — if the file above didn't exist it would try `src/routes/blog/+error.svelte` and then `src/routes/+error.svelte` before rendering the default error page. If _that_ fails (or if the error was thrown from the `load` function of the root `+layout`, which sits 'above' the root `+error`), SvelteKit will bail out and render a static fallback error page, which you can customise by creating a `src/error.html` file.
+SvelteKit は、ツリーを上がって (walk up the tree) 最も近いエラー境界 (error boundary) を探します — もし上記のファイルが存在しない場合は、デフォルトのエラーページをレンダリングする前に `src/routes/blog/+error.svelte` を探しに行き、その次に `src/routes/+error.svelte` を探します。もしそれも失敗した場合は (または、最上位の `+error` の '上に' 位置する最上位の `+layout` の `load` 関数からエラーがスローされた場合)、SvelteKit は静的なフォールバックエラーページをレンダリングします。これは `src/error.html` ファイルを作成することでカスタマイズ可能です。
 
-If the error occurs inside a `load` function in `+layout(.server).js`, the closest error boundary in the tree is an `+error.svelte` file _above_ that layout (not next to it).
+`+layout(.server).js` の `load` 関数の内側でエラーが発生した場合、ツリーの中で最も近くにあるエラー境界はそのレイアウトの上位にある `+error.svelte` ファイルです (隣ではありません)。
 
-If no route can be found (404), `src/routes/+error.svelte` (or the default error page, if that file does not exist) will be used.
+ルート(route)が見つからない場合 (404)、`src/routes/+error.svelte` (または、もしこのファイルが存在しない場合はデフォルトのエラーページ) が使われます。
 
-> [!NOTE] `+error.svelte` is _not_ used when an error occurs inside [`handle`](hooks#Server-hooks-handle) or a [+server.js](#server) request handler.
+> [!NOTE] エラーが [`handle`](hooks#Server-hooks-handle) の内側や [+server.js](#server) リクエストハンドラ の内側で発生した場合は、`+error.svelte` は使用されません。
 
-You can read more about error handling [here](errors).
+エラーハンドリングに関する詳細は [こちら](errors) からお読み頂けます。
 
 ## +layout
 
-So far, we've treated pages as entirely standalone components — upon navigation, the existing `+page.svelte` component will be destroyed, and a new one will take its place.
+これまで、ページを完全に独立したコンポーネントとして扱ってきました — ナビゲーションを行うと、既存の `+page.svelte` コンポーネントが破棄され、新しいページコンポーネントで置き換えられます。
 
-But in many apps, there are elements that should be visible on _every_ page, such as top-level navigation or a footer. Instead of repeating them in every `+page.svelte`, we can put them in _layouts_.
+しかし多くのアプリでは、トップレベルのナビゲーションやフッターのように _全ての_ ページで表示されるべき要素があります。全ての `+page.svelte` にそれらを繰り返し配置する代わりに、_レイアウト(layouts)_ に配置することができます。
 
 ### +layout.svelte
 
-To create a layout that applies to every page, make a file called `src/routes/+layout.svelte`. The default layout (the one that SvelteKit uses if you don't bring your own) looks like this...
+全てのページに適用するレイアウトを作成するには、`src/routes/+layout.svelte` というファイルを作成します。デフォルトのレイアウト (あなたが作成していない場合に SvelteKit が使用するもの) は以下のようなものです…
 
 ```html
 <slot></slot>
 ```
 
-...but we can add whatever markup, styles and behaviour we want. The only requirement is that the component includes a `<slot>` for the page content. For example, let's add a nav bar:
+…しかし、お望みのマークアップ(markup)、スタイル(styles)、動作(behaviour)を追加することができます。唯一の要求事項は、コンポーネントにページコンテンツのための `<slot>` を含めることです。例えば、nav bar を追加してみましょう:
 
 ```html
 /// file: src/routes/+layout.svelte
@@ -170,7 +170,7 @@ To create a layout that applies to every page, make a file called `src/routes/+l
 <slot></slot>
 ```
 
-If we create pages for `/`, `/about` and `/settings`...
+`/`、`/about`、`/settings` のためのページを作成する場合…
 
 ```html
 /// file: src/routes/+page.svelte
@@ -187,11 +187,11 @@ If we create pages for `/`, `/about` and `/settings`...
 <h1>Settings</h1>
 ```
 
-...the nav will always be visible, and clicking between the three pages will only result in the `<h1>` being replaced.
+… nav は常に表示され、3つのページのための a 要素をそれぞれクリックしても `<h1>` が置き換わるだけです。
 
-Layouts can be _nested_. Suppose we don't just have a single `/settings` page, but instead have nested pages like `/settings/profile` and `/settings/notifications` with a shared submenu (for a real-life example, see [github.com/settings](https://github.com/settings)).
+レイアウトは _ネスト_ させることができます。例えば、単一の `/settings` ページだけでなく、`/settings/profile` や `/settings/notifications` のような共有のサブメニューを持つネストしたページがあるとします (実例としては、[github.com/settings](https://github.com/settings) をご参照ください)。
 
-We can create a layout that only applies to pages below `/settings` (while inheriting the root layout with the top-level nav):
+`/settings` 配下のページにのみ適用されるレイアウトを作成することができます (トップレベルの nav を持つ最上位のレイアウト(root layout)を継承しています):
 
 ```svelte
 <!--- file: src/routes/settings/+layout.svelte --->
@@ -211,13 +211,13 @@ We can create a layout that only applies to pages below `/settings` (while inher
 <slot></slot>
 ```
 
-You can see how `data` is populated by looking at the `+layout.js` example in the next section just below.
+`data` がどのように入力されるかは、すぐ下の次のセクションにある `+layout.js` の例を見ればわかります。
 
-By default, each layout inherits the layout above it. Sometimes that isn't what you want - in this case, [advanced layouts](advanced-routing#Advanced-layouts) can help you.
+デフォルトでは、各レイアウトはその上にあるレイアウトを継承します。そうしたくない場合は、[advanced layouts](advanced-routing#Advanced-layouts) が役に立つでしょう。
 
 ### +layout.js
 
-Just like `+page.svelte` loading data from `+page.js`, your `+layout.svelte` component can get data from a [`load`](load) function in `+layout.js`.
+`+page.svelte` が `+page.js` からデータを読み込むように、`+layout.svelte` コンポーネントは `+layout.js` の [`load`](load) 関数からデータを取得することができます。
 
 ```js
 /// file: src/routes/settings/+layout.js
@@ -232,9 +232,9 @@ export function load() {
 }
 ```
 
-If a `+layout.js` exports [page options](page-options) — `prerender`, `ssr` and `csr` — they will be used as defaults for child pages.
+`+layout.js` が [page options](page-options) (`prerender`、`ssr`、`csr`) をエクスポートする場合、それは子ページのデフォルトとしても使用されます。
 
-Data returned from a layout's `load` function is also available to all its child pages:
+レイアウトの `load` 関数から返されるデータは全ての子ページで利用することができます:
 
 ```svelte
 <!--- file: src/routes/settings/profile/+page.svelte --->
@@ -246,19 +246,19 @@ Data returned from a layout's `load` function is also available to all its child
 </script>
 ```
 
-> [!NOTE] Often, layout data is unchanged when navigating between pages. SvelteKit will intelligently rerun [`load`](load) functions when necessary.
+> [!NOTE] しばしば、ページ間を移動しているときにレイアウトデータが変更されないことがあります。SvelteKit は必要に応じてインテリジェントに [`load`](load) 関数を再実行します。
 
 ### +layout.server.js
 
-To run your layout's `load` function on the server, move it to `+layout.server.js`, and change the `LayoutLoad` type to `LayoutServerLoad`.
+サーバー上でレイアウトの `load` 関数を実行するためには、それを `+layout.server.js` に移動し、`LayoutLoad` 型を `LayoutServerLoad` に変更します。
 
-Like `+layout.js`, `+layout.server.js` can export [page options](page-options) — `prerender`, `ssr` and `csr`.
+`+layout.js` と同様に、`+layout.server.js` では [page options](page-options) — `prerender`、`ssr`、`csr` をエクスポートすることができます。
 
 ## +server
 
-As well as pages, you can define routes with a `+server.js` file (sometimes referred to as an 'API route' or an 'endpoint'), which gives you full control over the response. Your `+server.js` file exports functions corresponding to HTTP verbs like `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `OPTIONS`, and `HEAD` that take a `RequestEvent` argument and return a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
+ページと同様に、`+server.js` ファイル (よく 'API ルート(API route)' または 'エンドポイント(endpoint)' とも呼ばれる) でルート(routes) を定義でき、これによってレスポンスを完全にコントロールすることができます。`+server.js` ファイル は `GET`、`POST`、`PATCH`、`PUT`、`DELETE`、`OPTIONS`、`HEAD` といった HTTP verbs に対応する関数をエクスポートします。これは `RequestEvent` を引数に取り、[`Response`](https://developer.mozilla.org/ja/docs/Web/API/Response) オブジェクトを返します。
 
-For example we could create an `/api/random-number` route with a `GET` handler:
+例えば、`GET` ハンドラを使用した `/api/random-number` ルート(route)を作成できます:
 
 ```js
 /// file: src/routes/api/random-number/+server.js
@@ -281,17 +281,17 @@ export function GET({ url }) {
 }
 ```
 
-The first argument to `Response` can be a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream), making it possible to stream large amounts of data or create server-sent events (unless deploying to platforms that buffer responses, like AWS Lambda).
+`Response` の第一引数には [`ReadableStream`](https://developer.mozilla.org/ja/docs/Web/API/ReadableStream) を指定することができ、大量のデータをストリームしたり、server-sent events を作成したりすることができます (AWS Lambda のような、レスポンスをバッファするプラットフォームにデプロイする場合は除きます)。
 
-You can use the [`error`](@sveltejs-kit#error), [`redirect`](@sveltejs-kit#redirect) and [`json`](@sveltejs-kit#json) methods from `@sveltejs/kit` for convenience (but you don't have to).
+便宜上、`@sveltejs/kit` の [`error`](@sveltejs-kit#error)、[`redirect`](@sveltejs-kit#redirect)、[`json`](@sveltejs-kit#json) メソッドを使用することは可能です (ただし、使用する必要はありません)。
 
-If an error is thrown (either `error(...)` or an unexpected error), the response will be a JSON representation of the error or a fallback error page — which can be customised via `src/error.html` — depending on the `Accept` header. The [`+error.svelte`](#error) component will _not_ be rendered in this case. You can read more about error handling [here](errors).
+エラーがスローされる場合 (`error(...)` の場合でも、予期せぬエラーの場合でもどちらでも)、レスポンスは `Accept` ヘッダーに応じて、そのエラーの JSON 表現か、`src/error.html` でカスタマイズすることができるフォールバックエラーページとなります。この場合、[`+error.svelte`](#error) コンポーネントはレンダリングされません。エラーハンドリングに関する詳細は [こちら](errors) からお読み頂けます。
 
-> [!NOTE] When creating an `OPTIONS` handler, note that Vite will inject `Access-Control-Allow-Origin` and `Access-Control-Allow-Methods` headers — these will not be present in production unless you add them.
+> [!NOTE] `OPTIONS` ハンドラを作成する場合、Vite が `Access-Control-Allow-Origin` ヘッダーと `Access-Control-Allow-Methods` ヘッダーを注入することにご注意ください。本番環境では、あなたが明示的に追加しない限り注入されないはずです。
 
 ### Receiving data
 
-By exporting `POST`/`PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD` handlers, `+server.js` files can be used to create a complete API:
+`+server.js` ファイルは、`POST`/`PUT`/`PATCH`/`DELETE`/`OPTIONS`/`HEAD` ハンドラをエクスポートすることで、完全な API を作成することができます:
 
 ```svelte
 <!--- file: src/routes/add/+page.svelte --->
@@ -331,13 +331,13 @@ export async function POST({ request }) {
 }
 ```
 
-> [!NOTE] In general, [form actions](form-actions) are a better way to submit data from the browser to the server.
+> [!NOTE] 一般的には、ブラウザからサーバーにデータを送信する方法としては [form actions](form-actions) のほうがより良い方法です。
 
-> [!NOTE] If a `GET` handler is exported, a `HEAD` request will return the `content-length` of the `GET` handler's response body.
+> [!NOTE] `GET` ハンドラがエクスポートされている場合、`HEAD` リクエストは `GET` ハンドラのレスポンスボディの `content-length` を返します。
 
 ### Fallback method handler
 
-Exporting the `fallback` handler will match any unhandled request methods, including methods like `MOVE` which have no dedicated export from `+server.js`.
+`fallback` ハンドラをエクスポートすると、ハンドリングされていないリクエスト (`+server.js` にそれ専用のエクスポートがない `MOVE` などのメソッドを含む) にマッチします。
 
 ```js
 // @errors: 7031
@@ -356,21 +356,21 @@ export async function fallback({ request }) {
 }
 ```
 
-> [!NOTE] For `HEAD` requests, the `GET` handler takes precedence over the `fallback` handler.
+> [!NOTE] `HEAD` リクエストの場合、`fallback` ハンドラより `GET` ハンドラが優先されます。
 
 ### Content negotiation
 
-`+server.js` files can be placed in the same directory as `+page` files, allowing the same route to be either a page or an API endpoint. To determine which, SvelteKit applies the following rules:
+`+server.js` ファイルは `+page` ファイルと同じディレクトリに置くことができ、これによって同じルート(route)がページにも API エンドポイントにもなるようにすることができます。これがどちらなのか判断するために、SvelteKit は以下のルールを適用します:
 
-- `PUT`/`PATCH`/`DELETE`/`OPTIONS` requests are always handled by `+server.js` since they do not apply to pages
-- `GET`/`POST`/`HEAD` requests are treated as page requests if the `accept` header prioritises `text/html` (in other words, it's a browser page request), else they are handled by `+server.js`.
-- Responses to `GET` requests will include a `Vary: Accept` header, so that proxies and browsers cache HTML and JSON responses separately.
+- `PUT`/`PATCH`/`DELETE`/`OPTIONS` リクエストは、ページには適用されないため、常に `+server.js` で処理されます。
+- `GET`/`POST`/`HEAD` リクエストは、`accept` ヘッダーが `text/html` を優先している場合 (言い換えると、ブラウザのページリクエストの場合)、ページリクエストとして扱われます。それ以外の場合は `+server.js` で処理されます。
+- `GET` リクエストに対するレスポンスには `Vary: Accept` ヘッダーが含まれるため、プロキシーやブラウザは HTML と JSON のレスポンスを別々にキャッシュします。
 
 ## $types
 
-Throughout the examples above, we've been importing types from a `$types.d.ts` file. This is a file SvelteKit creates for you in a hidden directory if you're using TypeScript (or JavaScript with JSDoc type annotations) to give you type safety when working with your root files.
+これまでの例を通してずっと、`$types.d.ts` ファイルからインポートしてきました。これは、TypeScript (または JavaScript を JSDoc の型アノテーションと) 使用している場合に最上位のファイル(root files)を扱う際に型の安全性をもたらすために SvelteKit が隠しディレクトリに作成するファイルです。
 
-For example, annotating `export let data` with `PageData` (or `LayoutData`, for a `+layout.svelte` file) tells TypeScript that the type of `data` is whatever was returned from `load`:
+例えば、`export let data` に `PageData` (または `LayoutData` の場合は `+layout.svelte` ファイル) にアノテーションを付けると、`data` の型は `load` の戻り値であると TypeScript に伝えることができます:
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
@@ -380,19 +380,19 @@ For example, annotating `export let data` with `PageData` (or `LayoutData`, for 
 </script>
 ```
 
-In turn, annotating the `load` function with `PageLoad`, `PageServerLoad`, `LayoutLoad` or `LayoutServerLoad` (for `+page.js`, `+page.server.js`, `+layout.js` and `+layout.server.js` respectively) ensures that `params` and the return value are correctly typed.
+`load` 関数に `PageLoad`、`PageServerLoad`、`LayoutLoad`、`LayoutServerLoad` (それぞれ `+page.js`、`+page.server.js`、`+layout.js`、`+layout.server.js`) というアノテーションを付けると、`params` と戻り値が正しく型付けされることが保証されるでしょう。
 
-If you're using VS Code or any IDE that supports the language server protocol and TypeScript plugins then you can omit these types _entirely_! Svelte's IDE tooling will insert the correct types for you, so you'll get type checking without writing them yourself. It also works with our command line tool `svelte-check`.
+VS Code や、language server protocol と TypeScript plugin をサポートする IDE を使用している場合は、これらの型を _完全に_ 省略することができます！ Svelte の IDE ツール類があなたのために正しい型を挿入してくれるので、あなたはご自身で型を書くことなく型チェックすることができます。これはコマンドラインツール `svelte-check` でも機能します。
 
-You can read more about omitting `$types` in our [blog post](/blog/zero-config-type-safety) about it.
+`$types` の省略については、私たちの[ブログ記事](/blog/zero-config-type-safety)でより詳細な情報をお読み頂けます。
 
-## Other files
+## その他のファイル <!--Other-files-->
 
-Any other files inside a route directory are ignored by SvelteKit. This means you can colocate components and utility modules with the routes that need them.
+ルート(route)ディレクトリ内のその他のファイルは SvelteKit から無視されます。つまり、コンポーネントやユーティリティモジュールを、それらを必要とするルート(routes)に配置することができます。
 
-If components and modules are needed by multiple routes, it's a good idea to put them in [`$lib`]($lib).
+コンポーネントやモジュールが複数のルート(routes)から必要な場合、[`$lib`]($lib) にそれらを配置すると良いでしょう。
 
-## Further reading
+## その他の参考資料 <!--Further-reading-->
 
 - [Tutorial: Routing](/tutorial/kit/pages)
 - [Tutorial: API routes](/tutorial/kit/get-handlers)

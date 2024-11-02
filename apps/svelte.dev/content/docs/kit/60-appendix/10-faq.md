@@ -4,7 +4,7 @@ title: Frequently asked questions
 
 ## Other resources
 
-Please see [the Svelte FAQ](../svelte/faq) and [`vite-plugin-svelte` FAQ](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md) as well for the answers to questions deriving from those libraries.
+[Svelte FAQ](../svelte/faq) と [`vite-plugin-svelte` FAQ](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md) も、これらのライブラリに起因する疑問点には役立ちますのでご参照ください。
 
 ## What can I make with SvelteKit?
 
@@ -27,13 +27,13 @@ In order to support SSR, a JS backend — such as Node.js or Deno-based server, 
 
 It is also possible to write custom adapters or leverage community adapters to deploy SvelteKit to more platforms such as specialized server environments, browser extensions, or native applications. See [integrations](./integrations) for more examples and integrations.
 
-## How do I use HMR with SvelteKit?
+## SvelteKit で HMR を使うにはどうすればよいですか？ <!--How-do-I-use-HMR-with-SvelteKit-->
 
-SvelteKit has HMR enabled by default powered by [svelte-hmr](https://github.com/sveltejs/svelte-hmr). If you saw [Rich's presentation at the 2020 Svelte Summit](/blog/whats-the-deal-with-sveltekit), you may have seen a more powerful-looking version of HMR presented. This demo had `svelte-hmr`'s `preserveLocalState` flag on. This flag is now off by default because it may lead to unexpected behaviour and edge cases. But don't worry, you are still getting HMR with SvelteKit! If you'd like to preserve local state you can use the `@hmr:keep` or `@hmr:keep-all` directives as documented on the [svelte-hmr](https://github.com/sveltejs/svelte-hmr) page.
+SvelteKit は [svelte-hmr](https://github.com/sveltejs/svelte-hmr) によってデフォルトで HMR が有効になっています。[Rich の 2020 Svelte Summit のプレゼンテーション](/blog/whats-the-deal-with-sveltekit) を見たことがあるなら、より強力そうに見えるバージョンの HMR をご覧になったかもしれません。あのデモでは `svelte-hmr` の `preserveLocalState` フラグがオンになっていました。このフラグは想定外の動作やエッジケースにつながる可能性があるため、現在はデフォルトでオフになっています。でもご心配なく、SvelteKit で HMR を利用することはできます！もしローカルの状態を保持したい場合は、[svelte-hmr](https://github.com/sveltejs/svelte-hmr) ページに説明があるように、`@hmr:keep` または `@hmr:keep-all` ディレクティブを使用することができます。
 
-## How do I include details from package.json in my application?
+## package.json の詳細をアプリケーションに含めるにはどうすればよいですか？ <!--How-do-I-include-details-from-package.json-in-my-application-->
 
-You cannot directly require JSON files, since SvelteKit expects [`svelte.config.js`](./configuration) to be an ES module. If you'd like to include your application's version number or other information from `package.json` in your application, you can load JSON like so:
+SvelteKit では [`svelte.config.js`](./configuration) が ES module であることを想定しているため、JSON ファイルを直接要求することはできません。アプリケーションに、アプリケーションのバージョン番号やその他の情報を `package.json` から読み込みたい場合は、このように JSON を読み込むことができます:
 
 ```js
 /// file: svelte.config.js
@@ -48,24 +48,24 @@ const path = fileURLToPath(new URL('package.json', import.meta.url));
 const pkg = JSON.parse(readFileSync(path, 'utf8'));
 ```
 
-## How do I fix the error I'm getting trying to include a package?
+## パッケージをインクルードしようとするとエラーが発生するのですが、どうすれば直せますか？ <!--How-do-I-fix-the-error-I-m-getting-trying-to-include-a-package-->
 
-Most issues related to including a library are due to incorrect packaging. You can check if a library's packaging is compatible with Node.js by entering it into [the publint website](https://publint.dev/).
+ライブラリのインクルードに関する問題は、ほとんどが不適切なパッケージングによるものです。ライブラリのパッケージングが Node.js に対応しているかどうかは、[publint の web サイト](https://publint.dev/) でチェックできます。
 
-Here are a few things to keep in mind when checking if a library is packaged correctly:
+以下は、ライブラリが正しくパッケージングされているかどうかをチェックする際に気を付けるべき点です:
 
-- `exports` takes precedence over the other entry point fields such as `main` and `module`. Adding an `exports` field may not be backwards-compatible as it prevents deep imports.
-- ESM files should end with `.mjs` unless `"type": "module"` is set in which any case CommonJS files should end with `.cjs`.
-- `main` should be defined if `exports` is not. It should be either a CommonJS or ESM file and adhere to the previous bullet. If a `module` field is defined, it should refer to an ESM file.
-- Svelte components should be distributed as uncompiled `.svelte` files with any JS in the package written as ESM only. Custom script and style languages, like TypeScript and SCSS, should be preprocessed as vanilla JS and CSS respectively. We recommend using [`svelte-package`](./packaging) for packaging Svelte libraries, which will do this for you.
+- `exports` は `main` や `module` などの他のエントリーポイントのフィールドよりも優先されます。`exports` フィールドを追加すると、deep import を妨げることになるため、後方互換性が失われる場合があります。
+- `"type": "module"` が指定されていない限り、ESM ファイルは `.mjs` で終わる必要があり、CommonJS ファイルは `.cjs` で終わる必要があります。
+-  `exports` が定義されていない場合、`main` を定義する必要があり、それは CommonJS ファイル か ESM ファイル でなければならず、前項に従わなければなりません。`module` フィールドが定義されている場合、ESM ファイルを参照している必要があります。
+- Svelte コンポーネントは、コンパイルされていない `.svelte` ファイルとして配布し、パッケージに含まれる JS は ESM のみとして記述していなければなりません。TypeScript などのカスタムスクリプトや SCSS などのスタイル言語は、それぞれ vanilla JS と CSS にするために前処理(preprocess)をしなければなりません。Svelte ライブラリのパッケージングには、[`svelte-package`](./packaging) を使用することを推奨しています。このパッケージによって、これらの作業が行われます。
 
-Libraries work best in the browser with Vite when they distribute an ESM version, especially if they are dependencies of a Svelte component library. You may wish to suggest to library authors that they provide an ESM version. However, CommonJS (CJS) dependencies should work as well since, by default, [`vite-plugin-svelte` will ask Vite to pre-bundle them](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md#what-is-going-on-with-vite-and-pre-bundling-dependencies) using `esbuild` to convert them to ESM.
+ライブラリが ESM バージョンを配布している場合、特に Svelte コンポーネントライブラリがその依存関係に含まれている場合、Vite を使用するとブラウザ上で最適に動作します。ライブラリの作者に ESM バージョンを提供するよう提案すると良いでしょう。しかし、CommonJS (CJS) の依存関係も上手く扱えるようにするため、デフォルトで、[`vite-plugin-svelte` が Vite にそれらを事前バンドルするよう指示します](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md#what-is-going-on-with-vite-and-pre-bundling-dependencies)。Vite は `esbuild` を使ってそれらを ESM に変換します。
 
-If you are still encountering issues we recommend searching both [the Vite issue tracker](https://github.com/vitejs/vite/issues) and the issue tracker of the library in question. Sometimes issues can be worked around by fiddling with the [`optimizeDeps`](https://vitejs.dev/config/#dep-optimization-options) or [`ssr`](https://vitejs.dev/config/#ssr-options) config values though we recommend this as only a short-term workaround in favor of fixing the library in question.
+それでもまだ問題が解消されない場合は、[Vite の issue tracker](https://github.com/vitejs/vite/issues) と 該当のライブラリの issue tracker を検索することを推奨します。[`optimizeDeps`](https://vitejs.dev/config/#dep-optimization-options) や [`ssr`](https://vitejs.dev/config/#ssr-options) の設定値をいじることで問題を回避できる場合もありますが、これはあくまで一時的な回避策とし、問題のあるライブラリの修正を優先したほうが良いでしょう。
 
-## How do I use the view transitions API with SvelteKit?
+## SvelteKit で view transitions API を使うにはどうすればよいですか？ <!--How-do-I-use-the-view-transitions-API-with-SvelteKit-->
 
-While SvelteKit does not have any specific integration with [view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/), you can call `document.startViewTransition` in [`onNavigate`]($app-navigation#onNavigate) to trigger a view transition on every client-side navigation.
+SvelteKit では [view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/) 向けの特別なインテグレーションはありませんが、[`onNavigate`]($app-navigation#onNavigate) の中で `document.startViewTransition` を呼び出すことにより、クライアントサイドナビゲーション毎に view transition をトリガーすることができます。
 
 ```js
 // @errors: 2339 2810
@@ -83,19 +83,19 @@ onNavigate((navigation) => {
 });
 ```
 
-For more, see ["Unlocking view transitions"](/blog/view-transitions) on the Svelte blog.
+もっと詳しく知りたければ、Svelte ブログの ["Unlocking view transitions"](/blog/view-transitions) をご参照ください。
 
-## How do I use X with SvelteKit?
+## SvelteKit で X を使うにはどうすればよいですか？ <!--How-do-I-use-X-with-SvelteKit-->
 
-Make sure you've read the [documentation section on integrations](./integrations). If you're still having trouble, solutions to common issues are listed below.
+[ドキュメントのインテグレーションのセクション](./integrations) をしっかり読み込んでください。それでも問題が解決しない場合のために、よくある問題の解決策を以下に示します。
 
-### How do I setup a database?
+### データベースのセットアップはどう行えばよいですか？ <!--How-do-I-setup-a-database-->
 
-Put the code to query your database in a [server route](./routing#server) - don't query the database in .svelte files. You can create a `db.js` or similar that sets up a connection immediately and makes the client accessible throughout the app as a singleton. You can execute any one-time setup code in `hooks.server.js` and import your database helpers into any endpoint that needs them.
+データベースにクエリするコードを [サーバールート(server route)](./routing#server) に置いてください。.svelte ファイルの中でデータベースにクエリしないでください。コネクションをすぐにセットアップし、シングルトンとしてアプリ全体からクライアントにアクセスできるように `db.js` のようなものを作ると良いでしょう。`hooks.server.js` で1回セットアップするコードを実行し、データベースヘルパーを必要とするすべてのエンドポイントにインポートできます。
 
-### How do I use a client-side only library that depends on `document` or `window`?
+### `document` や `window` に依存しているクライアントサイドオンリーなライブラリはどう使えばよいですか？ <!--How-do-I-use-a-client-side-only-library-that-depends-on-document-or-window-->
 
-If you need access to the `document` or `window` variables or otherwise need code to run only on the client-side you can wrap it in a `browser` check:
+もし `document` や `window` 変数にアクセスする必要があったり、クライアントサイドだけで実行するコードが必要な場合は、`browser` チェックでラップしてください:
 
 ```js
 /// <reference types="@sveltejs/kit" />
@@ -107,7 +107,7 @@ if (browser) {
 }
 ```
 
-You can also run code in `onMount` if you'd like to run it after the component has been first rendered to the DOM:
+コンポーネントが最初に DOM にレンダリングされた後にコードを実行したい場合は、`onMount` で実行することもできます:
 
 ```js
 // @filename: ambient.d.ts
@@ -124,7 +124,7 @@ onMount(async () => {
 });
 ```
 
-If the library you'd like to use is side-effect free you can also statically import it and it will be tree-shaken out in the server-side build where `onMount` will be automatically replaced with a no-op:
+使用したいライブラリに副作用がなければ静的にインポートすることができますし、サーバー側のビルドでツリーシェイクされ、`onMount` が自動的に no-op に置き換えられます:
 
 ```js
 // @filename: ambient.d.ts
@@ -141,7 +141,7 @@ onMount(() => {
 });
 ```
 
-Finally, you may also consider using an `{#await}` block:
+最後に、`{#await}` ブロックのご使用も検討してみてください:
 ```svelte
 <!--- file: index.svelte --->
 <script>
@@ -161,13 +161,13 @@ Finally, you may also consider using an `{#await}` block:
 {/await}
 ```
 
-### How do I use a different backend API server?
+### 別のバックエンド API サーバーを使用するにはどうすれば良いですか？ <!--How-do-I-use-a-different-backend-API-server-->
 
-You can use [`event.fetch`](./load#Making-fetch-requests) to request data from an external API server, but be aware that you would need to deal with [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS), which will result in complications such as generally requiring requests to be preflighted resulting in higher latency. Requests to a separate subdomain may also increase latency due to an additional DNS lookup, TLS setup, etc. If you wish to use this method, you may find [`handleFetch`](./hooks#Server-hooks-handleFetch) helpful.
+外部の API サーバーにデータをリクエストするのに [`event.fetch`](./load#Making-fetch-requests) を使用することができますが、[CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS) に対応しなければならず、一般的にはリクエストのプリフライトが必要になり、結果として高レイテンシーになるなど、複雑になることにご注意ください。別のサブドメインへのリクエストも、追加の DNS ルックアップや TLS セットアップなどのためにレイテンシーが増加する可能性があります。この方法を使いたい場合は、[`handleFetch`](./hooks#Server-hooks-handlefetch) が参考になるかもしれません。
 
-Another approach is to set up a proxy to bypass CORS headaches. In production, you would rewrite a path like `/api` to the API server; for local development, use Vite's [`server.proxy`](https://vitejs.dev/config/server-options.html#server-proxy) option.
+別の方法は、頭痛の種である CORS をバイパスするためのプロキシーをセットアップすることです。本番環境では、`/api` などのパスを API サーバーに書き換えます(rewrite)。ローカルの開発環境では、Vite の [`server.proxy`](https://vitejs.dev/config/server-options.html#server-proxy) オプションを使用します。
 
-How to setup rewrites in production will depend on your deployment platform. If rewrites aren't an option, you could alternatively add an [API route](./routing#server):
+本番環境で書き換え(rewrite)をセットアップする方法は、デプロイ先のプラットフォームに依存します。もし、書き換える方法がなければ、代わりに [API route](./routing#server) を追加します:
 
 ```js
 /// file: src/routes/api/[...path]/+server.js
@@ -177,11 +177,11 @@ export function GET({ params, url }) {
 }
 ```
 
-(Note that you may also need to proxy `POST`/`PATCH` etc requests, and forward `request.headers`, depending on your needs.)
+(必要に応じて、`POST`/`PATCH` などのリクエストもプロキシし、`request.headers` も転送(forward)する必要があることにご注意ください)
 
-### How do I use middleware?
+### ミドルウェア(middleware)を使うにはどうすればよいですか？ <!--How-do-I-use-middleware-->
 
-`adapter-node` builds a middleware that you can use with your own server for production mode. In dev, you can add middleware to Vite by using a Vite plugin. For example:
+`adapter-node` は、プロダクションモードで使用するためのミドルウェアを自分のサーバで構築します。開発モードでは、Vite プラグインを使用して Vite にミドルウェア(middleware) を追加することができます。例えば:
 
 ```js
 // @errors: 2322
@@ -211,19 +211,19 @@ const config = {
 export default config;
 ```
 
-See [Vite's `configureServer` docs](https://vitejs.dev/guide/api-plugin.html#configureserver) for more details including how to control ordering.
+順序を制御する方法など、詳しくは [Vite の `configureServer` のドキュメント](https://vitejs.dev/guide/api-plugin.html#configureserver) をご覧ください。
 
-### Does it work with Yarn 2?
+### Yarn 2 で動作しますか？ <!--Does-it-work-with-Yarn-2-->
 
-Sort of. The Plug'n'Play feature, aka 'pnp', is broken (it deviates from the Node module resolution algorithm, and [doesn't yet work with native JavaScript modules](https://github.com/yarnpkg/berry/issues/638) which SvelteKit — along with an [increasing number of packages](https://blog.sindresorhus.com/get-ready-for-esm-aa53530b3f77) — uses). You can use `nodeLinker: 'node-modules'` in your [`.yarnrc.yml`](https://yarnpkg.com/configuration/yarnrc#nodeLinker) file to disable pnp, but it's probably easier to just use npm or [pnpm](https://pnpm.io/), which is similarly fast and efficient but without the compatibility headaches.
+多少は。Plug'n'Play 機能、通称 'pnp' は動きません (Node のモジュール解決アルゴリズムから逸脱しており、SvelteKitが[数多くのライブラリ](https://blog.sindresorhus.com/get-ready-for-esm-aa53530b3f77)とともに使用している[ネイティブの JavaScript モジュールではまだ動作しません](https://github.com/yarnpkg/berry/issues/638))。[`.yarnrc.yml`](https://yarnpkg.com/configuration/yarnrc#nodeLinker) で `nodeLinker: 'node-modules'` を使用して pnp を無効にできますが、おそらく npm や [pnpm](https://pnpm.io/) を使用するほうが簡単でしょう。同じように高速で効率的ですが、互換性に頭を悩ませることはありません。
 
-### How do I use with Yarn 3?
+### Yarn 3 を使用するにはどうすれば良いですか？ <!--How-do-I-use-with-Yarn-3-->
 
-Currently ESM Support within the latest Yarn (version 3) is considered [experimental](https://github.com/yarnpkg/berry/pull/2161).
+現時点の、最新の Yarn (version 3) の ESM サポート は [experimental](https://github.com/yarnpkg/berry/pull/2161) であるようです。
 
-The below seems to work although your results may vary.
+結果は異なるかもしれませんが、下記が有効なようです。
 
-First create a new application:
+最初に新しいアプリケーションを作成します:
 
 ```sh
 yarn create svelte myapp
@@ -239,10 +239,10 @@ yarn install
 
 #### Yarn 3 global cache
 
-One of the more interesting features of Yarn Berry is the ability to have a single global cache for packages, instead of having multiple copies for each project on the disk. However, setting `enableGlobalCache` to true causes building to fail, so it is recommended to add the following to the `.yarnrc.yml` file:
+Yarn Berry の興味深い機能の1つに、ディスク上のプロジェクトごとに複数のコピーを持つのではなく、パッケージ用に単一のグローバルキャッシュを持つことができる、というのがあります。しかし、`enableGlobalCache` の設定を true にするとビルドが失敗するため、`.yarnrc.yml` ファイルに以下を追加することを推奨します:
 
 ```yaml
 nodeLinker: node-modules
 ```
 
-This will cause packages to be downloaded into a local node_modules directory but avoids the above problem and is your best bet for using version 3 of Yarn at this point in time.
+これによってパッケージはローカルの node_modules ディレクトリにダウンロードされますが、上記の問題は回避され、現時点では Yarn の version 3 を使用するベストな方法となります。
