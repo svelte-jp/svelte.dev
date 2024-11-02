@@ -156,7 +156,7 @@ SSR を使用していない場合 (そして将来的にも SSR を使用する
 </script>
 ```
 
-> `onMount` や `onDestroy` にあるコードをナビゲーションのあとに再実行する必要がある場合は、[afterNavigate]($app-navigation#afterNavigate) や [beforeNavigate]($app-navigation#beforeNavigate) をそれぞれ使用します。
+> [!NOTE] `onMount` や `onDestroy` にあるコードをナビゲーションのあとに再実行する必要がある場合は、[afterNavigate]($app-navigation#afterNavigate) や [beforeNavigate]($app-navigation#beforeNavigate) をそれぞれ使用します。
 
 このようにコンポーネントを再利用すると、サイドバースクロールの state などが保持され、変化する値の間で簡単にアニメーションを行うことができます。ナビゲーション時にコンポーネントを完全に破棄して再マウントする必要がある場合には、このパターンを使用できます:
 
