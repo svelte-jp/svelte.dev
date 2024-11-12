@@ -354,7 +354,7 @@
 	.container {
 		display: flex;
 		flex-direction: column;
-		height: calc(100dvh - var(--sk-nav-height));
+		height: calc(100dvh - var(--sk-nav-height) - var(--sk-banner-height));
 		/** necessary for innerWidth to be correct, so we can determine `mobile` */
 		width: 100vw;
 		overflow: hidden;
@@ -369,7 +369,7 @@
 		/* we transform the default state, rather than the editor state, because otherwise
 		   the positioning of tooltips is wrong (doesn't take into account transforms) */
 		transform: translate(50%, 0);
-		border-top: 1px solid var(--sk-back-5);
+		border-top: 1px solid var(--sk-border);
 	}
 
 	.top.offset {
@@ -386,13 +386,13 @@
 		position: relative;
 		min-height: 100%;
 		height: 100%;
-		background: var(--sk-back-3);
+		background: var(--sk-bg-3);
 		--menu-width: 5rem;
 	}
 
 	.navigator {
 		position: relative;
-		background: var(--sk-back-2);
+		background: var(--sk-bg-2);
 		display: flex;
 		flex-direction: column;
 		font: var(--sk-font-ui-small);
@@ -405,7 +405,7 @@
 
 	.editor-container {
 		position: relative;
-		background-color: var(--sk-back-3);
+		background-color: var(--sk-bg-3);
 	}
 
 	.mobile .navigator {

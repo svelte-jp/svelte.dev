@@ -3,6 +3,7 @@ title: Svelte 5 誕生
 description: 最も大きなリリース
 author: The Svelte team
 authorURL: https://svelte.dev/
+pinnedUntil: 2024-11-15
 ---
 
 およそ18ヶ月の開発を経て、そしてたくさんのコントリビューターによる数千ものコミットによって、ついに Svelte 5 は安定版(stable)になりました。
@@ -87,7 +88,7 @@ For more details, see the [comprehensive Svelte 5 migration guide](/docs/svelte/
 
 ## Our new CLI
 
-Along with a new version of Svelte, we have a new Command Line Interface (CLI), `sv`, to go with it. You can learn all about it in [the `sv` announcement video](https://www.youtube.com/watch?v=fAPFsRP-mbc#t=3h15m40s) and in a forthcoming blog post.
+Along with a new version of Svelte, we have a new Command Line Interface (CLI), `sv`, to go with it. You can learn all about it in [the announcement blog post](sv-the-svelte-cli).
 
 ## What’s next?
 

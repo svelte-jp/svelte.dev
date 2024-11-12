@@ -11,14 +11,14 @@ SvelteKit 1.0 はもう間近です！[マイルストーンにあるイシュ�
 
 ## What's new in SvelteKit
 
-- ナビゲーションの結果、アプリがアンロード(フルページリロード / クローズ / 別ページへの離脱)されるかどうかを調べるには、`willUnload` プロパティを使用します。([#6813](https://github.com/sveltejs/kit/pull/6813))
-- `__data.json` リクエストがキャッシュできるようになり、すべての再取得シナリオ(invalidation scenarios)にマッチするレスポンスをキャッシュすることを保証します ([#7532](https://github.com/sveltejs/kit/pull/7532))
-- `<a name="hash">` タグへのリンクがサポートされました ([#7596](https://github.com/sveltejs/kit/pull/7596))
-- `handle` hook でリダイレクトをスローすることがサポートされました ([#7612](https://github.com/sveltejs/kit/pull/7612))
-- フォールバックコンポーネントがないレイアウトには、自動的にフォールバックコンポーネントが追加されるようになりました ([#7619](https://github.com/sveltejs/kit/pull/7619))
-- `resolve` hook にある新しい `preload` 関数は、どのファイルをプリロードのために <head> タグに追加するかを決定します ([Docs](https://kit.svelte.jp/docs/hooks#server-hooks-handle), [#4963](https://github.com/sveltejs/kit/pull/4963), [#7704](https://github.com/sveltejs/kit/pull/7704))
-- `version` が `$app/environment` 経由で使えるようになりました ([#7689](https://github.com/sveltejs/kit/pull/7689), [#7694](https://github.com/sveltejs/kit/pull/7694))
-- `handleError` が promise を返すようになりました ([#7780](https://github.com/sveltejs/kit/pull/7780))
+- Use the `willUnload` property to find out if the navigation will result the app being unloaded (full page reload/closing/leaving to another page). ([#6813](https://github.com/sveltejs/kit/pull/6813))
+- `__data.json` requests now allows for caching while ensuring we cache matching responses for all invalidation scenarios ([#7532](https://github.com/sveltejs/kit/pull/7532))
+- Linking to `<a name="hash">` tags is now supported ([#7596](https://github.com/sveltejs/kit/pull/7596))
+- Throwing redirects in the `handle` hook is now supported ([#7612](https://github.com/sveltejs/kit/pull/7612))
+- A fallback component will now be added automatically for layouts without one ([#7619](https://github.com/sveltejs/kit/pull/7619))
+- The new `preload` function within the `resolve` hook determines what files should be added to the <head> tag to preload it ([Docs](/docs/kit/hooks#Server-hooks-handle), [#4963](https://github.com/sveltejs/kit/pull/4963), [#7704](https://github.com/sveltejs/kit/pull/7704))
+- `version` is now available via `$app/environment` ([#7689](https://github.com/sveltejs/kit/pull/7689), [#7694](https://github.com/sveltejs/kit/pull/7694))
+- `handleError` can now return a promise ([#7780](https://github.com/sveltejs/kit/pull/7780))
 
 ### Breaking changes:
 

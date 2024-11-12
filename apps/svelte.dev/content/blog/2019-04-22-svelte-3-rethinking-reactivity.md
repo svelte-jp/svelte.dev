@@ -11,13 +11,13 @@ authorURL: https://twitter.com/Rich_Harris
 
 ## Svelte とは何か？ <!--What-is-Svelte-->
 
-Svelteはコンポーネントフレームワーク -- React や Vue のような -- ですが、重要な違いがあります。従来のフレームワークでは、宣言的な state 駆動型のコードを書くことができますが、ペナルティがあります。ブラウザは宣言的な構造を DOM 操作に変換するために余分な作業をしなければならず、[仮想 DOM の差分更新](/blog/virtual-dom-is-pure-overhead)技術のようなものはフレーム予算を食い荒らし、ガベージコレクタに課税します。
+Svelteはコンポーネントフレームワーク — React や Vue のような — ですが、重要な違いがあります。従来のフレームワークでは、宣言的な state 駆動型のコードを書くことができますが、ペナルティがあります。ブラウザは宣言的な構造を DOM 操作に変換するために余分な作業をしなければならず、[仮想 DOM の差分更新](/blog/virtual-dom-is-pure-overhead)技術のようなものはフレーム予算を食い荒らし、ガベージコレクタに課税します。
 
 その代わり、Svelteは _ビルド時_ に実行され、あなたのコンポーネントを DOM の更新を行う非常に効率的な _命令的_ コードに変換します。その結果、優れたパフォーマンス特性を持つ野心的なアプリケーションを書くことができます。
 
 Svelte の最初のバージョンは[仮説を検証する](/blog/frameworks-without-the-framework)ことがすべてでした -- これは、専用のコンパイラが優れたユーザーエクスペリエンスを提供する強固なコードを生成することができることを示しています。2つ目は、物事を少し片付けた小さなアップグレードでした。
 
-バージョン3は大幅なオーバーホールです。この5、6か月間、私たちの焦点は、優れた _開発者体験_ を提供することにありました。今では、他の場所で見かけるものよりも[大幅に少ないボイラープレート](/blog/write-less-code)でコンポーネントを書くことができるようになりました。真新しい[チュートリアル](/tutorial)を試してみて、私たちが何を言っているのか確認してください。-- 他のフレームワークに慣れている人なら、きっと驚くと思います。
+バージョン3は大幅なオーバーホールです。この5、6か月間、私たちの焦点は、優れた _開発者体験_ を提供することにありました。今では、他の場所で見かけるものよりも[大幅に少ないボイラープレート](/blog/write-less-code)でコンポーネントを書くことができるようになりました。真新しい[チュートリアル](/tutorial)を試してみて、私たちが何を言っているのか確認してください — 他のフレームワークに慣れている人なら、きっと驚くと思います。
 
 それを可能にするためには、まず、現代のUIフレームワークの中心となるコンセプト、リアクティビティを再考する必要がありました。
 
@@ -92,6 +92,10 @@ count += 1; $$invalidate('count', count);
 
 ## これから <!--Still-to-come-->
 
+<<<<<<< HEAD
 このリリースは大変なものでしたが、まだ完成には至っていません。 よりスマートでコンパクトなコードと長い機能のウィッシュリストを生成するためのアイデアがたくさんあります。Next.js スタイルのアプリフレームワークである [Sapper](https://sapper.svelte.dev) は、Svelte 3 を使用するためのアップデートの真っ最中です。[Svelte Native](https://svelte-native.technology/) のコミュニティプロジェクトは、Svelte で Android や iOS アプリを書くことができるようになり、順調に進んでいますが、コアからのより完全なサポートが必要です。他のフレームワークが持っているようなエディタ拡張機能、シンタックスハイライター、コンポーネントキット、devtools などの豊富な機能はまだありません。私たちは _本当に_ ファーストクラスの TypeScript サポートを追加したいと思っています。
 
 しかし、それらを待つ間でも Svelte 3 は Web アプリを構築するための最良の方法だと考えています。1時間ほどかけて[チュートリアル](/tutorial)を読んでみてください。いずれにしても、[Discord チャットルーム](https://svelte.dev/chat)や [GitHub](https://github.com/sveltejs/svelte) でお待ちしています。-- 誰でも歓迎します、特にあなたは。
+=======
+But in the meantime we think Svelte 3 is the best way to build web apps yet. Take an hour to go through the [tutorial](/tutorial) and we hope to convince you of the same. Either way, we'd love to see you in our [Discord chatroom](/chat) and on [GitHub](https://github.com/sveltejs/svelte) — everyone is welcome, especially you.
+>>>>>>> sveltejs/main

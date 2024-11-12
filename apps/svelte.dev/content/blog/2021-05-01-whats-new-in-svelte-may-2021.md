@@ -9,17 +9,17 @@ authorURL: https://dreamindani.com
 
 ## New features in the Svelte Compiler
 
-- `:global()` が合成CSSセレクター(compound CSS selectors)の一部としてサポートされました (**3.38.0**, [Example](https://svelte.dev/repl/54148fd2af484f2c84977c94e523c7c5?version=3.38.0))
-- CSSカスタムプロパティをコンポーネントに渡すことができるようになり、テーマ設定などに利用できるようになりました (**3.38.0**, [Docs coming soon](https://github.com/sveltejs/svelte/issues/6268))
+- `:global()` is now supported as part of compound CSS selectors (**3.38.0**, [Example](/playground/54148fd2af484f2c84977c94e523c7c5?version=3.38.0))
+- CSS custom properties can now be passed to components for use cases such as theming (**3.38.0**, [Docs coming soon](https://github.com/sveltejs/svelte/issues/6268))
 
 ## New in SvelteKit
 
-- [kit.svelte.dev](https://kit.svelte.dev/) の外観が新しくなり、[SvelteKit Demoサイト](https://netlify.demo.svelte.dev/) も一新されました。`npm init svelte@next` を実行してチェックしてみてください。
-- `@sveltejs/adapter-static` を使って、fallback page を指定することでシングルページアプリまたはSPAを作れるようになりました ([PR](https://github.com/sveltejs/kit/pull/1181), [Docs](https://github.com/sveltejs/kit/tree/master/packages/adapter-static))
-- アプリ全体またはページごとにサーバーサイドレンダリング (SSR) を無効にできるようになりました ([PR](https://github.com/sveltejs/kit/pull/713))
-- プリレンダリングのときにスローされるエラーメッセージがよりわかりやすく読みやすくなりました ([PR](https://github.com/sveltejs/kit/pull/1062), [Docs](https://kit.svelte.jp/docs/layouts#error-pages))
-- ページがルートレイアウトを継承しないようにレイアウトをリセットできるようになりました。これは特定のレイアウトがある場合やi18n variationに便利です ([PR](https://github.com/sveltejs/kit/pull/1061), [Docs](https://kit.svelte.jp/docs/layouts#resets))
-- SvelteKitコードの `fetch` は可能な限り環境が提供する実装を使用できるようになりました。もし `fetch` が利用できない場合は、アダプタによってpolyfillされます ([PR](https://github.com/sveltejs/kit/pull/1066), [Docs](https://kit.svelte.jp/docs/loading#input-fetch))
+- [kit.svelte.dev](https://kit.svelte.dev/) has a fresh new look and the [SvelteKit Demo Site](https://netlify.demo.svelte.dev/) got a fresh set of paint. Check it out by running `npm init svelte@next`
+- You can now use `@sveltejs/adapter-static` to create a single-page app or SPA by specifying a fallback page ([PR](https://github.com/sveltejs/kit/pull/1181), [Docs](https://github.com/sveltejs/kit/tree/master/packages/adapter-static))
+- Disable Server-side Rendering (SSR) app-wide or on a page-by-page basis ([PR](https://github.com/sveltejs/kit/pull/713))
+- Error messages thrown during pre-rendering are now much more informative and readable ([PR](https://github.com/sveltejs/kit/pull/1062), [Docs](/docs/kit/routing#error))
+- Layouts can now be reset to prevent pages from inheriting the root layout. This is useful if you have a specific layout for a page or i18n variation ([PR](https://github.com/sveltejs/kit/pull/1061), [Docs](/docs/kit/advanced-routing#Advanced-layouts-layout))
+- `fetch` in SvelteKit code will now use the environment-provided implementation, whenever possible. If `fetch` is unavailable, it will be polyfilled by adapters ([PR](https://github.com/sveltejs/kit/pull/1066), [Docs](/docs/kit/load#Making-fetch-requests))
 
 ## New in Svelte & Language Tools
 

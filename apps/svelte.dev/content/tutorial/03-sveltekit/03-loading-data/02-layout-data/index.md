@@ -47,4 +47,4 @@ path: /blog
 
 レイアウト (とその下のページ) は、親の `+layout.server.js` から `data.summaries` を継承します。
 
-ある記事から別の記事に移動したとき、記事自体のデータだけをロードするだけでよくなります — レイアウトのデータは有効なままです。もっと学習したければ、[invalidation](https://kit.svelte.jp/docs/load#rerunning-load-functions) のドキュメントをご覧ください。
+ある記事から別の記事に移動したとき、記事自体のデータだけをロードするだけでよくなります — レイアウトのデータは有効なままです。もっと学習したければ、[invalidation](/docs/kit/load#Rerunning-load-functions) のドキュメントをご覧ください。

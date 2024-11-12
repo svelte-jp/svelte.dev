@@ -24,13 +24,16 @@ export function load({ params }) {
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 </script>
 
 <h1>{data.post.title}</h1>
 <div>{@html data.post.content}</div>
 ```
+
+> [!LEGACY]
+> Svelte 4 では、代わりに `export let data` を使います
 
 生成される `$types` モジュールのおかげで、完全な型安全性を確保できます。
 
@@ -85,13 +88,13 @@ export async function load() {
 ```svelte
 <!--- file: src/routes/blog/[slug]/+layout.svelte --->
 <script>
-	/** @type {import('./$types').LayoutData} */
-	export let data;
+	/** @type {{ data: import('./$types').LayoutData, children: Snippet }} */
+	let { data, children } = $props();
 </script>
 
 <main>
-	<!-- +page.svelte is rendered in this <slot> -->
-	<slot />
+	<!-- +page.svelte is `@render`ed here -->
+	{@render children()}
 </main>
 
 <aside>
@@ -115,13 +118,13 @@ export async function load() {
 <script>
 	+++import { page } from '$app/stores';+++
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 
 +++	// we can access `data.posts` because it's returned from
 	// the parent layout `load` function
 	let index = $derived(data.posts.findIndex(post => post.slug === $page.params.slug));
-	let next = $derived(data.posts[index - 1];)+++
+	let next = $derived(data.posts[index + 1]);+++
 </script>
 
 <h1>{data.post.title}</h1>
@@ -305,7 +308,7 @@ Cookie は、ターゲットホストが Sveltekit アプリケーションと�
 - api.domain.com は cookie を受け取りません
 - sub.my.domain.com は cookie を受け取ります
 
-その他の cookie は、`credentials: 'include'` がセットされているときには渡されません。なぜなら、Sveltekit はどの cookie がどのドメインに属しているかわからないからです (ブラウザはこの情報を渡さないからです)。そのため、cookie を転送するのは安全ではありません。これを回避するには、[handleFetch hook](hooks#Server-hooks-handlefetch) をお使いください。
+その他の cookie は、`credentials: 'include'` がセットされているときには渡されません。なぜなら、Sveltekit はどの cookie がどのドメインに属しているかわからないからです (ブラウザはこの情報を渡さないからです)。そのため、cookie を転送するのは安全ではありません。これを回避するには、[handleFetch hook](hooks#Server-hooks-handleFetch) をお使いください。
 
 ## Headers
 
@@ -319,8 +322,8 @@ export async function load({ fetch, setHeaders }) {
 	const url = `https://cms.example.com/products.json`;
 	const response = await fetch(url);
 
-	// cache the page for the same length of time
-	// as the underlying data
+	// Headers are only set during SSR, caching the page's HTML
+	// for the same length of time as the underlying data.
 	setHeaders({
 		age: response.headers.get('age'),
 		'cache-control': response.headers.get('cache-control')
@@ -365,8 +368,8 @@ export async function load({ parent }) {
 ```svelte
 <!--- file: src/routes/abc/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 </script>
 
 <!-- renders `1 + 2 = 3` -->
@@ -504,8 +507,8 @@ export async function load({ params }) {
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 </script>
 
 <h1>{data.post.title}</h1>
@@ -645,8 +648,8 @@ export async function load({ fetch, depends }) {
 <script>
 	import { invalidate, invalidateAll } from '$app/navigation';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 
 	function rerunLoadFunction() {
 		// any of these will cause the `load` function to rerun

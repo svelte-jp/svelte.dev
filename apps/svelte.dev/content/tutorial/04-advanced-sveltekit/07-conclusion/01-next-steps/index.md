@@ -4,10 +4,10 @@ title: Next steps
 
 Congratulations！ このチュートリアルをすべてやり遂げたなら、あなたはもう Svelte と SvelteKit のエキスパートです。
 
-[`create-svelte`](https://www.npmjs.com/package/create-svelte) パッケージを使用して、ご自身のマシンでアプリを作り始めることができます:
+[Svelte CLI](https://www.npmjs.com/package/sv) を使用して、ご自身のマシンでアプリを作り始めることができます:
 
 ```bash
-npm create svelte@latest
+npx sv create
 ```
 
 Svelte と SvelteKit は進化を続けますが、このチュートリアルも同じです。更新していきますので、定期的にチェックしてください。

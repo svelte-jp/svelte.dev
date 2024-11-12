@@ -48,7 +48,7 @@ function fade(node, { delay = 0, duration = 400 }) {
 	import { fade } from 'svelte/transition';
 	+++import { elasticOut } from 'svelte/easing';+++
 
-	let visible = true;
+	let visible = $state(true);
 
 	function spin(node, { duration }) {
 		return {

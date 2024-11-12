@@ -5,28 +5,28 @@ author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
 
-[SvelteKit 1.0](https://svelte.jp/blog/announcing-sveltekit-1.0) のリリースからちょうど2週間が経ちました！ もしまだなら、[livestream](https://www.youtube.com/watch?v=N4BRVkQVoMc)、[新しい web サイト](https://kit.svelte.jp/) をチェックし、SvelteKit の全機能を段階的に学ぶなら [learn.svelte.dev](https://learn.svelte.dev/)(日本語版: https://learn.svelte.jp/) をチェックしてみてください。
+[SvelteKit 1.0](/blog/announcing-sveltekit-1.0) のリリースからちょうど2週間が経ちました！ もしまだなら、[livestream](https://www.youtube.com/watch?v=N4BRVkQVoMc)、[新しい web サイト](https://kit.svelte.jp/) をチェックし、SvelteKit の全機能を段階的に学ぶなら [tutorial](/tutorial) をチェックしてみてください。
 
 それでは詳細を見ていきましょう…
 
 ## What's new in SvelteKit
 
-- `@sveltejs/kit` 1.0 がリリースされました！今後のリリースは全て semver に準拠し、変更点は [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md#100) に major/minor/patch としてリストアップされます。
-- Storybook と Histoire のサポートが改善されました ([#7990](https://github.com/sveltejs/kit/pull/7990))。これらのツールを完全にサポートするための作業が進行中です ([storybook#20239](https://github.com/storybookjs/storybook/pull/20239)).
-- `vitePreprocess` がデフォルトのプリプロセッサになりました。`vitePreprocess` と `svelte-preprocess` の違いについては [ドキュメント](https://kit.svelte.jp/docs/integrations#preprocessors) をご覧ください ([#8036](https://github.com/sveltejs/kit/pull/8036)).
+- `@sveltejs/kit` 1.0 is out! All future releases will follow semver and changes will be listed as major/minor/patch in the [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md#100).
+- Improved support for Storybook and Histoire ([#7990](https://github.com/sveltejs/kit/pull/7990)). Work is ongoing to fully support those tools ([storybook#20239](https://github.com/storybookjs/storybook/pull/20239)).
+- `vitePreprocess` is now the default preprocessor. Please see [the docs](/docs/kit/integrations#vitePreprocess) for differences between `vitePreprocess` and `svelte-preprocess` ([#8036](https://github.com/sveltejs/kit/pull/8036)).
 
 ### Breaking changes:
 
-- Unknown exports (アンダースコアで始まるものは除く) が `+(layout|page)(.server)?.js` と `+server.js` ファイルで行えなくなりました ([#7878](https://github.com/sveltejs/kit/pull/7878))
-- `__data.json` が URL から取り除かれます ([#7979](https://github.com/sveltejs/kit/pull/7979))
-- `sveltekit()` が Vite plugin の配列の promise を返すようになりました ([#7994](https://github.com/sveltejs/kit/pull/7994))
-- SvelteKit を埋め込む際に、リンクのクリックをサポートする新しい `embedded` オプション(デフォルトではオフ)が追加されました ([docs](https://kit.svelte.jp/docs/configuration), [#7969](https://github.com/sveltejs/kit/pull/7969))
-- フォールバックの自動生成は `builder.generateFallback(fallback)` に置き換わりました ([#8013](https://github.com/sveltejs/kit/pull/8013))
-- `invalid()` は `fail()` に、`ValidationError` は `ActionFailure` に置き換わりました ([#8012](https://github.com/sveltejs/kit/pull/8012))
-- 不正な load レスポンスに対し、SvelteKit はエラーをスローするようになりました ([#8003](https://github.com/sveltejs/kit/pull/8003))
-- SvelteKit は Vite 4 を使用するようになり、Svelte の `peerDependency` は `^3.54.0` が必須になりました ([#7543](https://github.com/sveltejs/kit/pull/7543))
-- `ssr` が false で `prerender` が false でない場合、シェル(Shells)がプリレンダリングされるようになりました。ssr が false の場合、prerender を false にしてください(訳注: これまでと同じ挙動にする場合のみ。詳細は [#8131](https://github.com/sveltejs/kit/pull/8131) を参照) ([#8131](https://github.com/sveltejs/kit/pull/8131))
-- API の削除や変更に関する警告やエラーが削除されました ([#8019](https://github.com/sveltejs/kit/pull/8019))
+- Unknown exports (except when starting with an underscore) are no longer allowed from `+(layout|page)(.server)?.js` and `+server.js` files ([#7878](https://github.com/sveltejs/kit/pull/7878))
+- `__data.json` is now stripped from URL ([#7979](https://github.com/sveltejs/kit/pull/7979))
+- `sveltekit()` will now return a promise for an array of Vite plugins ([#7994](https://github.com/sveltejs/kit/pull/7994))
+- A new `embedded` option, turned off by default, helps with link clicks when embedding SvelteKit ([docs](/docs/kit/configuration), [#7969](https://github.com/sveltejs/kit/pull/7969))
+- Automatic fallback generation has been replaced with `builder.generateFallback(fallback)` ([#8013](https://github.com/sveltejs/kit/pull/8013))
+- `invalid()` is now `fail()` and `ValidationError` is now `ActionFailure` ([#8012](https://github.com/sveltejs/kit/pull/8012))
+- SvelteKit will now throw an error on invalid load response ([#8003](https://github.com/sveltejs/kit/pull/8003))
+- SvelteKit is now using Vite 4 and requires a Svelte `peerDependency` of `^3.54.0` ([#7543](https://github.com/sveltejs/kit/pull/7543))
+- Shells are now prerendered when `ssr` is false and `prerender` is not false - ensure prerender is false when ssr is also false ([#8131](https://github.com/sveltejs/kit/pull/8131))
+- Warnings and errors about removed/changed APIs have been removed ([#8019](https://github.com/sveltejs/kit/pull/8019))
 
 ## What's new in Svelte
 

@@ -9,7 +9,7 @@ authorURL: https://dreamindani.com
 
 ## What's new in Svelte
 
-- `<svelte:element>` 要素によって、動的に指定したタイプの要素をレンダリングできます。これは例えば、CMS のリッチなテキストコンテンツをレンダリングする場合などに便利です。詳細は [docs](/docs/special-elements#svelte-element) や [tutorial](https://svelte.jp/tutorial/svelte-element) をチェックしてみてください (**3.47.0**)!
+- The `<svelte:element>` element lets you render an element of a dynamically specified type. This is useful, for example, when rendering rich text content from a CMS. Check out the [docs](https://v4.svelte.dev/docs#template-syntax-svelte-element) or the [tutorial](/tutorial/svelte/svelte-element) for more info (**3.47.0**)!
 
 ## Language Tools updates
 
@@ -21,16 +21,16 @@ authorURL: https://dreamindani.com
 
 ## What's new in SvelteKit
 
-- ルート(routes)のディレクトリにあるファイルやディレクトリの名前を `__tests__` や `__test__` にすることができるようになりました ([#4438](https://github.com/sveltejs/kit/pull/4438))
-- Netlify Edge Functions ([#4657](https://github.com/sveltejs/kit/pull/4657)) と Vercel build output API ([#4663](https://github.com/sveltejs/kit/pull/4663)) がサポートされました
-- ルート(routes)のロード時、そのページが依存している URL を表す文字列の配列である dependencies プロパティに、カスタムで URL を追加できるようになりました ([Docs](https://kit.svelte.dev/docs/loading#output-dependencies), [#4536](https://github.com/sveltejs/kit/pull/4536))
+- Files and directories can now be named `__tests__` and `__test__` in the routes directory ([#4438](https://github.com/sveltejs/kit/pull/4438))
+- Netlify Edge Functions ([#4657](https://github.com/sveltejs/kit/pull/4657)) and the Vercel build output API ([#4663](https://github.com/sveltejs/kit/pull/4663)) are now supported
+- Custom `load` dependencies, array of strings representing URLs the page depends on, are now available when loading routes ([Docs](/docs/kit/load#Rerunning-load-functions), [#4536](https://github.com/sveltejs/kit/pull/4536))
 
 ### Breaking Changes
 
-- Validators が "matchers" という名称に変わりました ([Docs](https://kit.svelte.dev/docs/routing#advanced-routing-matching), [#4358](https://github.com/sveltejs/kit/pull/4358))
-- `__layout.reset` が名前付きレイアウト(named layouts)に置き換えられました。これによって、レイアウトの共通化などの設定がこれまで以上にできるようになりました ([Docs](https://kit.svelte.dev/docs/layouts#named-layouts), [#4388](https://github.com/sveltejs/kit/pull/4388))
-- プリレンダリングで、`rel="external"` リンクがスキップされるようになりました ([#4545](https://github.com/sveltejs/kit/pull/4545))
-- `maxage` は、`LoadOutput` の中の `cache` になりました ([#4690](https://github.com/sveltejs/kit/pull/4690))
+- Validators are now called "matchers" ([Docs](/docs/kit/advanced-routing#Matching), [#4358](https://github.com/sveltejs/kit/pull/4358))
+- `__layout.reset` has been replaced by named layouts - which have much configurability for shared layout elements ([Docs](/docs/kit/advanced-routing#Advanced-layouts-layout), [#4388](https://github.com/sveltejs/kit/pull/4388))
+- Prerendering is now skipped for `rel="external"` links ([#4545](https://github.com/sveltejs/kit/pull/4545))
+- `maxage` is now `cache` in `LoadOutput` ([#4690](https://github.com/sveltejs/kit/pull/4690))
 
 ---
 

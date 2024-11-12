@@ -8,8 +8,7 @@ authorURL: https://dreamindani.com
 数ヶ月(数年)かけて進めてきた2つのプロジェクトが公開されました。SvelteKitは現在パブリックベータとなり、slotted components はSvelteで使えるようになりました！
 
 ## SvelteKitはどう？(What's up with SvelteKit?)
-[SvelteKit](https://kit.svelte.jp/) - SSR、サーバーレスアプリケーション、SPAなどを構築するためのSvelteの汎用的なフレームワーク - が正式にパブリックベータになりました。バグがあるかも！　詳細は[最新のブログ記事](https://svelte.jp/blog/sveltekit-beta)をご覧ください。1.0がいつリリースされるか知りたいですか？ [github](https://github.com/sveltejs/kit/milestone/2)のマイルストーンをチェックしてみてください。
-> 訳注 : `最新のブログ記事`の日本語翻訳版は[こちら](https://svelte.jp/blog/sveltekit-beta)です。
+[SvelteKit](https://kit.svelte.jp/) - SSR、サーバーレスアプリケーション、SPAなどを構築するためのSvelteの汎用的なフレームワーク - が正式にパブリックベータになりました。バグがあるかも！　詳細は[最新のブログ記事](/blog/sveltekit-beta)をご覧ください。1.0がいつリリースされるか知りたいですか？ [github](https://github.com/sveltejs/kit/milestone/2)のマイルストーンをチェックしてみてください。
 
 始め方、Sapperとの違い、新しい機能や移行方法を学びたいですか？　今週の[Svelte Radioのエピソード](https://www.svelteradio.com/episodes/svelte-kit-public-beta)で、AntonyとKevとSwyxが深く掘り下げているのでチェックしてみてください。
 

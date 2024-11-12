@@ -6,8 +6,8 @@
 	<h2>私たちのフレンドリーなコミュニティに参加しませんか</h2>
 	<p>
 		私たちの姉妹組織である <a href="https://www.sveltesociety.dev/">Svelte Society</a> は、世界中でイベントを運営しています。
-	</p>
-	<p>あなたが所属する支部を見つけに、<a href="/chat">Discord サーバー</a>に参加しましょう。</p>
+	    あなたが所属する支部を見つけに、
+		<a href="/chat">Discord サーバー</a>に参加しましょう。
 
 	<figure>
 		<enhanced:img
@@ -26,10 +26,10 @@
 	figcaption {
 		position: relative;
 		top: max(-2vw, calc(-0.02 * (120rem + 2 * var(--sk-page-padding-side))));
-		font: var(--sk-font-body-small);
+		font: var(--sk-font-ui-medium);
 		margin: 0 auto;
 		padding: 0 var(--sk-page-padding-side);
-		color: var(--sk-text-4);
+		color: var(--sk-fg-3);
 		text-align: center;
 
 		a {
@@ -47,5 +47,11 @@
 	h2,
 	p {
 		text-align: center;
+	}
+
+	p {
+		max-width: 28em;
+		margin-left: auto;
+		margin-right: auto;
 	}
 </style>

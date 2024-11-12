@@ -6,7 +6,7 @@
 	import { expoOut, quintOut } from 'svelte/easing';
 	import type { TransitionConfig } from 'svelte/transition';
 	import Icon from '../components/Icon.svelte';
-	import NavContextMenu from './NavContextMenu.svelte';
+	import MobileSubMenu from './MobileSubMenu.svelte';
 	import type { NavigationLink } from '../types';
 	import ModalOverlay from '../components/ModalOverlay.svelte';
 
@@ -20,7 +20,7 @@
 
 	let show_context_menu = $state(!!current?.sections);
 
-	let nav_context_instance: NavContextMenu | undefined = $state();
+	let nav_context_instance: ReturnType<typeof MobileSubMenu> | undefined = $state();
 
 	let menu_height = $state(0);
 	let universal_menu_inner_height = $state(0);
@@ -146,6 +146,7 @@
 
 						<ul>
 							<li><a href="/chat">Discord</a></li>
+							<li><a href="https://bsky.app/profile/sveltesociety.dev">Bluesky</a></li>
 							<li><a href="https://github.com/sveltejs/svelte">GitHub</a></li>
 						</ul>
 					</div>
@@ -153,7 +154,7 @@
 
 				<div class="context" inert={!show_context_menu}>
 					{#if current}
-						<NavContextMenu
+						<MobileSubMenu
 							bind:this={nav_context_instance}
 							title={current.title}
 							contents={current.sections}
@@ -208,7 +209,7 @@
 		bottom: 0;
 		height: 99.5%;
 		border-radius: 1rem 1rem 0 0;
-		background: var(--background, var(--sk-back-2));
+		background: var(--background, var(--sk-bg-2));
 		will-change: height;
 		transition: 0.3s var(--quint-out);
 		transition-property: none;
@@ -218,7 +219,7 @@
 		}
 
 		:root.dark & {
-			border-top: solid 1.1px hsla(0, 0%, 100%, 0.2);
+			border-top: solid 1px var(--sk-raised-highlight);
 		}
 	}
 
@@ -265,7 +266,7 @@
 		& :global(a) {
 			position: relative;
 			padding: 0.3rem 0;
-			color: var(--sk-text-3);
+			color: inherit;
 			font: var(--sk-font-ui-medium);
 			width: 100%;
 			height: 100%;
@@ -302,8 +303,8 @@
 		justify-content: start;
 		gap: 1rem;
 		font: var(--sk-font-ui-medium);
-		color: var(--sk-text-3);
-		background-color: var(--sk-back-2);
+		color: var(--sk-fg-3);
+		background-color: var(--sk-bg-2);
 		width: 50%;
 		height: 4.8rem;
 		padding: 0 var(--sk-page-padding-side);
@@ -332,7 +333,7 @@
 		hr {
 			margin: 0.5rem 0;
 			height: 1px;
-			background: var(--sk-back-6);
+			background: var(--sk-border);
 			border: none;
 		}
 	}

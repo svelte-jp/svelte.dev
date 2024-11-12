@@ -90,12 +90,14 @@ SSR を使用していない場合は、あるユーザーのデータを別の�
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
 
-	/** @type {import('./$types').LayoutData} */
-	export let data;
+	/** @type {{ data: import('./$types').LayoutData }} */
+	let { data } = $props();
 
 	// store を作成し必要に応じて更新します...
-	const user = writable();
-	$: user.set(data.user);
+	const user = writable(data.user);
+	$effect.pre(() => {
+		user.set(data.user);
+	});
 
 	// ...そして子コンポーネントがアクセスできるように context に追加します
 	setContext('user', user);
@@ -125,8 +127,8 @@ SSR を使用していない場合 (そして将来的にも SSR を使用する
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 
 	// THIS CODE IS BUGGY!
 	const wordCount = data.content.split(' ').length;
@@ -143,13 +145,13 @@ SSR を使用していない場合 (そして将来的にも SSR を使用する
 
 …`/blog/my-short-post` から `/blog/my-long-post` への移動は、レイアウトやページ、コンポーネントの破棄や再作成を引き起こしません。代わりに、この `data` prop (と `data.title` と `data.content`) は更新されますが (他の Svelte コンポーネントも同様に)、コードは再実行されないため、`onMount` や `onDestroy` のようなライフサイクルメソッドは再実行されず、`estimatedReadingTime` も再計算されません。
 
-代わりに、その値を [_リアクティブ_](/tutorial/svelte/reactive-assignments) にする必要があります:
+代わりに、その値を [_リアクティブ_](/tutorial/svelte/state) にする必要があります:
 
 ```svelte
 /// file: src/routes/blog/[slug]/+page.svelte
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 
 +++	let wordCount = $state(data.content.split(' ').length);
 	let estimatedReadingTime = $derived(wordCount / 250);+++

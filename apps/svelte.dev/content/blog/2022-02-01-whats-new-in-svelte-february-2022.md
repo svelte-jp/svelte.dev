@@ -11,30 +11,30 @@ Happy February, everyone! ここ1か月ほどで、Svelte と SvelteKit の [開
 
 ## Highlights from the Svelte changelog
 
-- **3.45.0** では、[新しい a11y の warning である `a11y-no-redundant-roles`](/docs/accessibility-warnings#a11y-no-redundant-roles) と、分割代入およびキャッシュの修正が行われました
-- **3.46.0** では、要望が多かった [`{@const}` tag](/docs/special-tags#const) と [`style:` directive](/docs/element-directives#style-property) が追加されました
-- **3.46.1 - 3.46.3** では、`{@const}` タグと `style:` ディレクティブの修正、アニメーションに関する多くの修正が行われました
-- [Svelte REPL で AST が出力できるようになりました](https://svelte.dev/repl/hello-world)
+- **3.45.0** brought a [new a11y warning `a11y-no-redundant-roles`](https://v4.svelte.dev/docs#accessibility-warnings-a11y-no-redundant-roles), destructuring and caching fixes
+- **3.46.0** added the much requested [`{@const}` tag](https://v4.svelte.dev/docs#template-syntax-const) and [`style:` directive](https://v4.svelte.dev/docs#template-syntax-element-directives-style-property)
+- Check out **3.46.1 - 3.46.3** for fixes to the `{@const}` tag and `style:` directive, along with a number of fixes to animations
+- [AST output is now available in the Svelte REPL](/playground/hello-world)
 
 ## What's new in SvelteKit
 
-- `inlineStyleThreshold` によって、CSS ファイルをインラインスタイルシートにしてページに挿入するかどうか指定できるようになりました ([Docs](https://kit.svelte.jp/docs/configuration#inlinestylethreshold), [#2620](https://github.com/sveltejs/kit/pull/2620))
-- `beforeNavigate`/`afterNavigate` ライフサイクル関数によって、ページナビゲーションの前後に機能を追加することができるようになりました ([Docs](https://kit.svelte.jp/docs/modules#$app-navigation), [#3293](https://github.com/sveltejs/kit/pull/3293))
-- プラットフォーム固有のコンテキストを、adapter から渡せるようになりました ([Docs](https://kit.svelte.jp/docs/adapters#supported-environments-platform-specific-context), [#3429](https://github.com/sveltejs/kit/pull/3429))
-- Hooks の `resolve` 関数に `ssr` パラメーターが追加され、必要に応じて SSR を簡単にスキップできるようになりました ([Docs](https://kit.svelte.jp/docs/hooks#handle), [#2804](https://github.com/sveltejs/kit/pull/2804))
-- `$page.stuff` は、ページがレイアウトに対してデータを '上向きに' 渡すためのメカニズムを提供します ([Docs](https://kit.svelte.jp/docs/loading#input-stuff), [#3252](https://github.com/sveltejs/kit/pull/3252))
-- Fallthrough routes によって、ルート(route)が読み込めないときのルーティング先を指定することができます ([Docs](https://kit.svelte.jp/docs/routing#advanced-routing-fallthrough-routes), [#3217](https://github.com/sveltejs/kit/pull/3217))
+- `inlineStyleThreshold` allows you to specify where inline stylesheets are inserted into the page ([Docs](/docs/kit/configuration#inlineStyleThreshold), [#2620](https://github.com/sveltejs/kit/pull/2620))
+- `beforeNavigate`/`afterNavigate` lifecycle functions lets you add functionality before or after a page navigation ([Docs](/docs/kit/$app-navigation), [#3293](https://github.com/sveltejs/kit/pull/3293))
+- Platform context can now be passed from adapters ([Docs](/docs/kit/adapters#Platform-specific-context), [#3429](https://github.com/sveltejs/kit/pull/3429))
+- Hooks now have an `ssr` parameter in `resolve` to make it easier to skip SSR, when needed ([Docs](/docs/kit/hooks#Server-hooks-handle), [#2804](https://github.com/sveltejs/kit/pull/2804))
+- `$page.stuff` provides a mechanism for pages to pass data 'upward' to layouts ([Docs](https://kit.svelte.dev/docs/loading#input-stuff), [#3252](https://github.com/sveltejs/kit/pull/3252))
+- Fallthrough routes let you specify where to route when an route can't be loaded ([#3217](https://github.com/sveltejs/kit/pull/3217))
 
 ### New configs
 
-- Content Security Policy (CSP) がサポートされ、インラインの JavaScript と スタイルシートを使用するときのセキュリティが強化されます ([Docs](https://kit.svelte.jp/docs/configuration#csp), [#3499](https://github.com/sveltejs/kit/pull/3499))
-- `kit.routes` の設定で、ビルド時に、どのモジュールをパブリック/プライベートにするかカスタマイズできるようになりました ([Docs](https://kit.svelte.jp/docs/configuration#routes), [#3576](https://github.com/sveltejs/kit/pull/3576))
-- `prerender.createIndexFiles` の設定で、index.html をサブフォルダの名前でプリレンダリングできるようになりました ([Docs](https://kit.svelte.jp/docs/configuration#prerender), [#2632](https://github.com/sveltejs/kit/pull/2632))
-- `kit.methodOverride` を使用することで、HTTP メソッドをオーバーライドできるようになりました ([Docs](https://kit.svelte.jp/docs/routing#endpoints-http-method-overrides), [#2989](https://github.com/sveltejs/kit/pull/2989))
+- Content Security Policy (CSP) is now supported for increased security when using inline javascript or stylesheets ([Docs](/docs/kit/configuration#csp), [#3499](https://github.com/sveltejs/kit/pull/3499))
+- `kit.routes` config allows you to customise public/private modules during build ([#3576](https://github.com/sveltejs/kit/pull/3576))
+- `prerender.createIndexFiles` config lets you prerender index.html files as their subfolder's name ([#2632](https://github.com/sveltejs/kit/pull/2632))
+- HTTP methods can now be overridden using `kit.methodOverride` ([Docs](https://kit.svelte.dev/docs/routing#endpoints-http-method-overrides), [#2989](https://github.com/sveltejs/kit/pull/2989))
 
 ### Config changes
 
-- `config.kit.hydrate` と `config.kit.router` が `config.kit.browser` の配下に移動されました ([Docs](https://kit.svelte.jp/docs/configuration#browser), [3578](https://github.com/sveltejs/kit/pull/3578))
+- `config.kit.hydrate` and `config.kit.router` are now nested under `config.kit.browser` ([3578](https://github.com/sveltejs/kit/pull/3578))
 
 ### Breaking change
 
@@ -68,7 +68,7 @@ Happy February, everyone! ここ1か月ほどで、Svelte と SvelteKit の [開
 
 _To Read_
 
-- [Svelte の開発を加速する(Accelerating Svelte's Development)](https://svelte.jp/blog/accelerating-sveltes-development) by Ben McCann
+- [Accelerating Svelte's Development](/blog/accelerating-sveltes-development) by Ben McCann
 - [Storybook for Vite](https://storybook.js.org/blog/storybook-for-vite/)
 - [Let's learn SvelteKit by building a static Markdown blog from scratch](https://joshcollinsworth.com/blog/build-static-sveltekit-markdown-blog) by Josh Collinsworth
 - [Building an iOS app with Svelte, Capacitor and Firebase](https://harryherskowitz.com/2022/01/05/tapedrop-app.html) by Harry Herskowitz

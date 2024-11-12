@@ -33,7 +33,9 @@
 				.find((node) => (node as HTMLElement).classList.contains('code-block')) as HTMLElement;
 
 			const ts = !!parent.querySelector('.ts-toggle:checked');
-			const code = parent.querySelector(`pre:${ts ? 'last' : 'first'}-of-type code`) as HTMLElement;
+			const code = parent.querySelector(
+				`pre[data-language]:${ts ? 'last' : 'first'}-of-type code`
+			) as HTMLElement;
 
 			navigator.clipboard.writeText(get_text(code));
 		}
@@ -117,17 +119,21 @@
 			padding: 0.2rem 0.4rem;
 			margin: 0 0.2rem;
 			top: -0.1rem;
-			background: var(--sk-back-4);
+			background: var(--sk-bg-4);
 		}
 
 		.code-block {
 			position: relative;
-			background: var(--sk-back-2);
-			border: 1px solid var(--sk-back-5);
+			background: var(--sk-bg-2);
+			border: 1px solid var(--sk-border);
 			border-radius: var(--sk-border-radius);
 			overflow: hidden;
-			margin: 2rem 0;
-			/* background: var(--sk-back-3); */
+			margin: calc(0.5 * var(--sk-line-height-body)) 0;
+			/* background: var(--sk-bg-3); */
+
+			@media (min-width: 767px) {
+				margin: var(--sk-line-height-body) 0;
+			}
 
 			.controls {
 				--height: 3.6rem;
@@ -137,7 +143,7 @@
 				top: 0;
 				right: 0;
 				height: var(--height);
-				padding: 0.3rem 0.5rem 0.3rem 1rem;
+				padding: 0.3rem 0.5rem;
 				gap: 0.5rem;
 				z-index: 2;
 				justify-content: end;
@@ -145,7 +151,12 @@
 
 				&:has(.filename) {
 					position: relative;
-					background: var(--sk-back-3);
+					background: var(--sk-bg-3);
+					padding-left: 1rem;
+				}
+
+				&:not(:has(.filename)) {
+					background: inherit;
 				}
 
 				.filename {
@@ -155,7 +166,7 @@
 					top: 0.1rem;
 					flex: 1;
 					font: var(--sk-font-ui-small);
-					color: var(--sk-text-3);
+					color: var(--sk-fg-3);
 					text-overflow: ellipsis;
 					overflow: hidden;
 					white-space: nowrap;
@@ -187,7 +198,7 @@
 						align-items: center;
 						font-size: 1.2rem;
 						font-family: var(--sk-font-family-mono);
-						color: var(--sk-text-2);
+						color: inherit;
 					}
 
 					&::before {
@@ -282,7 +293,7 @@
 				width: 100%;
 				padding: 0.7rem 1rem;
 				box-sizing: border-box;
-				color: var(--sk-code-base);
+				color: var(--shiki-color-text);
 				border-radius: var(--sk-border-radius);
 				overflow-x: auto;
 
@@ -296,7 +307,7 @@
 				}
 
 				a:hover {
-					border-bottom: 1px solid var(--sk-theme-1);
+					border-bottom: 1px solid var(--sk-fg-accent);
 					text-decoration: none;
 				}
 
@@ -381,11 +392,11 @@
 			li::before {
 				content: '';
 				position: absolute;
-				top: calc(50% - 0.3rem);
+				top: 0.65em;
 				left: -1.8rem;
-				background-color: var(--sk-back-5);
-				width: 0.6rem;
-				height: 0.6rem;
+				background-color: var(--sk-fg-4);
+				width: 0.3em;
+				height: 0.3em;
 				border-radius: 50%;
 				opacity: 0.7;
 			}
@@ -413,13 +424,11 @@
 			font: var(--sk-font-body-small);
 			float: right;
 			pointer-events: all;
-			color: var(--sk-theme-1);
+			color: var(--sk-fg-accent);
 			cursor: pointer;
 		}
 
 		blockquote {
-			--primary-hsl: var(--sk-theme-1-hsl);
-			color: var(--sk-text-1);
 			padding: 0 0 0 4.5rem;
 
 			&.note,
@@ -440,17 +449,10 @@
 			}
 
 			&.deprecated {
-				--primary-hsl: var(--sk-text-warning-hsl);
-				--color: var(--primary-hsl);
-
 				p:first-child::before {
 					content: 'Deprecated ';
 					display: block;
 					font-style: normal;
-				}
-
-				a {
-					--color: var(--primary-hsl);
 				}
 			}
 
@@ -462,7 +464,7 @@
 				left: 0;
 				top: 0;
 				font-family: var(--sk-font-family-heading);
-				color: var(--sk-text-4);
+				color: var(--sk-fg-4);
 			}
 
 			@media (max-width: 767px) {
@@ -505,7 +507,7 @@
 			&::after {
 				background: url($lib/icons/chevron.svg) 50% 50% no-repeat;
 				background-size: 2rem;
-				rotate: -90deg;
+				rotate: 0deg;
 				transition: rotate 0.2s;
 				transition: rotate 0.2s;
 				top: 0.2rem;
@@ -522,13 +524,9 @@
 				display: flex;
 				align-items: center;
 				height: 3rem;
-				color: var(--sk-text-4);
+				color: var(--sk-fg-3);
 				font: var(--sk-font-body-small);
 				user-select: none;
-
-				&:hover {
-					color: var(--sk-text-3);
-				}
 
 				.legacy &::after {
 					position: absolute;
@@ -544,7 +542,7 @@
 
 			&[open] {
 				&::after {
-					rotate: 90deg;
+					rotate: 180deg;
 				}
 
 				& > summary {
@@ -559,6 +557,11 @@
 			& > :last-child {
 				margin-bottom: 0;
 			}
+		}
+
+		figcaption {
+			font: var(--sk-font-ui-medium);
+			color: var(--sk-fg-3);
 		}
 	}
 </style>

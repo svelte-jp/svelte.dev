@@ -9,9 +9,9 @@ Svelte 4 is out and folks have been building! There's a bunch of new showcases, 
 
 ## What's new in Svelte
 
-The big news this month was the release of Svelte 4.0! You can read all about it in the [Announcing Svelte 4 post](https://svelte.dev/blog/svelte-4). From performance fixes and developer experience improvements to [a brand new site, docs and tutorial](https://svelte.dev/blog/svelte-dev-overhaul)... this new release sets the stage for Svelte 5 with minimal breaking changes.
+The big news this month was the release of Svelte 4.0! You can read all about it in the [Announcing Svelte 4 post](/blog/svelte-4). From performance fixes and developer experience improvements to [a brand new site, docs and tutorial](/blog/svelte-dev-overhaul)... this new release sets the stage for Svelte 5 with minimal breaking changes.
 
-If you're already on Node.js 16, it's possible you won't see any breaking changes in your project. But be sure to read the [migration guide](https://svelte.dev/docs/v4-migration-guide) for all the details.
+If you're already on Node.js 16, it's possible you won't see any breaking changes in your project. But be sure to read the [migration guide](/docs/svelte/v4-migration-guide) for all the details.
 
 For a full list of all the changes to the Svelte compiler, including unreleased changes, check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/packages/svelte/CHANGELOG.md).
 
@@ -19,9 +19,9 @@ For a full list of all the changes to the Svelte compiler, including unreleased 
 
 This month there were lots of awesome [bug fixes](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md), so be sure to upgrade to the latest version! There are also a few new features to mention:
 
-- The new `event.isSubRequest` boolean indicates whether this is a same-origin fetch request to one of the app's own APIs during a server request (**1.21.0**, [Docs](https://kit.svelte.dev/docs/types#public-types-requestevent), [#10170](https://github.com/sveltejs/kit/pull/10170))
-- A new config option, `config.kit.env.privatePrefix` will set a private prefix on environment variables. This defaults to `''` (**1.21.0**, [Docs](https://kit.svelte.dev/docs/configuration), [#9996](https://github.com/sveltejs/kit/pull/9996))
-- `VERSION` is now exported and accessible via `@sveltejs/kit`. This can be used for feature detection or anything else that requires knowledge of the current version of SvelteKit (**1.21.0**, [Docs](https://kit.svelte.dev/docs/modules#sveltejs-kit-version), [#9969](https://github.com/sveltejs/kit/pull/9969))
+- The new `event.isSubRequest` boolean indicates whether this is a same-origin fetch request to one of the app's own APIs during a server request (**1.21.0**, [Docs](/docs/kit/@sveltejs-kit#RequestEvent), [#10170](https://github.com/sveltejs/kit/pull/10170))
+- A new config option, `config.kit.env.privatePrefix` will set a private prefix on environment variables. This defaults to `''` (**1.21.0**, [Docs](/docs/kit/configuration), [#9996](https://github.com/sveltejs/kit/pull/9996))
+- `VERSION` is now exported and accessible via `@sveltejs/kit`. This can be used for feature detection or anything else that requires knowledge of the current version of SvelteKit (**1.21.0**, [Docs](/docs/kit/@sveltejs-kit#VERSION), [#9969](https://github.com/sveltejs/kit/pull/9969))
 
 For adapter-specific changes, check out the CHANGELOGs in each of [the `adapter` directories](https://github.com/sveltejs/kit/tree/master/packages).
 
@@ -44,8 +44,8 @@ For adapter-specific changes, check out the CHANGELOGs in each of [the `adapter`
 
 ### Learning Resources
 
-- [Announcing Svelte 4 post](https://svelte.dev/blog/svelte-4)
-- [svelte.dev: A complete overhaul](https://svelte.dev/blog/svelte-dev-overhaul)
+- [Announcing Svelte 4 post](/blog/svelte-4)
+- [svelte.dev: A complete overhaul](/blog/svelte-dev-overhaul)
 
 _Featuring Svelte Contributors and Ambassadors_
 

@@ -145,7 +145,7 @@
 		<div class="modal-contents">
 			<h2>This action is not allowed</h2>
 			<p>{modal_text}</p>
-			<button onclick={() => (modal_text = '')}>OK</button>
+			<button class="raised primary" onclick={() => (modal_text = '')}>OK</button>
 		</div>
 	</Modal>
 {/if}
@@ -158,7 +158,7 @@
 		overflow-x: hidden;
 		padding: 1rem 0rem;
 		margin: 0;
-		background: var(--sk-back-3);
+		background: var(--sk-bg-3);
 		list-style: none;
 	}
 
@@ -168,16 +168,5 @@
 
 	.modal-contents p {
 		white-space: pre-line;
-	}
-
-	.modal-contents button {
-		display: block;
-		background: var(--sk-theme-1);
-		color: white;
-		padding: 1rem;
-		width: 10em;
-		margin: 1em 0 0 0;
-		border-radius: var(--sk-border-radius);
-		line-height: 1;
 	}
 </style>

@@ -118,7 +118,7 @@ SvelteKit では、それらにアクセスする方法が異なります。`sto
 
 ### ルーティング <!--Routing-->
 
-ルート(routes) の正規表現はもうサポートされていません。代わりに、[advanced route matching](advanced-routing#matching) をお使いください。
+ルート(routes) の正規表現はもうサポートされていません。代わりに、[advanced route matching](advanced-routing#Matching) をお使いください。
 
 ### Segments
 

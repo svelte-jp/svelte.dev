@@ -3,7 +3,7 @@ title: Custom dependencies
 path: /Europe/London
 ---
 
-`load` 関数の中で `fetch(url)` を呼ぶと、`url` を依存関係(dependency)として登録します。`fetch` を使用するのが適切でない場合もありますが、その場合は [`depends(url)`](https://kit.svelte.jp/docs/load#invalidation-manual-invalidation) 関数を使って手動で依存関係を指定することができます。
+`load` 関数の中で `fetch(url)` を呼ぶと、`url` を依存関係(dependency)として登録します。`fetch` を使用するのが適切でない場合もありますが、その場合は [`depends(url)`](/docs/kit/load#Rerunning-load-functions-Manual-invalidation) 関数を使って手動で依存関係を指定することができます。
 
 `[a-z]+:` パターンで始まる文字列であれば有効な URL であるため、`data:now` のようなカスタムの invalidation key を作ることができます。
 

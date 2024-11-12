@@ -11,7 +11,7 @@ title: Snapshots
 ```svelte
 <!--- file: +page.svelte --->
 <script>
-	let comment = '';
+	let comment = $state('');
 
 	/** @type {import('./$types').Snapshot<string>} */
 	export const snapshot = {
