@@ -8,6 +8,7 @@
 		私たちの姉妹組織である <a href="https://www.sveltesociety.dev/">Svelte Society</a> は、世界中でイベントを運営しています。
 	    あなたが所属する支部を見つけに、
 		<a href="/chat">Discord サーバー</a>に参加しましょう。
+	</p>
 
 	<figure>
 		<enhanced:img
