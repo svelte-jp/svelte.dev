@@ -109,12 +109,16 @@ Top navigation bar for the application. It provides a slot for the left side, th
 						{/snippet}
 					</Dropdown>
 				{:else}
-					<a
-						href="/{link.slug}"
-						aria-current={$page.url.pathname.startsWith(`/${link.slug}`) ? 'page' : null}
-					>
-						{link.title}
-					</a>
+					{#if link.slug === 'playground'}
+						<a href="https://svelte.dev/playground" target="_blank">{link.title}</a>
+					{:else}
+						<a
+							href="/{link.slug}"
+							aria-current={$page.url.pathname.startsWith(`/${link.slug}`) ? 'page' : null}
+						>
+							{link.title}
+						</a>
+					{/if}
 				{/if}
 			{/each}
 		</div>

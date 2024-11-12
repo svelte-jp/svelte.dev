@@ -82,7 +82,7 @@
 			</p>
 		</a>
 
-		<a href="/playground">
+		<a href="https://svelte.dev/playground" class="external" target="_blank">
 			<h2>とりあえず試してみたい方</h2>
 			<p>
 				Playground に移動し、example を確認したり、Svelte アプリをブラウザ上で作ったり、
@@ -90,7 +90,7 @@
 			</p>
 		</a>
 
-		<a href="/chat" class="external">
+		<a href="/chat" class="external" target="_blank">
 			<h2>助けて！行き詰まった！という方</h2>
 			<p>
 				私たちの Discord サーバーで他の Svelte ユーザーたちと一緒に過ごしたり、質問したりしましょう。
