@@ -2,7 +2,7 @@
 title: Other handlers
 ---
 
-Similarly, we can add handlers for other HTTP verbs. Add a `/todo/[id]` route by creating a `src/routes/todo/[id]/+server.js` file with `PUT` and `DELETE` handlers for toggling and removing todos, using the `toggleTodo` and `deleteTodo` functions in `src/lib/server/database.js`:
+同様に、他の HTTP verb のハンドラを追加できます。`src/routes/todo/[id]/+server.js` ファイルを作成し、`src/lib/server/database.js` の `toggleTodo` 関数と `deleteTodo` 関数を使用して todo の切り替えや削除を行う `PUT` と `DELETE` のハンドラを記述し、`/todo/[id]` ルート(route)を追加します:
 
 ```js
 /// file: src/routes/todo/[id]/+server.js
@@ -24,9 +24,9 @@ export async function DELETE({ params, cookies }) {
 }
 ```
 
-Since we don't need to return any actual data to the browser, we're returning an empty [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response) with a [204 No Content](https://http.dog/204) status.
+ブラウザに実際のデータを返す必要はないため、空の [Response](https://developer.mozilla.org/ja/docs/Web/API/Response) を [204 No Content](https://http.dog/204) ステータスで返しています。
 
-We can now interact with this endpoint inside our event handlers:
+これで、イベントハンドラからこのエンドポイントを操作できるようになりました:
 
 ```svelte
 /// file: src/routes/+page.svelte

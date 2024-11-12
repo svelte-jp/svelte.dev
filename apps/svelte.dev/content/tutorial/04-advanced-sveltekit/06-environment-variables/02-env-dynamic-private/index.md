@@ -2,7 +2,7 @@
 title: $env/dynamic/private
 ---
 
-If you need to read the values of environment variables when the app runs, as opposed to when the app is built, you can use `$env/dynamic/private` instead of `$env/static/private`:
+アプリのビルド時ではなく、アプリの実行時に環境変数の値を読む必要がある場合、`$env/static/private` の代わりに `$env/dynamic/private` を使用することができます。
 
 ```js
 /// file: src/routes/+page.server.js

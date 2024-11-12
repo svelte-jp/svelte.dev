@@ -2,11 +2,11 @@
 title: Global transitions
 ---
 
-Ordinarily, transitions will only play on elements when their direct containing block is added or destroyed. In the example here, toggling the visibility of the entire list does not apply transitions to individual list elements.
+通常、要素でトランジションが再生されるのは、その要素を直接含むブロックが追加もしくは破棄されるときだけです。この例では、リスト全体の表示を切り替えても、個々のリスト要素でトランジションは再生されません。
 
-Instead, we'd like transitions to not only play when individual items are added and removed with the slider but also when we toggle the checkbox.
+代わりに、スライダーで個々のアイテムが追加もしくは削除されたときだけでなく、チェックボックスを切り替えたときにもトランジションが再生されるようにしたいと思います。
 
-We can achieve this with a _global_ transition, which plays when _any_ block containing the transitions is added or removed:
+これを実現するには、_global_ トランジションを使用します。これにより、トランジションを持つブロックが追加されたり削除されたりしたときに再生されます。
 
 ```svelte
 /// file: App.svelte
@@ -15,4 +15,4 @@ We can achieve this with a _global_ transition, which plays when _any_ block con
 </div>
 ```
 
-> [!NOTE] In Svelte 3, transitions were global by default and you had to use the `|local` modifier to make them local.
+> [!NOTE] Svelte 3 では、トランジションはデフォルトで global で、トランジションの動作をローカルにするために `|local` 修飾子を使用する必要がありました。

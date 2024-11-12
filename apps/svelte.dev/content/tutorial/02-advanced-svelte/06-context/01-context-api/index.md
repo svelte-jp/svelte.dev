@@ -2,9 +2,9 @@
 title: setContext and getContext
 ---
 
-The context API provides a mechanism for components to 'talk' to each other without passing around data and functions as props, or dispatching lots of events. It's an advanced feature, but a useful one. In this exercise, we're going to recreate [Schotter](https://collections.vam.ac.uk/item/O221321/schotter-print-nees-georg/) by George Nees — one of the pioneers of generative art — using the context API.
+context API は、データや関数を props として渡したり、たくさんのイベントをディスパッチしたりすることなく、コンポーネント同士で'会話'するための仕組みを提供します。これは高度ですが、便利な機能です。この演習では、generative art のパイオニアである George Nees の [Schotter](https://collections.vam.ac.uk/item/O221321/schotter-print-nees-georg/) を、context API を使って再現してみましょう。
 
-Inside `Canvas.svelte`, there's an `addItem` function that adds an item to the canvas. We can make it available to components inside `<Canvas>`, like `<Square>`, with `setContext`:
+`Canvas.svelte` にはアイテムを canvas に追加する `addItem` 関数があります。これを `<Canvas>` 内のコンポーネント (例えば `<Square>`) で利用できるようにするには、`setContext` を使います:
 
 ```js
 /// file: Canvas.svelte
@@ -26,7 +26,7 @@ function addItem(fn) {
 }
 ```
 
-Inside child components, we can now get the context with, well, `getContext`:
+子コンポーネントでは、この context を `getContext` で取得できます:
 
 ```js
 /// file: Square.svelte
@@ -37,7 +37,7 @@ let { x, y, size, rotate } = $props();
 +++getContext('canvas').addItem(draw);+++
 ```
 
-So far, so... boring. Let's add some randomness to the grid:
+ここまでは、そう…退屈ですよね。グリッドにランダム性を追加してみましょう:
 
 ```svelte
 /// file: App.svelte
@@ -57,9 +57,9 @@ So far, so... boring. Let's add some randomness to the grid:
 </div>
 ```
 
-`setContext` and `getContext` must be called during component initialisation, so that the context can be correctly bound. The key — `'canvas'` in this case — can be anything you like, including non-strings, which is useful for controlling who can access the context.
+`setContext` と `getContext` はコンポーネントの初期化中に呼び出す必要があります。これによって context が正しくバインドされます。このキー (この演習の場合は `'canvas'`) には文字列以外も含め、好きなものを指定でき、誰が context にアクセスできるのかコントロールするのに有用です。
 
-> [!NOTE] Your context object can include anything, including reactive state. This allows you to pass values that change over time to child components:
+> [!NOTE] context オブジェクトには、リアクティブな state を含めあらゆるものを含めることができます。これにより、時間の経過とともに変化する値を子コンポーネントに渡すことができます:
 >
 > ```js
 > // in a parent component

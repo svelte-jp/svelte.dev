@@ -2,11 +2,11 @@
 title: The $lib alias
 ---
 
-Because SvelteKit uses directory-based routing, it's easy to place modules and components alongside the routes that use them. A good rule of thumb is 'put code close to where it's used'.
+SvelteKit はディレクトリベースのルーティングを使用しているので、モジュールやコンポーネントとそれを使用するルート(route)を一緒に配置するのがとても簡単です。経験則では、'コードは使う場所のすぐ近くに置く (put code close to where it's used)' です。 
 
-Sometimes, code is used in multiple places. When this happens, it's useful to have a place to put them that can be accessed by all routes without needing to prefix imports with `../../../../`. In SvelteKit, that place is the `src/lib` directory. Anything inside this directory can be accessed by any module in `src` via the `$lib` alias.
+コードが複数の場所で使われることもよくあります。そのときに、インポートのプレフィックスに `../../../../` をつけなくても全てのルート(route)からアクセスできる置き場所があると便利です。SvelteKit では、`src/lib` ディレクトリがその場所です。このディレクトリに配置されているものは、`$lib` エイリアスを介して `src` にあるどのモジュールからもアクセスすることができます。
 
-Both `+page.svelte` files in this exercise import `src/lib/message.js`. But if you navigate to `/a/deeply/nested/route`, the app breaks, because we got the prefix wrong. Update it to use `$lib/message.js` instead:
+この演習にある両方の `+page.svelte` ファイルは `src/lib/message.js` をインポートしています。しかし `/a/deeply/nested/route` に移動すると、アプリが壊れます。なぜなら、プレフィックスが間違っているからです。代わりに、 `$lib/message.js` を使用するように更新しましょう:
 
 ```svelte
 /// file: src/routes/a/deeply/nested/route/+page.svelte
@@ -18,7 +18,7 @@ Both `+page.svelte` files in this exercise import `src/lib/message.js`. But if y
 <p>{message}</p>
 ```
 
-Do the same for `src/routes/+page.svelte`:
+`src/routes/+page.svelte` も同じようにしましょう:
 
 ```svelte
 /// file: src/routes/+page.svelte

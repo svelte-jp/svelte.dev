@@ -2,9 +2,9 @@
 title: Redirects
 ---
 
-We can also use the `throw` mechanism to redirect from one page to another.
+`throw` のメカニズムを、あるページから別のページにリダイレクトするのにも使えます。
 
-Create a new `load` function in `src/routes/a/+page.server.js`:
+`load` 関数を `src/routes/a/+page.server.js` に作成してください。
 
 ```js
 /// file: src/routes/a/+page.server.js
@@ -15,12 +15,12 @@ export function load() {
 }
 ```
 
-Navigating to `/a` will now take us straight to `/b`.
+`/a` に移動しようとすると、`/b` に直行するようになります。
 
-You can `redirect(...)` inside `load` functions, form actions, API routes and the `handle` hook, which we'll discuss in a later chapter.
+`redirect(...)` は、`load` 関数、form actions、API ルート、そして後の章で説明する `handle` hook の内側で使うことができます。
 
-The most common status codes you'll use:
+よく使用されるステータスコードはこちらです。
 
-- `303` — for form actions, following a successful submission
-- `307` — for temporary redirects
-- `308` — for permanent redirects
+- `303` — form actions で、送信に成功したあと続いて使用されます
+- `307` — 一時的なリダイレクトに使用されます
+- `308` — 恒久的なリダイレクトに使用されます

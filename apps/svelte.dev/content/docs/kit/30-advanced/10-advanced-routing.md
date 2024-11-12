@@ -1,16 +1,16 @@
 ---
-title: Advanced routing
+title: 高度なルーティング
 ---
 
-## Rest parameters
+## Restパラメータ <!--Rest-parameters-->
 
-If the number of route segments is unknown, you can use rest syntax — for example you might implement GitHub's file viewer like so...
+ルートセグメント(route segments)の数がわからない場合は、rest 構文を使用することができます。例えば GitHub のファイルビューアのようなものを実装する場合は…
 
 ```bash
 /[org]/[repo]/tree/[branch]/[...file]
 ```
 
-...in which case a request for `/sveltejs/kit/tree/main/documentation/docs/04-advanced-routing.md` would result in the following parameters being available to the page:
+…この場合、`/sveltejs/kit/tree/main/documentation/docs/04-advanced-routing.md` をリクエストすると、以下のパラメータをページで使うことができます:
 
 ```js
 // @noErrors
@@ -22,11 +22,11 @@ If the number of route segments is unknown, you can use rest syntax — for exam
 }
 ```
 
-> [!NOTE] `src/routes/a/[...rest]/z/+page.svelte` will match `/a/z` (i.e. there's no parameter at all) as well as `/a/b/z` and `/a/b/c/z` and so on. Make sure you check that the value of the rest parameter is valid, for example using a [matcher](#Matching).
+> [!NOTE] `src/routes/a/[...rest]/z/+page.svelte` は `/a/z` にも (つまり、パラメータが全くない場合にも)、`/a/b/z` や `/a/b/c/z` と同様にマッチします。Rest パラメータの値が正しいことを、例えば [matcher](#Matching) を使用するなどして確認してください。
 
 ### 404 pages
 
-Rest parameters also allow you to render custom 404s. Given these routes...
+Rest パラメータによってカスタムの 404 をレンダリングすることができます。これらのルート(routes)があるとして…
 
 ```tree
 src/routes/
@@ -38,7 +38,7 @@ src/routes/
 └ +error.svelte
 ```
 
-...the `marx-brothers/+error.svelte` file will _not_ be rendered if you visit `/marx-brothers/karl`, because no route was matched. If you want to render the nested error page, you should create a route that matches any `/marx-brothers/*` request, and return a 404 from it:
+…もし `/marx-brothers/karl` にリクエストしても、`marx-brothers/+error.svelte` ファイルはレンダリング _されません_ 。なぜならどのルート(route) にもマッチしないからです。もしネストしたエラーページをレンダリングしたければ、どんな `/marx-brothers/*` リクエストにもマッチするルート(route)を作成し、そこから 404 を返すようにしてください:
 
 ```tree
 src/routes/
@@ -61,17 +61,17 @@ export function load(event) {
 }
 ```
 
-> [!NOTE] If you don't handle 404 cases, they will appear in [`handleError`](hooks#Shared-hooks-handleError)
+> [!NOTE] もし 404 のケースをハンドリングしていない場合、[`handleError`](hooks#Shared-hooks-handleError) によって表示が行われます。
 
 ## Optional parameters
 
-A route like `[lang]/home` contains a parameter named `lang` which is required. Sometimes it's beneficial to make these parameters optional, so that in this example both `home` and `en/home` point to the same page. You can do that by wrapping the parameter in another bracket pair: `[[lang]]/home`
+`[lang]/home` というルートに含まれる `lang` というパラメータは必須です。これらのパラメータをオプションにできると、今回の例では `home` と `en/home` のどちらも同じページを指すことができるのでとても便利です。パラメータにもう1つ括弧を付けることでこれができるようになります: `[[lang]]/home`
 
-Note that an optional route parameter cannot follow a rest parameter (`[...rest]/[[optional]]`), since parameters are matched 'greedily' and the optional parameter would always be unused.
+optional のルートパラメータ(route parameter)は rest パラメータに続けて使用すること (`[...rest]/[[optional]]`) はできません。パラメータは 'greedily' にマッチし、optional のパラメータは使用されないこともあるためです。
 
-## Matching
+## マッチング(Matching)
 
-A route like `src/routes/fruits/[page]` would match `/fruits/apple`, but it would also match `/fruits/rocketship`. We don't want that. You can ensure that route parameters are well-formed by adding a _matcher_ — which takes the parameter string (`"apple"` or `"rocketship"`) and returns `true` if it is valid — to your [`params`](configuration#files) directory...
+`src/routes/fruits/[page]` というルート(route)は `/fruits/apple` にマッチしますが、`/fruits/rocketship` にもマッチしてしまいます。これを防ぎたい場合、パラメータ文字列(`"apple"` や `"rocketship"`)を引数に取ってそれが有効なら `true` を返す _matcher_ を [`params`](configuration#files) ディレクトリに追加することで、ルート(route)のパラメータを適切に定義することができます…
 
 ```js
 /// file: src/params/fruit.js
@@ -85,21 +85,21 @@ export function match(param) {
 }
 ```
 
-...and augmenting your routes:
+…そしてルート(routes)を拡張します:
 
 ```
 src/routes/fruits/[page+++=fruit+++]
 ```
 
-If the pathname doesn't match, SvelteKit will try to match other routes (using the sort order specified below), before eventually returning a 404.
+もしパス名がマッチしない場合、SvelteKit は (後述のソート順の指定に従って) 他のルートでマッチするか試行し、どれにもマッチしない場合は最終的に 404 を返します。
 
-Each module in the `params` directory corresponds to a matcher, with the exception of `*.test.js` and `*.spec.js` files which may be used to unit test your matchers.
+`params` ディレクトリにある各モジュールは matcher に対応しています。ただし、matcher のユニットテストに使用される `*.test.js` と `*.spec.js` ファイルは例外です。
 
-> [!NOTE] Matchers run both on the server and in the browser.
+> [!NOTE] Matcher は サーバーとブラウザの両方で動作します。
 
-## Sorting
+## ソート(Sorting)
 
-It's possible for multiple routes to match a given path. For example each of these routes would match `/foo-abc`:
+あるパスに対し、マッチするルート(routes)は複数でも構いません。例えば、これらのルート(routes)はどれも `/foo-abc` にマッチします:
 
 ```bash
 src/routes/[...catchall]/+page.svelte
@@ -109,14 +109,14 @@ src/routes/foo-[c]/+page.svelte
 src/routes/foo-abc/+page.svelte
 ```
 
-SvelteKit needs to know which route is being requested. To do so, it sorts them according to the following rules...
+SvelteKit は、どのルート(route)に対してリクエストされているのかを判断しなければなりません。そのため、以下のルールに従ってこれらをソートします…
 
-- More specific routes are higher priority (e.g. a route with no parameters is more specific than a route with one dynamic parameter, and so on)
-- Parameters with [matchers](#Matching) (`[name=type]`) are higher priority than those without (`[name]`)
-- `[[optional]]` and `[...rest]` parameters are ignored unless they are the final part of the route, in which case they are treated with lowest priority. In other words `x/[[y]]/z` is treated equivalently to `x/z` for the purposes of sorting
-- Ties are resolved alphabetically
+- より詳細・明確(specific)なルート(routes)ほど、より優先度が高い (例えば、動的なパラメータが1つあるルートより、パラメータのないルートのほうがより詳細・明確(specific)である、など)
+- [matchers](#Matching) 付きのパラメータ (`[name=type]`) は matchers なしのパラメータ (`[name]`) よりも優先度が高い
+- `[[optional]]` と `[...rest]` パラメータはルート(route)の最後の部分でない限り無視される (最後の部分になっている場合は最も低い優先度として扱われる)。言い換えると、ソートの目的上、`x/[[y]]/z` と `x/z` は同等に扱われる
+- 優先度が同じ場合はアルファベット順で解決される
 
-...resulting in this ordering, meaning that `/foo-abc` will invoke `src/routes/foo-abc/+page.svelte`, and `/foo-def` will invoke `src/routes/foo-[c]/+page.svelte` rather than less specific routes:
+…この順序で並べると、`/foo-abc` の場合は `src/routes/foo-abc/+page.svelte` を呼び出し、`/foo-def` の場合は `src/routes/foo-[c]/+page.svelte` を呼び出します:
 
 ```bash
 src/routes/foo-abc/+page.svelte
@@ -126,11 +126,11 @@ src/routes/[b]/+page.svelte
 src/routes/[...catchall]/+page.svelte
 ```
 
-## Encoding
+## エンコード(Encoding)
 
-Some characters can't be used on the filesystem — `/` on Linux and Mac, `\ / : * ? " < > |` on Windows. The `#` and `%` characters have special meaning in URLs, and the `[ ] ( )` characters have special meaning to SvelteKit, so these also can't be used directly as part of your route.
+ファイルシステムでは使用できない文字があります — Linux と Mac では `/`、Windows では `\ / : * ? " < > |` です。URL においては、`#` と `%` には特別な意味がありますし、SvelteKit においては `[ ] ( )` に特別な意味があります。そのため、これらの文字をそのままルート(route)に使用することはできません。
 
-To use these characters in your routes, you can use hexadecimal escape sequences, which have the format `[x+nn]` where `nn` is a hexadecimal character code:
+これらの文字をルート(route)に使用するには、16進数のエスケープシーケンスを使います。`[x+nn]` というフォーマットで、`nn` の部分は16進数の文字コードです:
 
 - `\` — `[x+5c]`
 - `/` — `[x+2f]`
@@ -148,32 +148,32 @@ To use these characters in your routes, you can use hexadecimal escape sequences
 - `(` — `[x+28]`
 - `)` — `[x+29]`
 
-For example, to create a `/smileys/:-)` route, you would create a `src/routes/smileys/[x+3a]-[x+29]/+page.svelte` file.
+例えば、`/smileys/:-)` というルート(route)を作る場合は、`src/routes/smileys/[x+3a]-[x+29]/+page.svelte` ファイルを作成します。
 
-You can determine the hexadecimal code for a character with JavaScript:
+JavaScript を使って文字の16進数コードを判定することができます:
 
 ```js
 ':'.charCodeAt(0).toString(16); // '3a', hence '[x+3a]'
 ```
 
-You can also use Unicode escape sequences. Generally you won't need to as you can use the unencoded character directly, but if — for some reason — you can't have a filename with an emoji in it, for example, then you can use the escaped characters. In other words, these are equivalent:
+また、Unicode のエスケープシーケンスを使用することもできます。通常、エンコードされていない文字を直接使用することができるので、こうする必要はありませんが、何らかの理由で、例えばファイル名に絵文字を使用することができない場合、エスケープ文字を使用することができます。言い換えると、以下は同じことをしているということです:
 
 ```
 src/routes/[u+d83e][u+dd2a]/+page.svelte
 src/routes/🤪/+page.svelte
 ```
 
-The format for a Unicode escape sequence is `[u+nnnn]` where `nnnn` is a valid value between `0000` and `10ffff`. (Unlike JavaScript string escaping, there's no need to use surrogate pairs to represent code points above `ffff`.) To learn more about Unicode encodings, consult [Programming with Unicode](https://unicodebook.readthedocs.io/unicode_encodings.html).
+Unicode エスケープシーケンスのフォーマットは `[u+nnnn]` で、`nnnn` の部分は `0000` から `10ffff` までの適切な値です (JavaScript の文字列エスケープとは異なり、`ffff` 以上のコードポイントを表現するためにサロゲートペアを使用する必要はありません)。Unicode エンコーディングについてもっと知りたい方は、[Programming with Unicode](https://unicodebook.readthedocs.io/unicode_encodings.html) を参照してください。
 
-> [!NOTE] Since TypeScript [struggles](https://github.com/microsoft/TypeScript/issues/13399) with directories with a leading `.` character, you may find it useful to encode these characters when creating e.g. [`.well-known`](https://en.wikipedia.org/wiki/Well-known_URI) routes: `src/routes/[x+2e]well-known/...`
+> [!NOTE] ディレクトリの先頭に `.` 文字があると、TypeScript で [問題](https://github.com/microsoft/TypeScript/issues/13399) が起きるため、例えば [`.well-known`](https://en.wikipedia.org/wiki/Well-known_URI) のようなルート(route)を作る場合はこれらの文字をエンコードしておくと良いでしょう: `src/routes/[x+2e]well-known/...`
 
 ## Advanced layouts
 
-By default, the _layout hierarchy_ mirrors the _route hierarchy_. In some cases, that might not be what you want.
+デフォルトでは、 _レイアウトの階層_ が _ルート(route)の階層_ に反映されます。場合によっては、そうしたくないこともあるかもしれません。
 
 ### (group)
 
-Perhaps you have some routes that are 'app' routes that should have one layout (e.g. `/dashboard` or `/item`), and others that are 'marketing' routes that should have a different layout (`/about` or `/testimonials`). We can group these routes with a directory whose name is wrapped in parentheses — unlike normal directories, `(app)` and `(marketing)` do not affect the URL pathname of the routes inside them:
+'アプリ' のルート(routes)としてのレイアウト (例えば `/dashboard` や `/item`) が1つあり、'マーケティング' のルート(routes)としての別のレイアウト (`/about` や `/testimonials`) があるかもしれません。これらのルート(routes)を、ディレクトリの名前を括弧でくくることでグループ化することができます。通常のディレクトリとは異なり、`(app)` や `(marketing)` はそれらの中のルート(routes)の URL パス名には影響しません:
 
 ```tree
 src/routes/
@@ -189,17 +189,17 @@ src/routes/
 └ +layout.svelte
 ```
 
-You can also put a `+page` directly inside a `(group)`, for example if `/` should be an `(app)` or a `(marketing)` page.
+`+page` を `(group)` の中に直接配置することもできます (例えば、`/` が `(app)` や `(marketing)` のページであるべき場合など)。
 
 ### Breaking out of layouts
 
-The root layout applies to every page of your app — if omitted, it defaults to `<slot />`. If you want some pages to have a different layout hierarchy than the rest, then you can put your entire app inside one or more groups _except_ the routes that should not inherit the common layouts.
+最上位のレイアウト(root layout)は、アプリの全てのページに適用されます。省略した場合、デフォルトは `<slot />` です。もし、いくつかのページで他のページとは異なるレイアウト階層を持ちたい場合には、アプリ全体を1つまたは複数のグループにして、共通のレイアウトを継承しないルート(route)を分けることができます。
 
-In the example above, the `/admin` route does not inherit either the `(app)` or `(marketing)` layouts.
+上記の例で、`/admin` ルート(route)は `(app)` や `(marketing)` のレイアウトを継承しません。
 
 ### +page@
 
-Pages can break out of the current layout hierarchy on a route-by-route basis. Suppose we have an `/item/[id]/embed` route inside the `(app)` group from the previous example:
+ページは、ルート(route)ごとに現在のレイアウト階層から抜け出すことができます。先ほどの例に出てきた `(app)` グループの中に、`/item/[id]/embed` ルート(route)があるとします:
 
 ```tree
 src/routes/
@@ -214,12 +214,12 @@ src/routes/
 └ +layout.svelte
 ```
 
-Ordinarily, this would inherit the root layout, the `(app)` layout, the `item` layout and the `[id]` layout. We can reset to one of those layouts by appending `@` followed by the segment name — or, for the root layout, the empty string. In this example, we can choose from the following options:
+通常、これは最上位のレイアウト(root layout)と `(app)` レイアウトと `item` レイアウトと `[id]` レイアウトを継承します。`@` と、その後ろにセグメント名 (最上位のレイアウト(root layout)の場合は空文字列(empty string)) を追加することで、これらのレイアウトのどれかにリセットすることができます。この例では、以下のオプションから選択できます:
 
-- `+page@[id].svelte` - inherits from `src/routes/(app)/item/[id]/+layout.svelte`
-- `+page@item.svelte` - inherits from `src/routes/(app)/item/+layout.svelte`
-- `+page@(app).svelte` - inherits from `src/routes/(app)/+layout.svelte`
-- `+page@.svelte` - inherits from `src/routes/+layout.svelte`
+- `+page@[id].svelte` -  `src/routes/(app)/item/[id]/+layout.svelte` を継承します
+- `+page@item.svelte` - `src/routes/(app)/item/+layout.svelte` を継承します
+- `+page@(app).svelte` - `src/routes/(app)/+layout.svelte` を継承します
+- `+page@.svelte` - `src/routes/+layout.svelte` を継承します
 
 ```tree
 src/routes/
@@ -236,7 +236,7 @@ src/routes/
 
 ### +layout@
 
-Like pages, layouts can _themselves_ break out of their parent layout hierarchy, using the same technique. For example, a `+layout@.svelte` component would reset the hierarchy for all its child routes.
+ページと同じように、同じ方法でレイアウト _自体_ をその親のレイアウトの階層から外すことができます。例えば、`+layout@.svelte` コンポーネントはその全ての子ルート(routes)の階層をリセットします。
 
 ```
 src/routes/
@@ -252,9 +252,9 @@ src/routes/
 └ +layout.svelte
 ```
 
-### When to use layout groups
+### レイアウトグループを使うときは <!--When-to-use-layout-groups-->
 
-Not all use cases are suited for layout grouping, nor should you feel compelled to use them. It might be that your use case would result in complex `(group)` nesting, or that you don't want to introduce a `(group)` for a single outlier. It's perfectly fine to use other means such as composition (reusable `load` functions or Svelte components) or if-statements to achieve what you want. The following example shows a layout that rewinds to the root layout and reuses components and functions that other layouts can also use:
+全てのユースケースがレイアウトのグループ化に適しているわけではありませんし、無理に使用する必要もありません。あなたのユースケースが複雑な `(group)` のネストになってしまうかもしれませんし、たった1つの例外ケースのために `(group)` を導入したくないかもしれません。コンポジション (再利用可能な `load` 関数や Svelte コンポーネント) や if 文など、他の手段を使用してやりたいことを実現するのは全く問題ありません。以下の例では、最上位のレイアウト(root layout)に戻し、他のレイアウトでも使用できるコンポーネントや関数を再利用したレイアウトを示しています:
 
 ```svelte
 <!--- file: src/routes/nested/route/+layout@.svelte --->
@@ -285,6 +285,6 @@ export function load(event) {
 }
 ```
 
-## Further reading
+## その他の参考情報 <!--Further-reading-->
 
 - [Tutorial: Advanced Routing](/tutorial/kit/optional-params)

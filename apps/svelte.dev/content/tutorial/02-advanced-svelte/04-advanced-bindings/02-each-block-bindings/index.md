@@ -2,7 +2,7 @@
 title: Each block bindings
 ---
 
-You can bind to properties inside an `each` block.
+`each` ブロック内のプロパティにバインドすることもできます。
 
 ```svelte
 /// file: App.svelte

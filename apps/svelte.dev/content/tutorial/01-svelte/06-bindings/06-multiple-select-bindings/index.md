@@ -2,9 +2,9 @@
 title: Select multiple
 ---
 
-A `<select>` element can have a `multiple` attribute, in which case it will populate an array rather than selecting a single value.
+`<select>` 要素は `multiple` 属性を持つことができ、そうした場合は単一の値が選択されるのではなく、値が配列に入ります。
 
-Replace the checkboxes with a `<select multiple>`:
+checkbox を `<select multiple>` で置き換えます:
 
 ```svelte
 /// file: App.svelte
@@ -17,6 +17,6 @@ Replace the checkboxes with a `<select multiple>`:
 +++</select>+++
 ```
 
-Note that we're able to omit the `value` attribute on the `<option>`, since the value is identical to the element's contents.
+`<option>` の `value` 属性はそのコンテンツと同じであるため、省略することができます。
 
-> [!NOTE] Press and hold the `control` key (or the `command` key on MacOS) to select multiple options.
+> [!NOTE] `control` キー (MacOS の場合は `command` キー) を押したままにすると、複数の option を選択することができます。

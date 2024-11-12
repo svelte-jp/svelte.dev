@@ -2,31 +2,31 @@
 title: Web standards
 ---
 
-Throughout this documentation, you'll see references to the standard [Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) that SvelteKit builds on top of. Rather than reinventing the wheel, we _use the platform_, which means your existing web development skills are applicable to SvelteKit. Conversely, time spent learning SvelteKit will help you be a better web developer elsewhere.
+このドキュメントを通じて、SvelteKit の土台となっている標準の [Web API](https://developer.mozilla.org/en-US/docs/Web/API) を参照することができます。私たちは車輪の再発明をするのではなく、_プラットフォームを使用します_ 。つまり、既存の Web 開発スキルが SvelteKit にも活用できるということです。逆に言えば、SvelteKit の学習に時間を割くことは、あなたが他の場所でも通用する良い Web 開発者になるのに役立つでしょう。
 
-These APIs are available in all modern browsers and in many non-browser environments like Cloudflare Workers, Deno, and Vercel Functions. During development, and in [adapters](adapters) for Node-based environments (including AWS Lambda), they're made available via polyfills where necessary (for now, that is — Node is rapidly adding support for more web standards).
+これらの API は、全てのモダンブラウザはもちろん、Cloudflare Workers、Deno、Vercel Edge Functions といったブラウザ以外の環境でも使用することができます。開発中や、(AWS Lambda を含む) Node ベースの環境向けの [adapters](adapters) では、必要に応じて polyfill で利用できるようにしています (現時点においては。Node は急速により多くの Web 標準のサポートを追加しています)。
 
-In particular, you'll get comfortable with the following:
+具体的には、以下のことが楽にできるでしょう:
 
 ## Fetch APIs
 
-SvelteKit uses [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) for getting data from the network. It's available in [hooks](hooks) and [server routes](routing#server) as well as in the browser.
+SvelteKit は、ネットワーク越しにデータを取得するために [`fetch`](https://developer.mozilla.org/ja/docs/Web/API/fetch) を使用します。ブラウザだけでなく、[hooks](hooks) や [サーバールート(server routes)](routing#server) の中でも使用することができます。
 
-> [!NOTE] A special version of `fetch` is available in [`load`](load) functions, [server hooks](hooks#Server-hooks) and [API routes](routing#server) for invoking endpoints directly during server-side rendering, without making an HTTP call, while preserving credentials. (To make credentialled fetches in server-side code outside `load`, you must explicitly pass `cookie` and/or `authorization` headers.) It also allows you to make relative requests, whereas server-side `fetch` normally requires a fully qualified URL.
+> [!NOTE] [`load`](load) 関数、[server hooks](hooks#Server-hooks)、[API routes](routing#server) の中では特別なバージョンの `fetch` を使用することができ、サーバーサイドレンダリング中に、HTTP をコールすることなく、クレデンシャルを保持したまま、直接エンドポイント(endpoints)を呼び出すことができます。(`load` の外側のサーバーサイドコードでクレデンシャル付きの fetch を行う場合は、明示的に `cookie` や `authorization` ヘッダーなどを渡さなければなりません。) また、通常のサーバーサイドの `fetch` では絶対パスの URL が必要となりますが、特別なバージョンの `fetch` では相対パスのリクエストが可能です。
 
-Besides `fetch` itself, the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) includes the following interfaces:
+`fetch` 自体の他に、[Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API) には以下のインターフェイスが含まれています:
 
 ### Request
 
-An instance of [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) is accessible in [hooks](hooks) and [server routes](routing#server) as `event.request`. It contains useful methods like `request.json()` and `request.formData()` for getting data that was posted to an endpoint.
+[`Request`](https://developer.mozilla.org/ja/docs/Web/API/Request) のインスタンスは [hooks](hooks) や [サーバールート(server routes)](routing#server) で `event.request` という形でアクセスすることができます。これには `request.json()` や `request.formData()` など、エンドポイントに送られたデータを取得するための便利なメソッドが含まれています。
 
 ### Response
 
-An instance of [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) is returned from `await fetch(...)` and handlers in `+server.js` files. Fundamentally, a SvelteKit app is a machine for turning a `Request` into a `Response`.
+[`Response`](https://developer.mozilla.org/ja/docs/Web/API/Response) のインスタンスは `await fetch(...)` と `+server.js` ファイル内のハンドラーから返されます。本質的には、SvelteKit アプリは `Request` を `Response` に変換するマシンです。
 
 ### Headers
 
-The [`Headers`](https://developer.mozilla.org/en-US/docs/Web/API/Headers) interface allows you to read incoming `request.headers` and set outgoing `response.headers`. For example, you can get the `request.headers` as shown below, and use the [`json` convenience function](@sveltejs-kit#json) to send modified `response.headers`:
+[`Headers`](https://developer.mozilla.org/ja/docs/Web/API/Headers) インターフェイスでは、受け取った `request.headers` を読み取り、送信する `response.headers` をセットすることができます。例えば以下のように、`request.headers` を取得して、[`json` という便利な関数](@sveltejs-kit#json)を使用して `response.headers` を変更し送信することができます:
 
 ```js
 // @errors: 2461
@@ -51,7 +51,7 @@ export function GET({ request }) {
 
 ## FormData
 
-When dealing with HTML native form submissions you'll be working with [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) objects.
+HTML のネイティブのフォーム送信を扱う場合は、[`FormData`](https://developer.mozilla.org/ja/docs/Web/API/FormData) オブジェクトを使用します。
 
 ```js
 // @errors: 2461
@@ -74,15 +74,15 @@ export async function POST(event) {
 
 ## Stream APIs
 
-Most of the time, your endpoints will return complete data, as in the `userAgent` example above. Sometimes, you may need to return a response that's too large to fit in memory in one go, or is delivered in chunks, and for this the platform provides [streams](https://developer.mozilla.org/en-US/docs/Web/API/Streams_API) — [ReadableStream](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream), [WritableStream](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) and [TransformStream](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream).
+ほとんどの場合、エンドポイント(endpoints) は 上記の `userAgent` の例のように、完全なデータを返します。たまに、1度ではメモリに収まらない大きすぎるレスポンスを返したり、チャンクで配信したりしなければならないことがあります。このような場合のために、プラットフォームは [streams](https://developer.mozilla.org/ja/docs/Web/API/Streams_API) — [ReadableStream](https://developer.mozilla.org/ja/docs/Web/API/ReadableStream)、[WritableStream](https://developer.mozilla.org/ja/docs/Web/API/WritableStream)、[TransformStream](https://developer.mozilla.org/ja/docs/Web/API/TransformStream) を提供しています。
 
 ## URL APIs
 
-URLs are represented by the [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL) interface, which includes useful properties like `origin` and `pathname` (and, in the browser, `hash`). This interface shows up in various places — `event.url` in [hooks](hooks) and [server routes](routing#server), [`$page.url`]($app-stores) in [pages](routing#page), `from` and `to` in [`beforeNavigate` and `afterNavigate`]($app-navigation) and so on.
+URL は [`URL`](https://developer.mozilla.org/ja/docs/Web/API/URL) インターフェイスで表現され、`origin` や `pathname` のような便利なプロパティが含まれています (ブラウザでは `hash` なども)。このインターフェイスは、[hooks](hooks) と [サーバールート(server routes)](routing#server) では `event.url`、[ページ(pages)](routing#page) では [`$page.url`]($app-stores)、[`beforeNavigate` と `afterNavigate`]($app-navigation) では `from` と `to`、など、様々な場所で使われています。
 
 ### URLSearchParams
 
-Wherever you encounter a URL, you can access query parameters via `url.searchParams`, which is an instance of [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams):
+URL が存在する場所であれば、[`URLSearchParams`](https://developer.mozilla.org/ja/docs/Web/API/URLSearchParams) のインスタンスである `url.searchParams` を使用してクエリパラメータにアクセスできます:
 
 ```js
 // @filename: ambient.d.ts
@@ -99,7 +99,7 @@ const foo = url.searchParams.get('foo');
 
 ## Web Crypto
 
-The [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) is made available via the `crypto` global. It's used internally for [Content Security Policy](configuration#csp) headers, but you can also use it for things like generating UUIDs:
+[Web Crypto API](https://developer.mozilla.org/ja/docs/Web/API/Web_Crypto_API) を、グローバルの `crypto` 経由で使用することができます。内部では [Content Security Policy](configuration#csp) ヘッダーで使用されていますが、例えば UUID を生成するのにもお使い頂けます。
 
 ```js
 const uuid = crypto.randomUUID();

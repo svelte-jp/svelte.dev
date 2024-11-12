@@ -4,7 +4,7 @@ title: Integrations
 
 ## `vitePreprocess`
 
-Including [`vitePreprocess`](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/preprocess.md) in your project will allow you to use the various flavors of JS and CSS that Vite supports: TypeScript, PostCSS, SCSS, Less, Stylus, and SugarSS. If you set your project up with TypeScript it will be included by default:
+プロジェクトに [`vitePreprocess`](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/preprocess.md) を含めることで、Vite がサポートする様々な JS や CSS のフレーバー (TypeScript、PostCSS、SCSS、Less、Stylus、SugarSS) を使用することができます。プロジェクトを TypeScript でセットアップすると、TypeScript はデフォルトで含まれるようになります:
 
 ```js
 // svelte.config.js
@@ -17,7 +17,7 @@ export default {
 
 ## Adders
 
-Run `npx sv add` to setup many different complex integrations with a single command including:
+`npx sv add` によって、様々な複雑なインテグレーションを単一のコマンドでセットアップすることができます:
 - prettier (formatting)
 - eslint (linting)
 - vitest (unit testing)
@@ -31,20 +31,20 @@ Run `npx sv add` to setup many different complex integrations with a single comm
 
 ## Directory
 
-See [sveltesociety.dev](https://sveltesociety.dev/) for a full listing of [packages](https://sveltesociety.dev/packages) and [templates](https://sveltesociety.dev/templates) available for use with Svelte and SvelteKit.
+Svelte と SvelteKit で使用できる [パッケージ](https://sveltesociety.dev/packages) や [テンプレート](https://sveltesociety.dev/templates) のリストは [sveltesociety.dev](https://sveltesociety.dev/) でご覧いただけます。
 
 ## Additional integrations
 
 ### `svelte-preprocess`
 
-`svelte-preprocess` has some additional functionality not found in `vitePreprocess` such as support for Pug, Babel, and global styles. However, `vitePreprocess` may be faster and require less configuration, so it is used by default. Note that CoffeeScript is [not supported](https://github.com/sveltejs/kit/issues/2920#issuecomment-996469815) by SvelteKit.
+`svelte-preprocess` は、Pug、Babel、global styles のサポートなど、`vitePreprocess` には無い機能があります。しかし、`vitePreprocess` はより速く、設定が少ないため、デフォルトでは `vitePreprocess` が使用されます。SvelteKit は CoffeeScript を [サポートしていない](https://github.com/sveltejs/kit/issues/2920#issuecomment-996469815) ことにご注意ください。
 
-You will need to install `svelte-preprocess` with `npm install --save-dev svelte-preprocess` and [add it to your `svelte.config.js`](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/usage.md#with-svelte-config). After that, you will often need to [install the corresponding library](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/getting-started.md) such as `npm install -D sass` or `npm install -D less`.
+`svelte-preprocess` をインストールするには `npm install --save-dev svelte-preprocess` を実行し、ご自身で [`svelte.config.js` に追加する](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/usage.md#with-svelte-config) 必要があります。その後、`npm install -D sass` や `npm install -D less` など、[対応するライブラリのインストール](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/getting-started.md) が必要になることが多いようです。
 
 ## Vite plugins
 
-Since SvelteKit projects are built with Vite, you can use Vite plugins to enhance your project. See a list of available plugins at [`vitejs/awesome-vite`](https://github.com/vitejs/awesome-vite?tab=readme-ov-file#plugins).
+SvelteKit プロジェクトは Vite で構築されているため、Vite plugin を使用してプロジェクトを拡張することができます。利用可能な plugin のリストは [`vitejs/awesome-vite`](https://github.com/vitejs/awesome-vite?tab=readme-ov-file#plugins) をご覧ください。
 
 ## Integration FAQs
 
-The SvelteKit FAQ has a [how to do X with SvelteKit](./faq#How-do-I-use-X-with-SvelteKit), which may be helpful if you still have questions.
+SvelteKit FAQ に [SvelteKit で X をする方法](./faq#How-do-I-use-X-with-SvelteKit) があるので、もしまだ不明点があるようでしたら役に立つかもしれません。

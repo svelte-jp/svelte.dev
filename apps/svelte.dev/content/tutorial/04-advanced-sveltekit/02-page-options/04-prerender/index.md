@@ -2,21 +2,21 @@
 title: prerender
 ---
 
-Prerendering means generating HTML for a page once, at build time, rather than dynamically for each request.
+プリレンダリングとは、リクエストのたびに動的にレンダリングするのではなく、ビルド時に1度だけ HTML を生成することを意味します。
 
-The advantage is that serving static data is extremely cheap and performant, allowing you to easily serve large numbers of users without worrying about cache-control headers (which are easy to get wrong).
+利点は、静的データの配信が圧倒的にチープでハイパフォーマンスなことにあります。cache-control ヘッダー (これは間違いやすいことです) のことを気にすることなく、大人数のユーザーに配信することができるようになります。
 
-The tradeoff is that the build process takes longer, and prerendered content can only be updated by building and deploying a new version of the application.
+トレードオフは、ビルドプロセスの時間が長くなることと、プリレンダリングされたコンテンツを更新するにはアプリケーションの新バージョンをビルドしてデプロイしなければならないことです。
 
-To prerender a page, set `prerender` to `true`:
+ページをプリレンダリングするには、`prerender` を `true` に設定します。
 
 ```js
 /// file: src/routes/+page.server.js
 export const prerender = true;
 ```
 
-Here in the tutorial, this won't have any observable effect, since the application is running in `dev` mode.
+このチュートリアルでは、アプリケーションが `dev` モードで実行されているため、目で見てわかるような効果はありません。
 
-Not all pages can be prerendered. The basic rule is this: for content to be prerenderable, any two users hitting it directly must get the same content from the server, and the page must not contain form actions. Pages with dynamic route parameters can be prerendered as long as they are specified in the [`prerender.entries`](https://kit.svelte.dev/docs/configuration#prerender) configuration or can be reached by following links from pages that _are_ in `prerender.entries`.
+全てのページをプリレンダリングできるわけではありません。基本的なルールはこうです: コンテンツがプリレンダリング可能であると言うためには、それを直接表示する2人のユーザーが、サーバーから同じコンテンツを取得できなけれならず、ページには form actions が含まれていないこと。動的なルートパラメータ(route parameters)を持つページは、[`prerender.entries`](https://kit.svelte.jp/docs/configuration#prerender) 設定で指定されているか、`prerender.entries` で指定されているページからリンクを辿って到達できるのであれば、プリレンダリングすることができます。
 
-> [!NOTE] Setting `prerender` to `true` inside your root `+layout.server.js` effectively turns SvelteKit into a static site generator (SSG).
+> [!NOTE] 最上位(root)の `+layout.server.js` で `prerender` を `true` に設定した場合、実質的には SvelteKit は静的サイトジェネレーター (static site generator, SSG) になります。

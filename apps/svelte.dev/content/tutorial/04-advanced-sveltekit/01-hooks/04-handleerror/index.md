@@ -2,9 +2,9 @@
 title: handleError
 ---
 
-The `handleError` hook lets you intercept unexpected errors and trigger some behaviour, like pinging a Slack channel or sending data to an error logging service.
+`handleError` hook は、予期せぬエラー(unexpected errors)をインターセプトし、何らかの動作をトリガーすることができます。例えば、エラーが起きたときに Slack channel に通知したり、エラーロギングサービスにデータを送ったりします。
 
-As you'll recall from an [earlier exercise](error-basics), an error is _unexpected_ if it wasn't created with the `error` helper from `@sveltejs/kit`. It generally means something in your app needs fixing. The default behaviour is to log the error:
+[前の演習](error-basics)を振り返ると、`@sveltejs/kit` からインポートする `error` ヘルパーで作成されていないエラーは、 _予期せぬ(unexpected)_ エラーです。それは通常、アプリを修正する必要があるということです。デフォルトの動作としては、エラーをログに記録します:
 
 ```js
 /// file: src/hooks.server.js
@@ -13,9 +13,9 @@ export function handleError({ event, error }) {
 }
 ```
 
-If you navigate to `/the-bad-place`, you'll see this in action — the error page is shown, and if you open the terminal (using the button to the right of the URL bar), you'll see the message from `src/routes/the-bad-place/+page.server.js`.
+`/the-bad-place` に移動すると、この動作を見ることができます — エラーページが表示され、(URL バーの右にあるボタンを押して) ターミナルを開くと `src/routes/the-bad-place/+page.server.js` からのメッセージが表示されているはずです。
 
-Notice that we're _not_ showing the error message to the user. That's because error messages can include sensitive information that at best will confuse your users, and at worst could benefit evildoers. Instead, the error object available to your application — represented as `$page.error` in your `+error.svelte` pages, or `%sveltekit.error%` in your `src/error.html` fallback — is just this:
+エラーメッセージをユーザーに表示していないことにご注目ください。これは、エラーメッセージには機密情報が含まれている可能性があり、ユーザーを混乱させ、最悪の場合、悪意のある人間に利用される可能性があるからです。そのため、アプリケーションで利用できるエラーオブジェクト (`+error.svelte` ページでは `$page.error`、`src/error.html` フォールバック では `%sveltekit.error%`) はこれだけです:
 
 <!-- prettier-ignore-start -->
 ```js
@@ -25,7 +25,7 @@ Notice that we're _not_ showing the error message to the user. That's because er
 ```
 <!-- prettier-ignore-end -->
 
-In some situations you may want to customise this object. To do so, you can return an object from `handleError`:
+状況によっては、このオブジェクトをカスタマイズしたいでしょう。そのためには、`handleError` からオブジェクトを返します:
 
 ```js
 /// file: src/hooks.server.js
@@ -39,7 +39,7 @@ export function handleError({ event, error }) {
 }
 ```
 
-You can now reference properties other than `message` in a custom error page. Create `src/routes/+error.svelte`:
+カスタムのエラーページで `message` 以外のプロパティを参照できるようになりました。`src/routes/+error.svelte` を作成しましょう:
 
 ```svelte
 /// file: src/routes/+error.svelte

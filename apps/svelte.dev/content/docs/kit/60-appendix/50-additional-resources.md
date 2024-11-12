@@ -4,20 +4,22 @@ title: Additional resources
 
 ## FAQs
 
-Please see the [SvelteKit FAQ](faq) for solutions to common issues and helpful tips and tricks.
+よくある問題の解決方法や役に立つ tips や tricks については、[SvelteKit FAQ](faq) をご覧ください。
 
-The [Svelte FAQ](../svelte/faq) and [`vite-plugin-svelte` FAQ](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md) may also be helpful for questions deriving from those libraries.
+[Svelte FAQ](../svelte/faq) と [`vite-plugin-svelte` FAQ](https://github.com/sveltejs/vite-plugin-svelte/blob/main/docs/faq.md) も、これらのライブラリに起因する疑問点には役立つでしょう。
 
 ## Examples
 
-We've written and published a few different SvelteKit sites as examples:
+例として、数種類 SvelteKit サイトを作成し、公開しています:
 
 - [`sveltejs/realworld`](https://github.com/sveltejs/realworld) contains an example blog site
 - [A HackerNews clone](https://github.com/sveltejs/sites/tree/master/sites/hn.svelte.dev)
 - [`svelte.dev`](https://github.com/sveltejs/svelte.dev)
 
-SvelteKit users have also published plenty of examples on GitHub, under the [#sveltekit](https://github.com/topics/sveltekit) and [#sveltekit-template](https://github.com/topics/sveltekit-template) topics, as well as on [the Svelte Society site](https://sveltesociety.dev/templates?category=sveltekit). Note that these have not been vetted by the maintainers and may not be up to date.
+また、SvelteKit ユーザーが GitHub で [#sveltekit](https://github.com/topics/sveltekit) や [#sveltekit-template](https://github.com/topics/sveltekit-template) というトピックを付けて多くの例を公開しており、[Svelte Society のサイト](https://sveltesociety.dev/templates?category=sveltekit) にも例が公開されています。なお、これらはメンテナーによって検証されておらず、最新ではない可能性もありますのでご注意ください。
 
-## Support
+## サポート <!--Support-->
 
-You can ask for help on [Discord](https://svelte.dev/chat) and [StackOverflow](https://stackoverflow.com/questions/tagged/sveltekit). Please first search for information related to your issue in the FAQ, Google or another search engine, issue tracker, and Discord chat history in order to be respectful of others' time. There are many more people asking questions than answering them, so this will help in allowing the community to grow in a scalable fashion.
+[Discord](https://svelte.dev/chat) や [StackOverflow](https://stackoverflow.com/questions/tagged/sveltekit) でヘルプを求めることができます。他の方の時間を尊重するため、まずは FAQ、Googleまたは他の検索エンジン、issue tracker、Discord のチャット履歴などから、問題に関連する情報を検索してください。回答する方より質問する方のほうが多いので、こうすることでコミュニティをスケーラブルに発展させることができると思います。
+
+> 日本語翻訳版 追記：上記のDiscordはSvelte本体のもので、英語でコミュニケーションが行われています。もし日本語で質問したり交流したいのであれば、[Svelte日本のDiscord](https://discord.com/invite/YTXq3ZtBbx)にどうぞ！

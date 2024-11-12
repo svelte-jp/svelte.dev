@@ -2,13 +2,13 @@
 title: Cloudflare Workers
 ---
 
-To deploy to [Cloudflare Workers](https://workers.cloudflare.com/), use [`adapter-cloudflare-workers`](https://github.com/sveltejs/kit/tree/main/packages/adapter-cloudflare-workers).
+[Cloudflare Workers](https://workers.cloudflare.com/) にデプロイする場合は、[`adapter-cloudflare-workers`](https://github.com/sveltejs/kit/tree/main/packages/adapter-cloudflare-workers) を使用します。
 
 > [!NOTE] Unless you have a specific reason to use `adapter-cloudflare-workers`, it's recommended that you use `adapter-cloudflare` instead. Both adapters have equivalent functionality, but Cloudflare Pages offers features like GitHub integration with automatic builds and deploys, preview deployments, instant rollback and so on.
 
-## Usage
+## 使い方 <!--Usage-->
 
-Install with `npm i -D @sveltejs/adapter-cloudflare-workers`, then add the adapter to your `svelte.config.js`:
+`npm i -D @sveltejs/adapter-cloudflare-workers` を実行してインストールし、`svelte.config.js` にこの adapter を追加します:
 
 ```js
 // @errors: 2307
@@ -40,9 +40,9 @@ Path to your custom `wrangler.toml` config file.
 
 Preferences for the emulated `platform.env` local bindings. See the [getPlatformProxy](https://developers.cloudflare.com/workers/wrangler/api/#syntax) Wrangler API documentation for a full list of options.
 
-## Basic Configuration
+## 基本設定 <!--Basic-configuration-->
 
-This adapter expects to find a [wrangler.toml](https://developers.cloudflare.com/workers/platform/sites/configuration) file in the project root. It should look something like this:
+この adapter では、プロジェクトの root に [wrangler.toml](https://developers.cloudflare.com/workers/platform/sites/configuration) ファイルを置くことを想定しています。内容としては以下のようなものです:
 
 ```toml
 /// file: wrangler.toml
@@ -58,32 +58,32 @@ compatibility_date = "2021-11-12"
 workers_dev = true
 ```
 
-`<your-service-name>` can be anything. `<your-account-id>` can be found by logging into your [Cloudflare dashboard](https://dash.cloudflare.com) and grabbing it from the end of the URL:
+`<your-service-name>` は何でも構いません。`<your-account-id>` は、[Cloudflare dashboard](https://dash.cloudflare.com) にログインし、URL の末尾から取得できます:
 
 ```
 https://dash.cloudflare.com/<your-account-id>
 ```
 
-> [!NOTE] You should add the `.cloudflare` directory (or whichever directories you specified for `main` and `site.bucket`) to your `.gitignore`.
+> [!NOTE] `.cloudflare` ディレクトリ (または `main` と `site.bucket` に指定したディレクトリ) を `.gitignore` に追加する必要があります。
 
-You will need to install [wrangler](https://developers.cloudflare.com/workers/wrangler/get-started/) and log in, if you haven't already:
+[wrangler](https://developers.cloudflare.com/workers/wrangler/get-started/) をインストールしてログインする必要がありますが、もしまだやっていなければ:
 
 ```
 npm i -g wrangler
 wrangler login
 ```
 
-Then, you can build your app and deploy it:
+その後、アプリをビルドしデプロイすることができます:
 
 ```sh
 wrangler deploy
 ```
 
-## Custom config
+## カスタム設定 <!--Custom-config-->
 
 If you would like to use a config file other than `wrangler.toml` you can specify so using the [`config` option](#Options-config).
 
-If you would like to enable [Node.js compatibility](https://developers.cloudflare.com/workers/runtime-apis/nodejs/#enable-nodejs-from-the-cloudflare-dashboard), you can add "nodejs_compat" flag to `wrangler.toml`:
+[Node.js 互換](https://developers.cloudflare.com/workers/runtime-apis/nodejs/#enable-nodejs-from-the-cloudflare-dashboard) を有効化したい場合は、`wrangler.toml` で  "nodejs_compat" フラグを追加してください:
 
 ```toml
 /// file: wrangler.toml
@@ -92,7 +92,7 @@ compatibility_flags = [ "nodejs_compat" ]
 
 ## Runtime APIs
 
-The [`env`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters) object contains your project's [bindings](https://developers.cloudflare.com/pages/platform/functions/bindings/), which consist of KV/DO namespaces, etc. It is passed to SvelteKit via the `platform` property, along with [`context`](https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/#contextwaituntil), [`caches`](https://developers.cloudflare.com/workers/runtime-apis/cache/), and [`cf`](https://developers.cloudflare.com/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties), meaning that you can access it in hooks and endpoints:
+[`env`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters) オブジェクトにはあなたのプロジェクトの [bindings](https://developers.cloudflare.com/pages/platform/functions/bindings/) が含まれており、KV/DO namespaces などで構成されています。これは `platform` プロパティを介して [`context`](https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/#contextwaituntil)、[`caches`](https://developers.cloudflare.com/workers/runtime-apis/cache/)、[`cf`](https://developers.cloudflare.com/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) と一緒に SvelteKit に渡されます。つまり、hooks とエンドポイントでこれらにアクセスできるということです:
 
 ```js
 // @errors: 7031
@@ -101,9 +101,9 @@ export async function POST({ request, platform }) {
 }
 ```
 
-> [!NOTE] SvelteKit's built-in `$env` module should be preferred for environment variables.
+> [!NOTE] 環境変数については、SvelteKit の組み込みの `$env` モジュールの使用を推奨します。
 
-To include type declarations for your bindings, reference them in your `src/app.d.ts`:
+バインディングの型宣言を含めるには、、`src/app.d.ts` でこれらを参照します:
 
 ```dts
 /// file: src/app.d.ts
@@ -127,12 +127,12 @@ Cloudflare Workers specific values in the `platform` property are emulated durin
 
 For testing the build, you should use [wrangler](https://developers.cloudflare.com/workers/cli-wrangler) **version 3**. Once you have built your site, run `wrangler dev`.
 
-## Troubleshooting
+## トラブルシューティング <!--Troubleshooting-->
 
 ### Worker size limits
 
-When deploying to workers, the server generated by SvelteKit is bundled into a single file. Wrangler will fail to publish your worker if it exceeds [the size limits](https://developers.cloudflare.com/workers/platform/limits/#worker-size) after minification. You're unlikely to hit this limit usually, but some large libraries can cause this to happen. In that case, you can try to reduce the size of your worker by only importing such libraries on the client side. See [the FAQ](./faq#How-do-I-use-X-with-SvelteKit-How-do-I-use-a-client-side-only-library-that-depends-on-document-or-window) for more information.
+Workers にデプロイする場合、SvelteKit が生成したサーバーは1つのファイルにバンドルされます。minify 後に Worker が [そのサイズの上限](https://developers.cloudflare.com/workers/platform/limits/#worker-size) を超過する場合、Wrangler が Worker の公開に失敗します。通常、この制限に引っかかることはほとんどありませんが、一部の大きいライブラリではこれが発生することがあります。その場合、大きいライブラリをクライアントサイドでのみインポートするようにすることで、Worker のサイズを小さくすることができます。詳細は [FAQ](./faq#How-do-I-use-X-with-SvelteKit-How-do-I-use-a-client-side-only-library-that-depends-on-document-or-window) をご覧ください。
 
-### Accessing the file system
+### ファイルシステムにアクセスする <!--Accessing-the-file-system-->
 
-You can't use `fs` in Cloudflare Workers — you must [prerender](page-options#prerender) the routes in question.
+Cloudflare Workers では `fs` を使用することはできません。そうする必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。

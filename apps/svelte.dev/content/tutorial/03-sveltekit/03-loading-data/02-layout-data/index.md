@@ -3,13 +3,13 @@ title: Layout data
 path: /blog
 ---
 
-Just as `+layout.svelte` files create UI for every child route, `+layout.server.js` files load data for every child route.
+`+layout.svelte` ファイルが全ての子ルート(route)共通の UI を作るのと同じように、`+layout.server.js` ファイルは全ての子ルート(route)共通で使えるデータをロードします。
 
-Suppose we'd like to add a 'more posts' sidebar to our blog post page. We _could_ return `summaries` from the `load` function in `src/routes/blog/[slug]/+page.server.js`, like we do in `src/routes/blog/+page.server.js`, but that would be repetitive.
+'more posts'(他の記事) サイドバーを、ブログ記事ページに追加したいと思います。`src/routes/blog/+page.server.js` で行っているのと同じように、`src/routes/blog/[slug]/+page.server.js` の `load` 関数から `summaries` を返すこともできますが、これでは同じことを繰り返すことになってしまいます。
 
-Instead, let's rename `src/routes/blog/+page.server.js` to `src/routes/blog/+layout.server.js`. Notice that the `/blog` route continues to work — `data.summaries` is still available to the page.
+代わりに、`src/routes/blog/+page.server.js` を `src/routes/blog/+layout.server.js` にリネームしましょう。`/blog` ルート(route)が動作し続けていることにご注目ください — `data.summaries` がまだページで利用できているのです。
 
-Now, add a sidebar in the layout for the post page:
+では、記事ページ向けのレイアウトにサイドバーを追加しましょう:
 
 ```svelte
 /// file: src/routes/blog/[slug]/+layout.svelte
@@ -45,6 +45,6 @@ Now, add a sidebar in the layout for the post page:
 </style>
 ```
 
-The layout (and any page below it) inherits `data.summaries` from the parent `+layout.server.js`.
+レイアウト (とその下のページ) は、親の `+layout.server.js` から `data.summaries` を継承します。
 
-When we navigate from one post to another, we only need to load the data for the post itself — the layout data is still valid. See the documentation on [invalidation](https://kit.svelte.dev/docs/load#rerunning-load-functions) to learn more.
+ある記事から別の記事に移動したとき、記事自体のデータだけをロードするだけでよくなります — レイアウトのデータは有効なままです。もっと学習したければ、[invalidation](https://kit.svelte.jp/docs/load#rerunning-load-functions) のドキュメントをご覧ください。

@@ -2,9 +2,9 @@
 title: $env/static/public
 ---
 
-Some environment variables _can_ be safely exposed to the browser. These are distinguished from private environment variables with a `PUBLIC_` prefix.
+ブラウザに公開しても安全な環境変数もあります。これらは `PUBLIC_` プレフィックスを付けることで、プライベートな環境変数と区別します。
 
-Add values to the two public environment variables in `.env`:
+`.env` にある2つのパブリックな環境変数に値を追加します。
 
 ```env
 /// file: .env
@@ -12,7 +12,7 @@ PUBLIC_THEME_BACKGROUND=+++"steelblue"+++
 PUBLIC_THEME_FOREGROUND=+++"bisque"+++
 ```
 
-Then, import them into `src/routes/+page.svelte`:
+そして、これらを `src/routes/+page.svelte` にインポートします。
 
 ```svelte
 /// file: src/routes/+page.svelte

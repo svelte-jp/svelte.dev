@@ -2,19 +2,19 @@
 title: Cloudflare Pages
 ---
 
-To deploy to [Cloudflare Pages](https://developers.cloudflare.com/pages/), use [`adapter-cloudflare`](https://github.com/sveltejs/kit/tree/main/packages/adapter-cloudflare).
+[Cloudflare Pages](https://developers.cloudflare.com/pages/) にデプロイする場合は、[`adapter-cloudflare`](https://github.com/sveltejs/kit/tree/main/packages/adapter-cloudflare) を使用します。
 
 This adapter will be installed by default when you use [`adapter-auto`](adapter-auto). If you plan on staying with Cloudflare Pages, you can switch from [`adapter-auto`](adapter-auto) to using this adapter directly so that values specific to Cloudflare Workers are emulated during local development, type declarations are automatically applied, and the ability to set Cloudflare-specific options is provided.
 
-## Comparisons
+## 比較 <!--Comparisons-->
 
-- `adapter-cloudflare` – supports all SvelteKit features; builds for [Cloudflare Pages](https://blog.cloudflare.com/cloudflare-pages-goes-full-stack/)
-- `adapter-cloudflare-workers` – supports all SvelteKit features; builds for Cloudflare Workers
-- `adapter-static` – only produces client-side static assets; compatible with Cloudflare Pages
+- `adapter-cloudflare` – SvelteKit の全ての機能をサポートします; [Cloudflare Pages](https://blog.cloudflare.com/cloudflare-pages-goes-full-stack/) 向けにビルドします
+- `adapter-cloudflare-workers` – SvelteKit の全ての機能をサポートします; Cloudflare Workers 向けにビルドします
+- `adapter-static` – クライアントサイドの静的なアセットを生成するのみです; Cloudflare Pages と互換性があります
 
-## Usage
+## 使い方 <!--Usage-->
 
-Install with `npm i -D @sveltejs/adapter-cloudflare`, then add the adapter to your `svelte.config.js`:
+`npm i -D @sveltejs/adapter-cloudflare` を実行してインストールし、`svelte.config.js` にこの adapter を追加します:
 
 ```js
 // @errors: 2307
@@ -59,11 +59,11 @@ You can have up to 100 `include` and `exclude` rules combined. Generally you can
 
 Preferences for the emulated `platform.env` local bindings. See the [getPlatformProxy](https://developers.cloudflare.com/workers/wrangler/api/#syntax) Wrangler API documentation for a full list of options.
 
-## Deployment
+## デプロイメント(Deployment)
 
-Please follow the [Get Started Guide](https://developers.cloudflare.com/pages/get-started) for Cloudflare Pages to begin.
+Cloudflare Pages の始め方は、[Get Started Guide](https://developers.cloudflare.com/pages/get-started) に従ってください。
 
-When configuring your project settings, you must use the following settings:
+プロジェクトのセッティングを設定するときは、以下のセッティングを使用しなければなりません:
 
 - **Framework preset** – SvelteKit
 - **Build command** – `npm run build` or `vite build`
@@ -71,7 +71,7 @@ When configuring your project settings, you must use the following settings:
 
 ## Runtime APIs
 
-The [`env`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters) object contains your project's [bindings](https://developers.cloudflare.com/pages/platform/functions/bindings/), which consist of KV/DO namespaces, etc. It is passed to SvelteKit via the `platform` property, along with [`context`](https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/#contextwaituntil), [`caches`](https://developers.cloudflare.com/workers/runtime-apis/cache/), and [`cf`](https://developers.cloudflare.com/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties), meaning that you can access it in hooks and endpoints:
+[`env`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters) オブジェクトにはあなたのプロジェクトの [bindings](https://developers.cloudflare.com/pages/platform/functions/bindings/) が含まれており、KV/DO namespaces などで構成されています。これは `platform` プロパティを介して [`context`](https://developers.cloudflare.com/workers/runtime-apis/handlers/fetch/#contextwaituntil)、[`caches`](https://developers.cloudflare.com/workers/runtime-apis/cache/)、[`cf`](https://developers.cloudflare.com/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) と一緒に SvelteKit に渡されます。つまり、hooks とエンドポイントでこれらにアクセスできるということです:
 
 ```js
 // @errors: 7031
@@ -80,9 +80,9 @@ export async function POST({ request, platform }) {
 }
 ```
 
-> [!NOTE] SvelteKit's built-in `$env` module should be preferred for environment variables.
+> [!NOTE] 環境変数については、SvelteKit のビルトインの `$env` モジュールを優先的に使用したほうが良いでしょう。
 
-To include type declarations for your bindings, reference them in your `src/app.d.ts`:
+バインディングの型宣言を含めるには、、`src/app.d.ts` でこれらを参照します:
 
 ```dts
 /// file: src/app.d.ts
@@ -102,24 +102,24 @@ export {};
 
 ### Testing Locally
 
-Cloudflare Workers specific values in the `platform` property are emulated during dev and preview modes. Local [bindings](https://developers.cloudflare.com/workers/wrangler/configuration/#bindings) are created based on the configuration in your `wrangler.toml` file and are used to populate `platform.env` during development and preview. Use the adapter config [`platformProxy` option](#Options-platformProxy) to change your preferences for the bindings.
+Cloudflare Workers specific values in the `platform` property are emulated during dev and preview modes. Local [bindings](https://developers.cloudflare.com/workers/wrangler/configuration/#bindings) are created based on the configuration in your `wrangler.toml` file and are used to populate `platform.env` during development and preview. Use the adapter config [`platformProxy` option](#options-platformproxy) to change your preferences for the bindings.
 
 For testing the build, you should use [wrangler](https://developers.cloudflare.com/workers/cli-wrangler) **version 3**. Once you have built your site, run `wrangler pages dev .svelte-kit/cloudflare`.
 
 ## Notes
 
-Functions contained in the `/functions` directory at the project's root will _not_ be included in the deployment, which is compiled to a [single `_worker.js` file](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode). Functions should be implemented as [server endpoints](routing#server) in your SvelteKit app.
+プロジェクトの root にある `/functions` ディレクトリに含まれる関数はデプロイメントには含まれず、[1つの `_worker.js` ファイル](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)にコンパイルされます。関数は、あなたの SvelteKit アプリの [サーバーエンドポイント(server endpoints)](/routing#server) として実装する必要があります。
 
-The `_headers` and `_redirects` files specific to Cloudflare Pages can be used for static asset responses (like images) by putting them into the `/static` folder.
+Cloudflare Pages 固有の `_headers` ファイルと `_redirects` ファイルについては、`/static` フォルダに置くことで、静的アセットのレスポンス (画像など) に使用することができます。
 
-However, they will have no effect on responses dynamically rendered by SvelteKit, which should return custom headers or redirect responses from [server endpoints](routing#server) or with the [`handle`](hooks#Server-hooks-handle) hook.
+しかし、SvelteKit が動的にレンダリングするレスポンスには効果がありません。この場合にカスタムヘッダーやリダイレクトレスポンスを返すには、[サーバーエンドポイント(server endpoints)](/routing#server) や [`handle`](/hooks#Server-hooks-handle) hook から返す必要があります。
 
-## Troubleshooting
+## トラブルシューティング <!--Troubleshooting-->
 
-### Further reading
+### 外部の資料 <!--Further-reading-->
 
-You may wish to refer to [Cloudflare's documentation for deploying a SvelteKit site](https://developers.cloudflare.com/pages/framework-guides/deploy-a-svelte-site).
+[Cloudflare の、SvelteKit サイトのデプロイに関するドキュメント](https://developers.cloudflare.com/pages/framework-guides/deploy-a-svelte-site)をご参照ください。
 
-### Accessing the file system
+### ファイルシステムにアクセスする <!--Accessing-the-file-system-->
 
-You can't use `fs` in Cloudflare Workers — you must [prerender](page-options#prerender) the routes in question.
+Cloudflare Workers では `fs` を使用することはできません。そうする必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。

@@ -2,9 +2,9 @@
 title: POST handlers
 ---
 
-You can also add handlers that mutate data, such as `POST`. In most cases, you should use [form actions](the-form-element) instead — you'll end up writing less code, and it'll work without JavaScript, making it more resilient.
+また、データを変更するハンドラを追加することもできます。例えば `POST` です。ただし、ほとんどのケースでは [form actions](the-form-element) を使うほうが良いでしょう — 書くコード量が少なくなり、JavaScript なしでも動作するので、よりレジリエンスになります。
 
-Inside the `keydown` event handler of the 'add a todo' `<input>`, let's post some data to the server:
+'add a todo' `<input>` の `keydown` イベントハンドラの中で、データをサーバーに POST しましょう:
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -30,9 +30,9 @@ Inside the `keydown` event handler of the 'add a todo' `<input>`, let's post som
 />
 ```
 
-Here, we're posting some JSON to the `/todo` API route — using a `userid` from the user's cookies — and receiving the `id` of the newly created todo in response.
+ここでは、ユーザーの cookie にある `userid` を使用して `/todo` API ルート(route) に JSON を POST し、新たに作成した todo の `id` をレスポンスとして受け取っています。
 
-Create the `/todo` route by adding a `src/routes/todo/+server.js` file with a `POST` handler that calls `createTodo` in `src/lib/server/database.js`:
+`src/routes/todo/+server.js` ファイルを追加して、`src/lib/server/database.js` の `createTodo` を呼び出す `POST` ハンドラを記述し、`/todo` ルート(route)を作成しましょう。
 
 ```js
 /// file: src/routes/todo/+server.js
@@ -49,9 +49,9 @@ export async function POST({ request, cookies }) {
 }
 ```
 
-As with `load` functions and form actions, the `request` is a standard [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) object; `await request.json()` returns the data that we posted from the event handler.
+`load` 関数や form actions と同様、`request` は標準の [Request](https://developer.mozilla.org/ja/docs/Web/API/Request) オブジェクトです; `await request.json()` はイベントハンドラから POST されたデータを返します。
 
-We're returning a response with a [201 Created](https://http.dog/201) status and the `id` of the newly generated todo in our database. Back in the event handler, we can use this to update the page:
+データベースに新たに生成された todo の `id` をレスポンスとして [201 Created](https://http.dog/201) ステータスで返しています。イベントハンドラに戻り、これを使用してページを更新します:
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -84,4 +84,4 @@ We're returning a response with a [201 Created](https://http.dog/201) status and
 />
 ```
 
-> [!NOTE] You should only mutate `data` in such a way that you'd get the same result by reloading the page.
+> [!NOTE] ページをリロードしても同じ結果が取得できるような方法で `data` を変更する必要があります。

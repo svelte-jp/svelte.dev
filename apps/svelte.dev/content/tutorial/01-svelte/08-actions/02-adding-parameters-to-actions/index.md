@@ -2,11 +2,11 @@
 title: Adding parameters
 ---
 
-Like transitions and animations, an action can take an argument, which the action function will be called with alongside the element it belongs to.
+トランジションとアニメーションと同じように、action は引数を取ることができます。その引数と、action 関数自身が属する要素を以って、action 関数は呼び出されます。
 
-In this exercise, we want to add a tooltip to the `<button>` using the [`Tippy.js`](https://atomiks.github.io/tippyjs/) library. The action is already wired up with `use:tooltip`, but if you hover over the button (or focus it with the keyboard) the tooltip contains no content.
+この演習では、[`Tippy.js`](https://atomiks.github.io/tippyjs/) ライブラリを使って `<button>` にツールチップを追加したいと思います。action はすでに `use:tooltip` によって紐付けられていますが、ボタンをホバーしても (キーボードでフォーカスしても) ツールチップには何も表示されません。
 
-First, the action needs to accept a function that returns some options to pass to Tippy:
+最初に、action でオプションを受け取り、それを Tippy に渡さなければなりません:
 
 ```js
 /// file: App.svelte
@@ -19,9 +19,9 @@ function tooltip(node, +++fn+++) {
 }
 ```
 
-> [!NOTE] We're passing in a function, rather than the options themselves, because the `tooltip` function does not re-run when the options change.
+> [!NOTE] オプションそのものではなく関数を渡していますが、これは、`tooltip` 関数はオプションが変更されたときに再実行しないからです。
 
-Then, we need to pass the options into the action:
+それから、オプションを action に渡します:
 
 ```svelte
 /// file: App.svelte
@@ -30,4 +30,4 @@ Then, we need to pass the options into the action:
 </button>
 ```
 
-> [!NOTE] In Svelte 4, actions returned an object with `update` and `destroy` methods. This still works but we recommend using `$effect` instead, as it provides more flexibility and granularity.
+> [!NOTE] Svelte 4 では、action は `update` メソッドと `destroy` メソッドをもったオブジェクトを返していました。これはまだ動作しますが、代わりに `$effect` を使用することをおすすめします。そのほうがより柔軟できめ細やかだからです。

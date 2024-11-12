@@ -2,9 +2,9 @@
 title: Reloading the page
 ---
 
-Ordinarily, SvelteKit will navigate between pages without refreshing the page. In this exercise, if we navigate between `/` and `/about`, the timer keeps on ticking.
+通常、SvelteKit ではページをリフレッシュすることなくページ間を移動できます。この演習では、`/` と `/about` の間を移動してもタイマーが動き続けますが、これは移動のときにリフレッシュしていないからです。
 
-In rare cases, you might want to disable this behaviour. You can do so by adding the `data-sveltekit-reload` attribute on an individual link, or any element that contains links:
+まれに、この動作を無効にしたいときがあります。`data-sveltekit-reload` 属性を個々のリンクやリンクを含む要素に付けると、これを実現できます:
 
 ```svelte
 /// file: src/routes/+layout.svelte
@@ -14,4 +14,4 @@ In rare cases, you might want to disable this behaviour. You can do so by adding
 </nav>
 ```
 
-For more information on available link options and their values, consult the [link options documentation](https://kit.svelte.dev/docs/link-options).
+link options とその値に関する詳細な情報については、[link options のドキュメント](https://kit.svelte.jp/docs/link-options)をご参照ください。

@@ -2,9 +2,9 @@
 title: Group inputs
 ---
 
-If you have multiple `type="radio"` or `type="checkbox"` inputs relating to the same value, you can use `bind:group` along with the `value` attribute. Radio inputs in the same group are mutually exclusive; checkbox inputs in the same group form an array of selected values.
+同じ値に関連している `type="radio"` input や `type="checkbox"` input が複数ある場合、`value` 属性とともに `bind:group` を使うことができます。同じグループの radio input は互いに排他的(exclusive)です。同じグループの checkbox input は選択した値の配列を構成します。
 
-Add `bind:group={scoops}` to the radio inputs...
+`bind:group={scoops}` を radio input に追加し…
 
 ```svelte
 /// file: App.svelte
@@ -16,7 +16,7 @@ Add `bind:group={scoops}` to the radio inputs...
 />
 ```
 
-...and `bind:group={flavours}` to the checkbox inputs:
+…そして `bind:group={flavours}` を checkbox input に追加します:
 
 ```svelte
 /// file: App.svelte

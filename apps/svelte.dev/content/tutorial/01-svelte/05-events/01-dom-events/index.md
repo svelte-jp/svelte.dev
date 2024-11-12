@@ -2,7 +2,7 @@
 title: DOM events
 ---
 
-As we've briefly seen already, you can listen to any DOM event on an element (such as click or [pointermove](https://developer.mozilla.org/en-US/docs/Web/API/Element/pointermove_event)) with an `on<name>` function:
+今までざっと見てきたように、 要素の任意の DOM イベント (例えば click や [pointermove](https://developer.mozilla.org/ja/docs/Web/API/Element/pointermove_event)) をリスンするには、`on<name>` 関数を使用します:
 
 ```svelte
 /// file: App.svelte
@@ -11,7 +11,7 @@ As we've briefly seen already, you can listen to any DOM event on an element (su
 </div>
 ```
 
-Like with any other property where the name matches the value, we can use the short form:
+他のプロパティと同様に、名前と値が一致する場合は短縮形を使用することができます:
 
 ```svelte
 /// file: App.svelte

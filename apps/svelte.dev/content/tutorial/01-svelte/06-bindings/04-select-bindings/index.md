@@ -2,7 +2,7 @@
 title: Select bindings
 ---
 
-We can also use `bind:value` with `<select>` elements:
+`<select>` 要素にも `bind:value` を使用できます。
 
 ```svelte
 /// file: App.svelte
@@ -12,6 +12,6 @@ We can also use `bind:value` with `<select>` elements:
 >
 ```
 
-Note that the `<option>` values are objects rather than strings. Svelte doesn't mind.
+`<option>` の値は文字列ではなくオブジェクトであることにご注意ください。Svelteは気にしません。
 
-> [!NOTE] Because we haven't set an initial value of `selected`, the binding will set it to the default value (the first in the list) automatically. Be careful though — until the binding is initialised, `selected` remains undefined, so we can't blindly reference e.g. `selected.id` in the template.
+> [!NOTE] `selected` の初期値を設定していないので、バインディングは自動的にデフォルト値(配列の先頭)に設定されます。しかし、注意してください。バインディングが初期化されるまで、`selected` は undefined のままなので、よく考えもせずにテンプレート内の `selected.id` などを参照することはできません。

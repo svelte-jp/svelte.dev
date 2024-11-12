@@ -2,9 +2,9 @@
 title: This
 ---
 
-You can use the special `bind:this` directive to get a readonly binding to an element in your component.
+コンポーネントにある要素を読み取り専用のバインディングにするための特別なディレクティブとして、`bind:this` を使用することができます。
 
-The `$effect` in this exercise attempts to create a canvas context, but `canvas` is `undefined`. Begin by declaring it at the top level of the component...
+この演習の `$effect` では、canvas context を作成しようとしていますが、`canvas` は `undefined` です。まずコンポーネントのトップレベルで宣言することから始めましょう...
 
 ```svelte
 /// file: App.svelte
@@ -19,11 +19,11 @@ The `$effect` in this exercise attempts to create a canvas context, but `canvas`
 </script>
 ```
 
-...then add the directive to the `<canvas>` element:
+...それからディレクティブを `<canvas>` 要素に追加します:
 
 ```svelte
 /// file: App.svelte
 <canvas +++bind:this={canvas}+++ width={32} height={32}></canvas>
 ```
 
-Note that the value of `canvas` will remain `undefined` until the component has mounted — in other words you can't access it until the `$effect` runs.
+コンポーネントがマウントされるまで `canvas` は `undefined` のままであることにご注意ください。言い換えると、`$effect` が実行されるまでアクセスできないということです。

@@ -2,7 +2,7 @@
 title: Inline handlers
 ---
 
-You can also declare event handlers inline:
+イベントハンドラをインラインで宣言することもできます。
 
 ```svelte
 /// file: App.svelte

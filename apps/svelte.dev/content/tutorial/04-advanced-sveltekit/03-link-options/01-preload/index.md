@@ -2,9 +2,9 @@
 title: Preloading
 ---
 
-In this exercise, the `/slow-a` and `/slow-b` routes both have artificial delays in their `load` functions, meaning it takes a long time to navigate to them.
+この演習では、`/slow-a` と `/slow-b` の両方のルートにわざと遅延を設けています (`load` 関数でそれを行っています)。つまり、そこに移動しようとすると時間がかかるようになっています。
 
-You can't always make your data load more quickly — sometimes it's out of your control — but SvelteKit can speed up navigations by _anticipating_ them. When an `<a>` element has a `data-sveltekit-preload-data` attribute, SvelteKit will begin the navigation as soon as the user hovers over the link (on desktop) or taps it (on mobile). Try adding it to the first link:
+データの読み込みをいつも速くできるとは限りません — コントロールできないこともあります — しかし、SvelteKit は事前読み込みをすることで、ナビゲーションを高速化することができます。`<a>` 要素に `data-sveltekit-preload-data` 属性を付けると、デスクトップの場合はリンクをホバーしたとき、モバイルの場合はリンクをタップしたとき、すぐにナビゲーションを開始します。これをリンクに付けてみましょう:
 
 ```svelte
 /// file: src/routes/+layout.svelte
@@ -15,9 +15,9 @@ You can't always make your data load more quickly — sometimes it's out of your
 </nav>
 ```
 
-Navigating to `/slow-a` will now be noticeably faster. Starting navigation on hover or tap (rather than waiting for a `click` event to be registered) might not sound like it makes much difference, but in practice it typically saves 200ms or more. That's enough to be the difference between sluggish and snappy.
+`/slow-a` へのナビゲーションが格段に速くなるはずです。`click` イベントの登録を待つのではなく、ホバーやタップでナビゲーションで開始するのは、あまり違いがないように聞こえるかもしれませんが、実際には、通常 200ms 以上短縮することができ、遅いか速いか違いを感じるのに十分な差となります。
 
-You can put the attribute on individual links, or on any element that _contains_ links. The default project template includes the attribute on the `<body>` element:
+この属性は、個々のリンクに付けることもできますし、リンクを含む任意の要素に付けることもできます。デフォルトのプロジェクトテンプレートでは、`<body>` 要素に付いています:
 
 ```html
 <body data-sveltekit-preload-data>
@@ -25,21 +25,21 @@ You can put the attribute on individual links, or on any element that _contains_
 </body>
 ```
 
-You can customise the behaviour further by specifying one of the following values for the attribute:
+この属性に以下の値のいずれかを指定すると、この動作をさらにカスタマイズすることができます:
 
-- `"hover"` (default, falls back to `"tap"` on mobile)
-- `"tap"` — only begin preloading on tap
-- `"off"` — disable preloading
+- `"hover"` (デフォルト。モバイルでは `"tap"` にフォールバックする)
+- `"tap"` — タップしたときのみプリロードを開始する
+- `"off"` — プリロードを無効にする
 
-Using `data-sveltekit-preload-data` may sometimes result in false positives - i.e. loading data in anticipation of a navigation that doesn't then happen — which might be undesirable. As an alternative, `data-sveltekit-preload-code` allows you to preload the JavaScript needed by a given route without eagerly loading its data. This attribute can have the following values:
+`data-sveltekit-preload-data` を使用すると、偽陽性(false positives)になることがあります。つまり、ナビゲーションを先読みしてデータを読み込むもののそのあと実際にはナビゲーションしないことがあり、それが望ましくない場合もあるということです。代わりに `data-sveltekit-preload-code` を使用すると、データを読み込むことなくそのルートに必要な JavaScript をプリロードすることができます。この属性は以下の値を持つことができます:
 
-- `"eager"` — preload everything on the page following a navigation
-- `"viewport"` — preload everything as it appears in the viewport
-- `"hover"` (default) as above
-- `"tap"` — as above
-- `"off"` — as above
+- `"eager"` — ナビゲーションに続いてページ上の全てをプリロードする
+- `"viewport"` — viewport に表示されているものを全てプリロードする
+- `"hover"` (デフォルト) 上記の通り
+- `"tap"` — 上記の通り
+- `"off"` — 上記の通り
 
-You can also initiate preloading programmatically with `preloadCode` and `preloadData` imported from `$app/navigation`:
+`$app/navigation` からインポートできる `preloadCode` と `preloadData` を使うと、プログラムでプリロードを開始することができます:
 
 ```js
 import { preloadCode, preloadData } from '$app/navigation';

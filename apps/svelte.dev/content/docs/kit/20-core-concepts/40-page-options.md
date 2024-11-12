@@ -2,44 +2,44 @@
 title: Page options
 ---
 
-By default, SvelteKit will render (or [prerender](glossary#Prerendering)) any component first on the server and send it to the client as HTML. It will then render the component again in the browser to make it interactive in a process called [**hydration**](glossary#Hydration). For this reason, you need to ensure that components can run in both places. SvelteKit will then initialize a [**router**](routing) that takes over subsequent navigations.
+デフォルトでは、SvelteKit はどのコンポーネントも最初はサーバーでレンダリング (または [プリレンダリング](glossary#Prerendering)) し、それを HTML としてクライアントに送信します。その後、ブラウザ上でコンポーネントを再度レンダリングし、[**ハイドレーション(hydration)**](glossary#Hydration)と呼ばれるプロセスでそれをインタラクティブなものにします。このため、コンポーネントが両方の場所で実行できることを確認する必要があります。SvelteKit はそれから [**ルーター(router)**](routing) を初期化し、その後のナビゲーションを引き継ぎます。
 
-You can control each of these on a page-by-page basis by exporting options from [`+page.js`](routing#page-page.js) or [`+page.server.js`](routing#page-page.server.js), or for groups of pages using a shared [`+layout.js`](routing#layout-layout.js) or [`+layout.server.js`](routing#layout-layout.server.js). To define an option for the whole app, export it from the root layout. Child layouts and pages override values set in parent layouts, so — for example — you can enable prerendering for your entire app then disable it for pages that need to be dynamically rendered.
+これらはそれぞれオプションを [`+page.js`](routing#page-page.js) や [`+page.server.js`](routing#page-page.server.js) からエクスポートすることでページごとに、または共有の [`+layout.js`](routing#layout-layout.js) や [`+layout.server.js`](routing#layout-layout.server.js) を使用してページグループごとに制御することが可能です。アプリ全体に対してオプションを定義するには、最上位のレイアウト(root layout)からそれをエクスポートします。子レイアウトとページは親レイアウトで設定された値を上書きするため、例えば、プリレンダリングをアプリ全体で有効にし、それから動的にレンダリングする必要があるページではそれを無効にすることができます。
 
-You can mix and match these options in different areas of your app. For example you could prerender your marketing page for maximum speed, server-render your dynamic pages for SEO and accessibility and turn your admin section into an SPA by rendering it on the client only. This makes SvelteKit very versatile.
+アプリの様々な領域でこれらのオプションをうまく組み合わせることができます。例えば、マーケティングページは高速化を最大限にするためにプリレンダリングし、動的なページは SEO とアクセシビリティのためにサーバーでレンダリングし、管理者用のセクションはクライアントのみでレンダリングするようにして SPA にすることができます。このように、SvelteKit はとても万能で多くの用途にお使いいただけます。
 
 ## prerender
 
-It's likely that at least some routes of your app can be represented as a simple HTML file generated at build time. These routes can be [_prerendered_](glossary#Prerendering).
+あなたのアプリの、少なくともいくつかのルートは、ビルド時に生成されるシンプルな HTML ファイルとして表現されることが多いでしょう。これらのルート(routes)を [_プリレンダリング_](glossary#Prerendering) することができます。
 
 ```js
 /// file: +page.js/+page.server.js/+server.js
 export const prerender = true;
 ```
 
-Alternatively, you can set `export const prerender = true` in your root `+layout.js` or `+layout.server.js` and prerender everything except pages that are explicitly marked as _not_ prerenderable:
+代わりに、`export const prerender = true` を最上位(root)の `+layout.js` または `+layout.server.js` に設定し、明示的にプリレンダリングしないものとしてマークされたページを除き、全てをプリレンダリングできます:
 
 ```js
 /// file: +page.js/+page.server.js/+server.js
 export const prerender = false;
 ```
 
-Routes with `prerender = true` will be excluded from manifests used for dynamic SSR, making your server (or serverless/edge functions) smaller. In some cases you might want to prerender a route but also include it in the manifest (for example, with a route like `/blog/[slug]` where you want to prerender your most recent/popular content but server-render the long tail) — for these cases, there's a third option, 'auto':
+`prerender = true` があるルート(routes)は動的な SSR を行うのに使用する manifest から除外されるため、サーバー (または serverless/edge functions) を小さくすることができます。場合によっては、ルート(route)をプリレンダリングしつつ、manifest にも含めたいことがあるでしょう (例えば、`/blog/[slug]` のようなルート(route)があり、最も新しい/人気のあるコンテンツはプリレンダリングしたいがめったにアクセスされないものはサーバーでレンダリングしたい、など)。こういったケースのために、3つ目のオプションがあります、'auto' です:
 
 ```js
 /// file: +page.js/+page.server.js/+server.js
 export const prerender = 'auto';
 ```
 
-> [!NOTE] If your entire app is suitable for prerendering, you can use [`adapter-static`](https://github.com/sveltejs/kit/tree/main/packages/adapter-static), which will output files suitable for use with any static webserver.
+> [!NOTE] もしアプリ全体がプリレンダリングに適している場合は、[`adapter-static`](https://github.com/sveltejs/kit/tree/main/packages/adapter-static) を使うことで、任意の静的 Web サーバーで使用するのに適したファイルを出力することができます。
 
-The prerenderer will start at the root of your app and generate files for any prerenderable pages or `+server.js` routes it finds. Each page is scanned for `<a>` elements that point to other pages that are candidates for prerendering — because of this, you generally don't need to specify which pages should be accessed. If you _do_ need to specify which pages should be accessed by the prerenderer, you can do so with [`config.kit.prerender.entries`](configuration#prerender), or by exporting an [`entries`](#entries) function from your dynamic route.
+プリレンダラはアプリの最上位(root)から開始され、プリレンダリング可能なページや `+server.js` ルート(routes)を見つけると、そのファイルを生成します。各ページは、プリレンダリングの候補である他のページを指し示す `<a>` 要素を見つけるためにスキャンされます。このため、通常はどのページにアクセスすべきか指定する必要はありません。もしプリレンダラがアクセスするページを指定する必要がある場合は、[`config.kit.prerender.entries`](configuration#prerender) で指定するか、動的なルート(route)から [`entries`](#entries) 関数をエクスポートします。
 
-While prerendering, the value of `building` imported from [`$app/environment`]($app-environment) will be `true`.
+プリレンダリング中、[`$app/environment`]($app-environment) からインポートされる `building` の値は `true` になります。
 
 ### Prerendering server routes
 
-Unlike the other page options, `prerender` also applies to `+server.js` files. These files are _not_ affected by layouts, but will inherit default values from the pages that fetch data from them, if any. For example if a `+page.js` contains this `load` function...
+他のページオプションとは違い、`prerender` は `+server.js` ファイルにも適用できます。これらのファイルはレイアウトから影響を受けませんが、そこからデータを読み込むページからデフォルトの値を継承します。例えば、`+page.js` がこの `load` 関数を含む場合…
 
 ```js
 /// file: +page.js
@@ -52,41 +52,41 @@ export async function load({ fetch }) {
 }
 ```
 
-...then `src/routes/my-server-route.json/+server.js` will be treated as prerenderable if it doesn't contain its own `export const prerender = false`.
+…それから `src/routes/my-server-route.json/+server.js` は、自身の `export const prerender = false` を含んでいなければ、プリレンダリング可能であると扱われることになります。
 
-### When not to prerender
+### プリレンダリングしない場合 <!--When-not-to-prerender-->
 
-The basic rule is this: for a page to be prerenderable, any two users hitting it directly must get the same content from the server.
+基本的なルールは次の通りです: ページがプリレンダリング可能であると言うためには、そのページを直接表示する2人のユーザーが、サーバーから同じコンテンツを取得できなけれなりません。
 
-> [!NOTE] Not all pages are suitable for prerendering. Any content that is prerendered will be seen by all users. You can of course fetch personalized data in `onMount` in a prerendered page, but this may result in a poorer user experience since it will involve blank initial content or loading indicators.
+> [!NOTE] 全てのページがプリレンダリングに適しているわけではありません。プリレンダリングされたコンテンツは全てのユーザーに表示されます。もちろん、プリレンダリングされたページの `onMount` でパーソナライズされたデータをフェッチできますが、ブランクの初期コンテンツやローディングインジケーターにより、ユーザエクスペリエンスが低下してしまう可能性があります。
 
-Note that you can still prerender pages that load data based on the page's parameters, such as a `src/routes/blog/[slug]/+page.svelte` route.
+`src/routes/blog/[slug]/+page.svelte` ルート(route)のような、ページのパラメータを元にデータをロードするページもプリレンダリングができることにご注意ください。
 
-Accessing [`url.searchParams`](load#Using-URL-data-url) during prerendering is forbidden. If you need to use it, ensure you are only doing so in the browser (for example in `onMount`).
+プリレンダリング中に [`url.searchParams`](load#Using-URL-data-url) にアクセスすることは禁止されています。もし使う必要があるなら、ブラウザの中だけで行うようにしてください (例えば `onMount` の中で)。
 
-Pages with [actions](form-actions) cannot be prerendered, because a server must be able to handle the action `POST` requests.
+[action](form-actions) 付きのページは、サーバーがその action の `POST` リクエストを処理できなければならないため、プリレンダリングできません。
 
-### Route conflicts
+### ルートの衝突(Route conflicts)
 
-Because prerendering writes to the filesystem, it isn't possible to have two endpoints that would cause a directory and a file to have the same name. For example, `src/routes/foo/+server.js` and `src/routes/foo/bar/+server.js` would try to create `foo` and `foo/bar`, which is impossible.
+プリレンダリングはファイルシステムに書き込むため、ディレクトリとファイルが同じ名前になるエンドポイントを2つ持つことはできません。例えば、`src/routes/foo/+server.js` と `src/routes/foo/bar/+server.js` の場合は、`foo` と `foo/bar` を作成しようとしますが、これは不可能です。
 
-For that reason among others, it's recommended that you always include a file extension — `src/routes/foo.json/+server.js` and `src/routes/foo/bar.json/+server.js` would result in `foo.json` and `foo/bar.json` files living harmoniously side-by-side.
+このため(他にも理由はありますが)、常に拡張子を付けておくことを推奨します — `src/routes/foo.json/+server.js` と `src/routes/foo/bar.json/+server.js` は、`foo.json` と `foo/bar.json` ファイルが並んで調和して共存できます。
 
-For _pages_, we skirt around this problem by writing `foo/index.html` instead of `foo`.
+ページの場合は、`foo` ではなく `foo/index.html` を書き込むことでこの問題を回避しています。
 
 ### Troubleshooting
 
-If you encounter an error like 'The following routes were marked as prerenderable, but were not prerendered' it's because the route in question (or a parent layout, if it's a page) has `export const prerender = true` but the page wasn't reached by the prerendering crawler and thus wasn't prerendered.
+'The following routes were marked as prerenderable, but were not prerendered' というようなエラーが表示されたら、それは該当のルート (またはページの場合は親レイアウト) に `export const prerender = true` があるにもかかわらず、プリレンダリングクローラーがそのページにアクセスせず、そのページがプリレンダリングされていないことが原因です。
 
-Since these routes cannot be dynamically server-rendered, this will cause errors when people try to access the route in question. There are a few ways to fix it:
+これらのルート(route)は動的にサーバーレンダリングできないため、該当のルート(route)にアクセスしようとしたときにエラーが発生します。それを解決するには、いくつか方法があります:
 
-* Ensure that SvelteKit can find the route by following links from [`config.kit.prerender.entries`](configuration#prerender) or the [`entries`](#entries) page option. Add links to dynamic routes (i.e. pages with `[parameters]` ) to this option if they are not found through crawling the other entry points, else they are not prerendered because SvelteKit doesn't know what value the parameters should have. Pages not marked as prerenderable will be ignored and their links to other pages will not be crawled, even if some of them would be prerenderable.
-* Ensure that SvelteKit can find the route by discovering a link to it from one of your other prerendered pages that have server-side rendering enabled.
-* Change `export const prerender = true` to `export const prerender = 'auto'`. Routes with `'auto'` can be dynamically server rendered
+* SvelteKit が [`config.kit.prerender.entries`](configuration#prerender) か [`entries`](#entries) ページオプションからのリンクを辿ってそのルート(route)を見つけられるようにしてください。動的なルート(例えば `[parameters]` を持つページ) へのリンクは、他のエントリーポイントをクローリングしても見つからない場合はこのオプションに追加してください。そうしないと、SvelteKit はその parameters が持つべき値がわからないので、プリレンダリングされません。プリレンダリング可能(prerenderable)なページとしてマークされていないページは無視され、そのページから他のページ(プリレンダリング可能なものも含む)へのリンクもクローリングされません。
+* サーバーサイドレンダリングが可能な別のプリレンダリングページで、該当のルートのリンクを検出できるようにしてください。
+* `export const prerender = true` から `export const prerender = 'auto'` に変更してください。`'auto'` になっているルート(route)は動的にサーバーレンダリングすることができます
 
 ## entries
 
-SvelteKit will discover pages to prerender automatically, by starting at _entry points_ and crawling them. By default, all your non-dynamic routes are considered entry points — for example, if you have these routes...
+SvelteKit は、 _エントリーポイント(entry points)_ を開始地点としてクローリングを行うことでページを自動的に発見します。デフォルトでは、動的でないルート(route)はすべてエントリーポイントとみなされます。例えば、以下のルートがある場合…
 
 ```bash
 /             # non-dynamic
@@ -94,11 +94,11 @@ SvelteKit will discover pages to prerender automatically, by starting at _entry 
 /blog/[slug]  # dynamic, because of `[slug]`
 ```
 
-...SvelteKit will prerender `/` and `/blog`, and in the process discover links like `<a href="/blog/hello-world">` which give it new pages to prerender.
+…SvelteKit は `/` と `/blog` をプリレンダリングし、その過程で `<a href="/blog/hello-world">` などのリンクを発見し、それをプリレンダリング対象とします。
 
-Most of the time, that's enough. In some situations, links to pages like `/blog/hello-world` might not exist (or might not exist on prerendered pages), in which case we need to tell SvelteKit about their existence.
+ほとんどの場合、これで十分です。しかし状況によっては、`/blog/hello-world` などのページに対するリンクが存在しない (あるいはプリレンダリングされたページには存在しない) 場合があります。この場合、SvelteKit にその存在を知らせる必要があります。
 
-This can be done with [`config.kit.prerender.entries`](configuration#prerender), or by exporting an `entries` function from a `+page.js`, a `+page.server.js` or a `+server.js` belonging to a dynamic route:
+これを行うには [`config.kit.prerender.entries`](configuration#prerender) で指定するか、動的なルート(route) に属する `+page.js` か `+page.server.js` か `+server.js` で `entries` 関数をエクスポートします:
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -113,11 +113,11 @@ export function entries() {
 export const prerender = true;
 ```
 
-`entries` can be an `async` function, allowing you to (for example) retrieve a list of posts from a CMS or database, in the example above.
+`entries` は `async` 関数にすることができるので、(例えば) 上記で示したように CMS や データベースから投稿リストを取得することもできます。
 
 ## ssr
 
-Normally, SvelteKit renders your page on the server first and sends that HTML to the client where it's [hydrated](glossary#Hydration). If you set `ssr` to `false`, it renders an empty 'shell' page instead. This is useful if your page is unable to be rendered on the server (because you use browser-only globals like `document` for example), but in most situations it's not recommended ([see appendix](glossary#SSR)).
+通常、SvelteKit ではページを最初にサーバーでレンダリングし、その HTML をクライアントに送信して[ハイドレーション](glossary#Hydration)を行います。もし `ssr` を `false` に設定した場合、代わりに空の 'shell' ページがレンダリングされます。これはページがサーバーでレンダリングできない場合には便利 (例えば `document` などのブラウザオンリーな globals を使用するなど) ですが、ほとんどの状況では推奨されません ([appendix をご参照ください](glossary#SSR))。
 
 ```js
 /// file: +page.js
@@ -125,11 +125,11 @@ export const ssr = false;
 // If both `ssr` and `csr` are `false`, nothing will be rendered!
 ```
 
-If you add `export const ssr = false` to your root `+layout.js`, your entire app will only be rendered on the client — which essentially means you turn your app into an SPA.
+`export const ssr = false` を最上位(root)の `+layout.js` に追加した場合、アプリ全体がクライアントのみでレンダリングされるようになり、それはつまり、本質的にはアプリを SPA にする、ということを意味します。
 
 ## csr
 
-Ordinarily, SvelteKit [hydrates](glossary#Hydration) your server-rendered HTML into an interactive client-side-rendered (CSR) page. Some pages don't require JavaScript at all — many blog posts and 'about' pages fall into this category. In these cases you can disable CSR:
+通常、SvelteKit はサーバーでレンダリングされた HTML を、クライアントサイドレンダリング(CSR)されたインタラクティブなページに [ハイドレーション](glossary#Hydration) します。JavaScript を全く必要としないページもあります。多くのブログ記事や 'about' ページがこのカテゴリに入ります。このような場合は CSR を無効にすることができます:
 
 ```js
 /// file: +page.js
@@ -137,15 +137,15 @@ export const csr = false;
 // If both `csr` and `ssr` are `false`, nothing will be rendered!
 ```
 
-Disabling CSR does not ship any JavaScript to the client. This means:
+CSR を無効にすると、クライアントに JavaScript が送信されません。つまり:
 
-* The webpage should work with HTML and CSS only.
-* `<script>` tags inside all Svelte components are removed.
-* `<form>` elements cannot be [progressively enhanced](form-actions#Progressive-enhancement).
-* Links are handled by the browser with a full-page navigation.
-* Hot Module Replacement (HMR) will be disabled.
+* web ページは HTML と CSS だけで動作します。
+* すべての Svelte コンポーネントの `<script>` タグは削除されます。
+* `<form>` 要素を[プログレッシブ・エンハンスメント](form-actions#Progressive-enhancement)にすることはできません。
+* リンクはブラウザによってフルページナビゲーションで処理されます。
+* Hot Module Replacement (HMR) が無効になります。
 
-You can enable `csr` during development (for example to take advantage of HMR) like so:
+ (例えば HMR を活用したい場合に) 開発時に `csr` を有効にするには以下のようにします:
 
 ```js
 /// file: +page.js
@@ -156,24 +156,24 @@ export const csr = dev;
 
 ## trailingSlash
 
-By default, SvelteKit will remove trailing slashes from URLs — if you visit `/about/`, it will respond with a redirect to `/about`. You can change this behaviour with the `trailingSlash` option, which can be one of `'never'` (the default), `'always'`, or `'ignore'`.
+デフォルトでは、SvelteKit は URL から末尾のスラッシュ(trailing slash)を取り除きます。`/about/` にアクセスすると、`/about` へのリダイレクトをレスポンスとして受け取ることになります。この動作は、`trailingSlash` オプションで変更することができます。指定できる値は `'never'` (デフォルト)、`'always'`、`'ignore'` です。
 
-As with other page options, you can export this value from a `+layout.js` or a `+layout.server.js` and it will apply to all child pages. You can also export the configuration from `+server.js` files.
+他のページオプションと同様に、`+layout.js` や `+layout.server.js` からこの値をエクスポートすると、すべての子のページに適用されます。`+server.js` ファイルからその設定をエクスポートすることもできます。
 
 ```js
 /// file: src/routes/+layout.js
 export const trailingSlash = 'always';
 ```
 
-This option also affects [prerendering](#prerender). If `trailingSlash` is `always`, a route like `/about` will result in an `about/index.html` file, otherwise it will create `about.html`, mirroring static webserver conventions.
+このオプションは [プリレンダリング](#prerender) にも影響します。`trailingSlash` が `always` の場合 `/about` というルート(route)は `about/index.html` ファイルとなり、それ以外の場合は `about.html` が作成され、静的な Web サーバの慣習を反映したものになります。
 
-> [!NOTE] Ignoring trailing slashes is not recommended — the semantics of relative paths differ between the two cases (`./y` from `/x` is `/y`, but from `/x/` is `/x/y`), and `/x` and `/x/` are treated as separate URLs which is harmful to SEO.
+> [!NOTE] 末尾のスラッシュを無視することは推奨されません。相対パスのセマンティクスが2つのケースで異なり(`/x` からの `./y` は `/y` ですが、`/x/` からは `/x/y` となります)、`/x` と `/x/` は別の URL として扱われ、SEO 上有害となるからです。
 
 ## config
 
-With the concept of [adapters](adapters), SvelteKit is able to run on a variety of platforms. Each of these might have specific configuration to further tweak the deployment — for example on Vercel you could choose to deploy some parts of your app on the edge and others on serverless environments.
+[adapter](adapters) のコンセプトにより、SvelteKit は様々なプラットフォーム上で実行することができます。しかし、各プラットフォームには、デプロイメントをさらに微調整するための特定の設定があるかもしれません — 例えば Vercel では、アプリのある部分はエッジに、他の部分はサーバーレス環境にデプロイするのを選択することができます。
 
-`config` is an object with key-value pairs at the top level. Beyond that, the concrete shape is dependent on the adapter you're using. Every adapter should provide a `Config` interface to import for type safety. Consult the documentation of your adapter for more information.
+`config` はトップレベルで key-value ペアを持つオブジェクトです。その他の具体的な形は、使用する adapter に依存します。すべての adapter は型安全性のためにインポート可能な `Config` インターフェースを提供することになっています。詳細な情報については、使用する adapter のドキュメントを参照してください。
 
 ```js
 // @filename: ambient.d.ts
@@ -190,7 +190,7 @@ export const config = {
 };
 ```
 
-`config` objects are merged at the top level (but _not_ deeper levels). This means you don't need to repeat all the values in a `+page.js` if you want to only override some of the values in the upper `+layout.js`. For example this layout configuration...
+`config` オブジェクトはトップレベル(top level)でマージされます (より深いレベル(deeper levels)ではマージされません)。つまり、より上位の `+layout.js` にある値の一部を上書きしたい場合に、`+page.js` にある全ての値を繰り返す必要はないということです。例えばこの layout の設定は…
 
 ```js
 /// file: src/routes/+layout.js
@@ -203,7 +203,7 @@ export const config = {
 }
 ```
 
-...is overridden by this page configuration...
+…この page の設定で上書きされ…
 
 ```js
 /// file: src/routes/+page.js
@@ -215,8 +215,8 @@ export const config = {
 }
 ```
 
-...which results in the config value `{ runtime: 'edge', regions: ['us1', 'us2'], foo: { baz: true } }` for that page.
+…このページの設定の値は `{ runtime: 'edge', regions: ['us1', 'us2'], foo: { baz: true } }` となります。
 
-## Further reading
+## その他の参考資料 <!--Further-reading-->
 
 - [Tutorial: Page options](/tutorial/kit/page-options)

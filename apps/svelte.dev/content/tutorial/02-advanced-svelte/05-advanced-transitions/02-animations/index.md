@@ -2,11 +2,11 @@
 title: Animations
 ---
 
-In the [previous chapter](/tutorial/svelte/deferred-transitions), we used deferred transitions to create the illusion of motion as elements move from one todo list to the other.
+[前の章](/tutorial/svelte/deferred-transitions)では、要素が1つのToDoリストから別のリストに移動するときに、遷移の遅延を使用して動きの錯覚を作成しました。
 
-To complete the illusion, we also need to apply motion to the elements that _aren't_ transitioning. For this, we use the `animate` directive.
+この錯覚を完成させるには、遷移していない要素にもモーションを適用する必要があります。このために、`animate` ディレクティブを使用します。
 
-First, import the `flip` function — flip stands for ['First, Last, Invert, Play'](https://aerotwist.com/blog/flip-your-animations/) — from `svelte/animate` into `TodoList.svelte`:
+最初に、`TodoList.svelte` に `flip` 関数（flip は ['First, Last, Invert, Play'](https://aerotwist.com/blog/flip-your-animations/) の略です）を `svelte/animate` からインポートします
 
 ```svelte
 /// file: TodoList.svelte
@@ -18,7 +18,7 @@ First, import the `flip` function — flip stands for ['First, Last, Invert, Pla
 </script>
 ```
 
-Then add it to the `<li>` elements:
+次に、それを `<li>` 要素に追加します:
 
 ```svelte
 /// file: TodoList.svelte
@@ -30,7 +30,7 @@ Then add it to the `<li>` elements:
 >
 ```
 
-The movement is a little slow in this case, so we can add a `duration` parameter:
+この場合、動きが少し遅いので、`duration` パラメータを追加することができます。
 
 ```svelte
 /// file: TodoList.svelte
@@ -42,6 +42,6 @@ The movement is a little slow in this case, so we can add a `duration` parameter
 >
 ```
 
-> [!NOTE] `duration` can also be a `d => milliseconds` function, where `d` is the number of pixels the element has to travel
+> [!NOTE] `duration` は `d => ミリ秒` 関数でもよいです。`d` は，要素が移動する必要があるピクセル数です。
 
-Note that all the transitions and animations are being applied with CSS, rather than JavaScript, meaning they won't block (or be blocked by) the main thread.
+すべてのトランジションとアニメーションが JavaScript ではなく CSS で適用されていて、メインスレッドをブロックすることはない（ブロックされることもない）という点に注意してください。

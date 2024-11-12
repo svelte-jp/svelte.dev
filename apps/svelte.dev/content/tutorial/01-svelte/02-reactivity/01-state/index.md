@@ -2,18 +2,18 @@
 title: State
 ---
 
-At the heart of Svelte is a powerful system of _reactivity_ for keeping the DOM in sync with your application state — for example, in response to an event.
+Svelteの中心には、DOMを（例えば、イベントに応じて）アプリケーションの状態(state)に同期し続けさせるための強力な _リアクティビティ(reactivity)_ システムがあります。
 
-Make the `count` declaration reactive by wrapping the value with `$state(...)`:
+`count` 宣言をリアクティブにするには、`$state(...)` で値をラップします。
 
 ```js
 /// file: App.svelte
 let count = +++$state(0)+++;
 ```
 
-This is called a _rune_, and it's how you tell Svelte that `count` isn't an ordinary variable. Runes look like functions, but they're not — when you use Svelte, they're part of the language itself.
+これは _Rune_ と呼ばれ、`count` が通常の変数ではないことを Svelte に伝えるためのものです。 Rune は関数のように見えますが、実際には違います — Svelte を使用する場合、これは言語の一部です。
 
-All that's left is to implement `increment`:
+あとは `increment` を実装するだけです:
 
 ```js
 /// file: App.svelte

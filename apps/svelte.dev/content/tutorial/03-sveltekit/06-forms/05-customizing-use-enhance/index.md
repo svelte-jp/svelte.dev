@@ -2,7 +2,7 @@
 title: Customizing use:enhance
 ---
 
-With `use:enhance`, we can go further than just emulating the browser's native behaviour. By providing a callback, we can add things like **pending states** and **optimistic UI**. Let's simulate a slow network by adding an artificial delay to our two actions:
+`use:enhance` を使えば、ブラウザネイティブな動作をエミュレートするだけでなく、さらに踏み込んだことができます。コールバックを提供することで、**待機状態(pending states)** や **楽観的なUI(optimistic UI)** を追加することができます。私たちの2つの action にわざと遅延を追加し、遅いネットワークをシミュレートしましょう。
 
 ```js
 /// file: src/routes/+page.server.js
@@ -19,7 +19,7 @@ export const actions = {
 };
 ```
 
-When we create or delete items, it now takes a full second before the UI updates, leaving the user wondering if they messed up somehow. To solve that, add some local state...
+アイテムを作成または削除するとき、UI の更新まで丸1秒かかるようになっており、ユーザーはなにか失敗したのかと思うようになります。これを解決するには、ローカルの状態(local state)をいくつか追加します…
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -34,7 +34,7 @@ When we create or delete items, it now takes a full second before the UI updates
 </script>
 ```
 
-...and toggle `creating` inside the first `use:enhance`:
+…そして1つ目の `use:enhance` の内側で、`creating` を切り替えます。
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -63,7 +63,7 @@ When we create or delete items, it now takes a full second before the UI updates
 </form>
 ```
 
-We can then show a message while we're saving data:
+データを保存している間は、メッセージを表示することができます:
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -76,7 +76,7 @@ We can then show a message while we're saving data:
 {/if}+++
 ```
 
-In the case of deletions, we don't really need to wait for the server to validate anything — we can just update the UI immediately:
+削除の場合、サーバーがなにか検証するのを待つ必要はありません — すぐに UI を更新することができます:
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -104,4 +104,4 @@ In the case of deletions, we don't really need to wait for the server to validat
 </ul>
 ```
 
-> [!NOTE] `use:enhance` is very customizable — you can `cancel()` submissions, handle redirects, control whether the form is reset, and so on. [See the docs](https://kit.svelte.dev/docs/modules#$app-forms-enhance) for full details.
+> [!NOTE] `use:enhance` はとてもカスタマイズしやすく、フォーム送信の `cancel()`、リダイレクト処理、form をリセットするかどうかの制御、などを行うことができます。詳細については [ドキュメントをご覧ください](https://kit.svelte.jp/docs/modules#$app-forms-enhance)。

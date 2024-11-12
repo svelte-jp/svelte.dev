@@ -2,14 +2,14 @@
 title: In and out
 ---
 
-Instead of the `transition` directive, an element can have an `in` or an `out` directive, or both together. Import `fade` alongside `fly`...
+`transition` ディレクティブの代わりに、要素に `in` や `out`、または両方のディレクティブを設定することができます。`fly` と一緒に `fade` をインポートしてください。
 
 ```js
 /// file: App.svelte
 import { +++fade+++, fly } from 'svelte/transition';
 ```
 
-...then replace the `transition` directive with separate `in` and `out` directives:
+その後、`transition` ディレクティブを `in` と `out` ディレクティブにそれぞれ置き換えてください。
 
 ```svelte
 /// file: App.svelte
@@ -18,4 +18,4 @@ import { +++fade+++, fly } from 'svelte/transition';
 </p>
 ```
 
-In this case, the transitions are _not_ reversed.
+この場合、トランジションは可逆的にはなりません。

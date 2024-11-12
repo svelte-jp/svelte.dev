@@ -2,22 +2,22 @@
 title: The RequestEvent object
 ---
 
-The `event` object passed into `handle` is the same object — an instance of a [`RequestEvent`](https://kit.svelte.dev/docs/types#public-types-requestevent) — that is passed into [API routes](get-handlers) in `+server.js` files, [form actions](the-form-element) in `+page.server.js` files, and `load` functions in `+page.server.js` and `+layout.server.js`.
+`handle` に渡される `event` オブジェクトは、`+server.js` ファイルの [API routes](get-handlers) や `+page.server.js` ファイルの [form actions](the-form-element) や `+page.server.js` と `+layout.server.js` の `load` 関数に渡されるものと同じオブジェクトで、[`RequestEvent`](https://kit.svelte.jp/docs/types#public-types-requestevent) のインスタンスです。
 
-It contains a number of useful properties and methods, some of which we've already encountered:
+便利なプロパティやメソッドを数多く持っており、いくつかはすでに見たことがあるでしょう:
 
-- `cookies` — the [cookies API](cookies)
-- `fetch` — the standard [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), with additional powers
-- `getClientAddress()` — a function to get the client's IP address
-- `isDataRequest` — `true` if the browser is requesting data for a page during client-side navigation, `false` if a page/route is being requested directly
-- `locals` — a place to put arbitrary data
-- `params` — the route parameters
-- `request` — the [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request) object
-- `route` — an object with an `id` property representing the route that was matched
-- `setHeaders(...)` — a function for [setting HTTP headers](headers) on the response
-- `url` — a [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) object representing the current request
+- `cookies` — [cookies API](cookies)
+- `fetch` — 標準の [Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API) と同等ですが、いくつかの機能が追加されています
+- `getClientAddress()` — クライアントの IP アドレスを取得する関数
+- `isDataRequest` — クライアントサイドナビゲーション中にブラウザがデータをリクエストしていると `true`、ページやルート(route)が直接リクエストされていると `false`
+- `locals` — 任意のデータを置く場所
+- `params` — ルート(route)のパラメータ
+- `request` — [Request](https://developer.mozilla.org/ja/docs/Web/API/Request) オブジェクト
+- `route` — マッチしたルート(route)を表す `id` プロパティを持つオブジェクト
+- `setHeaders(...)` — レスポンスに [HTTP ヘッダーを設定する](headers)関数
+- `url` — 現在のリクエストを表す [URL](https://developer.mozilla.org/ja/docs/Web/API/URL) オブジェクト
 
-A useful pattern is to add some data to `event.locals` in `handle` so that it can be read in subsequent `load` functions:
+便利なパターンとしては、`handle` で `event.locals` にデータを追加して、後続の `load` 関数でそれを使用できるようにすることです:
 
 ```js
 /// file: src/hooks.server.js

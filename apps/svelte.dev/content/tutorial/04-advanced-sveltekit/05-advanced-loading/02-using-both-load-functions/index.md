@@ -2,11 +2,11 @@
 title: Using both load functions
 ---
 
-Occasionally, you might need to use a server load function and a universal load function together. For example, you might need to return data from the server, but also return a value that can't be serialized as server data.
+server load 関数と universal load 関数を一緒に使うことが必要なときもあるでしょう。例えば、サーバーからデータを返す必要がある一方で、サーバーのデータとしてシリアライズできない値も返す必要があるケースです。
 
-In this example we want to return a different component from `load` depending on whether the data we got from `src/routes/+page.server.js` is `cool` or not.
+この例では、`src/routes/+page.server.js` から返されるデータが `cool` かそうでないかに応じて、`load` から異なるコンポーネントを返したいと思います。
 
-We can access server data in `src/routes/+page.js` via the `data` property:
+`src/routes/+page.js` で、`data` プロパティを使ってサーバーのデータにアクセスすることができます。
 
 ```js
 /// file: src/routes/+page.js
@@ -22,4 +22,4 @@ export async function load(+++{ data }+++) {
 }
 ```
 
-> [!NOTE] Note that the data isn't merged — we must explicitly return `message` from the universal `load` function.
+> [!NOTE] data がマージされていないことにご注意ください — 明示的に universal `load` 関数から `message` を返さなければなりません。

@@ -2,7 +2,7 @@
 title: The class directive
 ---
 
-Like any other attribute, you can specify classes with a JavaScript attribute. Here, we could add a `flipped` class to the card:
+他の属性と同じように、JavaScriptの属性でクラスを指定することができます。ここでは、`flipped` クラスを card に追加します:
 
 ```svelte
 /// file: App.svelte
@@ -12,9 +12,9 @@ Like any other attribute, you can specify classes with a JavaScript attribute. H
 >
 ```
 
-This works as expected — if you click on the card now, it'll flip.
+これで期待通りに動作します — card をクリックすると、反転(flip)します。
 
-We can make it nicer though. Adding or removing a class based on some condition is such a common pattern in UI development that Svelte includes a special directive to simplify it:
+ただ、もっと良くすることができます。何らかの条件に基づいてクラスを追加したり削除したりすることは UI 開発ではよくあるパターンで、Svelteにはこれを簡略化するための特別なディレクティブがあります:
 
 ```svelte
 /// file: App.svelte
@@ -25,4 +25,4 @@ We can make it nicer though. Adding or removing a class based on some condition 
 >
 ```
 
-This directive means 'add the `flipped` class whenever `flipped` is truthy'.
+このディレクティブは、'`flipped` が truthy なときはいつでも `flipped` クラスを追加する' という意味です。

@@ -2,22 +2,22 @@
 title: Component bindings
 ---
 
-Just as you can bind to properties of DOM elements, you can bind to component props. For example, we can bind to the `value` prop of this `<Keypad>` component as though it were a form element.
+DOM 要素のプロパティにバインドできるのと同様に、コンポーネントの props にもバインドできます。例えば、フォーム要素のように `<Keypad>` コンポーネントの `value` prop にバインドすることができます。
 
-First, we need to mark the prop as _bindable_. Inside `Keypad.svelte`, update the `$props()` declaration to use the `$bindable` rune:
+まず、prop を _(バインド可能)bindable_ なものとしてマークする必要があります。`Keypad.svelte` の中で、`$props()` 宣言で `$bindable` Rune を使用するように更新します:
 
 ```js
 /// file: Keypad.svelte
 let { value +++= $bindable('')+++, onsubmit } = $props();
 ```
 
-Then, in `App.svelte`, add a `bind:` directive:
+それから、`App.svelte` で `bind:` ディレクティブを追加します:
 
 ```svelte
 /// file: App.svelte
 <Keypad +++bind:value={pin}+++ {onsubmit} />
 ```
 
-Now, when the user interacts with the keypad, the value of `pin` in the parent component is immediately updated.
+これで、ユーザがキーパッドを操作すると、親コンポーネントの `pin` の値が即座に更新されるようになりました。
 
-> [!NOTE] Use component bindings sparingly. It can be difficult to track the flow of data around your application if you have too many of them, especially if there is no 'single source of truth'.
+> [!NOTE] コンポーネントバインディングは控えめに使用してください。それらが多すぎるとアプリケーションの周りのデータの流れを追跡するのが困難になります。特に「信頼できる唯一の情報源(single source of truth)」が存在しない場合には。

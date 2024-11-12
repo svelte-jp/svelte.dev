@@ -2,14 +2,16 @@
 title: Next steps
 ---
 
-Congratulations! If you've made it the entire way through this tutorial, you can now consider yourself a Svelte and SvelteKit expert.
+Congratulations！ このチュートリアルをすべてやり遂げたなら、あなたはもう Svelte と SvelteKit のエキスパートです。
 
-You can start building apps on your own machine with the [`create-svelte`](https://www.npmjs.com/package/create-svelte) package:
+[`create-svelte`](https://www.npmjs.com/package/create-svelte) パッケージを使用して、ご自身のマシンでアプリを作り始めることができます:
 
 ```bash
 npm create svelte@latest
 ```
 
-Svelte and SvelteKit will continue to evolve, and so will this tutorial. Check back periodically for updates.
+Svelte と SvelteKit は進化を続けますが、このチュートリアルも同じです。更新していきますので、定期的にチェックしてください。
 
-To keep up with developments in the Svelte world, join our Discord server at [svelte.dev/chat](https://svelte.dev/chat) and follow [Svelte Society](https://twitter.com/sveltesociety) on Twitter. We're so happy to welcome you to the Svelte community!
+Svelte の世界の動向を知りたければ、Discord サーバー ([svelte.dev/chat](https://svelte.dev/chat)) に参加し、Twitter で [Svelte Society](https://twitter.com/sveltesociety) をフォローしてください。Svelte のコミュニティにあなたを歓迎します！
+
+> 日本語翻訳版 追記：上記のDiscordはSvelte本体のもので、英語でコミュニケーションが行われています。もし日本語で質問したり交流したいのであれば、[Svelte日本のDiscord](https://discord.com/invite/YTXq3ZtBbx)にどうぞ！

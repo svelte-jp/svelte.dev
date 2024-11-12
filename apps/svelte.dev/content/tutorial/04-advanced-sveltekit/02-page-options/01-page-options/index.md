@@ -2,15 +2,15 @@
 title: Basics
 ---
 
-In the chapter on [loading data](/tutorial/kit/page-data), we saw how you can export `load` functions from `+page.js`, `+page.server.js`, `+layout.js` and `+layout.server.js` files. We can also export various **page options** from these modules:
+[loading data](/tutorial/kit/page-data) の章では、`+page.js`、`+page.server.js`、`+layout.js`、`+layout.server.js` ファイルから `load` 関数をエクスポートする方法について見てきました。これらのモジュールからは他にも様々な **ページオプション(page options)** をエクスポートできます。
 
-- `ssr` — whether or not pages should be server-rendered
-- `csr` — whether to load the SvelteKit client
-- `prerender` — whether to prerender pages at build time, instead of per-request
-- `trailingSlash` — whether to strip, add, or ignore trailing slashes in URLs
+- `ssr` — ページをサーバーレンダリングするかどうか
+- `csr` — SvelteKit client をロードするかどうか
+- `prerender` — リクエストの度にレンダリングする代わりに、ビルド時にページをプリレンダリングするかどうか
+- `trailingSlash` — URL の末尾のスラッシュ(trailing slashes)を、削除するか、追加するか、無視するか
 
-In the following exercises, we'll learn about each of these in turn.
+この後の演習では、これらをそれぞれ順番に学んでいきます。
 
-Page options can apply to individual pages (if exported from `+page.js` or `+page.server.js`), or groups of pages (if exported from `+layout.js` or `+layout.server.js`). To define an option for the whole app, export it from the root layout. Child layouts and pages override values set in parent layouts, so — for example — you can enable prerendering for your entire app then disable it for pages that need to be dynamically rendered.
+ページオプションは (`+page.js` や `+page.server.js` からエクスポートすることで) ページ個別に適用することができますし、(`+layout.js` や `+layout.server.js` からエクスポートすることで) ページのグループに適用することもできます。アプリ全体のオプションを定義するには、最上位のレイアウト(root layout) からエクスポートします。子レイアウトやページは親レイアウトで設定された値をオーバーライドするので、例えば、アプリ全体ではプリレンダリングを有効にして、動的なレンダリングが必要なページではそれを無効にすることができます。
 
-You can mix and match these options in different areas of your app — you could prerender your marketing pages, dynamically server-render your data-driven pages, and treat your admin pages as a client-rendered SPA. This makes SvelteKit very versatile.
+アプリの様々な領域でこれらのオプションをうまく組み合わせることができます。マーケティング用のページはプリレンダリングし、データドリブンなページは動的にサーバーでレンダリングし、管理者用ページはクライアントレンダリングされる SPA として扱うことができます。このように、SvelteKit はとても万能で多くの用途にお使いいただけます。

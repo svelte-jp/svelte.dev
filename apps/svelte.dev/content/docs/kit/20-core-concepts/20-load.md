@@ -2,11 +2,11 @@
 title: Loading data
 ---
 
-Before a [`+page.svelte`](routing#page-page.svelte) component (and its containing [`+layout.svelte`](routing#layout-layout.svelte) components) can be rendered, we often need to get some data. This is done by defining `load` functions.
+[`+page.svelte`](routing#page-page.svelte) コンポーネント (と [`+layout.svelte`](routing#layout-layout.svelte) コンポーネント) をレンダリングする前に、データを取得する必要があるケースが多いでしょう。`load` 関数を定義することでこれができるようになります。
 
 ## Page data
 
-A `+page.svelte` file can have a sibling `+page.js` that exports a `load` function, the return value of which is available to the page via the `data` prop:
+`+page.svelte` ファイルは、`load` 関数をエクスポートする `+page.js` という兄弟ファイルを持つことができ、`load` 関数の戻り値は page で `data` プロパティを介して使用することができます。
 
 ```js
 /// file: src/routes/blog/[slug]/+page.js
@@ -32,11 +32,11 @@ export function load({ params }) {
 <div>{@html data.post.content}</div>
 ```
 
-Thanks to the generated `$types` module, we get full type safety.
+生成される `$types` モジュールのおかげで、完全な型安全性を確保できます。
 
-A `load` function in a `+page.js` file runs both on the server and in the browser (unless combined with `export const ssr = false`, in which case it will [only run in the browser](page-options#ssr)). If your `load` function should _always_ run on the server (because it uses private environment variables, for example, or accesses a database) then it would go in a `+page.server.js` instead.
+`+page.js` ファイルの `load` 関数はサーバーでもブラウザでも実行されます (ただし、`export const ssr = false` を設定した場合は[ブラウザでのみ実行されます](page-options#ssr))。`load` 関数を*常に*サーバーで実行させたければ (例えばプライベートな環境変数を使用していたり、データベースにアクセスする場合など)、代わりに `+page.server.js` に `load` 関数を置くとよいでしょう。
 
-A more realistic version of your blog post's `load` function, that only runs on the server and pulls data from a database, might look like this:
+例えばブログ記事の `load` 関数をより現実的なものにするとしたら、以下のように、サーバー上でのみ実行され、データベースからデータを取得する、というものになるでしょう。
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -57,11 +57,11 @@ export async function load({ params }) {
 }
 ```
 
-Notice that the type changed from `PageLoad` to `PageServerLoad`, because server `load` functions can access additional arguments. To understand when to use `+page.js` and when to use `+page.server.js`, see [Universal vs server](load#Universal-vs-server).
+型が `PageLoad` から `PageServerLoad` に変わっていることにご注意ください。server `load` 関数では追加の引数にアクセスすることができます。どのような場合に `+page.js` を使用し、どのような場合に `+page.server.js` を使用するのかを理解するには、[Universal vs server](load#Universal-vs-server) を参照してください。
 
 ## Layout data
 
-Your `+layout.svelte` files can also load data, via `+layout.js` or `+layout.server.js`.
+`+layout.svelte` ファイルでも、`+layout.js` や `+layout.server.js` を通じてデータを読み込むことができます。
 
 ```js
 /// file: src/routes/blog/[slug]/+layout.server.js
@@ -108,7 +108,7 @@ export async function load() {
 </aside>
 ```
 
-Data returned from layout `load` functions is available to child `+layout.svelte` components and the `+page.svelte` component as well as the layout that it 'belongs' to.
+レイアウトの `load` 関数から返されたデータは、子の `+layout.svelte` コンポーネントやそのレイアウトに属する `+page.svelte` コンポーネントでも利用可能です。
 
 ```svelte
 /// file: src/routes/blog/[slug]/+page.svelte
@@ -132,13 +132,13 @@ Data returned from layout `load` functions is available to child `+layout.svelte
 {/if}+++
 ```
 
-> [!NOTE] If multiple `load` functions return data with the same key, the last one 'wins' — the result of a layout `load` returning `{ a: 1, b: 2 }` and a page `load` returning `{ b: 3, c: 4 }` would be `{ a: 1, b: 3, c: 4 }`.
+> [!NOTE] 複数の `load` 関数が同じキーを持つデータを返した場合、最後に返したものが'勝ちます'。レイアウトの `load` が `{ a: 1, b: 2 }` を返し、ページの `load` が `{ b: 3, c: 4 }` を返すと、結果は `{ a: 1, b: 3, c: 4 }` となります。
 
 ## $page.data
 
-The `+page.svelte` component, and each `+layout.svelte` component above it, has access to its own data plus all the data from its parents.
+`+page.svelte` コンポーネントとその上の各 `+layout.svelte` コンポーネントは、自身のデータとその親の全てのデータにアクセスすることができます。
 
-In some cases, we might need the opposite — a parent layout might need to access page data or data from a child layout. For example, the root layout might want to access a `title` property returned from a `load` function in `+page.js` or `+page.server.js`. This can be done with `$page.data`:
+場合によっては、その逆も必要かもしれません — 親レイアウトからページのデータや子レイアウトのデータにアクセスする必要があるかもしれません。例えば、最上位のレイアウト(root layout)から、`+page.js` や `+page.server.js` の `load` 関数から返された `title` プロパティにアクセスしたい場合があるでしょう。これは `$page.data` で行うことができます:
 
 ```svelte
 <!--- file: src/routes/+layout.svelte --->
@@ -151,48 +151,48 @@ In some cases, we might need the opposite — a parent layout might need to acce
 </svelte:head>
 ```
 
-Type information for `$page.data` is provided by `App.PageData`.
+`$page.data` の型情報は `App.PageData` から提供されます。
 
 ## Universal vs server
 
-As we've seen, there are two types of `load` function:
+これまで見てきたように、`load` 関数には2つの種類があります:
 
-* `+page.js` and `+layout.js` files export _universal_ `load` functions that run both on the server and in the browser
-* `+page.server.js` and `+layout.server.js` files export _server_ `load` functions that only run server-side
+* `+page.js` ファイルと `+layout.js` ファイルは、サーバーとブラウザの両方で実行される universal `load` 関数をエクスポートします
+* `+page.server.js` ファイルと `+layout.server.js` ファイルは、サーバーサイドでのみ実行される server `load` 関数をエクスポートします
 
-Conceptually, they're the same thing, but there are some important differences to be aware of.
+概念上は同じものですが、気をつけなければならない重要な違いがあります。
 
-### When does which load function run?
+### いつ、どの load 関数が実行されるのか？ <!--When-does-which-load-function-run-->
 
-Server `load` functions _always_ run on the server.
+server `load` 関数は _常に_ サーバーで実行されます。
 
-By default, universal `load` functions run on the server during SSR when the user first visits your page. They will then run again during hydration, reusing any responses from [fetch requests](#Making-fetch-requests). All subsequent invocations of universal `load` functions happen in the browser. You can customize the behavior through [page options](page-options). If you disable [server side rendering](page-options#ssr), you'll get an SPA and universal `load` functions _always_ run on the client.
+デフォルトでは、universal `load` 関数は、ユーザーがはじめてページにアクセスしたときの SSR 中にサーバーで実行されます。そのあとのハイドレーション中に、[fetch リクエスト](#Making-fetch-requests) で取得したレスポンスを再利用してもう一度実行されます。それ以降の universal `load` 関数の呼び出しは、すべてブラウザで行われます。この動作は [page options](page-options) によってカスタマイズすることができます。[サーバーサイドレンダリング](page-options#ssr) を無効にした場合、SPA となるため、universal `load` 関数は _常に_ クライアントで実行されるようになります。
 
-If a route contains both universal and server `load` functions, the server `load` runs first.
+ルート(route)に universal と server の両方の `load` 関数が含まれている場合、server `load` が最初に実谷されます。
 
-A `load` function is invoked at runtime, unless you [prerender](page-options#prerender) the page — in that case, it's invoked at build time.
+`load` 関数は実行時に呼び出されます。ページを [プリレンダリング](page-options#prerender) する場合は、ビルド時に呼び出されます。
 
 ### Input
 
-Both universal and server `load` functions have access to properties describing the request (`params`, `route` and `url`) and various functions (`fetch`, `setHeaders`, `parent`, `depends` and `untrack`). These are described in the following sections.
+universal `load` 関数と server `load` 関数はどちらも、リクエストを表すプロパティ (`params`、`route`、`url`) と様々な関数 (`fetch`、`setHeaders`、`parent`、`depends`、`untrack`) にアクセスできます。これらについては、以下のセクションで説明します。
 
-Server `load` functions are called with a `ServerLoadEvent`, which inherits `clientAddress`, `cookies`, `locals`, `platform` and `request` from `RequestEvent`.
+server `load` 関数は `ServerLoadEvent` を引数にとって呼び出されます。`ServerLoadEvent` は、`RequestEvent` から `clientAddress`、`cookies`、`locals`、`platform`、`request` を継承しています。
 
-Universal `load` functions are called with a `LoadEvent`, which has a `data` property. If you have `load` functions in both `+page.js` and `+page.server.js` (or `+layout.js` and `+layout.server.js`), the return value of the server `load` function is the `data` property of the universal `load` function's argument.
+universal `load` 関数は、`LoadEvent` を引数にとって呼び出されます。`LoadEvent` は `data` プロパティを持っています。もし `+page.js` と `+page.server.js` (または `+layout.js` と `+layout.server.js`) の両方に `load` 関数がある場合、server `load` 関数の戻り値が、universal `load` 関数の引数の `data` プロパティとなります。
 
 ### Output
 
-A universal `load` function can return an object containing any values, including things like custom classes and component constructors.
+universal `load` 関数は、任意の値(カスタムクラスやコンポーネントコンストラクタなどを含む)を含むオブジェクトを返すことができます。
 
-A server `load` function must return data that can be serialized with [devalue](https://github.com/rich-harris/devalue) — anything that can be represented as JSON plus things like `BigInt`, `Date`, `Map`, `Set` and `RegExp`, or repeated/cyclical references — so that it can be transported over the network. Your data can include [promises](#Streaming-with-promises), in which case it will be streamed to browsers.
+server `load` 関数は、ネットワークで転送できるようにするために、[devalue](https://github.com/rich-harris/devalue) でシリアライズできるデータ (つまり JSON で表現できるものに加え、`BigInt`、`Date`、`Map`、`Set`、`RegExp` や、繰り返し/循環参照など) を返さなければなりません。データには [promises](#Streaming-with-promises) を含めることができ、その場合はブラウザにストリーミングされます。
 
-### When to use which
+### どちらを使用すべきか <!--When-to-use-which-->
 
-Server `load` functions are convenient when you need to access data directly from a database or filesystem, or need to use private environment variables.
+server `load` 関数は、データベースやファイルシステムからデータを直接アクセスする必要がある場合や、プライベートな環境変数を使用する必要がある場合に有用です。
 
-Universal `load` functions are useful when you need to `fetch` data from an external API and don't need private credentials, since SvelteKit can get the data directly from the API rather than going via your server. They are also useful when you need to return something that can't be serialized, such as a Svelte component constructor.
+universal `load` 関数は、外部の API から データを `fetch` (取得) する必要があり、プライベートなクレデンシャルが必要ない場合に便利です。なぜなら、SvelteKit はあなたのサーバーを経由せずに、その API から直接データを取得することができるからです。また、Svelte コンポーネントコンストラクタのような、シリアライズできないものを返す必要がある場合にも便利です。
 
-In rare cases, you might need to use both together — for example, you might need to return an instance of a custom class that was initialised with data from your server. When using both, the server `load` return value is _not_ passed directly to the page, but to the universal `load` function (as the `data` property):
+まれに、両方を同時に使用する必要がある場合もあります。例えば、サーバーからのデータで初期化されたカスタムクラスのインスタンスを返す必要がある場合です。両方を使用する場合は、server `load` の戻り値は直接ページには渡されず、universal `load` 関数に (`data` プロパティとして) 渡されます:
 
 ```js
 /// file: src/routes/+page.server.js
@@ -216,19 +216,19 @@ export async function load({ data }) {
 }
 ```
 
-## Using URL data
+## URL data を使用する <!--Using-URL-data-->
 
-Often the `load` function depends on the URL in one way or another. For this, the `load` function provides you with `url`, `route` and `params`.
+多くの場合、`load` 関数は何らかの形で URL に依存します。そのため、`load` 関数では `url`、`route`、`params` を提供しています。
 
 ### url
 
-An instance of [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL), containing properties like the `origin`, `hostname`, `pathname` and `searchParams` (which contains the parsed query string as a [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) object). `url.hash` cannot be accessed during `load`, since it is unavailable on the server.
+[`URL`](https://developer.mozilla.org/ja/docs/Web/API/URL) のインスタンスで、`origin`、`hostname`、`pathname`、`searchParams` ([`URLSearchParams`](https://developer.mozilla.org/ja/docs/Web/API/URLSearchParams) オブジェクトとしてパースされたクエリ文字列を含む) を含んでいます。`url.hash` はサーバーで利用できないため、`load` 中にアクセスすることはできません。
 
-> [!NOTE] In some environments this is derived from request headers during server-side rendering. If you're using [adapter-node](adapter-node), for example, you may need to configure the adapter in order for the URL to be correct.
+> [!NOTE] 環境によっては、サーバーサイドレンダリング時のリクエストヘッダからこれが導出されることもあります。例えば [adapter-node](adapter-node) では、URL を正しく設定するために adapter の設定をする必要があるかもしれません。
 
 ### route
 
-Contains the name of the current route directory, relative to `src/routes`:
+現在のルート(route)ディレクトリの名前を含んでいます。`src/routes` との相対です:
 
 ```js
 /// file: src/routes/a/[b]/[...c]/+page.js
@@ -240,9 +240,9 @@ export function load({ route }) {
 
 ### params
 
-`params` is derived from `url.pathname` and `route.id`.
+`params` は `url.pathname` と `route.id` から導出されます。
 
-Given a `route.id` of `/a/[b]/[...c]` and a `url.pathname` of `/a/x/y/z`, the `params` object would look like this:
+`route.id` が `/a/[b]/[...c]` で、`url.pathname` が `/a/x/y/z` の場合、`params` オブジェクトはこのようになります:
 
 ```json
 {
@@ -251,15 +251,15 @@ Given a `route.id` of `/a/[b]/[...c]` and a `url.pathname` of `/a/x/y/z`, the `p
 }
 ```
 
-## Making fetch requests
+## fetch リクエストの作成 <!--Making-fetch-requests-->
 
-To get data from an external API or a `+server.js` handler, you can use the provided `fetch` function, which behaves identically to the [native `fetch` web API](https://developer.mozilla.org/en-US/docs/Web/API/fetch) with a few additional features:
+外部の API や `+server.js` ハンドラからデータを取得するには、提供されている `fetch` 関数を使用します。これは [ネイティブの `fetch` web API](https://developer.mozilla.org/ja/docs/Web/API/fetch) と同じように動作しますが、いくつか追加の機能があります:
 
-- It can be used to make credentialed requests on the server, as it inherits the `cookie` and `authorization` headers for the page request.
-- It can make relative requests on the server (ordinarily, `fetch` requires a URL with an origin when used in a server context).
-- Internal requests (e.g. for `+server.js` routes) go directly to the handler function when running on the server, without the overhead of an HTTP call.
-- During server-side rendering, the response will be captured and inlined into the rendered HTML by hooking into the `text`, `json` and `arrayBuffer` methods of the `Response` object. Note that headers will _not_ be serialized, unless explicitly included via [`filterSerializedResponseHeaders`](hooks#Server-hooks-handle).
-- During hydration, the response will be read from the HTML, guaranteeing consistency and preventing an additional network request - if you received a warning in your browser console when using the browser `fetch` instead of the `load` `fetch`, this is why.
+- ページリクエストの `cookie` と `authorization` ヘッダーを継承するので、サーバー上でクレデンシャル付きのリクエストを行うことができます
+- サーバー上で、相対パスのリクエストを行うことができます (通常、`fetch` はサーバーのコンテキストで使用する場合にはオリジン付きの URL が必要です)
+- サーバーで動作している場合、内部リクエスト (例えば `+server.js` ルート(routes)に対するリクエスト) は直接ハンドラ関数を呼び出すので、HTTP を呼び出すオーバーヘッドがありません
+- サーバーサイドレンダリング中は、`Response` オブジェクトの `text` メソッドと `json` メソッドと `arrayBuffer` メソッドにフックすることにより、レスポンスはキャプチャされ、レンダリング済の HTML にインライン化されます。ヘッダーは、[`filterSerializedResponseHeaders`](hooks#Server-hooks-handle) で明示的に指定されない限り、シリアライズされないことにご注意ください。
+- ハイドレーション中は、レスポンスは HTML から読み込まれるため、一貫性が保証され、追加のネットワークリクエストを防ぎます。もし、`load` 関数の `fetch` ではなくブラウザの `fetch` を使用しているときにブラウザコンソールに警告が出た場合は、これが理由です。
 
 ```js
 /// file: src/routes/items/[id]/+page.js
@@ -274,14 +274,14 @@ export async function load({ fetch, params }) {
 
 ## Cookies
 
-A server `load` function can get and set [`cookies`](@sveltejs-kit#Cookies).
+server `load` 関数では [`cookies`](@sveltejs-kit#Cookies) を取得したり設定したりすることができます。
 
 ```js
 /// file: src/routes/+layout.server.js
 // @filename: ambient.d.ts
 declare module '$lib/server/database' {
 	export function getUser(sessionid: string | undefined): Promise<{ name: string, avatar: string }>
-}
+rerunning-load-functions}
 
 // @filename: index.js
 // ---cut---
@@ -297,19 +297,19 @@ export async function load({ cookies }) {
 }
 ```
 
-Cookies will only be passed through the provided `fetch` function if the target host is the same as the SvelteKit application or a more specific subdomain of it.
+Cookie は、ターゲットホストが Sveltekit アプリケーションと同じか、より明確・詳細(specific)なサブドメインである場合にのみ、SvelteKit から提供される `fetch` 関数を介して引き渡されます。
 
-For example, if SvelteKit is serving my.domain.com:
-- domain.com WILL NOT receive cookies
-- my.domain.com WILL receive cookies
-- api.domain.com WILL NOT receive cookies
-- sub.my.domain.com WILL receive cookies
+例えば、SvelteKit が my.domain.com でサーブしている場合:
+- domain.com は cookie を受け取りません
+- my.domain.com は cookie を受け取ります
+- api.domain.com は cookie を受け取りません
+- sub.my.domain.com は cookie を受け取ります
 
-Other cookies will not be passed when `credentials: 'include'` is set, because SvelteKit does not know which domain which cookie belongs to (the browser does not pass this information along), so it's not safe to forward any of them. Use the [handleFetch hook](hooks#Server-hooks-handleFetch) to work around it.
+その他の cookie は、`credentials: 'include'` がセットされているときには渡されません。なぜなら、Sveltekit はどの cookie がどのドメインに属しているかわからないからです (ブラウザはこの情報を渡さないからです)。そのため、cookie を転送するのは安全ではありません。これを回避するには、[handleFetch hook](hooks#Server-hooks-handlefetch) をお使いください。
 
 ## Headers
 
-Both server and universal `load` functions have access to a `setHeaders` function that, when running on the server, can set headers for the response. (When running in the browser, `setHeaders` has no effect.) This is useful if you want the page to be cached, for example:
+server `load` 関数と universal `load` 関数はどちらも `setHeaders` 関数にアクセスでき、サーバー上で実行している場合、 レスポンスにヘッダーを設定できます (ブラウザで実行している場合、`setHeaders` には何の効果もありません)。これは、ページをキャッシュさせる場合に便利です、例えば:
 
 ```js
 // @errors: 2322 1360
@@ -330,11 +330,11 @@ export async function load({ fetch, setHeaders }) {
 }
 ```
 
-Setting the same header multiple times (even in separate `load` functions) is an error — you can only set a given header once. You cannot add a `set-cookie` header with `setHeaders` — use `cookies.set(name, value, options)` instead.
+同じヘッダーを複数回設定することは (たとえ別々の `load` 関数であっても) エラーとなります。指定したヘッダーを設定できるのは一度だけです。`set-cookie` ヘッダーは、`setHeaders` では追加できません。代わりに、`cookies.set(name, value, options)` を使用してください。
 
 ## Using parent data
 
-Occasionally it's useful for a `load` function to access data from a parent `load` function, which can be done with `await parent()`:
+`load` 関数が親の `load` 関数からのデータにアクセスできたら便利なことがあるでしょう。`await parent()` でこれを行うことができます:
 
 ```js
 /// file: src/routes/+layout.js
@@ -373,13 +373,13 @@ export async function load({ parent }) {
 <p>{data.a} + {data.b} = {data.c}</p>
 ```
 
-> [!NOTE] Notice that the `load` function in `+page.js` receives the merged data from both layout `load` functions, not just the immediate parent.
+> [!NOTE] `+page.js` の `load` 関数が、直接の親だけなく、両方のレイアウトの `load` 関数からマージされたデータを受け取っていることにご注意ください。
 
-Inside `+page.server.js` and `+layout.server.js`, `parent` returns data from parent `+layout.server.js` files.
+`+page.server.js` と `+layout.server.js` の中では、`parent` は親の `+layout.server.js` ファイルからデータを取得します。
 
-In `+page.js` or `+layout.js` it will return data from parent `+layout.js` files. However, a missing `+layout.js` is treated as a `({ data }) => data` function, meaning that it will also return data from parent `+layout.server.js` files that are not 'shadowed' by a `+layout.js` file
+`+page.js` や `+layout.js` では、親の `+layout.js` ファイルからデータを返します。しかし、`+layout.js` が見つからない場合は `({ data }) => data` 関数として扱われます。つまり、`+layout.js` ファイルによって'シャドウ(shadowed)'されていない親の `+layout.server.js` ファイルからデータを返します。 
 
-Take care not to introduce waterfalls when using `await parent()`. Here, for example, `getData(params)` does not depend on the result of calling `parent()`, so we should call it first to avoid a delayed render.
+`await parent()` を使用する際はウォータフォールを発生させないよう注意してください。例えば、こちらの `getData(params)` は `parent()` の呼び出しの結果には依存しないので、レンダリングの遅延を避けるために最初に呼び出すほうが良いでしょう。
 
 ```js
 /// file: +page.js
@@ -403,7 +403,7 @@ export async function load({ params, parent }) {
 
 ## Errors
 
-If an error is thrown during `load`, the nearest [`+error.svelte`](routing#error) will be rendered. For [_expected_](errors#Expected-errors) errors, use the `error` helper from `@sveltejs/kit` to specify the HTTP status code and an optional message:
+`load` 中にエラーがスローされた場合、最も近くにある [`+error.svelte`](routing#error) がレンダリングされます。[想定されるエラー](errors#Expected-errors)には、`@sveltejs/kit` からインポートできる `error` ヘルパーを使用して HTTP ステータスコードとオプションのメッセージを指定できます:
 
 ```js
 /// file: src/routes/admin/+layout.server.js
@@ -433,15 +433,15 @@ export function load({ locals }) {
 }
 ```
 
-Calling `error(...)` will throw an exception, making it easy to stop execution from inside helper functions.
+`error(...)` を呼び出すと例外がスローされるため、ヘルパー関数の内側から簡単に実行を止めることができます。
 
-If an [_unexpected_](errors#Unexpected-errors) error is thrown, SvelteKit will invoke [`handleError`](hooks#Shared-hooks-handleError) and treat it as a 500 Internal Error.
+[予期せぬエラー](errors#Unexpected-errors)がスローされた場合、SvelteKit は [`handleError`](hooks#Shared-hooks-handleError) を呼び出し、それを 500 Internal Error として処理します。
 
-> [!NOTE] [In SvelteKit 1.x](migrating-to-sveltekit-2#redirect-and-error-are-no-longer-thrown-by-you) you had to `throw` the error yourself
+> [!NOTE] [SvelteKit 1.x 系では](migrating-to-sveltekit-2#redirect-and-error-are-no-longer-thrown-by-you)、ご自分で error を `throw` する必要がありました
 
 ## Redirects
 
-To redirect users, use the `redirect` helper from `@sveltejs/kit` to specify the location to which they should be redirected alongside a `3xx` status code. Like `error(...)`, calling `redirect(...)` will throw an exception, making it easy to stop execution from inside helper functions.
+ユーザーをリダイレクトさせるには、`@sveltejs/kit` からインポートできる `redirect` ヘルパーを使用して、ステータスコード `3xx` と一緒にリダイレクト先の location を指定します。`error(...)` と同じように、`redirect(...)` を呼び出すと例外がスローされるため、ヘルパー関数の内側から簡単に実行を止めることができます。
 
 ```js
 /// file: src/routes/user/+layout.server.js
@@ -466,15 +466,15 @@ export function load({ locals }) {
 }
 ```
 
-> [!NOTE] Don't use `redirect()` inside a `try {...}` block, as the redirect will immediately trigger the catch statement.
+> [!NOTE] `try {...}` ブロックの中で `redirect()` を使用してはいけません。redirect がすぐにその catch ステートメントをトリガーしてしまうからです。
 
-In the browser, you can also navigate programmatically outside of a `load` function using [`goto`]($app-navigation#goto) from [`$app.navigation`]($app-navigation).
+ブラウザでは、[`$app.navigation`]($app-navigation) からインポートできる [`goto`]($app-navigation#goto) を使うことで、`load` 関数の外側でプログラム的にナビゲーションを行うことができます。
 
-> [!NOTE] [In SvelteKit 1.x](migrating-to-sveltekit-2#redirect-and-error-are-no-longer-thrown-by-you) you had to `throw` the `redirect` yourself
+> [!NOTE] [SvelteKit 1.x 系では](migrating-to-sveltekit-2#redirect-and-error-are-no-longer-thrown-by-you)、ご自分で `redirect` を `throw` する必要がありました
 
 ## Streaming with promises
 
-When using a server `load`, promises will be streamed to the browser as they resolve. This is useful if you have slow, non-essential data, since you can start rendering the page before all the data is available:
+server `load` を使用する場合、promise が解決されると同時にブラウザにストリームされます。これにより、遅くて重要でないデータがある場合でも、すべてのデータが利用可能になる前にページのレンダリングを開始することができます:
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -499,7 +499,7 @@ export async function load({ params }) {
 }
 ```
 
-This is useful for creating skeleton loading states, for example:
+これはロード状態(loading states)のスケルトンを作成するのに便利です、例えば:
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
@@ -522,7 +522,7 @@ This is useful for creating skeleton loading states, for example:
 {/await}
 ```
 
-When streaming data, be careful to handle promise rejections correctly. More specifically, the server could crash with an "unhandled promise rejection" error if a lazy-loaded promise fails before rendering starts (at which point it's caught) and isn't handling the error in some way. When using SvelteKit's `fetch` directly in the `load` function, SvelteKit will handle this case for you. For other promises, it is enough to attach a noop-`catch` to the promise to mark it as handled.
+データをストリーミングする場合は、promise の reject を正しく処理するようにしてください。具体的には、レンダリングの開始時点 (本来この時点で catch される) より前に遅延ロード (lazy-loaded) された promise が失敗し、エラーを処理していない場合、server が "unhandled promise rejection" エラーでクラッシュする可能性があります。SvelteKit の `fetch` を `load` 関数で直接使用する場合は SvelteKit がこのケースを処理してくれます。それ以外の promise の場合は、何もしない `catch` (noop-`catch`) をアタッチし、処理済であることを明示するだけで十分です。
 
 ```js
 /// file: src/routes/+page.server.js
@@ -539,23 +539,23 @@ export function load({ fetch }) {
 }
 ```
 
-> [!NOTE] On platforms that do not support streaming, such as AWS Lambda or Firebase, responses will be buffered. This means the page will only render once all promises resolve. If you are using a proxy (e.g. NGINX), make sure it does not buffer responses from the proxied server.
+> [!NOTE] AWS Lambda や Firebase のような ストリーミングをサポートしないプラットフォームでは、レスポンスはバッファされます。つまり、すべての promise が解決してからでないとページがレンダリングされないということです。もしプロキシ (例えば NGINX) を使用している場合は、プロキシされたサーバーからのレスポンスをバッファしないようにしてください。
 
-> [!NOTE] Streaming data will only work when JavaScript is enabled. You should avoid returning promises from a universal `load` function if the page is server rendered, as these are _not_ streamed — instead, the promise is recreated when the function reruns in the browser.
+> [!NOTE] ストリーミングデータは JavaScript が有効なときにのみ動作します。ページがサーバーでレンダリングされる場合、universal `load` 関数からは promise を返すのは避けたほうがよいでしょう、ストリーミングされないからです (代わりに、関数がブラウザで再実行されるときに promise が再作成されます)。
 
-> [!NOTE] The headers and status code of a response cannot be changed once the response has started streaming, therefore you cannot `setHeaders` or throw redirects inside a streamed promise.
+> [!NOTE] レスポンスのヘッダーとステータスコードは、レスポンスがストリーミングを開始すると変更することはできなくなります。そのため、ストリームされた promise の中で `setHeaders` を呼んだりリダイレクトをスローしたりすることはできません。
 
-> [!NOTE] [In SvelteKit 1.x](migrating-to-sveltekit-2#Top-level-promises-are-no-longer-awaited) top-level promises were automatically awaited, only nested promises were streamed.
+> [!NOTE] [SvelteKit 1.x 系では](migrating-to-sveltekit-2#Top-level-promises-are-no-longer-awaited)、トップレベルの promise は自動的に await され、ネストした promise だけがストリーミングされていました。
 
 ## Parallel loading
 
-When rendering (or navigating to) a page, SvelteKit runs all `load` functions concurrently, avoiding a waterfall of requests. During client-side navigation, the result of calling multiple server `load` functions are grouped into a single response. Once all `load` functions have returned, the page is rendered.
+ページをレンダリング (またはページにナビゲーション) するとき、SvelteKit はすべての `load` 関数を同時に実行し、リクエストのウォーターフォールを回避します。クライアントサイドナビゲーションのときは、複数の server `load` 関数の呼び出し結果が単一のレスポンスにグループ化されます。すべての `load` 関数が返されると、ページがレンダリングされます。
 
-## Rerunning load functions
+## load 関数の再実行 <!--Rerunning-load-functions-->
 
-SvelteKit tracks the dependencies of each `load` function to avoid rerunning it unnecessarily during navigation.
+SvelteKit は それぞれの `load` 関数の依存関係を追跡し、ナビゲーションの際に不必要に再実行されるのを回避します。
 
-For example, given a pair of `load` functions like these...
+例えば、このような `load` 関数のペアがあるとして…
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -595,17 +595,17 @@ export async function load() {
 }
 ```
 
-...the one in `+page.server.js` will rerun if we navigate from `/blog/trying-the-raw-meat-diet` to `/blog/i-regret-my-choices` because `params.slug` has changed. The one in `+layout.server.js` will not, because the data is still valid. In other words, we won't call `db.getPostSummaries()` a second time.
+…もし、`/blog/trying-the-raw-meat-diet` から `/blog/i-regret-my-choices` に移動したら、`params.slug` が変更されているので、`+page.server.js` のほうは再実行されるでしょう。`+layout.server.js` のほうは再実行されません、なぜならデータがまだ有効だからです。言い換えると、`db.getPostSummaries()` を2回呼び出すことはないということです。
 
-A `load` function that calls `await parent()` will also rerun if a parent `load` function is rerun.
+`await parent()` を呼び出している `load` 関数は、親の `load` 関数が再実行された場合に再実行されます。
 
-Dependency tracking does not apply _after_ the `load` function has returned — for example, accessing `params.x` inside a nested [promise](#Streaming-with-promises) will not cause the function to rerun when `params.x` changes. (Don't worry, you'll get a warning in development if you accidentally do this.) Instead, access the parameter in the main body of your `load` function.
+依存関係の追跡は、`load` 関数から返したあとには適用されません。例えば、ネストした [promise](#Streaming-with-promises) の内側で `params.x` にアクセスしている場合、`params.x` が変更されても関数の再実行は行われません (ご心配なく、誤ってこれを行っても開発中に警告が表示されます)。代わりに、`load` 関数の本体部分でパラメータにアクセスしてください。
 
-Search parameters are tracked independently from the rest of the url. For example, accessing `event.url.searchParams.get("x")` inside a `load` function will make that `load` function re-run when navigating from `?x=1` to `?x=2`, but not when navigating from `?x=1&y=1` to `?x=1&y=2`.
+search parameter は url の他の部分とは独立し追跡されます。例えば、`load` 関数の中で `event.url.searchParams.get("x")` にアクセスすると、`?x=1` から `?x=2` にナビゲーションするときにその `load` 関数が再実行されますが、`?x=1&y=1` から `?x=1&y=2` にナビゲーションするときには再実行されません。
 
 ### Untracking dependencies
 
-In rare cases, you may wish to exclude something from the dependency tracking mechanism. You can do this with the provided `untrack` function:
+まれに、依存関係の追跡メカニズムからなにかを除外したいケースがあります。このような場合、`untrack` 関数を使用します:
 
 ```js
 /// file: src/routes/+page.js
@@ -620,9 +620,9 @@ export async function load({ untrack, url }) {
 
 ### Manual invalidation
 
-You can also rerun `load` functions that apply to the current page using [`invalidate(url)`]($app-navigation#invalidate), which reruns all `load` functions that depend on `url`, and [`invalidateAll()`]($app-navigation#invalidateAll), which reruns every `load` function. Server load functions will never automatically depend on a fetched `url` to avoid leaking secrets to the client.
+現在のページに適用される `load` 関数は、[`invalidate(url)`]($app-navigation#invalidate) を使用することで再実行させることもできます。これは `url` に依存しているすべての `load` 関数を再実行させるものです。[`invalidateAll()`]($app-navigation#invalidateAll) は、すべての `load` 関数を再実行させます。server load 関数の場合は、クライアントに秘情報が漏れるのを防ぐため、取得した `url` に自動的に依存することはありません。
 
-A `load` function depends on `url` if it calls `fetch(url)` or `depends(url)`. Note that `url` can be a custom identifier that starts with `[a-z]:`:
+`load` 関数が `fetch(url)` や `depends(url)` を呼び出している場合、その `load` 関数は `url` に依存しています。`url` には `[a-z]:` から始まるカスタムの識別子を指定することができることにご注意ください:
 
 ```js
 /// file: src/routes/random-number/+page.js
@@ -661,37 +661,36 @@ export async function load({ fetch, depends }) {
 <button on:click={rerunLoadFunction}>Update random number</button>
 ```
 
-### When do load functions rerun?
+### load 関数はいつ再実行されるのか <!--When-do-load-functions-rerun-->
 
-To summarize, a `load` function will rerun in the following situations:
+まとめると、`load` 関数は以下のシチュエーションで再実行されます:
 
-- It references a property of `params` whose value has changed
-- It references a property of `url` (such as `url.pathname` or `url.search`) whose value has changed. Properties in `request.url` are _not_ tracked
-- It calls `url.searchParams.get(...)`, `url.searchParams.getAll(...)` or `url.searchParams.has(...)` and the parameter in question changes. Accessing other properties of `url.searchParams` will have the same effect as accessing `url.search`.
-- It calls `await parent()` and a parent `load` function reran
-- A child `load` function calls `await parent()` and is rerunning, and the parent is a server load function
-- It declared a dependency on a specific URL via [`fetch`](#Making-fetch-requests) (universal load only) or [`depends`](@sveltejs-kit#LoadEvent), and that URL was marked invalid with [`invalidate(url)`]($app-navigation#invalidate)
-- All active `load` functions were forcibly rerun with [`invalidateAll()`]($app-navigation#invalidateAll)
+- `params` のプロパティを参照していて、その値が変更された場合
+- `url` のプロパティ (例えば `url.pathname` や `url.search`) を参照していて、その値が変更された場合。`request.url` のプロパティは追跡されません
+- `url.searchParams.get(...)` や `url.searchParams.getAll(...)` や `url.searchParams.has(...)` を呼び出しており、その該当するパラメータが変更された場合。`url.searchParams` の他のプロパティにアクセスした場合は、`url.search` にアクセスした場合と同じ効果になる。
+- `await parent()` を呼び出していて、親の `load` 関数が再実行されたとき
+- [`fetch`](#Making-fetch-requests) (universal load のみ) や [`depends`](@sveltejs-kit#LoadEvent) を介して特定の URL に対する依存を宣言していて、その URL が [`invalidate(url)`]($app-navigation#invalidate) で無効(invalid)であるとマークされた場合
+- [`invalidateAll()`]($app-navigation#invalidateAll) によって全ての有効な `load` 関数が強制的に再実行された場合
 
-`params` and `url` can change in response to a `<a href="..">` link click, a [`<form>` interaction](form-actions#GET-vs-POST), a [`goto`]($app-navigation#goto) invocation, or a [`redirect`](@sveltejs-kit#redirect).
+`params` と `url` は、`<a href="..">` リンクのクリックや、[`<form>` のやりとり](form-actions#GET-vs-POST)、[`goto`]($app-navigation#goto) の呼び出し、[`redirect`](@sveltejs-kit#redirect) に応じて変更されます。
 
-Note that rerunning a `load` function will update the `data` prop inside the corresponding `+layout.svelte` or `+page.svelte`; it does _not_ cause the component to be recreated. As a result, internal state is preserved. If this isn't what you want, you can reset whatever you need to reset inside an [`afterNavigate`]($app-navigation#afterNavigate) callback, and/or wrap your component in a [`{#key ...}`](../svelte/key) block.
+`load` 関数の再実行は、対応する `+layout.svelte` や `+page.svelte` 内の `data` プロパティが更新されるだけで、コンポーネントは再作成されることはありません。結果として、内部の状態は保持されます。もし、この挙動がお望みでなければ、[`afterNavigate`]($app-navigation#afterNavigate) コールバック内でリセットしたり、コンポーネントを [`{#key ...}`](https://svelte.jp/docs#template-syntax-key) ブロックでラップしたりしてリセットすることができます。
 
-## Implications for authentication
+## 認証に対する影響 <!--Implications-for-authentication-->
 
-A couple features of loading data have important implications for auth checks:
-- Layout `load` functions do not run on every request, such as during client side navigation between child routes. [(When do load functions rerun?)](load#Rerunning-load-functions-When-do-load-functions-rerun)
-- Layout and page `load` functions run concurrently unless `await parent()` is called. If a layout `load` throws, the page `load` function runs, but the client will not receive the returned data.
+データ読み込みに関するいくつかの機能は、認証チェックに重要な影響があります:
+- レイアウトの `load` 関数は、例えばその子ルート間のクライアントサイドナビゲーションなど、すべてのリクエストで実行されるわけではありません [(load 関数はいつ再実行されるのか)](load#Rerunning-load-functions-When-do-load-functions-rerun)
+- レイアウトとページの `load` 関数は、`await parent()` を呼び出していない限り同時に実行されます。もしレイアウトの `load` がスローした場合、ページの `load` 関数は実行されますが、クライアントは戻り値のデータを受け取れません。
 
-There are a few possible strategies to ensure an auth check occurs before protected code.
+保護されたコードの前に認証チェックが行われるようにするには、いくつかの戦略が考えられます。
 
-To prevent data waterfalls and preserve layout `load` caches:
-- Use [hooks](hooks) to protect multiple routes before any `load` functions run
-- Use auth guards directly in `+page.server.js` `load` functions for route specific protection
+データのウォータフォールを防ぎつつ、レイアウトの `load` のキャッシュを保持するには:
+- [hooks](hooks) を使用し、`load` 関数が実行されるよりも前に複数のルートを保護する
+- ルート固有の保護が必要な場合は `+page.server.js` の `load` 関数で直接認証ガード (auth guard) を使用する
 
-Putting an auth guard in `+layout.server.js` requires all child pages to call `await parent()` before protected code. Unless every child page depends on returned data from `await parent()`, the other options will be more performant.
+認証ガード (auth guard) を `+layout.server.js` に置くと、全ての子ページで保護されたコードの前で `await parent()` を呼び出す必要があります。全ての子ページが `await parent()` の戻り値のデータに依存していないのであれば、他のオプションのほうがパフォーマンスが良いでしょう。
 
-## Further reading
+## その他の参考資料 <!--Further-reading-->
 
 - [Tutorial: Loading data](/tutorial/kit/page-data)
 - [Tutorial: Errors and redirects](/tutorial/kit/error-basics)

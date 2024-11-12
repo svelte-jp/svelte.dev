@@ -2,11 +2,11 @@
 title: Binding to component instances
 ---
 
-Just as you can bind to DOM elements, you can bind to component instances themselves with `bind:this`.
+DOM 要素にバインドできるのと同じように、`bind:this` でコンポーネントインスタンス自体にバインドすることができます。
 
-This is useful in the rare cases that you need to interact with a component programmatically (rather than by providing it with updated props). Revisiting our canvas app from [a few exercises ago](actions), it would be nice to add a button to clear the screen.
+ごく稀に、(更新されたプロパティを提供するのではなく) プログラム的にコンポーネントと対話しなければならないことがあり、これはそれに有用です。[少し前の演習](actions)の canvas アプリを振り返ると、画面をクリアするボタンを追加するともっとよくなりそうです。
 
-First, let's export a function from `Canvas.svelte`:
+最初に、`Canvas.svelte` から関数をエクスポートしましょう:
 
 ```svelte
 /// file: Canvas.svelte
@@ -19,7 +19,7 @@ let coords = $state();
 }+++
 ```
 
-Then, create a reference to the component instance:
+次に、コンポーネントインスタンスの参照を作成します:
 
 ```js
 /// file: App.svelte
@@ -35,7 +35,7 @@ let showMenu = $state(true);
 <Canvas +++bind:this={canvas}+++ color={selected} size={size} />
 ```
 
-Finally, add a button that calls the `clear` function:
+最後に、`clear` 関数を呼び出すボタンを追加します:
 
 ```svelte
 /// file: App.svelte

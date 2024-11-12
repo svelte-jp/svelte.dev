@@ -2,9 +2,9 @@
 title: GET handlers
 ---
 
-SvelteKit allows you to create more than just pages. We can also create _API routes_ by adding a `+server.js` file that exports functions corresponding to HTTP methods: `GET`, `PUT`, `POST`, `PATCH` and `DELETE`.
+SvelteKit では、ページ以外にも様々なものを作ることができます。`+server.js` ファイルを追加し、そこでHTTP メソッド `GET`、`PUT`、`POST`、`PATCH`、`DELETE` に対応する関数をエクスポートすることで、 _API ルート(API routes)_ を作成することもできます。
 
-This app fetches data from a `/roll` API route when you click the button. Create that route by adding a `src/routes/roll/+server.js` file:
+このアプリは、ボタンをクリックしたときに `/roll` API ルートからデータを取得します。`src/routes/roll/+server.js` ファイルを追加し、そのルートを作成しましょう。
 
 ```js
 /// file: src/routes/roll/+server.js
@@ -19,9 +19,9 @@ export function GET() {
 }
 ```
 
-Clicking the button now works.
+これでボタンクリックしたときの動作が動くようになりました。
 
-Request handlers must return a [Response](https://developer.mozilla.org/en-US/docs/Web/API/Response/Response) object. Since it's common to return JSON from an API route, SvelteKit provides a convenience function for generating these responses:
+リクエストハンドラは [Response](https://developer.mozilla.org/ja/docs/Web/API/Response/Response) オブジェクトを返さなければなりません。API ルートから JSON を返すことはよくあることなので、SvelteKit はこのようなレスポンスを生成する便利な関数を提供しています。
 
 ```js
 /// file: src/routes/roll/+server.js

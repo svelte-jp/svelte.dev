@@ -2,7 +2,7 @@
 title: <svelte:element>
 ---
 
-Sometimes you don't know in advance which element needs to be rendered. Rather than having a long list of `{#if ...}` blocks...
+どの DOM 要素をレンダリングするのかいつも事前にわかるとはかぎりません。長い `{#if ...}` ブロックのリストを用意するよりむしろ...
 
 ```svelte
 /// file: App.svelte
@@ -13,7 +13,7 @@ Sometimes you don't know in advance which element needs to be rendered. Rather t
 {/if}
 ```
 
-...we can use `<svelte:element>`:
+...`<svelte:element>` を使用したほうがよいでしょう:
 
 ```svelte
 /// file: App.svelte
@@ -22,4 +22,4 @@ Sometimes you don't know in advance which element needs to be rendered. Rather t
 </svelte:element>+++
 ```
 
-The `this` value can be any string, or a falsy value — if it's falsy, no element is rendered.
+`this` の値は任意の文字列、または falsy な値です。falsy である場合、要素はレンダリングされません。
