@@ -3,13 +3,13 @@ title: Invalidation
 path: /Europe/London
 ---
 
-When the user navigates from one page to another, SvelteKit calls your `load` functions, but only if it thinks something has changed.
+ユーザーがあるページから別のページに移動するとき、SvelteKit はなにか変更があったと判断した場合にのみ `load` 関数を呼び出します。
 
-In this example, navigating between timezones causes the `load` function in `src/routes/[...timezone]/+page.js` to re-run because `params.timezone` is invalid. But the `load` function in `src/routes/+layout.js` does _not_ re-run, because as far as SvelteKit is concerned it wasn't invalidated by the navigation.
+この例では、タイムゾーン間の移動によって `src/routes/[...timezone]/+page.js` にある `load` 関数が再実行されます。`load` 関数の `params.timezone` が無効(invalid)になるからです。しかし、`src/routes/+layout.js` にある `load` 関数は再実行されません。なぜなら、SvelteKit から見れば、ナビゲーションでは何も変わらなかったからです。
 
-We can fix that by manually invalidating it using the [`invalidate(...)`](https://kit.svelte.dev/docs/$app-navigation#invalidate) function, which takes a URL and re-runs any `load` functions that depend on it. Because the `load` function in `src/routes/+layout.js` calls `fetch('/api/now')`, it depends on `/api/now`.
+[`invalidate(...)`](https://kit.svelte.jp/docs/$app-navigation#invalidate) 関数を使って、手動で無効化(invalidate)することでこれを修正できます。この関数は、URL を 引数に取り、それに依存している `load` 関数を再実行させます。`src/routes/+layout.js` にある `load` 関数は `fetch('/api/now')` を呼び出しているため、`/api/now` に依存しています。
 
-In `src/routes/[...timezone]/+page.svelte`, add an `onMount` callback that calls `invalidate('/api/now')` once a second:
+`src/routes/[...timezone]/+page.svelte` に、1秒に1回 `invalidate('/api/now')` を呼び出す `onMount` コールバックを追加します。
 
 ```svelte
 /// file: src/routes/[...timezone]/+page.svelte
@@ -38,4 +38,4 @@ In `src/routes/[...timezone]/+page.svelte`, add an `onMount` callback that calls
 </h1>
 ```
 
-> [!NOTE] You can also pass a function to `invalidate`, in case you want to invalidate based on a pattern and not specific URLs
+> [!NOTE] 特定の URL ではなくパターンに基づいて `invalidate` を実行したい場合、`invalidate` に関数を渡すこともできます。

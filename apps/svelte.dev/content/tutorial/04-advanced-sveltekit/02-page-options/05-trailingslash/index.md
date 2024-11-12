@@ -2,24 +2,24 @@
 title: trailingSlash
 ---
 
-Two URLs like `/foo` and `/foo/` might look the same, but they're actually different. A relative URL like `./bar` will resolve to `/bar` in the first case and `/foo/bar` in the second, and search engines will treat them as separate entries, harming your SEO.
+2つの URL `/foo` と `/foo/` は同じように見えるかもしれませんが、実際は異なります。`./bar` のような相対 URL は、1つめのケースでは `/bar` に解決し、2つ目のケースでは `/foo/bar` に解決します。検索エンジンはこれらを別々のエントリとして扱うため、SEO に悪影響を与えます。
 
-In short, being loosey-goosey about trailing slashes is a bad idea. By default, SvelteKit strips trailing slashes, meaning that a request for `/foo/` will result in a redirect to `/foo`.
+要するに、末尾のスラッシュを雑に扱うのは悪い考えだということです。デフォルトで、SvelteKit は末尾のスラッシュを削除します。つまり、`/foo/` に対するリクエストは `/foo` にリダイレクトされます。
 
-If you instead want to ensure that a trailing slash is always present, you can specify the `trailingSlash` option accordingly:
+代わりに、末尾のスラッシュが常に存在するようにしたい場合は、`trailingSlash` オプションをそれに応じて指定することができます。
 
 ```js
 /// file: src/routes/always/+page.server.js
 export const trailingSlash = 'always';
 ```
 
-To accommodate both cases (this is not recommended!), use `'ignore'`:
+両方とも許容するには (これは推奨されません！)、`'ignore'` を使用します。
 
 ```js
 /// file: src/routes/ignore/+page.server.js
 export const trailingSlash = 'ignore';
 ```
 
-The default value is `'never'`.
+デフォルトの値は `'never'` です。
 
-Whether or not trailing slashes are applied affects prerendering. A URL like `/always/` will be saved to disk as `always/index.html` whereas a URL like `/never` will be saved as `never.html`.
+末尾のスラッシュが適用されるかどうかは、プリレンダリングに影響します。`/always/` のような URL は、`always/index.html` としてディスクに保存され、一方で `/never` のような URL は `never.html` のように保存されます。

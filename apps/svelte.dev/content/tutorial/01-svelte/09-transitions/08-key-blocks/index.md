@@ -2,9 +2,9 @@
 title: Key blocks
 ---
 
-Key blocks destroy and recreate their contents when the value of an expression changes. This is useful if you want an element to play its transition whenever a value changes instead of only when the element enters or leaves the DOM.
+Key ブロックは、式の値が変更されたときにその中身を破棄して再作成します。これは、要素がDOMに出入りしたときだけでなく、値が変化したときにトランジションしたい場合に便利です。
 
-Here, for example, we'd like to play the `typewriter` transition from `transition.js` whenever the loading message, i.e. `i` changes. Wrap the `<p>` element in a key block:
+ここでは例えば、`transition.js` の `typewriter` トランジションを、ローディングメッセージが変わる度に、つまり `i` が変わる度に再生させたいと思います。`<p>` 要素を key ブロックで囲みます。
 
 ```svelte
 /// file: App.svelte

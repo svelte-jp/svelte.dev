@@ -2,9 +2,9 @@
 title: Each blocks
 ---
 
-When building user interfaces you'll often find yourself working with lists of data. In this exercise, we've repeated the `<button>` markup multiple times — changing the colour each time — but there's still more to add.
+ユーザーインターフェースを作る時、データのリストを扱うことがよくあります。この演習では、`<button>` マークアップを何度も繰り返し、その度に色を変えていますが、まだ追加するものがあります。
 
-Instead of laboriously copying, pasting and editing, we can get rid of all but the first button, then use an `each` block:
+手間暇かけてコピー、ペースト、編集する代わりに、最初の button 以外を取り除き、そして `each` ブロックを使用します:
 
 ```svelte
 /// file: App.svelte
@@ -20,9 +20,9 @@ Instead of laboriously copying, pasting and editing, we can get rid of all but t
 </div>
 ```
 
-> [!NOTE] The expression (`colors`, in this case) can be any iterable or array-like object — in other words, anything that works with [`Array.from`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from).
+> [!NOTE] 式(この場合は `colors`)には、任意の iterable や配列に似たオブジェクトにすることができます。言い換えると、[`Array.from`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/from) が使用できるならなんでも良いということです。
 
-Now we need to use the `color` variable in place of `"red"`:
+こうする場合、`"red"` の代わりに `color` 変数を使用する必要があります:
 
 ```svelte
 /// file: App.svelte
@@ -38,7 +38,7 @@ Now we need to use the `color` variable in place of `"red"`:
 </div>
 ```
 
-You can get the current _index_ as a second argument, like so:
+第2引数として現在の _index_ をこのように取得することができます。
 
 ```svelte
 /// file: App.svelte

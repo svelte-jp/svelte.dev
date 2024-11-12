@@ -2,7 +2,7 @@
 title: Shorthand class directive
 ---
 
-Often, the name of the class will be the same as the name of the value it depends on:
+多くの場合、クラスの名前はそれが依存する値の名前と同じになります。
 
 ```svelte
 <button
@@ -12,7 +12,7 @@ Often, the name of the class will be the same as the name of the value it depend
 >
 ```
 
-In those cases we can use a shorthand form:
+そのような場合は、省略形を使うことができます。
 
 ```svelte
 /// file: App.svelte

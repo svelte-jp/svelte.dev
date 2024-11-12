@@ -2,14 +2,14 @@
 title: <svelte:window> bindings
 ---
 
-We can also bind to certain properties of `window`, such as `scrollY`:
+また、`window` の特定のプロパティ、例えば `scrollY` のようなプロパティにバインドすることもできます。
 
 ```svelte
 /// file: App.svelte
 <svelte:window +++bind:scrollY={y}+++ />
 ```
 
-The list of properties you can bind to is as follows:
+バインドできるプロパティの一覧は以下の通りです。
 
 - `innerWidth`
 - `innerHeight`
@@ -17,6 +17,6 @@ The list of properties you can bind to is as follows:
 - `outerHeight`
 - `scrollX`
 - `scrollY`
-- `online` — an alias for `window.navigator.onLine`
+- `online` — これは `window.navigator.onLine` の別名です
 
-All except `scrollX` and `scrollY` are readonly.
+`scrollX` と `scrollY` 以外はすべて読み取り専用です。

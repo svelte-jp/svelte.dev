@@ -2,20 +2,20 @@
 title: Universal load functions
 ---
 
-In the [previous section on loading](page-data) we loaded data from the server using `+page.server.js` and `+layout.server.js` files. This is very convenient if you need to do things like getting data directly from a database, or reading cookies.
+[以前学習した loading のセクション](page-data)では、`+page.server.js` と `+layout.server.js` ファイルを使ってサーバーからデータを取得しました。データベースから直接データを取得したり、cookie から読み取ったりするのにとても便利です。
 
-Sometimes it doesn't make sense to load data from the server when doing a client-side navigation. For example:
+しかし、クライアントサイドナビゲーションを行うとき、サーバーからデータを取得することが理にかなっていないケースもあります。例えば:
 
-- You're loading data from an external API
-- You want to use in-memory data if it's available
-- You want to delay navigation until an image has been preloaded, to avoid pop-in
-- You need to return something from `load` that can't be serialized (SvelteKit uses [devalue](https://github.com/Rich-Harris/devalue) to turn server data into JSON), such as a component or a store
+- 外部の API からデータを取得する
+- インメモリデータが使えるならそれを使いたい
+- ポップインを避けるため、画像がプリロードされるまでナビゲーションを遅らせたい
+- コンポーネントや store など、シリアライズできないもの (SvelteKit は [devalue](https://github.com/Rich-Harris/devalue) でサーバーのデータを JSON に変換しています) を `load` から返す必要がある
 
-In this exercise, we're dealing with the latter case. The server `load` functions in `src/routes/red/+page.server.js`, `src/routes/green/+page.server.js` and `src/routes/blue/+page.server.js` return a `component` constructor, which can't be serialized like data. If you navigate to `/red`, `/green` or `/blue`, you'll see a 'Data returned from `load` ... is not serializable' error in the terminal.
+この演習では、最後のケースを扱います。`src/routes/red/+page.server.js`、`src/routes/green/+page.server.js`、`src/routes/blue/+page.server.js` の server `load` 関数は、シリアライズできない `component` コンストラクタを返します。`/red`、`/green`、`/blue` に移動すると、ターミナルで 'Data returned from `load` ... is not serializable' というエラーが表示されるでしょう。
 
-To turn the server `load` functions into universal `load` functions, rename each `+page.server.js` file to `+page.js`. Now, the functions will run on the server during server-side rendering, but will also run in the browser when the app hydrates or the user performs a client-side navigation.
+server `load` 関数を universal `load` 関数に変えるため、各 `+page.server.js` ファイルを `+page.js` にリネームします。これで、この関数はサーバーサイドレンダリング中にサーバーで実行されるものの、アプリのハイドレーション中またはユーザーがクライアントサイドナビゲーションを実行しているときにも実行されるようになります。
 
-We can now use the `component` returned from these `load` functions like any other value, including in `src/routes/+layout.svelte`:
+これで、他の値と同じように、`load` 関数から返された `component` を `src/routes/+layout.svelte` で使えるようになりました:
 
 ```svelte
 /// file: src/routes/+layout.svelte
@@ -34,4 +34,4 @@ We can now use the `component` returned from these `load` functions like any oth
 </nav>
 ```
 
-Read the [documentation](https://kit.svelte.dev/docs/load#universal-vs-server) to learn more about the distinction between server `load` functions and universal `load` functions, and when to use which.
+server `load` 関数と universal `load` 関数の違いや、その使い分けなど、詳細については[ドキュメント](https://kit.svelte.jp/docs/load#universal-vs-server)をご参照ください。

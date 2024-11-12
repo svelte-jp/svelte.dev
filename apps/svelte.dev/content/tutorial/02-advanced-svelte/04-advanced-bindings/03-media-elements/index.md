@@ -2,9 +2,9 @@
 title: Media elements
 ---
 
-You can bind to properties of `<audio>` and `<video>` elements, making it easy to (for example) build custom player UI, like `AudioPlayer.svelte`.
+`<audio>` 要素と `<video>` 要素のプロパティをバインドすることができるので、(例えば) `AudioPlayer.svelte` のようなカスタムのプレーヤー UI をとても簡単に作ることができます。
 
-First, add the `<audio>` element along with its bindings (we'll use the shorthand form for `src`, `duration` and `paused`):
+最初に、`<audio>` 要素とそのバインディングを追加します (`src` と `duration` と `paused` は短縮形を使います):
 
 ```svelte
 /// file: AudioPlayer.svelte
@@ -22,7 +22,7 @@ First, add the `<audio>` element along with its bindings (we'll use the shorthan
 	></button>
 ```
 
-Next, add an event handler to the `<button>` that toggles `paused`:
+次に、`paused` を切り替える `<button>` にイベントハンドラを追加します:
 
 ```svelte
 /// file: AudioPlayer.svelte
@@ -33,7 +33,7 @@ Next, add an event handler to the `<button>` that toggles `paused`:
 ></button>
 ```
 
-Our audio player now has basic functionality. Let's add the ability to seek to a specific part of a track by dragging the slider. Inside the slider's `pointerdown` handler there's a `seek` function, where we can update `time`:
+これでオーディオプレーヤーに基本的な機能が付きました。では、スライダーをドラッグして曲の指定した部分にシークできる機能を追加しましょう。スライダー(slider)の `pointerdown` ハンドラの内側にある `seek` 関数で、`time` を更新することができます:
 
 ```js
 /// file: AudioPlayer.svelte
@@ -48,7 +48,7 @@ function seek(e) {
 }
 ```
 
-When the track ends, be kind — rewind:
+曲が終わったら、親切に巻き戻しましょう:
 
 ```svelte
 /// file: AudioPlayer.svelte
@@ -63,22 +63,22 @@ When the track ends, be kind — rewind:
 ></audio>
 ```
 
-The complete set of bindings for `<audio>` and `<video>` is as follows — seven _readonly_ bindings...
+`<audio>` と `<video>` のバインディングの完全なセットは以下の通りです — 7つの _読み取り専用(readonly)_ のバインディング…
 
-- `duration` — the total duration, in seconds
-- `buffered` — an array of `{start, end}` objects
-- `seekable` — ditto
-- `played` — ditto
+- `duration` — 総再生時間 (秒単位)
+- `buffered` — `{start, end}` オブジェクトの配列
+- `seekable` — 同上
+- `played` — 同上
 - `seeking` — boolean
 - `ended` — boolean
-- `readyState` — number between (and including) 0 and 4
+- `readyState` — 0 から 4 までの数値 (0 と 4 も含む)
 
-...and five _two-way_ bindings:
+…と5つの _双方向_ バインディングです:
 
-- `currentTime` — the current position of the playhead, in seconds
-- `playbackRate` — speed up or slow down (`1` is 'normal')
-- `paused` — this one should be self-explanatory
-- `volume` — a value between 0 and 1
-- `muted` — a boolean value where true is muted
+- `currentTime` — 再生マーカー (playhead) の現在の位置 (秒単位)
+- `playbackRate` — 再生速度を上げるか遅くするか (`1` が 'normal')
+- `paused` — これは自明ですね
+- `volume` — 0 から 1 の値
+- `muted` — boolean で、true はミュートを意味します
 
-Videos additionally have readonly `videoWidth` and `videoHeight` bindings.
+video には読み取り専用の `videoWidth` と `videoHeight` バインディングがあります。

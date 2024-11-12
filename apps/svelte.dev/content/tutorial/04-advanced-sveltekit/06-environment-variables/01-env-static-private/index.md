@@ -2,22 +2,22 @@
 title: $env/static/private
 ---
 
-Environment variables — like API keys and database credentials — can be added to a `.env` file, and they will be made available to your application.
+API キーやデータベースの認証情報などの環境変数は `.env` ファイルに追加することでき、アプリケーションから使えるようになります。
 
-> [!NOTE] You can also use `.env.local` or `.env.[mode]` files — see the [Vite documentation](https://vitejs.dev/guide/env-and-mode.html#env-files) for more information. Make sure you add any files containing sensitive information to your `.gitignore` file!
+> [!NOTE] また、`.env.local` ファイルや `.env.[mode]` ファイルも使えます — 詳細は [Vite のドキュメント](https://vitejs.dev/guide/env-and-mode.html#env-files) をご覧ください。機密情報を含むファイルは必ず `.gitignore` ファイルに追加してください！
 >
-> Environment variables in `process.env` are also available via `$env/static/private`.
+> `process.env` にある環境変数も `$env/static/private` 経由で使うことができます。
 
-In this exercise, we want to allow the user to enter the website if they know the correct passphrase, using an environment variable.
+この演習では、環境変数を使って、正しいパスフレーズを知っているユーザーのみ web サイトを見ることができるようにしたいと思います。
 
-First, in `.env`, add a new environment variable:
+まず、`.env` に新しい環境変数を追加します。
 
 ```env
 /// file: .env
 PASSPHRASE=+++"open sesame"+++
 ```
 
-Open `src/routes/+page.server.js`. Import `PASSPHRASE` from `$env/static/private` and use it inside the [form action](/tutorial/kit/the-form-element):
+`src/routes/+page.server.js` を開いてください。`$env/static/private` から `PASSPHRASE` をインポートし、[form action](/tutorial/kit/the-form-element) の中でそれを使用してください。
 
 ```js
 /// file: src/routes/+page.server.js
@@ -49,13 +49,13 @@ export const actions = {
 };
 ```
 
-The website is now accessible to anyone who knows the correct passphrase.
+正しいパスフレーズを知っている人が、web サイトにアクセスできるようになりました。
 
 ## Keeping secrets
 
-It's important that sensitive data doesn't accidentally end up being sent to the browser, where it could easily be stolen by hackers and scoundrels.
+機密データが誤ってブラウザに送信されるとハッカーや悪者に簡単に盗まれてしまうので、そうならないようにすることが重要です。
 
-SvelteKit makes it easy to prevent this from happening. Notice what happens if we try to import `PASSPHRASE` into `src/routes/+page.svelte`:
+SvelteKit では、これを簡単に防ぐことができます。もし `PASSPHRASE` を `src/routes/+page.svelte` にインポートしようとしたらどうなるか確認してみましょう。
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -65,27 +65,27 @@ SvelteKit makes it easy to prevent this from happening. Notice what happens if w
 </script>
 ```
 
-An error overlay pops up, telling us that `$env/static/private` cannot be imported into client-side code. It can only be imported into server modules:
+エラーオーバーレイが表示され、`$env/static/private` はクライアントサイドコードにインポートできないことを教えてくれます。これはサーバーモジュールにのみインポートすることができます。
 
 - `+page.server.js`
 - `+layout.server.js`
 - `+server.js`
-- any modules ending with `.server.js`
-- any modules inside `src/lib/server`
+- `.server.js` で終わるモジュール
+- `src/lib/server` に置いてあるモジュール
 
-In turn, these modules can only be imported by _other_ server modules.
+同様に、これらのモジュールは他のサーバーモジュールにのみインポートすることができます。
 
 ## Static vs dynamic
 
-The `static` in `$env/static/private` indicates that these values are known at build time, and can be _statically replaced_. This enables useful optimisations:
+`$env/static/private` にある `static` とは、これらの値がビルド時に解決され、 _静的に置き換えられる_ ということを示しています。これによって最適化が可能になります。
 
 ```js
 import { FEATURE_FLAG_X } from '$env/static/private';
 
 if (FEATURE_FLAG_X === 'enabled') {
-	// code in here will be removed from the build output
-	// if FEATURE_FLAG_X is not enabled
+	// FEATURE_FLAG_X が enabled でない場合、
+	// ここにあるコードはビルド出力から削除されます
 }
 ```
 
-In some cases you might need to refer to environment variables that are _dynamic_ — in other words, not known until we run the app. We'll cover this case in the next exercise.
+場合によっては、 _動的_ な環境変数 — 言い換えると、アプリの実行時までわからない環境変数を参照する必要があるかもしれません。これについては、次の演習で説明します。

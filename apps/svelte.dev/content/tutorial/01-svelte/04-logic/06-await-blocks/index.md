@@ -2,7 +2,7 @@
 title: Await blocks
 ---
 
-Most web applications have to deal with asynchronous data at some point. Svelte makes it easy to _await_ the value of [promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) directly in your markup:
+ほとんどの webアプリケーションでは、どこかの時点で非同期のデータを扱わなければなりません。Svelte ではマークアップの中で直接 [promises](https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Using_promises) の値を簡単に _await_ することができます。
 
 ```svelte
 /// file: App.svelte
@@ -15,9 +15,9 @@ Most web applications have to deal with asynchronous data at some point. Svelte 
 {/await}+++
 ```
 
-> [!NOTE] Only the most recent `promise` is considered, meaning you don't need to worry about race conditions.
+> [!NOTE] 直近の `promise` だけが処理されるので、レースコンディション(race conditions)を気にする必要はありません。
 
-If you know that your promise can't reject, you can omit the `catch` block. You can also omit the first block if you don't want to show anything until the promise resolves:
+promise が reject できないことがわかっている場合は、`catch` ブロックを省略することができます。また promise が resolve するまで何も表示したくない場合は、最初のブロックを省略することもできます。
 
 ```svelte
 {#await promise then number}

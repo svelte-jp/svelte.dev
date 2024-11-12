@@ -2,7 +2,7 @@
 title: Exports
 ---
 
-Anything exported from a `module` script block becomes an export from the module itself. Let's export a `stopAll` function:
+`module` スクリプトブロックからエクスポートされたものはすべてモジュール自体からのエクスポートになります。`stopAll` 関数をエクスポートしましょう:
 
 ```svelte
 /// file: AudioPlayer.svelte
@@ -15,7 +15,7 @@ Anything exported from a `module` script block becomes an export from the module
 </script>
 ```
 
-We can now import `stopAll` in `App.svelte`...
+`App.svelte` で `stopAll` をインポートすることができます…
 
 ```svelte
 /// file: App.svelte
@@ -25,7 +25,7 @@ We can now import `stopAll` in `App.svelte`...
 </script>
 ```
 
-...and use it in an event handler:
+…さらにそれをイベントハンドラで使うことができます。
 
 ```svelte
 /// file: App.svelte
@@ -40,4 +40,4 @@ We can now import `stopAll` in `App.svelte`...
 </div>
 ```
 
-> [!NOTE] You can't have a default export, because the component _is_ the default export.
+> [!NOTE] default export は使うことはできません、なぜならコンポーネント自体が default export だからです。

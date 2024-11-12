@@ -2,9 +2,9 @@
 title: Contenteditable bindings
 ---
 
-Elements with a `contenteditable` attribute support `textContent` and `innerHTML` bindings:
+`contenteditable` 属性を持つ要素は、`textContent` と `innerHTML` のバインディングをサポートします。
 
 ```svelte
 /// file: App.svelte
-<div +++bind:innerHTML={html}+++ contenteditable></div>
+<div +++bind:innerHTML={html}+++ contenteditable />
 ```

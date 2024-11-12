@@ -4,19 +4,19 @@ title: page
 
 > TODO link to stores exercise
 
-As we learned earlier, Svelte stores are a place to put data that doesn't belong to an individual component.
+以前学んだように、Svelte の store は個々のコンポーネントに属さないデータを置くことができます。
 
-SvelteKit makes three readonly stores available via the `$app/stores` module — `page`, `navigating` and `updated`. The one you'll use most often is [`page`](https://kit.svelte.dev/docs/types#public-types-page), which provides information about the current page:
+SvelteKit では、3つの読み取り専用 store を `$app/stores` モジュールから使用できます — `page`、`navigating`、`updated` です。もっとも多く使用することになるのは [`page`](https://kit.svelte.jp/docs/types#public-types-page) で、これは現在のページに関する情報を取得することができます:
 
-- `url` — the [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL) of the current page
-- `params` — the current page's [parameters](params)
-- `route` — an object with an `id` property representing the current route
-- `status` — the HTTP status code of the current page
-- `error` — the error object of the current page, if any (you'll learn more about error handling in [later](error-basics) [exercises](handleerror))
-- `data` — the data for the current page, combining the return values of all `load` functions
-- `form` — the data returned from a [form action](the-form-element)
+- `url` — 現在のページの [URL](https://developer.mozilla.org/ja/docs/Web/API/URL)
+- `params` — 現在のページの[パラメータ](params)
+- `route` — 現在のルート(route)を表す `id` プロパティを持つオブジェクト
+- `status` — 現在のページの HTTP ステータスコード
+- `error` — 現在のページのエラーオブジェクト (エラーが存在する場合。[以降](error-basics)の[演習](handleerror)でエラーハンドリングを学習する予定です)
+- `data` — 現在のページの data。全ての `load` 関数からの戻り値が足されたもの
+- `form` — [form action](the-form-element) から返されるデータ
 
-As with any other store, you can reference its value in a component by prefixing its name with the `$` symbol. For example, we can access the current pathname as `$page.url.pathname`:
+他の store と同様、コンポーネントでは `$` シンボルを先頭に付けることでその値を参照することができます。例えば、現在のパス名は `$page.url.pathname` でアクセスできます:
 
 ```svelte
 /// file: src/routes/+layout.svelte

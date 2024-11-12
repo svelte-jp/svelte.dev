@@ -4,15 +4,15 @@ editing_constraints:
   { 'create': ['/src/routes/a/b/c/+page@b.svelte', '/src/routes/a/b/c/+page@a.svelte'] }
 ---
 
-Ordinarily, a page inherits every layout above it, meaning that `src/routes/a/b/c/+page.svelte` inherits four layouts:
+通常、ページはその上にある全てのレイアウトを継承しています。つまり、`src/routes/a/b/c/+page.svelte` は4つのレイアウトを継承しています。
 
 - `src/routes/+layout.svelte`
 - `src/routes/a/+layout.svelte`
 - `src/routes/a/b/+layout.svelte`
 - `src/routes/a/b/c/+layout.svelte`
 
-Occasionally, it's useful to break out of the current layout hierarchy. We can do that by adding the `@` sign followed by the name of the parent segment to 'reset' to — for example `+page@b.svelte` would put `/a/b/c` inside `src/routes/a/b/+layout.svelte`, while `+page@a.svelte` would put it inside `src/routes/a/+layout.svelte`.
+たまに、現在のレイアウト階層から抜け出せると便利なときもあります。`@` 記号の後に'リセット'する親セグメントの名前を追加することで、これを実現することができます — 例えば、`/a/b/c` で `+page@b.svelte` にすると `src/routes/a/b/+layout.svelte` が適用され、`+page@a.svelte` の場合は `src/routes/a/+layout.svelte` が適用されます。
 
-Let's reset it all the way to the root layout, by renaming it to `+page@.svelte`.
+`+page@.svelte` にリネームして、一気に最上位(root)のレイアウトまでリセットしてみましょう。
 
-> [!NOTE] The root layout applies to every page of your app, you cannot break out of it.
+> [!NOTE] 最上位(root)のレイアウトはアプリの全てのページに適用され、そこから抜け出すことはできません。

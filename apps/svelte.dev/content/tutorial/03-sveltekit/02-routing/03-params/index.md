@@ -3,15 +3,15 @@ title: Route parameters
 path: /blog
 ---
 
-To create routes with dynamic parameters, use square brackets around a valid variable name. For example, a file like `src/routes/blog/[slug]/+page.svelte` will create a route that matches `/blog/one`, `/blog/two`, `/blog/three` and so on.
+動的なパラメータ付きのルート(routes)を作成するには、角括弧を使用して有効な変数名を囲みます。例えば、`src/routes/blog/[slug]/+page.svelte` というファイルは、`/blog/one`、`/blog/two`、`/blog/three` などにマッチするルート(route)を作成します。
 
-Let's create that file:
+そのファイルを作成してみましょう。
 
 ```svelte
 /// file: src/routes/blog/[slug]/+page.svelte
 <h1>blog post</h1>
 ```
 
-We can now navigate from the `/blog` page to individual blog posts. In the next chapter, we'll see how to load their content.
+これで、`/blog` ページから個々のブログ記事に移動できるようになりました。次の章では、そのコンテンツをロードする方法を見ていきます。
 
-> [!NOTE] Multiple route parameters can appear _within_ one URL segment, as long as they are separated by at least one static character: `foo/[bar]x[baz]` is a valid route where `[bar]` and `[baz]` are dynamic parameters.
+> [!NOTE] 少なくとも1つの静的な文字で区切られていれば、1つの URL セグメント内に複数のルートパラメータを使用することができます。`foo/[bar]x[baz]` は有効なルートで、`[bar]` と `[baz]` は動的なパラメータです。

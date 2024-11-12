@@ -2,11 +2,11 @@
 title: Progressive enhancement
 ---
 
-Because we're using `<form>`, our app works even if the user doesn't have JavaScript ([which happens more often than you probably think](https://kryogenix.org/code/browser/everyonehasjs.html)). That's great, because it means our app is resilient.
+私たちは `<form>` を使用しているため、たとえユーザーが JavaScript を使えなくても ([これはあなたが思うより頻繁に発生しています](https://kryogenix.org/code/browser/everyonehasjs.html)) アプリが動作します。これは素晴らしいことです、なぜなら私たちのアプリがレジリエントであることを意味するからです。
 
-Most of the time, users _do_ have JavaScript. In those cases, we can _progressively enhance_ the experience, the same way SvelteKit progressively enhances `<a>` elements by using client-side routing.
+ほとんどの場合、ユーザーは JavaScript を有効にしています。そのような場合は、SvelteKit がクライアントサイドルーティングで `<a>` 要素を _漸進的に強化(progressively enhance)_ しているのと同じように、form の体験を漸進的に強化することができます。
 
-Import the `enhance` function from `$app/forms`...
+`$app/forms` から `enhance` 関数をインポートし…
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -17,7 +17,7 @@ Import the `enhance` function from `$app/forms`...
 </script>
 ```
 
-...and add the `use:enhance` directive to the `<form>` elements:
+…そして `use:enhance` ディレクティブを `<form>` 要素に追加します。
 
 ```svelte
 /// file: src/routes/+page.svelte
@@ -29,14 +29,14 @@ Import the `enhance` function from `$app/forms`...
 <form method="POST" action="?/delete" +++use:enhance+++>
 ```
 
-And that's all it takes! Now, when JavaScript is enabled, `use:enhance` will emulate the browser-native behaviour except for the full-page reloads. It will:
+これだけです！ JavaScript が有効な場合、`use:enhance` は、ブラウザネイティブな動作(フルページリロードを除く)をエミュレートします。こうすると、
 
-- update the `form` prop
-- invalidate all data on a successful response, causing `load` functions to re-run
-- navigate to the new page on a redirect response
-- render the nearest error page if an error occurs
+- `form` プロパティを更新します
+- 成功レスポンスの場合は全てのデータを無効化・最新化(invalidate)するようマークし、`load` 関数を再実行させます
+- リダイレクトレスポンスの場合は新しいページに移動します
+- エラーが発生した場合は最も近くにあるエラーページをレンダリングします
 
-Now that we're updating the page rather than reloading it, we can get fancy with things like transitions:
+こうして、ページをリロードするのではなく更新するようになったので、トランジションなどで装飾することができます。
 
 ```svelte
 /// file: src/routes/+page.svelte

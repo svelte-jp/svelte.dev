@@ -2,16 +2,16 @@
 title: The use directive
 ---
 
-Actions are essentially element-level lifecycle functions. They're useful for things like:
+アクション(action)は基本的に要素レベルのライフサイクル関数です。これらは以下のような場合に便利です。
 
-- interfacing with third-party libraries
-- lazy-loaded images
-- tooltips
-- adding custom event handlers
+- サードパーティライブラリとの連携
+- 画像の遅延読み込み
+- ツールチップ
+- カスタムイベントハンドラの追加
 
-In this app, you can scribble on the `<canvas>`, and change colours and brush size via the menu. But if you open the menu and cycle through the options with the Tab key, you'll soon find that the focus isn't _trapped_ inside the modal.
+このアプリは `<canvas>` に落書きすることができます。メニューから色やブラシの大きさを変えたりすることができます。しかし、メニューを開いてタブキーでオプションを循環させようとすると、フォーカスがモーダルの中に閉じ込められていないことに気が付くと思います。
 
-We can fix that with an action. Import `trapFocus` from `actions.svelte.js`...
+これを action で修正することができます。`actions.svelte.js` から `trapFocus` をインポートし…
 
 ```svelte
 /// file: App.svelte
@@ -27,16 +27,16 @@ We can fix that with an action. Import `trapFocus` from `actions.svelte.js`...
 </script>
 ```
 
-...then add it to the menu with the `use:` directive:
+…そして、それを `use:` ディレクティブを使ってメニュー(menu)に追加します:
 
 ```svelte
 /// file: App.svelte
 <div class="menu" +++use:trapFocus+++>
 ```
 
-Let's take a look at the `trapFocus` function in `actions.svelte.js`. An action function is called with a `node` — the `<div class="menu">` in our case — when the node is mounted to the DOM. Inside the action, we have an [effect](effects).
+`actions.svelte.js` にある `trapFocus` 関数を見てみましょう。action 関数は `node` (この場合は `<div class="menu">`) が DOM にマウントされたときに、その node を引数に取って呼び出されます。action の内側には、[effect](effects) があります。
 
-First, we need to add an event listener that intercepts Tab key presses:
+まず、タブキーが押されたことをインターセプトするイベントリスナーを追加する必要があります:
 
 ```js
 /// file: actions.svelte.js
@@ -46,7 +46,7 @@ $effect(() => {
 });
 ```
 
-Second, we need to do some cleanup when the node is unmounted — removing the event listener, and restoring focus to where it was before the element mounted:
+次に、node がアンマウントされたときにいくつかクリーンアップする必要があります — イベントリスナーを削除し、フォーカスを要素がマウントされる前の場所に戻します:
 
 ```js
 /// file: actions.svelte.js
@@ -61,4 +61,4 @@ $effect(() => {
 });
 ```
 
-Now, when you open the menu, you can cycle through the options with the Tab key.
+これで、メニューを開いた時に、タブキーでオプションを循環させられるようになりました。

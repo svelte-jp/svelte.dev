@@ -2,16 +2,16 @@
 title: Deep state
 ---
 
-As we saw in the previous exercise, state reacts to _reassignments_. But it also reacts to _mutations_ — we call this _deep reactivity_.
+前回の演習では state が _再代入_ に対してリアクティブになることを確認しましたが、それだけでなく、 _ミューテーション(mutations)_ に対してもリアクティブです — 私たちはこれを _ディープリアクティビティ(deep reactivity)_ と呼んでいます。
 
-Make `numbers` a reactive array:
+`numbers` をリアクティブな配列にしましょう:
 
 ```js
 /// file: App.svelte
 let numbers = +++$state([1, 2, 3, 4])+++;
 ```
 
-Now, when we change the array...
+こうすると、この配列を変更するときに...
 
 ```js
 /// file: App.svelte
@@ -20,7 +20,7 @@ function addNumber() {
 }
 ```
 
-...the component updates. Or better still, we can `push` to the array instead:
+...コンポーネントが更新されます。また、代わりに配列に `push` することもできます:
 
 ```js
 /// file: App.svelte
@@ -29,4 +29,4 @@ function addNumber() {
 }
 ```
 
-> [!NOTE] Deep reactivity is implemented using [proxies](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy), and mutations to the proxy do not affect the original object.
+> [!NOTE] Deep reactivity は [proxy](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy) を使用して実装されており、proxy に対するミューテーションは元のオブジェクトには影響しません。

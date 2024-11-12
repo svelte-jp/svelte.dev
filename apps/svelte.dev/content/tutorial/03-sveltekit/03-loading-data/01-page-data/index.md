@@ -3,15 +3,15 @@ title: Page data
 path: /blog
 ---
 
-At its core, SvelteKit's job boils down to three things:
+本質的には、SvelteKit が行う仕事は次の3つに集約されます。
 
-1. **Routing** — figure out which route matches an incoming request
-2. **Loading** — get the data needed by the route
-3. **Rendering** — generate some HTML (on the server) or update the DOM (in the browser)
+1. **ルーティング(Routing)** — 受け取ったリクエストにどのルートがマッチするかを判断する
+2. **ローディング(Loading)** — ルートが必要とするデータを取得する
+3. **レンダリング(Rendering)** — (サーバー上で) HTML を生成する、または (ブラウザで) DOMを更新する
 
-We've seen how routing and rendering work. Let's talk about the middle part — loading.
+これまで、ルーティングとレンダリングがどのように動作するか見てきました。ここではその中間のローディングについて説明します。
 
-Every page of your app can declare a `load` function in a `+page.server.js` file alongside the `+page.svelte` file. As the file name suggests, this module only ever runs on the server, including for client-side navigations. Let's add a `src/routes/blog/+page.server.js` file so that we can replace the hard-coded links in `src/routes/blog/+page.svelte` with actual blog post data:
+アプリの全てのページで、`+page.svelte` ファイルと同じ並びに `+page.server.js` ファイルを置き、そこで `load` 関数を宣言することができます。ファイル名が示す通り、このモジュールはサーバーでのみ実行されます (クライアントサイドナビゲーション中であっても)。`src/routes/blog/+page.server.js` ファイルを追加しましょう。そうすることで、`src/routes/blog/+page.svelte` にあるハードコードされたリンクを、実際のブログ記事データで置き換えることができるようになります。
 
 ```js
 /// file: src/routes/blog/+page.server.js
@@ -27,9 +27,9 @@ export function load() {
 }
 ```
 
-> [!NOTE] For the sake of the tutorial, we're importing data from `src/routes/blog/data.js`. In a real app, you'd be more likely to load the data from a database or a CMS, but for now we'll do it like this.
+> [!NOTE] このチュートリアルでは、`src/routes/blog/data.js` からデータをインポートしています。現実のアプリでは、データベースや CMS からデータをロードすることが多いかと思いますが、今このチュートリアルではこのようにしています。
 
-We can access this data in `src/routes/blog/+page.svelte` via the `data` prop:
+このデータは `src/routes/blog/+page.svelte` で `data` prop を介してアクセスすることができます。
 
 ```svelte
 /// file: src/routes/blog/+page.svelte
@@ -49,7 +49,7 @@ We can access this data in `src/routes/blog/+page.svelte` via the `data` prop:
 </ul>
 ```
 
-Now, let's do the same for the post page:
+では、記事のページでも同じようにやってみましょう。
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -75,7 +75,7 @@ export function load({ params }) {
 <div>{@html data.post.content}</div>+++
 ```
 
-There's one last detail we need to take care of — the user might visit an invalid pathname like `/blog/nope`, in which case we'd like to respond with a 404 page:
+最後にもう1つやらなければならないことがあります — ユーザーが `/blog/nope` のような無効なパス名でアクセスするかもしれないため、その場合には 404 ページで応答するようにしたいです。
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.js
@@ -93,4 +93,4 @@ export function load({ params }) {
 }
 ```
 
-We'll learn more about error handling in later chapters.
+エラーハンドリングの詳細については、後の章で学習します。

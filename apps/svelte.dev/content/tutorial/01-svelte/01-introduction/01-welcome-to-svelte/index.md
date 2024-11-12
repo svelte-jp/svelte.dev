@@ -1,30 +1,30 @@
 ---
-title: Welcome to Svelte
+title: Svelte にようこそ
 ---
 
 Svelte チュートリアルにようこそ！ ここでは、高速でフットプリントが小さい、あらゆるサイズの Web アプリケーションを簡単に構築するために必要なこと全てを学ぶことができます。
 
 [API ドキュメント](/docs) や [Playground](/playground) を参照することもできます。また、すぐにローカルで動かしたい場合は、`npx sv create` を実行してプロジェクトを作成してください。
 
-## What is Svelte?
+## Svelte とは？ <!--What-is-Svelte-->
 
-Svelte is a tool for building web applications. Like other user interface frameworks, it allows you to build your app _declaratively_ out of components that combine markup, styles and behaviours.
+Svelte は、web アプリケーションを構築するためのツールです。他のユーザーインターフェースフレームワークと同様、マークアップ(markup)、スタイル(styles)、振る舞い(behaviours) を組み合わせたコンポーネントでアプリを _宣言的(declaratively)_ に構築することができます。
 
-These components are _compiled_ into small, efficient JavaScript modules that eliminate overhead traditionally associated with UI frameworks.
+これらのコンポーネントはサイズが小さく効率的な JavaScript モジュールに _コンパイル_ されるため、従来の UI フレームワークには付き物だったオーバーヘッドがありません。
 
-You can build your entire app with Svelte (for example, using an application framework like [SvelteKit](/docs/kit), which this tutorial will cover), or you can add it incrementally to an existing codebase. You can also ship components as standalone packages that work anywhere.
+アプリ全体を Svelte で作ることもできますし (例えば [SvelteKit](/docs/kit) のようなアプリケーションフレームワークを使用して。SvelteKit はこのチュートリアルで学習できます)、既存のコードベースに部分的/段階的に追加することもできます。また、どんな場所でも機能するスタンドアロンパッケージとしてコンポーネントを配布することもできます。
 
-## How to use this tutorial
+## このチュートリアルの使い方 <!--How-to-use-this-tutorial-->
 
-> [!NOTE] You'll need to have basic familiarity with HTML, CSS and JavaScript to understand Svelte.
+> [!NOTE] Svelte を理解するには、HTML、CSS、JavaScript の基本的な知識が必要です。
 
-This tutorial is split into four main parts:
+このチュートリアルは大きく4つのパートに分かれています:
 
-- [Basic Svelte](/tutorial/svelte/welcome-to-svelte) (you are here)
+- [Basic Svelte](/tutorial/svelte/welcome-to-svelte) (現在はこちらです)
 - [Advanced Svelte](/tutorial/svelte/tweens)
 - [Basic SvelteKit](/tutorial/kit/introducing-sveltekit)
 - [Advanced SvelteKit](/tutorial/kit/optional-params)
 
-Each section will present an exercise designed to illustrate a feature. Later exercises build on the knowledge gained in earlier ones, so it's recommended that you go from start to finish. If necessary, you can navigate via the menu above.
+各セクションには、機能を解説するために作られた演習があります。後のセクションの演習は、それより前のセクションの演習で得た知識を土台として作られているので、最初から最後まで通しで学習することをおすすめします。必要に応じて、上部のメニューから移動することができます。
 
-If you get stuck, you can click the `solve` button in the top right of the screen. (The `solve` button is disabled on sections like this one that don't include an exercise.) Try not to rely on it too much; you will learn faster by figuring out where to put each suggested code block and manually typing it in to the editor.
+行き詰まったら、スクリーンの右上にある `正解を見る` ボタンをクリックすることもできます。(このセクションのように演習がないセクションでは `正解を見る` ボタンは無効化されています。) ただし、これに頼りすぎないようにしてください。提示されたコードブロックをどこに配置するか自分で考え、エディタに手入力することで、より早く学習することができます。

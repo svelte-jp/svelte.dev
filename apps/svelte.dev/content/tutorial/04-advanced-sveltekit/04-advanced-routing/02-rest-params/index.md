@@ -4,11 +4,11 @@ path: /how
 focus: /src/routes/[path]/+page.svelte
 ---
 
-To match an unknown number of path segments, use a `[...rest]` parameter, so named for its resemblance to [rest parameters in JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters).
+未知の数のパスセグメントにマッチさせるには、`[...rest]` パラメータを使用します。これは、 [JavaScript の残余引数(rest parameters)](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/rest_parameters) に似ているため、この名前が付けられました。
 
-Rename `src/routes/[path]` to `src/routes/[...path]`. The route now matches any path.
+`src/routes/[path]` を `src/routes/[...path]` にリネームしましょう。このルート(route)はどんなパスにもマッチします。
 
-> [!NOTE] Other, more specific routes will be tested first, making rest parameters useful as 'catch-all' routes. For example, if you needed a custom 404 page for pages inside `/categories/...`, you could add these files:
+> [!NOTE] 他の、より詳細・明確(specific)なルート(routes)が最初にテストされるため、rest パラメータは 'catch-all' ルート(routes)として便利です。例えば、`/categories/...` の中のページ用にカスタムの 404 ページを必要とする場合は、以下のファイルを追加することができます。
 >
 > ```tree
 > src/routes/
@@ -21,6 +21,6 @@ Rename `src/routes/[path]` to `src/routes/[...path]`. The route now matches any 
 > │ │ └ +page.server.js+++
 > ```
 >
-> Inside the `+page.server.js` file, `error(404)` inside `load`.
+> `+page.server.js` ファイルにて、`load` の内側で `error(404)` のようにエラーをスローします。
 
-Rest parameters do _not_ need to go at the end — a route like `/items/[...path]/edit` or `/items/[...path].json` is totally valid.
+Rest parameters はパスの末尾にしなければならないわけではありません。 — `/items/[...path]/edit` や `/items/[...path].json` のようなルート(route)は完全に有効です。

@@ -2,7 +2,7 @@
 title: Dimensions
 ---
 
-You can add `clientWidth`, `clientHeight`, `offsetWidth` and `offsetHeight` bindings to any element:
+全てのブロックレベル要素は `clientWidth`、 `clientHeight`、`offsetWidth`、`offsetHeight` バインディングを備えています:
 
 ```svelte
 /// file: App.svelte
@@ -12,4 +12,4 @@ You can add `clientWidth`, `clientHeight`, `offsetWidth` and `offsetHeight` bind
 </div>
 ```
 
-These bindings are readonly — changing the values of `w` and `h` won't have any effect on the element.
+これらのバインディングは読み取り専用です。`w` と `h` の値を変更しても要素に何の影響もありません。

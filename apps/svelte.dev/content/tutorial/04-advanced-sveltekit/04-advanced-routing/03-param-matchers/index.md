@@ -3,9 +3,9 @@ title: Param matchers
 path: /colors/ff3e00
 ---
 
-To prevent the router from matching on invalid input, you can specify a _matcher_. For example, you might want a route like `/colors/[value]` to match hex values like `/colors/ff3e00` but not named colors like `/colors/octarine` or any other arbitrary input.
+ルーターが無効な入力にマッチするのを防ぐために、 _matcher_ を指定することができます。例えば、`/colors/[value]` のようなルート(route)を、`/colors/ff3e00` のような16進数の値(hex value)にマッチさせたいけれど、`/colors/octarine` のような色の名前やその他の任意の入力にはマッチさせたくないことがあるでしょう。
 
-First, create a new file called `src/params/hex.js` and export a `match` function from it:
+まず、`src/params/hex.js` という新しいファイルを作成し、そこから `match` 関数をエクスポートしてください。
 
 ```js
 /// file: src/params/hex.js
@@ -14,8 +14,8 @@ export function match(value) {
 }
 ```
 
-Then, to use the new matcher, rename `src/routes/colors/[color]` to `src/routes/colors/[color=hex]`.
+それから、その新しい matcher を使うために、`src/routes/colors/[color]` を `src/routes/colors/[color=hex]` にリネームしてください。
 
-Now, whenever someone navigates to that route, SvelteKit will verify that `color` is a valid `hex` value. If not, SvelteKit will try to match other routes, before eventually returning a 404.
+これで、誰かがこのルート(route)に移動してきたときはいつでも、SvelteKit が `color` が有効な `hex` value か検証します。違った場合、SvelteKit は、他のルート(routes)にマッチするか試行し、どれにもマッチしない場合は最終的に 404 を返します。
 
-> [!NOTE] Matchers run both on the server and in the browser.
+> [!NOTE] Matcher はサーバーとブラウザの両方で動作します。

@@ -2,15 +2,15 @@
 title: Optional parameters
 ---
 
-In the first chapter on [routing](/tutorial/kit/pages), we learned how to create routes with [dynamic parameters](/tutorial/kit/params).
+[ルーティング(Routing)](/tutorial/kit/pages) の最初の章で、[動的なパラメータ](/tutorial/kit/params)付きのルート(routes)を作成する方法について学習しました。
 
-Sometimes it's helpful to make a parameter optional. A classic example is when you use the pathname to determine the locale — `/fr/...`, `/de/...` and so on — but you also want to have a default locale.
+パラメータをオプショナルにできたら便利なときがあるでしょう。その代表的な例は、ロケールを決めるのにパス名を使用する場合です — `/fr/...`、`/de/...` などなど — このとき、デフォルトのロケールも持ちたいはずです。
 
-To do that, we use double brackets. Rename the `[lang]` directory to `[[lang]]`.
+そうするには、二重括弧を使用します。`[lang]` ディレクトリを `[[lang]]` にリネームしましょう。
 
-The app now fails to build, because `src/routes/+page.svelte` and `src/routes/[[lang]]/+page.svelte` would both match `/`. Delete `src/routes/+page.svelte`. (You may need to reload the app to recover from the error page).
+今は `src/routes/+page.svelte` と `src/routes/[[lang]]/+page.svelte` がどちらも `/` にマッチするため、アプリがビルドに失敗します。`src/routes/+page.svelte` を削除してください (エラーページから復帰するには、アプリをリロードする必要があるかもしれません)。
 
-Lastly, edit `src/routes/[[lang]]/+page.server.js` to specify the default locale:
+最後に、`src/routes/[[lang]]/+page.server.js` を編集してデフォルトロケールを指定してください。
 
 ```js
 /// file: src/routes/[[lang]]/+page.server.js

@@ -2,9 +2,9 @@
 title: Component styles
 ---
 
-Often, you need to influence the styles inside a child component. Perhaps we want to make these boxes red, green and blue.
+子コンポーネント内の style を指定したいことがよくあります。例えばこの演習では、このボックス(Box)を赤や緑、青にしたいです。
 
-One way to do this is with the `:global` CSS modifier, which allows you to indiscriminately target elements inside other components:
+方法の1つとしては、`:global` CSS 修飾子を使います。これによって他のコンポーネントの中の要素を無差別にターゲットにすることができます:
 
 ```svelte
 /// file: App.svelte
@@ -23,11 +23,11 @@ One way to do this is with the `:global` CSS modifier, which allows you to indis
 </style>
 ```
 
-But there are lots of reasons _not_ to do that. For one thing, it's extremely verbose. For another, it's brittle — any changes to the implementation details of `Box.svelte` could break the selector.
+しかし、こうすべきでない理由がたくさんあります。まず、とても冗長です。さらに、壊れやすいということです — `Box.svelte` の実装の詳細が変更されると、このセレクタが壊れるかもしれません。
 
-Most of all though, it's rude. Components should be able to decide for themselves which styles can be controlled from 'outside', in the same way they decide which variables are exposed as props. `:global` should be used as an escape hatch — a last resort.
+なにより、無礼です。コンポーネントは、どの変数を props として公開するか決めるのと同じように、どの style を '外' から指定できるようにするか自身で決めることができるはずです。`:global` は最後の手段のエスケープハッチとして使用したほうがよいでしょうl．
 
-Inside `Box.svelte`, change `background-color` so that it is determined by a [CSS custom property](https://developer.mozilla.org/en-US/docs/Web/CSS/--*):
+`Box.svelte` の中で、`background-color` を変更し、[CSS カスタムプロパティ](https://developer.mozilla.org/ja/docs/Web/CSS/--*)で定義されるようにします:
 
 ```svelte
 /// file: Box.svelte
@@ -42,7 +42,7 @@ Inside `Box.svelte`, change `background-color` so that it is determined by a [CS
 </style>
 ```
 
-Any parent element (such as `<div class="boxes">`) can set the value of `--color`, but we can also set it on individual components:
+親要素 (例えば `<div class="boxes">`) であれば `--color` の値をセットできますが、コンポーネントごとにセットすることもできます:
 
 ```svelte
 /// file: App.svelte
@@ -53,9 +53,9 @@ Any parent element (such as `<div class="boxes">`) can set the value of `--color
 </div>
 ```
 
-The values can be dynamic, like any other attribute.
+他の属性と同じようにこの値を動的にすることができます。
 
-> [!NOTE] This feature works by wrapping each component in an element with `display: contents`, where needed, and applying the custom properties to it. If you inspect the elements, you'll see markup like this:
+> [!NOTE] この機能は必要に応じてコンポーネントごとに `display: contents` がついた要素でラップし、カスタムプロパティを適用することによって実現しています。要素を確認すると、このようなマークアップになっているはずです:
 >
 > ```svelte
 > <svelte-css-wrapper style="display: contents; --color: red;">
@@ -63,4 +63,4 @@ The values can be dynamic, like any other attribute.
 > </svelte-css-wrapper>
 > ```
 >
-> Because of `display: contents` this won't affect your layout, but the extra element _can_ affect selectors like `.parent > .child`.
+> `display: contents` のおかげでレイアウトには影響しませんが、追加された要素は `.parent > .child` のようなセレクタに影響します。

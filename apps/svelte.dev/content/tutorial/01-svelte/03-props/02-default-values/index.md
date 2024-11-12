@@ -2,7 +2,7 @@
 title: Default values
 ---
 
-We can easily specify default values for props in `Nested.svelte`:
+`Nested.svelte` の props のデフォルト値を簡単に指定することができます。
 
 ```svelte
 /// file: Nested.svelte
@@ -11,7 +11,7 @@ We can easily specify default values for props in `Nested.svelte`:
 </script>
 ```
 
-If we now add a second component _without_ an `answer` prop, it will fall back to the default:
+`answer` prop なしで2つ目のコンポーネントを追加すると、デフォルト値にフォールバックすることがわかります。
 
 ```svelte
 /// file: App.svelte

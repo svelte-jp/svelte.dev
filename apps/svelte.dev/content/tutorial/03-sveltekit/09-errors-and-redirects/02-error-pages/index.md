@@ -2,9 +2,9 @@
 title: Error pages
 ---
 
-When something goes wrong inside a `load` function, SvelteKit renders an error page.
+`load` 関数の内側でなにか問題が発生したとき、SvelteKit はエラーページをレンダリングします。
 
-The default error page is somewhat bland. We can customize it by creating a `src/routes/+error.svelte` component:
+デフォルトのエラーページは当たり障りないものです。`src/routes/+error.svelte` コンポーネントを作成することで、カスタマイズすることができます。
 
 ```svelte
 /// file: src/routes/+error.svelte
@@ -19,11 +19,11 @@ The default error page is somewhat bland. We can customize it by creating a `src
 </span>
 ```
 
-Notice that the `+error.svelte` component is rendered inside the root `+layout.svelte`. We can create more granular `+error.svelte` boundaries:
+`+error.svelte` コンポーネントは最上位(root)の `+layout.svelte` の内側でレンダリングされます。よりきめ細やかな `+error.svelte` 境界を作ることもできます。
 
 ```svelte
 /// file: src/routes/expected/+error.svelte
 <h1>this error was expected</h1>
 ```
 
-This component will be rendered for `/expected`, while the root `src/routes/+error.svelte` page will be rendered for any other errors that occur.
+このコンポーネントは `/expected` でエラーが発生した場合にレンダリングされ、その他の場所でエラーが発生した場合は最上位(root)の `src/routes/+error.svelte` ページがレンダリングされます。

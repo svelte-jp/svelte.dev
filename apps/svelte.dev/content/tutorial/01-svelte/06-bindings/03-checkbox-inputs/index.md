@@ -2,7 +2,7 @@
 title: Checkbox inputs
 ---
 
-Checkboxes are used for toggling between states. Instead of binding to `input.value`, we bind to `input.checked`:
+チェックボックスは state を切り替えるのに使用されます。`input.value` にバインドする代わりに、`input.checked` にバインドします。
 
 ```svelte
 /// file: App.svelte

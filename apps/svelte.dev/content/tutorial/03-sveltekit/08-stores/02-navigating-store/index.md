@@ -2,14 +2,14 @@
 title: navigating
 ---
 
-The `navigating` store represents the current navigation. When a navigation starts — because of a link click, or a back/forward navigation, or a programmatic `goto` — the value of `navigating` will become an object with the following properties:
+`navigating` store は現在のナビゲーションを表しています。ナビゲーションを開始するとき — 例えばリンクをクリックしたり、ブラウザの '戻る/進む'、またはプログラムで `goto` を呼んだとき — `navigating` の値は以下のプロパティを持つオブジェクトになります:
 
-- `from` and `to` — objects with `params`, `route` and `url` properties
-- `type` — the type of navigation, e.g. `link`, `popstate` or `goto`
+- `from` と `to` — `params`、`route`、`url` プロパティを持つオブジェクト
+- `type` — ナビゲーションのタイプ。例えば `link`、`popstate`、`goto`
 
-> [!NOTE] For complete type information visit the [`Navigation`](https://kit.svelte.dev/docs/types#public-types-navigation) documentation.
+> [!NOTE] タイプに関する全ての情報については [`Navigation`](https://kit.svelte.jp/docs/types#public-types-navigation) のドキュメントをご参照ください。
 
-It can be used to show a loading indicator for long-running navigations. In this exercise, `src/routes/+page.server.js` and `src/routes/about/+page.server.js` both have an artificial delay. Inside `src/routes/+layout.svelte`, import the `navigating` store and add a message to the nav bar:
+これは、長時間かかるナビゲーションのローディングインジケーターを表示するのに使用できます。この演習では、`src/routes/+page.server.js` と `src/routes/about/+page.server.js` の両方にわざと遅延を設けています。`src/routes/+layout.svelte` で、`navigating` store をインポートし、nav バーにメッセージを追加しましょう:
 
 ```svelte
 /// file: src/routes/+layout.svelte

@@ -2,13 +2,13 @@
 title: handleFetch
 ---
 
-The `event` object has a `fetch` method that behaves like the standard [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), but with superpowers:
+`event` オブジェクトは標準の [Fetch API](https://developer.mozilla.org/ja/docs/Web/API/Fetch_API) のように振る舞う `fetch` メソッドを持っていますが、以下のスーパーパワーを備えています:
 
-- it can be used to make credentialed requests on the server, as it inherits the `cookie` and `authorization` headers from the incoming request
-- it can make relative requests on the server (ordinarily, `fetch` requires a URL with an origin when used in a server context)
-- internal requests (e.g. for `+server.js` routes) go directly to the handler function when running on the server, without the overhead of an HTTP call
+- 受け取ったリクエストから `cookie` と `authorization` を継承するので、サーバー上で認証付きのリクエストを行うことができます
+- サーバー上で相対リクエストを行うことができます (通常、`fetch` をサーバーで使用する場合はオリジンを持つ URL が必要です)
+- 内部リクエスト (例えば `+server.js` ルートに対するリクエスト) は、サーバー上で実行される場合は直接ハンドラ関数を呼び出すため、HTTP 呼び出しのオーバーヘッドがありません
 
-Its behaviour can be modified with the `handleFetch` hook, which by default looks like this:
+この動作は `handleFetch` hook で変更することができます。デフォルトではこのようになります:
 
 ```js
 /// file: src/hooks.server.js
@@ -17,7 +17,7 @@ export async function handleFetch({ event, request, fetch }) {
 }
 ```
 
-For example, we could respond to requests for `src/routes/a/+server.js` with responses from `src/routes/b/+server.js` instead:
+例えば、`src/routes/a/+server.js` に対するリクエストに対し、代わりに `src/routes/b/+server.js` のレスポンスを返すことができます:
 
 ```js
 /// file: src/hooks.server.js
@@ -31,4 +31,4 @@ export async function handleFetch({ event, request, fetch }) {
 }
 ```
 
-Later, when we cover [universal `load` functions](universal-load-functions), we'll see that `event.fetch` can also be called from the browser. In that scenario, `handleFetch` is useful if you have requests to a public URL like `https://api.yourapp.com` from the browser, that should be redirected to an internal URL (bypassing whatever proxies and load balancers sit between the API server and the public internet) when running on the server.
+後に、[universal `load` 関数](universal-load-functions)を学習するとき、`event.fetch` はブラウザでも呼び出せることを学びます。ブラウザからリクエストするときは `https://api.yourapp.com` のようなパブリックな URL で、それをサーバー上で実行するときは内部 URL にリダイレクトしたいとき (API サーバーとパブリックなインターネットの間にあるロードバランサーやプロキシーをバイパスしたいとき)、`handleFetch` はとても有用です。

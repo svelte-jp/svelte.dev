@@ -2,9 +2,9 @@
 title: Layouts
 ---
 
-Different routes of your app will often share common UI. Instead of repeating it in each `+page.svelte` component, we can use a `+layout.svelte` component that applies to all routes in the same directory.
+アプリの別々のルート(routes)が共通の UI を共有することがあると思います。その共通の UI を `+page.svelte` コンポーネントに繰り返し書く代わりに、同じディレクトリ内の全てのルート(routes)に適用される `+layout.svelte` コンポーネント を使用することができます。
 
-In this app we have two routes, `src/routes/+page.svelte` and `src/routes/about/+page.svelte`, that contain the same navigation UI. Let's create a new file, `src/routes/+layout.svelte`...
+このアプリには2つのルート(routes) `src/routes/+page.svelte` と `src/routes/about/+page.svelte` があり、どちらにも同じナビゲーション UI があります。新たに `src/routes/+layout.svelte` ファイルを作成してみましょう…
 
 ```
 src/routes/
@@ -14,7 +14,7 @@ src/routes/
 └ +page.svelte
 ```
 
-...and move the duplicated content from the `+page.svelte` files into the new `+layout.svelte` file. The `{@render children()}` tag is where the page content will be rendered:
+…そして2つの `+page.svelte` ファイルで重複しているコンテンツを、新たに作成した `+layout.svelte` ファイルに移動しましょう。`{@render children()}` タグは、ページコンテンツがレンダリングされる場所です。
 
 ```svelte
 /// file: src/routes/+layout.svelte
@@ -30,4 +30,4 @@ src/routes/
 {@render children()}
 ```
 
-A `+layout.svelte` file applies to every child route, including the sibling `+page.svelte` (if it exists). You can nest layouts to arbitrary depth.
+`+layout.svelte` ファイルは全ての子ルート(route)に適用されます。同じ階層にある `+page.svelte` にも適用されます(もし存在していれば)。レイアウトは任意の深さまでネストすることができます。

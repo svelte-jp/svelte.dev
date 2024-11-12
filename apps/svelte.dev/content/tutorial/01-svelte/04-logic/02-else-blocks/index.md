@@ -2,7 +2,7 @@
 title: Else blocks
 ---
 
-Just like in JavaScript, an `if` block can have an `else` block:
+JavaScript と同じように、`if` ブロックには `else` ブロックを置くことができます:
 
 ```svelte
 /// file: App.svelte
@@ -13,4 +13,4 @@ Just like in JavaScript, an `if` block can have an `else` block:
 {/if}
 ```
 
-`{#...}` opens a block. `{/...}` closes a block. `{:...}` _continues_ a block. Congratulations — you've already learned almost all the syntax Svelte adds to HTML.
+`{#...}` はブロックを開始します。`{/...}` はブロックを終了します。`{:...}` はブロックを継続します。おめでとうございます！あなたは既にSvelteがHTMLに追加した構文のほとんどを学びました。
