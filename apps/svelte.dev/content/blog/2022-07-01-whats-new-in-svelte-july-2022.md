@@ -17,10 +17,10 @@ Svelte の支援者の方々は、約 $80,000 を [OpenCollective のプロジ�
 
 ## What's new in Svelte & Language Tools
 
-- [learn.svelte.dev](https://learn.svelte.dev/) は、Svelte と SvelteKit を1から学ぶための新しい方法で、現在開発中です
-- SSR の高速化が Svelte の次のリリースに取り込まれます。2年以上費やされた PR で、いくつかのベンチマークテストによれば、レンダリングが3倍高速になりました! ([PR](https://github.com/sveltejs/svelte/pull/5701))
-- Svelte extension の最新版で、"Find File References" ([0.14.28](https://github.com/sveltejs/language-tools/releases/tag/language-server-0.14.28)) と "Find Component References" ([0.14.29](https://github.com/sveltejs/language-tools/releases/tag/language-server-0.14.29)) が追加され、Svelte ファイルと Svelte コンポーネントがインポートされている場所がわかるようになりました ([Demo](https://twitter.com/dummdidumm_/status/1532459709604716544/photo/1))
-- Svelte extension が CSS path の補完をサポートしました ([0.14.29](https://github.com/sveltejs/language-tools/releases/tag/language-server-0.14.29))
+- [The tutorial](/tutorial) is a new way to learn Svelte and SvelteKit from the ground up that is currently in development
+- Faster SSR is coming in the next Svelte release. A PR two years in the making, resulting in up to 3x faster rendering in some benchmarking tests! ([PR](https://github.com/sveltejs/svelte/pull/5701))
+- "Find File References" ([0.14.28](https://github.com/sveltejs/language-tools/releases/tag/language-server-0.14.28)) and "Find Component References" ([0.14.29](https://github.com/sveltejs/language-tools/releases/tag/language-server-0.14.29)) in the latest versions of the Svelte extension shows where Svelte files and components have been imported and used ([Demo](https://twitter.com/dummdidumm_/status/1532459709604716544/photo/1))
+- The Svelte extension now supports CSS path completion ([0.14.29](https://github.com/sveltejs/language-tools/releases/tag/language-server-0.14.29))
 
 ## What's new in SvelteKit
 

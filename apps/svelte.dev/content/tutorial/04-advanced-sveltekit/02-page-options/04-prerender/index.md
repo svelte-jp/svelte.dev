@@ -17,6 +17,6 @@ export const prerender = true;
 
 このチュートリアルでは、アプリケーションが `dev` モードで実行されているため、目で見てわかるような効果はありません。
 
-全てのページをプリレンダリングできるわけではありません。基本的なルールはこうです: コンテンツがプリレンダリング可能であると言うためには、それを直接表示する2人のユーザーが、サーバーから同じコンテンツを取得できなけれならず、ページには form actions が含まれていないこと。動的なルートパラメータ(route parameters)を持つページは、[`prerender.entries`](https://kit.svelte.jp/docs/configuration#prerender) 設定で指定されているか、`prerender.entries` で指定されているページからリンクを辿って到達できるのであれば、プリレンダリングすることができます。
+全てのページをプリレンダリングできるわけではありません。基本的なルールはこうです: コンテンツがプリレンダリング可能であると言うためには、それを直接表示する2人のユーザーが、サーバーから同じコンテンツを取得できなけれならず、ページには form actions が含まれていないこと。動的なルートパラメータ(route parameters)を持つページは、[`prerender.entries`](/docs/kit/configuration#prerender) 設定で指定されているか、`prerender.entries` で指定されているページからリンクを辿って到達できるのであれば、プリレンダリングすることができます。
 
 > [!NOTE] 最上位(root)の `+layout.server.js` で `prerender` を `true` に設定した場合、実質的には SvelteKit は静的サイトジェネレーター (static site generator, SSG) になります。

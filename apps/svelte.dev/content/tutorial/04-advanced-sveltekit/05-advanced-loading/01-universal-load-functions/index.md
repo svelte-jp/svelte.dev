@@ -34,4 +34,4 @@ server `load` 関数を universal `load` 関数に変えるため、各 `+page.s
 </nav>
 ```
 
-server `load` 関数と universal `load` 関数の違いや、その使い分けなど、詳細については[ドキュメント](https://kit.svelte.jp/docs/load#universal-vs-server)をご参照ください。
+server `load` 関数と universal `load` 関数の違いや、その使い分けなど、詳細については[ドキュメント](/docs/kit/load#Universal-vs-server)をご参照ください。

@@ -24,7 +24,7 @@ Svelte のトランジションエンジンで特に強力な特徴は、トラ�
 ```svelte
 /// file: TodoList.svelte
 <li
-	class:done
+	class:done={todo.done}
 	+++in:receive={{ key: todo.id }}+++
 	+++out:send={{ key: todo.id }}+++
 >

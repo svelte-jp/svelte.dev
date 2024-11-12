@@ -4,7 +4,7 @@ title: The <form> element
 
 [loading data](page-data) の章では、データをサーバーからブラウザに取得してくる方法を見てきました。時には、その逆方向にデータを送信する必要があります。そこで、web プラットフォームにおけるデータ送信方法である `<form>` の登場です。
 
-todo アプリを作ってみましょう。すでに `src/lib/server/database.js` にセットアップ済みのインメモリデータベースがあり、`src/routes/+page.server.js` の `load` 関数で [`cookies`](https://kit.svelte.jp/docs/load#cookies) API を使用しているためユーザーごとの todo リストを持つことができるようになっています。ここでは新しい todo を作成するための `<form>` を追加する必要があります。
+todo アプリを作ってみましょう。すでに `src/lib/server/database.js` にセットアップ済みのインメモリデータベースがあり、`src/routes/+page.server.js` の `load` 関数で [`cookies`](/docs/kit/load#Cookies) API を使用しているためユーザーごとの todo リストを持つことができるようになっています。ここでは新しい todo を作成するための `<form>` を追加する必要があります。
 
 ```svelte
 /// file: src/routes/+page.svelte

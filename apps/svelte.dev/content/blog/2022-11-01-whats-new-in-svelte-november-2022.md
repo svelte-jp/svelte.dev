@@ -11,10 +11,10 @@ authorURL: https://dreamindani.com
 
 ## What's new in SvelteKit
 
-- `use:enhance` の新しい `update` メソッドによって、独自のロジックでフォームを拡張しつつ、デフォルトのフォームの挙動に戻すことが簡単になります ([docs](https://kit.svelte.jp/docs/form-actions#progressive-enhancement-use-enhance), [#7083](https://github.com/sveltejs/kit/pull/7083) と [#7326](https://github.com/sveltejs/kit/pull/7326))
-- ルーティングで `[[optional]]` パラメータが使用できるようになりました ([docs](https://kit.svelte.jp/docs/advanced-routing#optional-parameters), [#7051](https://github.com/sveltejs/kit/pull/7051))
-- `goto` に `invalidateAll` オプションが追加され、新しいアクティブなページに属するすべての `load` 関数が (再)実行できるようになりました ([docs](https://kit.svelte.jp/docs/modules#$app-navigation-goto), [#7407](https://github.com/sveltejs/kit/pull/7407))
-- 静的なアセットを探す adapter で、`config.kit.paths.base` が使用されるようになりました - `adapter-netlify`、`adapter-vercel`、`adapter-cloudflare`、`adapter-cloudflare-workers` で発生していた 404 の問題が修正されました ([#4448](https://github.com/sveltejs/kit/pull/4448))
+- The new `update` method for `use:enhance` lets you easily get back the default form behavior while augmenting it with your own logic ([docs](/docs/kit/form-actions#Progressive-enhancement-use:enhance), [#7083](https://github.com/sveltejs/kit/pull/7083) and [#7326](https://github.com/sveltejs/kit/pull/7326))
+- `[[optional]]` parameters are now available for routing ([docs](/docs/kit/advanced-routing#Optional-parameters), [#7051](https://github.com/sveltejs/kit/pull/7051))
+- `goto` now has `invalidateAll` to (re-)run all `load` functions belonging to the new active page ([docs](/docs/kit/$app-navigation#goto), [#7407](https://github.com/sveltejs/kit/pull/7407))
+- `config.kit.paths.base` is now used in adapters looking for static assets - fixing 404 issues across `adapter-netlify`, `adapter-vercel`, `adapter-cloudflare`, and `adapter-cloudflare-workers` ([#4448](https://github.com/sveltejs/kit/pull/4448))
 
 ### Breaking changes:
 
@@ -24,12 +24,12 @@ authorURL: https://dreamindani.com
 
 ## Svelte changes
 
-- 新しいアクセシビリティ警告の `a11y-click-events-have-key-events` と `a11y-no-noninteractive-tabindex` は、コンポーネントが必須のキーイベントやタブインデックスを持たない場合に警告を出すようになりました。`a11y-role-has-required-aria-props` は、要素がセマンティックロール(semantic role)に一致する場合に警告を出さないようになりました (**3.51.0**)
-- `--style-props` が、`<svelte:component>` と `<svg>` でサポートされました (**3.51.0**, コンポーネント例: [Before](https://svelte.dev/repl/48984f20503f4959b70f24f4130d164b?version=3.47.0) と [After](https://svelte.dev/repl/48984f20503f4959b70f24f4130d164b?version=3.51.0), SVG の例: [Before](https://svelte.dev/repl/b7a3f94255914044b35462234ccaea43?version=3.50.0) と [After](https://svelte.dev/repl/b7a3f94255914044b35462234ccaea43?version=3.51.0))
-- コンポーネントのイベントハンドラで "nullish" な値がサポートされました (**3.51.0**, [Example](https://svelte.dev/repl/9228022922af4c76af68ce42349ccbf9?version=3.51.0))
-- スコープされたスタイル(Scoped styles)が `<svelte:element>` に適用できるようになりました (**3.51.0**, [Example](https://svelte.dev/repl/23d982fc6f4f4f06a6aa227860fa2d84?version=3.51.0))
-- インラインスタイルタグで `important` が使用できるようになりました: `style:foo|important` (**3.52.0**, [#7365](https://github.com/sveltejs/svelte/issues/7365))
-- `rel="noreferrer"` なしで `<a target="_blank">` を使用したときに警告がスローされるようになりました (**3.52.0**, [#6188](https://github.com/sveltejs/svelte/issues/6188))
+- New accessibility warnings, `a11y-click-events-have-key-events` and `a11y-no-noninteractive-tabindex`, will now warn when your components lack required key events or tabindex. While `a11y-role-has-required-aria-props` will no longer warn when elements match their semantic role (**3.51.0**)
+- `--style-props` are now supported on `<svelte:component>` and `<svg>` (**3.51.0**, Component Example: [Before](/playground/48984f20503f4959b70f24f4130d164b?version=3.47.0) and [After](/playground/48984f20503f4959b70f24f4130d164b?version=3.51.0), SVG Example: [Before](/playground/b7a3f94255914044b35462234ccaea43?version=3.50.0) and [After](/playground/b7a3f94255914044b35462234ccaea43?version=3.51.0))
+- "nullish" values for component event handlers are now supported (**3.51.0**, [Example](/playground/9228022922af4c76af68ce42349ccbf9?version=3.51.0))
+- Scoped styles can now be applied to `<svelte:element>` (**3.51.0**, [Example](/playground/23d982fc6f4f4f06a6aa227860fa2d84?version=3.51.0))
+- You can now use `important` in inline style tags: `style:foo|important` (**3.52.0**, [#7365](https://github.com/sveltejs/svelte/issues/7365))
+- A warning will now be thrown when using `<a target="_blank">` without `rel="noreferrer"` (**3.52.0**, [#6188](https://github.com/sveltejs/svelte/issues/6188))
 
 Tom Smykowski さんが [3.52.0 の全変更点](https://tomaszs2.medium.com/svelte-3-52-0-improves-dev-experience-45f8c460bb96) のグレートなサマリを書いてくれました！Svelte コンパイラの全変更点と、今後の変更については、こちらの [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md) をご確認ください！
 
@@ -77,7 +77,7 @@ _To Read_
 - [Using Sequelize with SvelteKit](https://cherrific.io/0xedB00816FB204b4CD9bCb45FF2EF693E99723484/story/23) by MetaZebre
 - [Implementing Maintenance mode on a SvelteKit site](https://blog.encodeart.dev/implementing-maintenance-mode-on-a-sveltekit-site) by Andreas Söderlund
 - [ActionStore: Real-time Svelte stores for Rails](https://dev.to/buhrmi/actionstore-real-time-svelte-stores-for-rails-4jhg) by Stefan Buhrmester
-- [Svelte CSS Image Slider: with Bouncy Overscroll](https://rodneylab.com/svelte-css-image-slider/) and [SvelteKit Local Edge Functions: Edge on Localhost](https://rodneylab.com/sveltekit-local-edge-functions/) by Rodney Lab
+- [Svelte CSS Image Slider: with Bouncy Overscroll](https://rodneylab.com/svelte-css-image-slider/) and [SvelteKit Local Edge Functions: Edge on Localhost](https://rodneylab.com/sveltekit-local-edge-functions/) by Rodney Lab
 - [Creating a Svelte Tabs component with Slot props](https://blog.openreplay.com/creating-a-svelte-tabs-component-with-slot-props/) by Shinichi Okada
 - [Sky Cart: An Open Source, cloud-agnostic shopping cart using Stripe Checkout](https://dev.to/stripe/sky-cart-an-open-source-cloud-agnostic-shopping-cart-using-stripe-checkout-o5k) by Mike Bifulco for Stripe
 

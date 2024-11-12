@@ -37,7 +37,11 @@ export async function handle({ event, resolve }) {
 
 > [!NOTE] 静的アセット(プリレンダリング済みのページを含む)に対するリクエストは SvelteKit では処理されません。
 
-未実装の場合、デフォルトは `({ event, resolve }) => resolve(event)` となります。カスタムデータをリクエストに追加し、`+server.js` のハンドラーやサーバー(server) `load` 関数に渡すには、以下のように `event.locals` オブジェクトに埋め込んでください。
+未実装の場合、デフォルトは `({ event, resolve }) => resolve(event)` となります。
+
+### locals
+
+カスタムデータをリクエストに追加し、`+server.js` のハンドラや server `load` 関数に渡すには、以下のように `event.locals` オブジェクトに埋め込んでください。
 
 ```js
 /// file: src/hooks.server.js

@@ -9,7 +9,7 @@ authorURL: https://svelte.dev/
 
 このリリースを皆さんに共有できることがとても嬉しいです。Svelte コアチームと広いコミュニティによる何千時間もの作業の集大成であり、小さなプロジェクトに取り組む単独の開発者であれ、大きなチームの一員であれ、本番レベル(production-grade)の Web を構築するのに最も楽しい方法だと思います。
 
-始めてみるには、`npm create svelte@latest` を実行し、[ドキュメント](https://kit.svelte.jp/docs)と、[インタラクティブなチュートリアル](https://learn.svelte.jp)を確認してみてください(インタラクティブなチュートリアルはまだ experimental です)。
+To get started, run `npm create svelte@latest`, and visit the [docs](/docs/kit) and (experimental!) [interactive tutorial](https://learn.svelte.dev).
 
 <div class="max">
 <figure style="max-width: 960px; margin: 0 auto">
@@ -69,7 +69,7 @@ SvelteKit プロジェクトを作成するとき、[TypeScript](https://www.typ
 
 どこでも! SvelteKit CLI にはローカルにインストールされた Node.js が必要ですが、フレームワーク自体にはどんなプラットフォームにも依存しません。つまり、JavaScript が動作する場所であれば、どこにでもデプロイすることができます。
 
-これは [adapter](https://kit.svelte.jp/docs/adapters) によって実現されています。デフォルトの adapter である [adapter-auto](https://github.com/sveltejs/kit/tree/master/packages/adapter-auto) は、Vercel、Netlify、Cloudflare Pages、Azure Static Web Apps をゼロコンフィグでサポートしており、今後さらに多くのプラットフォームが提供される予定です。コミュニティが提供する adapter によって、Deno、Bun、Firebase、App Engine、AWS Lambda、その他多くのサポートが追加されています。
+This is made possible by [adapters](/docs/kit/adapters). The default adapter, [adapter-auto](https://github.com/sveltejs/kit/tree/master/packages/adapter-auto), provides zero-config support for Vercel, Netlify, Cloudflare Pages and Azure Static Web Apps, with more platforms coming in the future. Community-provided adapters add support for Deno, Bun, Firebase, App Engine, AWS Lambda and many others.
 
 [adapter-node](https://github.com/sveltejs/kit/tree/master/packages/adapter-node) を使えばアプリを Node.js サーバーとしてデプロイすることもできます。
 
@@ -99,6 +99,6 @@ SvelteKit のプレリリースバージョンで構築したアプリをお持�
 
 SvelteKit 1.0 は始まりであり、終わりではありません。今日はプロダクションで使用する準備は整っていますが、まだ始まったばかりです。ロードマップには、ビルトインの i18n サポート、incremental static regeneration、デプロイメントリージョンとランタイムのきめ細やかなコントロール、イメージ最適化(image optimisation)、その他多くの改善があります。また、来年には Svelte 4 の取り組みを始める予定です — 詳細はまた今度。
 
-ただ、私たちに決断を委ねないでください。Svelte はコミュニティプロジェクトであり、私たちの最高のアイデアの多くは、実際には私たちのものではありません — あなたたちのものです。[Twitter](https://twitter.com/SvelteSociety) や [YouTube](https://youtube.com/sveltesociety) で Svelte Society をサブスクライブして最新の情報を得るようにし、[Discord server](https://svelte.dev/chat) に参加し、[GitHub](https://github.com/sveltejs) でコントリビュートしてください。
+But don’t let us have the final word. Svelte is a community project, and many of our best ideas aren’t really ours at all — they’re yours. Subscribe to Svelte Society on [Twitter](https://twitter.com/SvelteSociety) and [YouTube](https://youtube.com/sveltesociety) to stay up to date, and join us in our [Discord server](/chat) and on [GitHub](https://github.com/sveltejs) to contribute back.
 
 あなたが作ったものを見るのが待ちきれません。

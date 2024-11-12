@@ -39,18 +39,18 @@ _Day Two_
 
 ## More SvelteKit Updates
 
-- `use:enhance` はフォームを漸進的に強化 (progressively enhance) するのに最も簡単な方法です ([Docs](https://kit.svelte.dev/docs/form-actions#progressive-enhancement-use-enhance), [#6633](https://github.com/sveltejs/kit/pull/6633), [#6828](https://github.com/sveltejs/kit/pull/6828), [#7012](https://github.com/sveltejs/kit/pull/7012))
-- デモアプリが更新され、Sverdle ゲームが追加されました。Rich は Svelte Summit で披露し、`use:enhance` のデモンストレーションを行いました ([#6979](https://github.com/sveltejs/kit/pull/6979))
-- Cloudflare Pages の `_routes.json` の仕様が `adapter-cloudflare` でサポートされました ([#6530](https://github.com/sveltejs/kit/pull/6530))
-- asset とページの圧縮を並行に実行することでビルドパフォーマンスが改善されました ([#6710](https://github.com/sveltejs/kit/pull/6710))
+- `use:enhance` is the easiest way to progressively enhance a form ([Docs](/docs/kit/form-actions#Progressive-enhancement-use:enhance), [#6633](https://github.com/sveltejs/kit/pull/6633), [#6828](https://github.com/sveltejs/kit/pull/6828), [#7012](https://github.com/sveltejs/kit/pull/7012))
+- The demo app has been updated to add the Sverdle game, which Rich demoed at Svelte Summit and demonstrates `use:enhance` ([#6979](https://github.com/sveltejs/kit/pull/6979))
+- Cloudflare Pages `_routes.json` specification is now supported by `adapter-cloudflare` ([#6530](https://github.com/sveltejs/kit/pull/6530))
+- Improved build performance by running asset and page compression in parallel ([#6710](https://github.com/sveltejs/kit/pull/6710))
 
 ### Breaking changes:
 
-- SvelteKit を実行できる Node のミニマムバージョンが Node 16.14 になりました ([#6388](https://github.com/sveltejs/kit/pull/6388))
-- `App.PrivateEnv` と `App.PublicEnv` が削除され、generated types がその役割を引き継ぎます ([#6413](https://github.com/sveltejs/kit/pull/6413))
-- `%sveltekit.message%` は `%sveltekit.error.message%` に置き換わります ([6659](https://github.com/sveltejs/kit/pull/6659))
-- `App.PageError` は `App.Error` となりました - hooks をご確認ください ([Docs](https://kit.svelte.dev/docs/hooks#shared-hooks-handleerror), [#6963](https://github.com/sveltejs/kit/pull/6963))
-- `externalFetch` は `handleFetch` となり、サーバー上で実行される `load` から全ての fetch が実行されます ([#6565](https://github.com/sveltejs/kit/pull/6565))
+- Node 16.14 is now the minimum version to run SvelteKit ([#6388](https://github.com/sveltejs/kit/pull/6388))
+- `App.PrivateEnv` and `App.PublicEnv` have been removed in favour of generated types ([#6413](https://github.com/sveltejs/kit/pull/6413))
+- `%sveltekit.message%` has been replaced with `%sveltekit.error.message%` ([6659](https://github.com/sveltejs/kit/pull/6659))
+- `App.PageError` is now `App.Error` - check for it in your hooks ([Docs](/docs/kit/hooks#Shared-hooks-handleError), [#6963](https://github.com/sveltejs/kit/pull/6963))
+- `externalFetch` is now `handleFetch` and will run for all fetch calls in `load` that run on the server ([#6565](https://github.com/sveltejs/kit/pull/6565))
 
 変更の全リストは、SvelteKit の [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md) をご確認ください。
 

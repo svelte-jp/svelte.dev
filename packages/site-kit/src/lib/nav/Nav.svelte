@@ -7,12 +7,13 @@ Top navigation bar for the application. It provides a slot for the left side, th
 	import Icon from '../components/Icon.svelte';
 	import { page } from '$app/stores';
 	import ThemeToggle from '../components/ThemeToggle.svelte';
-	import Menu from './Menu.svelte';
+	import MobileMenu from './MobileMenu.svelte';
 	import type { NavigationLink } from '../types';
 	import Dropdown from '../components/Dropdown.svelte';
 	import { HoverMenu } from '../components';
 	import Search from '../search/Search.svelte';
 	import { tick } from 'svelte';
+	import FontToggle from '../components/FontToggle.svelte';
 
 	interface Props {
 		home_title?: string;
@@ -28,8 +29,6 @@ Top navigation bar for the application. It provides a slot for the left side, th
 	let open = $state(false);
 	let current = $state.raw<NavigationLink | undefined>();
 	let menu_button: HTMLButtonElement;
-
-	let nav: HTMLElement | undefined = $state();
 
 	// Prevents navbar to show/hide when clicking in docs sidebar
 	let hash_changed = false;
@@ -49,7 +48,7 @@ Top navigation bar for the application. It provides a slot for the left side, th
 	}
 
 	$effect(() => {
-		document.body.style.overflow = open ? 'hidden' : 'scroll';
+		document.body.style.overflow = open ? 'hidden' : '';
 	});
 </script>
 
@@ -67,7 +66,6 @@ Top navigation bar for the application. It provides a slot for the left side, th
 />
 
 <nav
-	bind:this={nav}
 	class:visible
 	style:z-index={$overlay_open && ($searching || $on_this_page_open) ? 80 : null}
 	aria-label="Primary"
@@ -126,9 +124,16 @@ Top navigation bar for the application. It provides a slot for the left side, th
 
 			<div class="external-links">
 				<a href="/chat" data-icon="discord" aria-label="Discord Chat"></a>
+				<a
+					href="https://bsky.app/profile/sveltesociety.dev"
+					data-icon="bluesky"
+					aria-label="Svelte Society on Bluesky"
+				></a>
 				<a href="https://github.com/sveltejs/svelte" data-icon="github" aria-label="GitHub Repo"
 				></a>
 			</div>
+
+			<FontToggle />
 
 			<ThemeToggle />
 		</div>
@@ -142,8 +147,10 @@ Top navigation bar for the application. It provides a slot for the left side, th
 				$searching = true;
 			}}
 		>
-			<Icon name="search" size={16} />
+			<Icon name="search" size={18} />
 		</button>
+
+		<FontToggle />
 
 		<ThemeToggle />
 
@@ -169,7 +176,7 @@ Top navigation bar for the application. It provides a slot for the left side, th
 
 {#if open}
 	<div class="mobile">
-		<Menu {links} {current} onclose={() => (open = false)} />
+		<MobileMenu {links} {current} onclose={() => (open = false)} />
 	</div>
 {/if}
 
@@ -183,7 +190,7 @@ Top navigation bar for the application. It provides a slot for the left side, th
 		height: var(--sk-nav-height);
 		margin: 0 auto;
 		padding: 0 var(--sk-page-padding-side);
-		background-color: var(--sk-back-2);
+		background-color: var(--sk-bg-1);
 		font-family: var(--sk-font-family-body);
 		user-select: none;
 		isolation: isolate;
@@ -198,6 +205,10 @@ Top navigation bar for the application. It provides a slot for the left side, th
 			height: 4px;
 			background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
 		}
+
+		:root.dark & {
+			background-color: var(--sk-bg-3);
+		}
 	}
 
 	a {
@@ -207,12 +218,12 @@ Top navigation bar for the application. It provides a slot for the left side, th
 	.current-section {
 		display: flex;
 		align-items: center;
-		color: var(--sk-text-3);
+		color: inherit;
 		margin-left: 0.4em;
 		font: var(--sk-font-ui-medium);
 	}
 
-	@media (max-width: 799px) {
+	@media (max-width: 831px) {
 		nav {
 			transition: transform 0.2s;
 		}
@@ -228,7 +239,7 @@ Top navigation bar for the application. It provides a slot for the left side, th
 		align-items: center;
 
 		a {
-			color: var(--sk-text-2);
+			color: inherit;
 			font: var(--sk-font-ui-medium);
 
 			white-space: nowrap;
@@ -239,11 +250,11 @@ Top navigation bar for the application. It provides a slot for the left side, th
 			outline-offset: -2px;
 
 			&:hover {
-				box-shadow: inset 0 -1px 0 0 var(--sk-back-5);
+				box-shadow: inset 0 -1px 0 0 var(--sk-border);
 			}
 
 			&[aria-current='page'] {
-				color: var(--sk-theme-1);
+				color: var(--sk-fg-accent);
 				box-shadow: inset 0 -1px 0 0 currentColor;
 			}
 
@@ -262,24 +273,22 @@ Top navigation bar for the application. It provides a slot for the left side, th
 		position: relative;
 		display: flex;
 		width: 100%;
-		gap: 1rem;
+		gap: 0.5rem;
 
 		.external-links {
 			display: flex;
 			height: 100%;
+			margin: 0 0.5rem;
 		}
 	}
 
 	.home-link {
 		--padding-right: 1rem;
-		width: 11.2rem;
+		width: 3.4rem;
 		height: 100%;
-		background: url(../branding/svelte.svg) no-repeat 0 50% / calc(100% - var(--padding-right)) auto;
+		background: url(../branding/svelte-logo.svg) no-repeat 0 50% / calc(100% - var(--padding-right))
+			auto;
 		padding: 0 var(--padding-right) 0 calc(var(--sk-page-padding-side) + 0rem);
-
-		:root.dark & {
-			background-image: url(../branding/svelte-dark.svg);
-		}
 	}
 
 	.mobile-menu {
@@ -298,7 +307,7 @@ Top navigation bar for the application. It provides a slot for the left side, th
 		display: block;
 	}
 
-	@media (max-width: 799px) {
+	@media (max-width: 831px) {
 		nav {
 			top: unset;
 			bottom: 0;
@@ -308,7 +317,7 @@ Top navigation bar for the application. It provides a slot for the left side, th
 			position: relative;
 			display: none;
 			width: 100%;
-			background: var(--sk-back-1);
+			background: var(--sk-bg-1);
 			padding: 1rem var(--sk-page-padding-side);
 		}
 
@@ -317,7 +326,20 @@ Top navigation bar for the application. It provides a slot for the left side, th
 		}
 	}
 
-	@media (min-width: 800px) {
+	@media (min-width: 480px) {
+		.home-link {
+			width: 11.2rem;
+			background: url(../branding/svelte.svg) no-repeat 0 50% / calc(100% - var(--padding-right))
+				auto;
+			padding: 0 var(--padding-right) 0 calc(var(--sk-page-padding-side) + 0rem);
+
+			:root.dark & {
+				background-image: url(../branding/svelte-dark.svg);
+			}
+		}
+	}
+
+	@media (min-width: 832px) {
 		.home-link {
 			--padding-right: 2rem;
 			width: 13.2rem;
@@ -365,6 +387,15 @@ Top navigation bar for the application. It provides a slot for the left side, th
 
 				:global(.dark) & {
 					background-image: url($lib/icons/discord-dark.svg);
+				}
+			}
+
+			[data-icon='bluesky'] {
+				width: 3rem;
+				background-image: url($lib/icons/bluesky-light.svg);
+
+				:global(.dark) & {
+					background-image: url($lib/icons/bluesky-dark.svg);
 				}
 			}
 

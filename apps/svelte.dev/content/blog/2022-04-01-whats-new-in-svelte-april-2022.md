@@ -11,15 +11,15 @@ authorURL: https://dreamindani.com
 
 ## What's new in SvelteKit
 
-- Param matchers により、ページをレンダリングする前に URL パラメータがマッチするかチェックできるようになりました。フォールスルールート(fallthrough routes)で URL パラメータをチェックしていた場合は、これに置き換えてください ([Docs](https://kit.svelte.jp/docs/routing#advanced-routing-matching), [#4334](https://github.com/sveltejs/kit/pull/4334))
-- 明示的なリダイレクトをエンドポイントで直接扱えるようになりました ([#4260](https://github.com/sveltejs/kit/pull/4260))
-- `svelte-kit sync` ([#4182](https://github.com/sveltejs/kit/pull/4182))、TypeScript 4.6 ([#4190](https://github.com/sveltejs/kit/pull/4190))、Vite 2.9 がリリースされました。ノンブロッキングな依存関係の最適化、開発モードでの実験的な CSS source map、SvelteKit チームのコントリビュートによるいくつかのバグフィックスが追加されています ([#4468](https://github.com/sveltejs/kit/pull/4468))
+- Param matchers allow you to check if a url parameter matches before rendering a page - replacing the need for fallthrough routes for this purpose ([Docs](/docs/kit/advanced-routing#Matching), [#4334](https://github.com/sveltejs/kit/pull/4334))
+- Explicit redirects can now be handled directly from endpoints ([#4260](https://github.com/sveltejs/kit/pull/4260))
+- `svelte-kit sync` ([#4182](https://github.com/sveltejs/kit/pull/4182)), TypeScript 4.6 ([#4190](https://github.com/sveltejs/kit/pull/4190)) and Vite 2.9 were released - adding non-blocking dependency optimization and experimental CSS source maps in dev mode as well as a number of bug fixes contributed by the SvelteKit team ([#4468](https://github.com/sveltejs/kit/pull/4468))
 
 ### New Config Options
 
-- `outDir` により、モノレポや、プロジェクトディレクトリの外側に出力ディレクトリを置きたい状況におけるパスの問題が解決します ([Docs](https://kit.svelte.jp/docs/configuration#outdir), [#4176](https://github.com/sveltejs/kit/pull/4176))
-- `endpointExtensions` により、ご自身で endpointExtensions を指定しない限り、.js と .ts 以外のファイルがエンドポイントとして扱われるのを防ぎます ([Docs](https://kit.svelte.jp/docs/configuration#endpointextensions), [#4197](https://github.com/sveltejs/kit/pull/4197))
-- `prerender.default` により、全てのページファイルに `export const prerender = true` を書かなくても全てのページをプリレンダリングすることができるようになりました ([Docs](https://kit.svelte.jp/docs/configuration#prerender), [#4192](https://github.com/sveltejs/kit/pull/4192))
+- `outDir` fixes path issues in monorepos and other situations where the desired output directory is outside the project directory ([Docs](/docs/kit/configuration#outDir), [#4176](https://github.com/sveltejs/kit/pull/4176))
+- `endpointExtensions` prevents files other than .js and .ts files from being treated as endpoints, unless you specify `endpointExtensions` ([Docs](https://kit.svelte.dev/docs/configuration#endpointextensions), [#4197](https://github.com/sveltejs/kit/pull/4197))
+- `prerender.default` lets you prerender every page without having to write `export const prerender = true` in every page file ([Docs](/docs/kit/configuration#prerender), [#4192](https://github.com/sveltejs/kit/pull/4192))
 
 ### Breaking Changes
 

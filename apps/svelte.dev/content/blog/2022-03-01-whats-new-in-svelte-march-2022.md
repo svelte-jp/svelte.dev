@@ -13,18 +13,18 @@ authorURL: https://dreamindani.com
 
 ## What's new in SvelteKit
 
-- ドキュメントが複数ページになり、検索可能になりました。型定義もドキュメントに追加され、また、コード例をホバーすると型が表示されるようになりました。[kit.svelte.dev/docs](https://kit.svelte.dev/docs/) (訳注 : 日本語版は [kit.svelte.jp/docs](https://kit.svelte.jp/docs/)) をチェックしてみてください。
-- ページエンドポイントにより、ページをロードするときに必要なボイラープレートが大幅に削減されます ([Issue](https://github.com/sveltejs/kit/issues/3532), [PR](https://github.com/sveltejs/kit/pull/3679), [Docs](https://kit.svelte.jp/docs/routing#endpoints-page-endpoints))
-- アプリケーションのバージョニングとアップデートの検知がサポートされ、アプリのアップデート後にルート(route)のロードが失敗したときにどうするか決めることができるようになりました ([Issue](https://github.com/sveltejs/kit/issues/87), [PR](https://github.com/sveltejs/kit/pull/3412), [Docs](https://kit.svelte.jp/docs/configuration#version))
-- `npm init svelte@next` に新しいオプションが追加され、テスト用に Playwright を自動でセットアップできるようになりました ([PR](https://github.com/sveltejs/kit/pull/4056))
+- The docs are now searchable and multipage with type definitions and hoverable code examples - Check them out at [svelte.dev/docs/kit](/docs/kit/)
+- Page endpoints significantly decrease the boilerplate needed when loading a page ([Issue](https://github.com/sveltejs/kit/issues/3532), [PR](https://github.com/sveltejs/kit/pull/3679), [Docs](/docs/kit/routing#server))
+- Application versioning and update detection support lets you determine what to do when a route fails to load after an app update ([Issue](https://github.com/sveltejs/kit/issues/87), [PR](https://github.com/sveltejs/kit/pull/3412), [Docs](/docs/kit/configuration#version))
+- A new option in `npm init svelte@next` will now set up Playwright automatically for testing ([PR](https://github.com/sveltejs/kit/pull/4056))
 
 ### Breaking Changes
 
-- `target` オプションは使えなくなりましたが、代わりに、`init` スクリプトがその `parentNode` をハイドレーションします ([#3674](https://github.com/sveltejs/kit/pull/3674))
-- アプリレベルの型情報を `App` namespace に埋め込めるようになり、`Stuff` や `Session` などのグローバルな型を型付けできるようになりました ([#3670](https://github.com/sveltejs/kit/pull/3670))
-- `JSONString` は `JSONValue` に名前が変わりました ([#3683](https://github.com/sveltejs/kit/pull/3683))
-- `createIndexFiles` は削除され、`trailingSlash` オプションでコントロールするようになりました ([#3801](https://github.com/sveltejs/kit/pull/3801))
-- SvelteKit はプリレンダリングの際にルート(root)相対なリンクを除外しなくなります。もしその URL が分割したアプリによって提供されることを意図している場合、404 が発生します。そのエラーを無視する必要がある場合、カスタムで [`prerender.onError`](https://kit.svelte.dev/docs/configuration#prerender) ハンドラ を使用してください ([#3826](https://github.com/sveltejs/kit/pull/3826))
+- The `target` option is no longer available. Instead, the `init` script hydrates its `parentNode` ([#3674](https://github.com/sveltejs/kit/pull/3674))
+- App-level types now live in the `App` namespace which allows you to type global types like `Stuff` or `Session` ([#3670](https://github.com/sveltejs/kit/pull/3670))
+- `JSONString` is now `JSONValue` ([#3683](https://github.com/sveltejs/kit/pull/3683))
+- `createIndexFiles` has been removed — it is now controlled by the `trailingSlash` option ([#3801](https://github.com/sveltejs/kit/pull/3801))
+- SvelteKit will no longer exclude root-relative external links from prerendering, which will cause 404s if these URLs are intended to be served by a separate app. Use a custom [`prerender.onError`](/docs/kit/configuration#prerender) handler if you need to ignore them ([#3826](https://github.com/sveltejs/kit/pull/3826))
 
 ## New in Language Tools
 
@@ -36,17 +36,17 @@ authorURL: https://dreamindani.com
 
 ### Apps & Sites
 
-- [SvelteStorm](https://github.com/open-source-labs/SvelteStorm) は、Svelte 開発者が Svelte アプリケーションを構築するのに必要なツールを全て提供することに特化した IDE です
-- [Supachat](https://github.com/Lleweraf/supachat) は Svelte と Supabase を使用したリアルタイムチャットアプリです
-- [Radicle](https://radicle.xyz/) はソフトウェアを共同で構築するための peer-to-peer スタックです
-- [The Making Known](https://the-making-known.com/) は、第二次世界大戦中にナチスドイツが占領下のベルギー・フランス・ルクセンブルグとコミュニケーションを図るためにデザインされたポスターとの遭遇に関する、ナレーション形式の作品です
-- [Svelte Kanban](https://github.com/V-Py/svelte-kanban) は Svelte と純粋な CSS で作られたシンプルなカンバンです
-- [fngrng](https://github.com/nvlgzr/fngrng) は、スピードではなく正確性にフォーカスを置いたタイピングトレーナーです
-- [Generative grids](https://svelte.dev/repl/873988ce33db43f097c0ca69df57b3ac?version=3.46.4) は、カラーパレットと形状をランダムに生成する、綺麗で小さい SVG グリッドです。Svelte REPL 上で動作します
-- [LifeHash](https://github.com/BlockchainCommons/lifehash.info) は、美しい決定論的なアイコンを作成するハッシュ・ビジュアライゼーション手法です
-- [TypedWebhook.tools](https://typedwebhook.tools/) は payload をチェックするための webhook テストツールで、自動型生成ができます
-- [Speedskating](https://github.com/spiegelgraphics/speedskating) はオリンピックのスピードスケート滑走を表示するアニメーションウィジェットです。Svelte、D3、regl で構築されています
-- [Web tail](https://github.com/mishankov/web-tail) はローカルまたはリモートサーバーのファイルを tail する web アプリケーションです
+- [SvelteStorm](https://github.com/open-source-labs/SvelteStorm) is specifically tailored to provide all of the essential tools a Svelte developer needs to build a Svelte application
+- [Supachat](https://github.com/Lleweraf/supachat) is a real-time chat app using Svelte and Supabase
+- [Radicle](https://radicle.xyz/) is a peer-to-peer stack for building software together
+- [The Making Known](https://the-making-known.com/) is a narrated encounter with posters designed by the Nazi German government to communicate with the occupied nations of Belgium, France, and Luxembourg during the Second World War
+- [Svelte Kanban](https://github.com/V-Py/svelte-kanban) is a simple Svelte Kanban made in pure CSS
+- [fngrng](https://github.com/nvlgzr/fngrng) is a typing trainer focussed on accuracy over speed
+- [Generative grids](/playground/873988ce33db43f097c0ca69df57b3ac?version=3.46.4) is a neat little generative SVG grid in a Svelte REPL, with randomly generated color palettes and shapes
+- [LifeHash](https://github.com/BlockchainCommons/lifehash.info) is a method of hash visualization that creates beautiful, deterministic icons
+- [TypedWebhook.tools](https://typedwebhook.tools/) is a webhook testing tool for checking payloads, with automatic type generation
+- [Speedskating](https://github.com/spiegelgraphics/speedskating) is an animation widget to show olympic speedskating runs. Built with Svelte, D3 and regl
+- [Web tail](https://github.com/mishankov/web-tail) is a web application to view lines from file on local system or on remote server
 
 SvelteKit のサイトを一緒に作るのに興味がありますか？ [Svelte Society のサイトにコントリビュートしてみましょう](https://github.com/svelte-society/sveltesociety.dev/issues)！
 

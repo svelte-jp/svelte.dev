@@ -13,15 +13,16 @@ Svelte は今回も、満足度、興味、ともに上昇しました。投票�
 
 ## What's new in SvelteKit
 
-今月の Svelte エコシステムにおける活動は、SvelteKit のバグフィックスと  1.0 ローンチからのフィードバックに対する取り組みにフォーカスされていました。待ち望まれていた [SvelteKit の base path サポートのバグフィックス](https://github.com/sveltejs/kit/issues/2958)がリリースされたことで、リモート開発環境でも SvelteKit プロジェクトが作れるようになりました。こういったフィックスだけでなく、以下のような新機能も[リリース](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md)されています:
-- `<form method="get">` にプログレッシブ・エンハンスメントを適用している場合、submitter の値が自動的に含まれるようになりました  (**1.0.3**, [#8273](https://github.com/sveltejs/kit/pull/8273))
-- グローバルな fetch に相対 URL が使用されている場合、開発モードではエラーが追加されるようになりました (**1.0.8**, [#8370](https://github.com/sveltejs/kit/pull/8370))
-- HTML からコメントが削除された場合にハイドレーションが壊れる可能性がある、という警告が追加されました (**1.0.11**, [#8423](https://github.com/sveltejs/kit/pull/8423))
-- `.svelte` ファイルに page option が使用されている場合や、レイアウトに `<slot />` が無い場合に警告されるようになりました (**1.1.0**, [#8475](https://github.com/sveltejs/kit/pull/8475))
-- 新しい `text(...)` ヘルパーにより、テキストのレスポンスを簡単に生成できるようになりました (**1.2.0**, [#8371](https://github.com/sveltejs/kit/pull/8371))
-- パブリックな env が app.html でアクセスできるようになりました (**1.2.0**, [Docs](https://kit.svelte.jp/docs/project-structure#project-files-src), [#8449](https://github.com/sveltejs/kit/pull/8449))
-- cookie がサイズ制限を超過した場合にエラーがスローされるようになりました (**1.2.1**, [#8591](https://github.com/sveltejs/kit/pull/8591))
-- 生成される `tsconfig` を変更できるようになりました (**1.3.0**, [#8606](https://github.com/sveltejs/kit/pull/8606))
+Work in the Svelte ecosystem this month has been focused on SvelteKit bug fixes and addressing feedback from the 1.0 launch. One of the more awaited [bug fixes to SvelteKit's base path support](https://github.com/sveltejs/kit/issues/2958) landed, which means that you can now create SvelteKit projects on remote development environments. There have been several [new releases](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md) with these fixes as well as a handful of new features such as:
+
+- The submitter's value will now be included automatically when progressively enhancing <form method="get"> (**1.0.3**, [#8273](https://github.com/sveltejs/kit/pull/8273))
+- Added an error in dev mode if global fetch is used with relative URL (**1.0.8**, [#8370](https://github.com/sveltejs/kit/pull/8370))
+- A warning will now indicated that hydration may break if comments are removed from HTML (**1.0.11**, [#8423](https://github.com/sveltejs/kit/pull/8423))
+- A warning will occur when of page options are used in `.svelte` files or a missing `<slot />` in layout is detected (**1.1.0**, [#8475](https://github.com/sveltejs/kit/pull/8475))
+- The new `text(...)` helper makes it easy to generate text responses (**1.2.0**, [#8371](https://github.com/sveltejs/kit/pull/8371))
+- The public env can now be accessed within app.html (**1.2.0**, [Docs](/docs/kit/project-structure#Project-files-src), [#8449](https://github.com/sveltejs/kit/pull/8449))
+- An error will now be thrown if cookie exceeds size limit (**1.2.1**, [#8591](https://github.com/sveltejs/kit/pull/8591))
+- The generated `tsconfig` can now be modified (**1.3.0**, [#8606](https://github.com/sveltejs/kit/pull/8606))
 
 ## What's new in Svelte and Language Tools
 

@@ -20,11 +20,11 @@ authorURL: https://dreamindani.com
 
 ### Breaking changes:
 
-- ファイルシステムベースルーターと `load` API において、ルート(routes)を管理する方法が改善されました。 **`@sveltejs/kit@1.0.0-next.406` 以降のバージョンをインストールする前に、[こちらの移行ガイド(migration guide)に従ってください](https://github.com/sveltejs/kit/discussions/5774)** ([PR](https://github.com/sveltejs/kit/pull/5778), [Issue](https://github.com/sveltejs/kit/discussions/5748))
-- `event.session` が `load` から削除され、合わせて `session` ストアと `getSession` も削除されました。代わりに `event.locals` を使用してください (**1.0.0-next.415**, [PR](https://github.com/sveltejs/kit/pull/5946))
-- 名前付きレイアウト(Named layouts)が削除され、`(groups)` が作成されました (**1.0.0-next.432**, [Docs](https://kit.svelte.dev/docs/advanced-routing#advanced-layouts), [PR & Migration Instructions](https://github.com/sveltejs/kit/pull/6174))
-- `event.clientAddress` は `event.getClientAddress()` になりました (**1.0.0-next.438**, [PR](https://github.com/sveltejs/kit/pull/6237))
-- `$app/env` は `$app/environment` にリネームされ、`$env/...` と混同しにくくなりました (**1.0.0-next.445**, [PR](https://github.com/sveltejs/kit/pull/6334))
+- The filesystem-based router and `load` API improves the way routes are managed. **Before installing version `@sveltejs/kit@1.0.0-next.406` or later, [follow this migration guide](https://github.com/sveltejs/kit/discussions/5774)** ([PR](https://github.com/sveltejs/kit/pull/5778), [Issue](https://github.com/sveltejs/kit/discussions/5748))
+- `event.session` has been removed from `load` along with the `session` store and `getSession`. Use `event.locals` instead (**1.0.0-next.415**, [PR](https://github.com/sveltejs/kit/pull/5946))
+- Named layouts have been removed in favor of `(groups)` (**1.0.0-next.432**, [Docs](/docs/kit/advanced-routing#Advanced-layouts), [PR & Migration Instructions](https://github.com/sveltejs/kit/pull/6174))
+- `event.clientAddress` is now `event.getClientAddress()` (**1.0.0-next.438**, [PR](https://github.com/sveltejs/kit/pull/6237))
+- `$app/env` has been renamed to `$app/environment`, to disambiguate with `$env/...` (**1.0.0-next.445**, [PR](https://github.com/sveltejs/kit/pull/6334))
 
 変更の全リストは、kit の  [CHANGELOG](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md) をご確認ください。
 
@@ -91,8 +91,8 @@ _To Read_
 - [sveltekit-flash-message](https://www.npmjs.com/package/sveltekit-flash-message) is a Sveltekit library that passes temporary data to the next request, usually from endpoints
 - [svelte-particles](https://github.com/matteobruni/tsparticles#svelte) is a lightweight TypeScript library for creating particles
 - [svelte-claps](https://github.com/bufgix/svelte-claps) adds clap button (like Medium) to any page for your SvelteKit apps
-- [Neon Flicker](https://svelte.dev/repl/fd5e3b2be7da42fe8afddf89661af7d7?version=3.49.0) is a Svelte component to make your text flicker in a cyberpunk style
-- [ComboBox](https://svelte.dev/repl/144f22d18c6943abb1fdd00f13e23fde?version=3.49.0) is a search input to help users select from a large list of items
+- [Neon Flicker](/playground/fd5e3b2be7da42fe8afddf89661af7d7?version=3.49.0) is a Svelte component to make your text flicker in a cyberpunk style
+- [ComboBox](/playground/144f22d18c6943abb1fdd00f13e23fde?version=3.49.0) is a search input to help users select from a large list of items
 - [@svelte-put](https://github.com/vnphanquang/svelte-put) is useful svelte stuff to put in your projects
 - [vite-plugin-svelte-bridge](https://github.com/joshnuss/vite-plugin-svelte-bridge) lets you write Svelte components and use them from React & Vue
 

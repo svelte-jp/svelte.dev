@@ -87,7 +87,7 @@
 
 		span:not(:last-child)::after {
 			content: ' / ';
-			color: var(--sk-text-4);
+			color: var(--sk-fg-4);
 			font: var(--sk-font-ui-small);
 		}
 	}

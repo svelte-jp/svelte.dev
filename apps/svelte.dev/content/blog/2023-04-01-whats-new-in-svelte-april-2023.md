@@ -15,28 +15,29 @@ Happy April、みなさん！ 今月は、Svelte コンパイラの全ての新�
 
 ## What's new in Svelte
 
-- **3.56.0** でたくさんの新機能が使えるようになりました！
-  - `|stopImmediatePropagation` という `on:eventname` 向けのイベント修飾子(event modifier) が追加されました ([#5085](https://github.com/sveltejs/svelte/issues/5085), [Docs](/docs/element-directives#on-eventname))
-  - `slide` トランジションに `axis` パラメータが追加されました ([#6182](https://github.com/sveltejs/svelte/issues/6182), [Docs](/docs/svelte-transition#slide))
-  - `writable` ストアを読み取り専用に変換する `readonly` ユーティリティが追加されました ([#6518](https://github.com/sveltejs/svelte/pull/6518), [Docs](/docs/svelte-store#writable))
-  - メディア要素向けの `readyState` バインディングが追加されました ([#6666](https://github.com/sveltejs/svelte/issues/6666), [Docs](/docs/element-directives#media-element-bindings))
-  - 画像(image) に `naturalWidth` と `naturalHeight` バインディングが追加されました ([#7771](https://github.com/sveltejs/svelte/issues/7771), [Docs](/docs/element-directives#image-element-bindings))
-- コンポーネントでの `<!-- svelte-ignore ... -->` がサポートされました ([#8082](https://github.com/sveltejs/svelte/issues/8082))
-- `bind:group` の input で、値に `undefined` がセットされたときにクリアされるようになりました (**3.56.0**, [#8214](https://github.com/sveltejs/svelte/issues/8214))
-- `{#each}` ブロック内にある、spread 属性を持つ `<input>` 要素を入れ替えたとき、その `<input>` の値が保持されるようになりました (**3.56.0**, [#7578](https://github.com/sveltejs/svelte/issues/7578))
-- 全体的に警告(warning)が改善されました - `noreferrer` から `aria` ルールまで！ (**3.56.0**)
-- `<svelte:document>` が追加されました (**3.57.0**, [#3310](https://github.com/sveltejs/svelte/issues/3310))
-- `style:` ディレクティブが `style=` 属性より優先されるようになりました (**3.57.0**, [#7475](https://github.com/sveltejs/svelte/issues/7475))
-- `fly` と `blur` トランジションで CSS の単位がサポートされました (**3.57.0**, [#7623](https://github.com/sveltejs/svelte/pull/7623), [Docs](/docs/svelte-transition))
+- A bunch of new features are now available as of **3.56.0**!
+  - Add `|stopImmediatePropagation` event modifier for `on:eventname` ([#5085](https://github.com/sveltejs/svelte/issues/5085), [Docs](https://v4.svelte.dev/docs#template-syntax-element-directives-on-eventname))
+  - Add `axis` parameter to `slide` transition ([#6182](https://github.com/sveltejs/svelte/issues/6182), [Docs](https://v4.svelte.dev/docs#run-time-svelte-transition-slide))
+  - Add `readonly` utility to convert `writable` store to readonly ([#6518](https://github.com/sveltejs/svelte/pull/6518), [Docs](https://v4.svelte.dev/docs#run-time-svelte-store-writable))
+  - Add `readyState` binding for media elements ([#6666](https://github.com/sveltejs/svelte/issues/6666), [Docs](https://v4.svelte.dev/docs#template-syntax-element-directives-bind-property-media-element-bindings))
+  - Add `naturalWidth` and `naturalHeight` bindings to images ([#7771](https://github.com/sveltejs/svelte/issues/7771), [Docs](https://v4.svelte.dev/docs#template-syntax-element-directives-bind-property-image-element-bindings))
+- Support `<!-- svelte-ignore ... -->` on components ([#8082](https://github.com/sveltejs/svelte/issues/8082))
+- Inputs in a `bind:group` will clear when their value is set to `undefined` (**3.56.0**, [#8214](https://github.com/sveltejs/svelte/issues/8214))
+- `<input>` values will now persist when swapping elements with spread attributes in an `{#each}` block (**3.56.0**, [#7578](https://github.com/sveltejs/svelte/issues/7578))
+- Better warnings across the board - from `noreferrer` to `aria` rules (**3.56.0**)
+- Add <svelte:document> (**3.57.0**, [#3310](https://github.com/sveltejs/svelte/issues/3310))
+- The `style:` directive will now take precedence over a `style=` attribute (**3.57.0**, [#7475](https://github.com/sveltejs/svelte/issues/7475))
+- CSS units are now supported in the `fly` and `blur` transitions (**3.57.0**, [#7623](https://github.com/sveltejs/svelte/pull/7623), [Docs](https://v4.svelte.dev/docs#run-time-svelte-transition))
 
 Svelte コンパイラに対する全ての変更については、まだ未リリースの変更も含め、[CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md)  をご確認ください。
 
 ## What's new in SvelteKit
 
-- リクエストの全ての cookie を `cookies.getAll` で取得できるようになりました (**1.10.0**, [#9287](https://github.com/sveltejs/kit/pull/9287), [Docs](https://kit.svelte.jp/docs/types#public-types-cookies))
-- `use:enhance` の新たに追加された `submitter` パラメータを使って、(複数の) フォームの送信ステータスを簡単に管理できるようになりました (**1.12.0**, [#9425](https://github.com/sveltejs/kit/pull/9425), [Docs](https://kit.svelte.jp/docs/types#public-types-submitfunction))
-- デフォルトのエラーページがダークモードスタイルに対応しました (**1.13.0**, [#9460](https://github.com/sveltejs/kit/pull/9460))
-- SvelteKit にとって特別な意味を持つすべてのメソッドと変数について、型を省略しても完全な型安全性の恩恵を受けることができるようになりました！ 詳細は[発表のブログ記事](https://svelte.jp/blog/zero-config-type-safety)をお読みください
+- You can now get all cookies for a request with `cookies.getAll` (**1.10.0**, [#9287](https://github.com/sveltejs/kit/pull/9287), [Docs](/docs/kit/@sveltejs-kit#Cookies))
+- Easily manage the submission status of (multiple) forms with the new exposed `submitter` parameter in `use:enhance` (**1.12.0**, [#9425](https://github.com/sveltejs/kit/pull/9425), [Docs](/docs/kit/@sveltejs-kit#SubmitFunction))
+- The default error page now has dark mode styles (**1.13.0**, [#9460](https://github.com/sveltejs/kit/pull/9460))
+- You can now omit types on all methods and variables with special meaning to SvelteKit and still benefit from full type safety! Read more about it in the [announcement blog post](/blog/zero-config-type-safety)
+
 ---
 
 ## Community Showcase
@@ -58,7 +59,8 @@ Svelte コンパイラに対する全ての変更については、まだ未リ�
 ### Learning Resources
 
 _Featuring Svelte Contributors and Ambassadors_
-- [Streaming, snapshots, and other new features since SvelteKit 1.0](https://svelte.jp/blog/streaming-snapshots-sveltekit) by Geoff Rich on the svelte.dev Blog
+
+- [Streaming, snapshots, and other new features since SvelteKit 1.0](/blog/streaming-snapshots-sveltekit) by Geoff Rich on the svelte.dev Blog
 - [Dev Vlog: Rich Harris shows us what's new in Svelte and Kit, March 2023](https://www.youtube.com/watch?v=vgXgex5E-8g) from Svelte Society
   - If you missed this one live, check out [the next one](https://www.youtube.com/watch?v=MJHO6FSioPI) - scheduled for April 5th
 - [Svelte Society - London February 2023](https://www.youtube.com/watch?v=RkQ_f7XxdMI)

@@ -69,7 +69,7 @@ export function load(event) {
 
 optional のルートパラメータ(route parameter)は rest パラメータに続けて使用すること (`[...rest]/[[optional]]`) はできません。パラメータは 'greedily' にマッチし、optional のパラメータは使用されないこともあるためです。
 
-## マッチング(Matching)
+## Matching
 
 `src/routes/fruits/[page]` というルート(route)は `/fruits/apple` にマッチしますが、`/fruits/rocketship` にもマッチしてしまいます。これを防ぎたい場合、パラメータ文字列(`"apple"` や `"rocketship"`)を引数に取ってそれが有効なら `true` を返す _matcher_ を [`params`](configuration#files) ディレクトリに追加することで、ルート(route)のパラメータを適切に定義することができます…
 
@@ -193,7 +193,7 @@ src/routes/
 
 ### Breaking out of layouts
 
-最上位のレイアウト(root layout)は、アプリの全てのページに適用されます。省略した場合、デフォルトは `<slot />` です。もし、いくつかのページで他のページとは異なるレイアウト階層を持ちたい場合には、アプリ全体を1つまたは複数のグループにして、共通のレイアウトを継承しないルート(route)を分けることができます。
+最上位のレイアウト(root layout)は、アプリの全てのページに適用されます。省略した場合、デフォルトは `{@render children()}` です。もし、いくつかのページで他のページとは異なるレイアウト階層を持ちたい場合には、アプリ全体を1つまたは複数のグループにして、共通のレイアウトを継承しないルート(route)を分けることができます。
 
 上記の例で、`/admin` ルート(route)は `(app)` や `(marketing)` のレイアウトを継承しません。
 
@@ -260,11 +260,11 @@ src/routes/
 <!--- file: src/routes/nested/route/+layout@.svelte --->
 <script>
 	import ReusableLayout from '$lib/ReusableLayout.svelte';
-	export let data;
+	let { data, children } = $props();
 </script>
 
 <ReusableLayout {data}>
-	<slot />
+	{@render children()}
 </ReusableLayout>
 ```
 

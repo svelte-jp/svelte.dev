@@ -163,7 +163,7 @@ onMount(() => {
 
 ### 別のバックエンド API サーバーを使用するにはどうすれば良いですか？ <!--How-do-I-use-a-different-backend-API-server-->
 
-外部の API サーバーにデータをリクエストするのに [`event.fetch`](./load#Making-fetch-requests) を使用することができますが、[CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS) に対応しなければならず、一般的にはリクエストのプリフライトが必要になり、結果として高レイテンシーになるなど、複雑になることにご注意ください。別のサブドメインへのリクエストも、追加の DNS ルックアップや TLS セットアップなどのためにレイテンシーが増加する可能性があります。この方法を使いたい場合は、[`handleFetch`](./hooks#Server-hooks-handlefetch) が参考になるかもしれません。
+外部の API サーバーにデータをリクエストするのに [`event.fetch`](./load#Making-fetch-requests) を使用することができますが、[CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS) に対応しなければならず、一般的にはリクエストのプリフライトが必要になり、結果として高レイテンシーになるなど、複雑になることにご注意ください。別のサブドメインへのリクエストも、追加の DNS ルックアップや TLS セットアップなどのためにレイテンシーが増加する可能性があります。この方法を使いたい場合は、[`handleFetch`](./hooks#Server-hooks-handleFetch) が参考になるかもしれません。
 
 別の方法は、頭痛の種である CORS をバイパスするためのプロキシーをセットアップすることです。本番環境では、`/api` などのパスを API サーバーに書き換えます(rewrite)。ローカルの開発環境では、Vite の [`server.proxy`](https://vitejs.dev/config/server-options.html#server-proxy) オプションを使用します。
 

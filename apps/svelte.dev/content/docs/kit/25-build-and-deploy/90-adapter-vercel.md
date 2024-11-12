@@ -140,8 +140,8 @@ export function load() {
 ```svelte
 <!--- file: +layout.svelte --->
 <script>
-	/** @type {import('./$types').LayoutServerData} */
-	export let data;
+	/** @type {{ data: import('./$types').LayoutServerData }} */
+	let { data } = $props();
 </script>
 
 <p>This staging environment was deployed from {data.deploymentGitBranch}.</p>
@@ -161,7 +161,7 @@ Cookie-based skew protection comes with one caveat: if a user has multiple versi
 
 ### Vercel functions
 
-プロジェクトの root の `api` ディレクトリに Vercel functions がある場合、`/api/*` に対するリクエストは SvelteKit で処理されません。Vercel functions に JavaScript 以外の言語を使用する必要が無いのであれば、SvelteKit アプリの [API ルート(routes)](/routing#server) として実装すると良いでしょう。逆に Vercel functions に JavaScript 以外の言語を使用する必要がある場合は、SvelteKit アプリに `/api/*` ルート(routes)を含めないようにしてください。
+プロジェクトの root の `api` ディレクトリに Vercel functions がある場合、`/api/*` に対するリクエストは SvelteKit で処理されません。Vercel functions に JavaScript 以外の言語を使用する必要が無いのであれば、SvelteKit アプリの [API ルート(routes)](routing#server) として実装すると良いでしょう。逆に Vercel functions に JavaScript 以外の言語を使用する必要がある場合は、SvelteKit アプリに `/api/*` ルート(routes)を含めないようにしてください。
 
 ### Node version
 
@@ -175,4 +175,4 @@ edge functions では `fs` を使用することはできません。
 
 serverless functions では `fs` を使用できますが、ファイルがプロジェクトからデプロイメントにコピーされないため、期待通りには動作しないでしょう。代わりに `$app/server` の `read` 関数を使用してファイルにアクセスしてください。edge functions にデプロイされたルート(route)では `read` は動作しません（将来的に変更される可能性があります）。
 
-その代わりに、`fs` を使用する必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。
+その代わりに、`fs` を使用する必要があるルート(route)については[プリレンダリング](page-options#prerender)する必要があります。

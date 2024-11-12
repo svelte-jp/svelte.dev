@@ -118,7 +118,7 @@ import Foo from 'your-library/Foo.svelte';
 
 ### svelte
 
-これはツール類に Svelte コンポーネントライブラリを認識できるようにするレガシーなフィールドです。`svelte` [export condition](#Anatomy-of-a-package-json-exports) を使用している場合は必要ありませんが、まだ export condition を認識しない古いツールとの後方互換性のために残しておくとよいでしょう。あなたの最上位(root)のエントリーポイントを指しているはずです。
+これはツール類に Svelte コンポーネントライブラリを認識できるようにするレガシーなフィールドです。`svelte` [export condition](#Anatomy-of-a-package.json-exports) を使用している場合は必要ありませんが、まだ export condition を認識しない古いツールとの後方互換性のために残しておくとよいでしょう。あなたの最上位(root)のエントリーポイントを指しているはずです。
 
 ```json
 {
@@ -157,7 +157,7 @@ This will treat only the specified files as having side effects.
 
 ## TypeScript
 
-あなたが TypeScript を使用していないとしても、あなたのライブラリの型定義を公開したほうがよいでしょう。あなたのライブラリを使用する人が、適切なインテリセンスを得られるようになるからです。`@sveltejs/package` は型生成のプロセスをほとんど隠ぺい(opaque)してくれます。デフォルトでは、ライブラリをパッケージングする際、JavaScript、TypeScript、Svelte ファイル向けに型定義を自動生成します。あなたは [exports](#Anatomy-of-a-package-json-exports) map の `types` condition が正しいファイルを指しているか確認するだけです。`npx sv create` でライブラリプロジェクトを初期化すると、root export に `types` condition が設定されます。
+あなたが TypeScript を使用していないとしても、あなたのライブラリの型定義を公開したほうがよいでしょう。あなたのライブラリを使用する人が、適切なインテリセンスを得られるようになるからです。`@sveltejs/package` は型生成のプロセスをほとんど隠ぺい(opaque)してくれます。デフォルトでは、ライブラリをパッケージングする際、JavaScript、TypeScript、Svelte ファイル向けに型定義を自動生成します。あなたは [exports](#Anatomy-of-a-package.json-exports) map の `types` condition が正しいファイルを指しているか確認するだけです。`npx sv create` でライブラリプロジェクトを初期化すると、root export に `types` condition が設定されます。
 
 しかし、root export 以外のもの、例えば `your-library/foo` インポートを提供する場合などは、型定義を提供する上でさらなる注意が必要です。残念ながら、TypeScript はデフォルトでは `{ "./foo": { "types": "./dist/foo.d.ts", ... }}` のような export に対して `types` condition を解決しません。代わりに、ライブラリの root からの相対で `foo.d.ts` を探します (つまり、`your-library/dist/foo.d.ts` ではなく `your-library/foo.d.ts` です)。これを修正する方法として、選択肢が2つあります:
 

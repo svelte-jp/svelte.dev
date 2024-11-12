@@ -1,8 +1,12 @@
 import fs from 'node:fs';
 import ts from 'typescript';
 import { format } from 'prettier';
-import { strip_origin } from './utils';
-import type { Modules, Declaration, TypeElement } from '@sveltejs/site-kit/markdown';
+import {
+	type Modules,
+	type Declaration,
+	type TypeElement,
+	strip_origin
+} from '@sveltejs/site-kit/markdown';
 
 export async function read_types(base: string, modules: Modules) {
 	{
@@ -11,7 +15,7 @@ export async function read_types(base: string, modules: Modules) {
 			'svelte/types/compiler/preprocess', // legacy entrypoint
 			'svelte/types/compiler/interfaces' // legacy entrypoint
 		];
-		const code = read_d_ts_file(base + 'types/index.d.ts');
+		const code = read_d_ts_file(base + 'index.d.ts');
 		const node = ts.createSourceFile('index.d.ts', code, ts.ScriptTarget.Latest, true);
 
 		for (const statement of node.statements) {

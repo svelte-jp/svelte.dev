@@ -40,15 +40,19 @@
 	}
 
 	.toc-container {
-		background: var(--sk-back-3);
+		background: var(--sk-bg-2);
 		display: none;
+
+		:root.dark & {
+			background: var(--sk-bg-0);
+		}
 	}
 
 	@media (min-width: 832px) {
 		.toc-container {
 			display: block;
 			width: var(--sidebar-width);
-			height: calc(100vh - var(--sk-nav-height) - var(--sk-banner-bottom-height));
+			height: calc(100vh - var(--sk-nav-height) - var(--sk-banner-height));
 			position: fixed;
 			left: 0;
 			top: var(--sk-nav-height);

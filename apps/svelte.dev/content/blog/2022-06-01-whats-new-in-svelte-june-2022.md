@@ -11,25 +11,25 @@ authorURL: https://dreamindani.com
 
 ## What's new in Svelte
 
-- `createEventDispatcher` 関数で、カスタムイベントをキャンセルできるようになりました (**3.48.0**, [Docs](/docs/svelte#createeventdispatcher), [PR](https://github.com/sveltejs/svelte/pull/7064))
-- `{@const}` タグが `{#if}` ブロックの中で使えるようになり、条件に応じて変数が定義できるようになりました (**3.48.0**, [Docs](/docs/special-tags#const), [PR](https://github.com/sveltejs/svelte/pull/7451))
-- `<svelte:element>`、アニメーション、多くの DOM 要素に関するバグが修正されました。詳細は [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md#3480) をご覧ください!
+- Custom events can now be cancelled in the `createEventDispatcher` function (**3.48.0**, [Docs](https://v4.svelte.dev/docs#run-time-svelte-createeventdispatcher), [PR](https://github.com/sveltejs/svelte/pull/7064))
+- The `{@const}` tag can now be used in `{#if}` blocks to conditionally define variables (**3.48.0**, [Docs](https://v4.svelte.dev/docs#template-syntax-const), [PR](https://github.com/sveltejs/svelte/pull/7451))
+- Lots of bug fixes across `<svelte:element>`, animations and various DOM elements. Check out the [CHANGELOG](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md#3480) for a deeper dive!
 
 ## What's new in SvelteKit
 
-- Vite 2 のリリースの最後の1つとして、Vite 2.9.9 がリリースされました。Svelte チームは、SvelteKit と Vite の統合をこれまで以上にスムーズにするために、Vite 3 のリリースに向けて、一生懸命コントリビュートしています ([Vite 3.0 Milestone](https://github.com/vitejs/vite/milestone/5))
-- `config.kit.alias` によって、`import` 文の値を置き換えるカスタムのエイリアスを簡単に宣言できるようになりました ([Docs](https://kit.svelte.dev/docs/configuration#alias), [PR](https://github.com/sveltejs/kit/pull/4964))
-- プリレンダリングされるようマークされたページが、SSR の実行中に失敗するようになりました ([PR](https://github.com/sveltejs/kit/pull/4812))
+- Vite 2.9.9 was released as one of the last Vite 2 releases. The Svelte team has been hard at work contributing to the Vite 3 release to make the integration between SvelteKit and Vite smoother than ever ([Vite 3.0 Milestone](https://github.com/vitejs/vite/milestone/5))
+- `config.kit.alias` lets you more easily declare a custom alias to replace values in `import` statements ([Docs](/docs/kit/configuration#alias), [PR](https://github.com/sveltejs/kit/pull/4964))
+- Pages marked for prerendering will now fail during SSR at runtime ([PR](https://github.com/sveltejs/kit/pull/4812))
 
 ### Breaking Changes
 
-- Node 14 はもうサポートされません ([PR](https://github.com/sveltejs/kit/pull/4922))
-- `/favicon.ico` に対するリクエストはもう抑制されなくなり、正しいルート(route)として扱われるようになりました ([PR](https://github.com/sveltejs/kit/pull/5046))
-- AMP サポートは `@sveltejs/amp` パッケージに分割されました ([Docs](https://kit.svelte.jp/docs/seo#manual-setup-amp), [PR](https://github.com/sveltejs/kit/pull/4710))
-- Generated types は `_types` ディレクトリに生成されるようになったため、それに合わせてインポートを更新してください ([PR](https://github.com/sveltejs/kit/pull/4705))
-- `%svelte.head%` と `%svelte.body%` は、`app.html` の `%sveltekit.head%` と `%sveltekit.body%` になりました  ([Docs](https://kit.svelte.jp/docs/migrating#project-files-src-template-html), [PR](https://github.com/sveltejs/kit/pull/5016/))
-- `LoadInput` は `LoadEvent` になりました
-- Wrangler 2 を優先するため、Wrangler 1 はサポートされなくなりました ([PR](https://github.com/sveltejs/kit/pull/4887))
+- Node 14 is no longer supported ([PR](https://github.com/sveltejs/kit/pull/4922))
+- Requests to `/favicon.ico` will no longer be suppressed and will instead be handled as a valid route ([PR](https://github.com/sveltejs/kit/pull/5046))
+- AMP support has been moved to a separate `@sveltejs/amp` package ([Docs](/docs/kit/seo#Manual-setup-AMP), [PR](https://github.com/sveltejs/kit/pull/4710))
+- Generated types are now written to `_types` directories - update your imports accordingly ([PR](https://github.com/sveltejs/kit/pull/4705))
+- `%svelte.head%` and `%svelte.body%` are now `%sveltekit.head%` and `%sveltekit.body%` in `app.html` ([PR](https://github.com/sveltejs/kit/pull/5016/))
+- `LoadInput` is now `LoadEvent`
+- Dropped support for Wrangler 1 in favor of Wrangler 2 ([PR](https://github.com/sveltejs/kit/pull/4887))
 
 ---
 

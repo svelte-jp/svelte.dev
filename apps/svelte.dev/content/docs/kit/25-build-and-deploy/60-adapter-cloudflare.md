@@ -102,17 +102,17 @@ export {};
 
 ### Testing Locally
 
-Cloudflare Workers specific values in the `platform` property are emulated during dev and preview modes. Local [bindings](https://developers.cloudflare.com/workers/wrangler/configuration/#bindings) are created based on the configuration in your `wrangler.toml` file and are used to populate `platform.env` during development and preview. Use the adapter config [`platformProxy` option](#options-platformproxy) to change your preferences for the bindings.
+Cloudflare Workers specific values in the `platform` property are emulated during dev and preview modes. Local [bindings](https://developers.cloudflare.com/workers/wrangler/configuration/#bindings) are created based on the configuration in your `wrangler.toml` file and are used to populate `platform.env` during development and preview. Use the adapter config [`platformProxy` option](#Options-platformProxy) to change your preferences for the bindings.
 
 For testing the build, you should use [wrangler](https://developers.cloudflare.com/workers/cli-wrangler) **version 3**. Once you have built your site, run `wrangler pages dev .svelte-kit/cloudflare`.
 
 ## Notes
 
-プロジェクトの root にある `/functions` ディレクトリに含まれる関数はデプロイメントには含まれず、[1つの `_worker.js` ファイル](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)にコンパイルされます。関数は、あなたの SvelteKit アプリの [サーバーエンドポイント(server endpoints)](/routing#server) として実装する必要があります。
+プロジェクトの root にある `/functions` ディレクトリに含まれる関数はデプロイメントには含まれず、[1つの `_worker.js` ファイル](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)にコンパイルされます。関数は、あなたの SvelteKit アプリの [サーバーエンドポイント(server endpoints)](routing#server) として実装する必要があります。
 
 Cloudflare Pages 固有の `_headers` ファイルと `_redirects` ファイルについては、`/static` フォルダに置くことで、静的アセットのレスポンス (画像など) に使用することができます。
 
-しかし、SvelteKit が動的にレンダリングするレスポンスには効果がありません。この場合にカスタムヘッダーやリダイレクトレスポンスを返すには、[サーバーエンドポイント(server endpoints)](/routing#server) や [`handle`](/hooks#Server-hooks-handle) hook から返す必要があります。
+しかし、SvelteKit が動的にレンダリングするレスポンスには効果がありません。この場合にカスタムヘッダーやリダイレクトレスポンスを返すには、[サーバーエンドポイント(server endpoints)](routing#server) や [`handle`](hooks#Server-hooks-handle) hook から返す必要があります。
 
 ## トラブルシューティング <!--Troubleshooting-->
 
@@ -122,4 +122,4 @@ Cloudflare Pages 固有の `_headers` ファイルと `_redirects` ファイル�
 
 ### ファイルシステムにアクセスする <!--Accessing-the-file-system-->
 
-Cloudflare Workers では `fs` を使用することはできません。そうする必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。
+Cloudflare Workers では `fs` を使用することはできません。そうする必要があるルート(route)については[プリレンダリング](page-options#prerender)する必要があります。

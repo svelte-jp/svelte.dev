@@ -5,7 +5,7 @@ author: Dani Sandoval
 authorURL: https://dreamindani.com
 ---
 
-1.0 ローンチ後、SvelteKit にエッセンシャルな機能が多く追加されたため、ホットな3月になっています。詳細は[先週のブログ記事](https://svelte.jp/blog/streaming-snapshots-sveltekit)をチェックしてみてください。
+1.0 ローンチ後、SvelteKit にエッセンシャルな機能が多く追加されたため、ホットな3月になっています。詳細は[先週のブログ記事](/blog/streaming-snapshots-sveltekit)をチェックしてみてください。
 
 Svelte Society は先月、$12,000 以上の賞金がかかっている [SvelteHack](https://hack.sveltesociety.dev/) を立ち上げました - 新旧すべての Svelte デベロッパーたちに、何か素晴らしいものを作ってもらえるよう呼びかけています。期限は4月17日！
 
@@ -15,14 +15,14 @@ Svelte Society は先月、$12,000 以上の賞金がかかっている [SvelteH
 
 ## What's new in SvelteKit
 
-- `$app/paths` がアプリなしで使えるようになりました - Vitest によるテストや Storybook の使用などが簡単になります (**1.4.0**, [#8838](https://github.com/sveltejs/kit/pull/8838))
-- adapter でルートレベル(route level)の設定ができるようになりました (**1.5.0**, [Docs](https://kit.svelte.jp/docs/page-options#config), [#8740](https://github.com/sveltejs/kit/pull/8740))
-- 新たな snapshot メカニズムにより、一時的な DOM の state を、たとえナビゲーション後やページリロード後でも保持できるようになりました (**1.5.0**,[Docs](https://kit.svelte.jp/docs/snapshots), [#8710](https://github.com/sveltejs/kit/pull/8710))
-- `OPTIONS` が server method として使用できるようになりました (**1.6.0**, [Docs](https://kit.svelte.jp/docs/routing#server), [#8731](https://github.com/sveltejs/kit/pull/8731))
-- 正しくないエクスポートに対するリッチなエラーメッセージが追加されました (**1.7.0**, [#9055](https://github.com/sveltejs/kit/pull/9055))
-- server load 関数で promise のストリーミングができるようになりました (**1.8.0**, [Docs](https://kit.svelte.jp/docs/load#streaming-with-promises), [#8901](https://github.com/sveltejs/kit/pull/8901))
-- 新たな設定オプションである `preloadStrategy` のおかげで、特定のブラウザ向けに、インポートの 'ウォーターフォール' を避けるためのプリロードのチューニングをすることがやりやすくなりました (**1.8.4**, [Docs](https://kit.svelte.jp/docs/configuration#output), [#9179](https://github.com/sveltejs/kit/pull/9179))
-- 新たな `paths.relative` オプションは、`paths.assets` と `paths.base` の解釈をコントロールすることができます (**1.9.0**, [Docs](https://kit.svelte.jp/docs/configuration#paths), [#9220](https://github.com/sveltejs/kit/pull/9220))
+- `$app/paths` can now be used without an app - making things like component testing with Vitest, using Storybook, etc. easier (**1.4.0**, [#8838](https://github.com/sveltejs/kit/pull/8838))
+- Adapters can now be configured at the route level (**1.5.0**, [Docs](/docs/kit/page-options#config), [#8740](https://github.com/sveltejs/kit/pull/8740))
+- The new snapshot mechanism preserves ephemeral DOM state even after navigation and page reloads (**1.5.0**,[Docs](/docs/kit/snapshots), [#8710](https://github.com/sveltejs/kit/pull/8710))
+- `OPTIONS` are now available within the server method (**1.6.0**, [Docs](/docs/kit/routing#server), [#8731](https://github.com/sveltejs/kit/pull/8731))
+- Richer error messages have been added for invalid exports (**1.7.0**, [#9055](https://github.com/sveltejs/kit/pull/9055))
+- Streaming promises are now available for server load functions (**1.8.0**, [Docs](/docs/kit/load#Streaming-with-promises), [#8901](https://github.com/sveltejs/kit/pull/8901))
+- A new configuration option, `preloadStrategy`, helps tune preloading to avoid import 'waterfalls' on certain browsers (**1.8.4**, [Docs](/docs/kit/configuration#output), [#9179](https://github.com/sveltejs/kit/pull/9179))
+- The new `paths.relative` option can control interpretation of `paths.assets` and `paths.base` (**1.9.0**, [Docs](/docs/kit/configuration#paths), [#9220](https://github.com/sveltejs/kit/pull/9220))
 
 ## What's new in Svelte and Language Tools
 
@@ -56,7 +56,7 @@ Svelte Society は先月、$12,000 以上の賞金がかかっている [SvelteH
 
 _Featuring Svelte Contributors and Ambassadors_
 
-- [Streaming, snapshots, and other new features since SvelteKit 1.0](https://svelte.dev/blog/streaming-snapshots-sveltekit) by Geoff Rich (on the Svelte Blog)
+- [Streaming, snapshots, and other new features since SvelteKit 1.0](/blog/streaming-snapshots-sveltekit) by Geoff Rich (on the Svelte Blog)
 - [View Transition Experiments with Svelte](https://geoffrich.net/posts/view-transition-experiments/) and [Native Page Transitions in SvelteKit (updated for 2023)](https://geoffrich.net/posts/page-transitions-1/) by Geoff Rich
 - [Ron Au's story and how to be whimsical!](https://www.svelteradio.com/episodes/ron-aus-story-and-how-to-be-whimsical) by Svelte Radio
 - [SvelteKit 1.0 with Rich Harris](https://podrocket.logrocket.com/sveltekit) by PodRocket

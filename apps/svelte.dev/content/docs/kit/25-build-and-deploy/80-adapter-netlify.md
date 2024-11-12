@@ -80,7 +80,7 @@ Netlify の機能に依存することなく、SvelteKit が直接提供する�
 ### Netlify Forms
 
 1. [こちら](https://docs.netlify.com/forms/setup/#html-forms)にあるように、例えば `/routes/contact/+page.svelte` に、Netlify HTML form を作成します。(hidden の `form-name` input 要素を追加するのを忘れずに！)
-2. Netlify の build bot はデプロイ時にあなたの HTML ファイルをパースします。つまり、あなたの form は HTML として[プリレンダリング](/page-options#prerender)されるようにしておかないといけません。あなたの `contact.svelte` に `export const prerender = true` を追加してそのページだけプリレンダリングするか、または `kit.prerender.force: true` オプションを設定して全てのページをプリレンダリングするようにしておくか、で対応できます。
+2. Netlify の build bot はデプロイ時にあなたの HTML ファイルをパースします。つまり、あなたの form は HTML として[プリレンダリング](page-options#prerender)されるようにしておかないといけません。あなたの `contact.svelte` に `export const prerender = true` を追加してそのページだけプリレンダリングするか、または `kit.prerender.force: true` オプションを設定して全てのページをプリレンダリングするようにしておくか、で対応できます。
 3. あなたの Netlify form に `<form netlify ... action="/success">` のような[カスタムの成功メッセージ](https://docs.netlify.com/forms/setup/#success-messages)がある場合、それに対応する `/routes/success/+page.svelte` が存在しプリレンダリングされるか確認してください。
 
 ### Netlify Functions
@@ -115,4 +115,4 @@ edge デプロイメントでは `fs` を使用することはできません。
 
 serverless デプロイメントでは `fs` を使用できますが、ファイルがプロジェクトからデプロイメントにコピーされないため、期待通りには動作しないでしょう。代わりに `$app/server` の `read` 関数を使用してファイルにアクセスしてください。edge デプロイメントでは `read` は動作しません（将来的に変更される可能性があります）。
 
-その代わりに、`fs` を使用する必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。
+その代わりに、`fs` を使用する必要があるルート(route)については[プリレンダリング](page-options#prerender)する必要があります。

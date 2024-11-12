@@ -66,12 +66,31 @@
 		transform: translate(-50%, -50%);
 		width: calc(100vw - 2rem);
 		max-width: 56rem;
-		background: var(--sk-back-2);
-		color: var(--sk-text-2);
+		background: var(--sk-bg-2);
 		padding: 2rem;
 		border: none;
 		border-radius: 0.5rem;
 		filter: drop-shadow(3px 5px 10px rgba(0, 0, 0, 0.1));
 		z-index: 99999;
+	}
+
+	.modal :global {
+		h2 {
+			font: var(--sk-font-ui-large);
+			margin: 0 0 0.5em 0;
+		}
+
+		p {
+			font: var(--sk-font-ui-medium);
+		}
+
+		button {
+			display: block;
+			padding: 1rem;
+			width: 10rem;
+			margin: 1em 0 0 0;
+			line-height: 1;
+			font: var(--sk-font-ui-small);
+		}
 	}
 </style>

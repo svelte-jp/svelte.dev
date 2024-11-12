@@ -20,9 +20,9 @@ Happy new year, Svelte Community! Svelte、SvelteKit、Language Tools、 Showcas
 
 ## Other new bits from `svelte/*`
 
-- [Svelte 3.44.3](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md#3443) がリリースされ、バインディングやループコードのいくつかのバグが修正されました
-- Svelte Language Tools が、Svelte 3.41 からの then/catch の短縮構文と TypeScript の "go to" 機能 ([105.8.0 以降](https://github.com/sveltejs/language-tools/releases/tag/extensions-105.8.0)) のサポートが導入されました
-- Svelte REPL にも素晴らしいアップグレードがあります - 保存された REPL を削除できるようになりました。[svelte.dev/apps](https://svelte.dev/apps) にログインして試してみてください
+- [Svelte 3.44.3](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md#3443) is out with a few bug fixes in the binding and loop code
+- Svelte Language Tools has introduced support for the then/catch shorthands from Svelte 3.41 and TypeScript's "go to" functionality ([105.8.0 and later](https://github.com/sveltejs/language-tools/releases/tag/extensions-105.8.0))
+- The Svelte REPL got a nice upgrade as well - letting you delete saved REPLs. Try it out by logging in at [svelte.dev/apps](/apps)
 
 ---
 
@@ -38,7 +38,7 @@ Happy new year, Svelte Community! Svelte、SvelteKit、Language Tools、 Showcas
 - [Version 0.2 of Tangent](http://tangentnotes.com/Download) はSvelteベースのノートアプリで、ベータ版になりました
 - [Intl Explorer](https://github.com/jesperorb/intl-explorer) は Intl に対応する全てのフォーマッターの出力を見るためのツールです
 
-Svelte のメインの Web サイトと Svelte REPL を https://github.com/sveltejs/sites リポジトリに移行するために多くの作業が行われました - それには [svelte.dev](https://svelte.dev/) のリニューアルも含まれます。これを実現した全てのコントリビューターに感謝します！
+A lot of work this month has gone into migrating the Svelte main website and Svelte REPL to live in the https://github.com/sveltejs/sites repository - including a brand new homepage for [svelte.dev](/). Thanks to all the contributors who made this possible!
 
 もし何か作業できる楽しいSvelteKitプロジェクトをお探しなら、[Svelte Society サイトの書き直しに貢献できます](https://github.com/svelte-society/sveltesociety-2021/issues) 💅
 

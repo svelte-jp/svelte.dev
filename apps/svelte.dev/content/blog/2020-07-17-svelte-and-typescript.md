@@ -66,18 +66,18 @@ npm install --save-dev @tsconfig/svelte typescript svelte-preprocess svelte-chec
 
 Rollupプロジェクトでは、次のようになります -- Rollupが `.ts` ファイルを扱えるように `@rollup/plugin-typescript` をインストールする必要があることに注意してください。
 
-```diff
-+ import autoPreprocess from 'svelte-preprocess';
-+ import typescript from '@rollup/plugin-typescript';
+```js
++++import autoPreprocess from 'svelte-preprocess';
+import typescript from '@rollup/plugin-typescript';+++
 
 export default {
-  ...,
-  plugins: [
-    svelte({
-+       preprocess: autoPreprocess()
-    }),
-+   typescript({ sourceMap: !production })
-  ]
+	// ...,
+	plugins: [
+		svelte({
+			+++preprocess: autoPreprocess()+++
+		}),
+		+++typescript({ sourceMap: !production })+++
+	]
 }
 ```
 

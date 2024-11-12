@@ -135,4 +135,4 @@ Workers にデプロイする場合、SvelteKit が生成したサーバーは1�
 
 ### ファイルシステムにアクセスする <!--Accessing-the-file-system-->
 
-Cloudflare Workers では `fs` を使用することはできません。そうする必要があるルート(route)については[プリレンダリング](/page-options#prerender)する必要があります。
+Cloudflare Workers では `fs` を使用することはできません。そうする必要があるルート(route)については[プリレンダリング](page-options#prerender)する必要があります。

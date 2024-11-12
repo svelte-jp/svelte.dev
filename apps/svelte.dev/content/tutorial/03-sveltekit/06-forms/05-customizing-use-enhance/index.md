@@ -104,4 +104,4 @@ export const actions = {
 </ul>
 ```
 
-> [!NOTE] `use:enhance` はとてもカスタマイズしやすく、フォーム送信の `cancel()`、リダイレクト処理、form をリセットするかどうかの制御、などを行うことができます。詳細については [ドキュメントをご覧ください](https://kit.svelte.jp/docs/modules#$app-forms-enhance)。
+> [!NOTE] `use:enhance` はとてもカスタマイズしやすく、フォーム送信の `cancel()`、リダイレクト処理、form をリセットするかどうかの制御、などを行うことができます。詳細については [ドキュメントをご覧ください](/docs/kit/$app-forms#enhance)。

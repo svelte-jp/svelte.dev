@@ -4,7 +4,6 @@
 	import type { Gist } from '$lib/db/types';
 	import { Repl } from '@sveltejs/repl';
 	import { theme } from '@sveltejs/site-kit/stores';
-	import { onMount } from 'svelte';
 	import { mapbox_setup } from '../../../../config.js';
 	import AppControls from './AppControls.svelte';
 	import { compress_and_encode_text, decode_and_decompress_text } from './gzip.js';
@@ -13,18 +12,23 @@
 
 	let { data } = $props();
 
+	const STORAGE_KEY = 'svelte:playground';
+
 	let repl = $state() as ReturnType<typeof Repl>;
 	let name = $state(data.gist.name);
 	let modified = $state(false);
-	let version = data.version;
 	let setting_hash: any = null;
+
+	// svelte-ignore non_reactive_update
+	let version = $page.url.searchParams.get('version') || 'latest';
+	let is_pr_or_commit_version = version.startsWith('pr-') || version.startsWith('commit-');
 
 	// Hashed URLs are less safe (we can't delete malicious REPLs), therefore
 	// don't allow links to escape the sandbox restrictions
 	const can_escape = browser && !$page.url.hash;
 
-	onMount(() => {
-		if (version !== 'local') {
+	if (version !== 'local' && !is_pr_or_commit_version) {
+		$effect(() => {
 			fetch(`https://unpkg.com/svelte@${version}/package.json`)
 				.then((r) => r.json())
 				.then((pkg) => {
@@ -38,8 +42,8 @@
 						replaceState(url, {});
 					}
 				});
-		}
-	});
+		});
+	}
 
 	afterNavigate(() => {
 		name = data.gist.name;
@@ -60,9 +64,10 @@
 	}
 
 	async function set_files() {
+		const saved = sessionStorage.getItem(STORAGE_KEY);
 		const hash = location.hash.slice(1);
 
-		if (!hash) {
+		if (!hash && !saved) {
 			repl?.set({
 				// TODO make this munging unnecessary
 				files: structuredClone(data.gist.components).map(munge)
@@ -73,15 +78,26 @@
 		}
 
 		try {
-			let files = JSON.parse(await decode_and_decompress_text(hash)).files;
+			const recovered = JSON.parse(saved ?? (await decode_and_decompress_text(hash)));
+			let files = recovered.files;
 
 			if (files[0]?.source) {
 				files = files.map(munge);
 			}
 
+			// older hashes may be missing a name
+			if (recovered.name) {
+				name = recovered.name;
+			}
+
 			repl.set({ files });
 		} catch {
 			alert(`Couldn't load the code from the URL. Make sure you copied the link correctly.`);
+		}
+
+		if (saved) {
+			sessionStorage.removeItem(STORAGE_KEY);
+			set_hash(saved);
 		}
 	}
 
@@ -93,11 +109,19 @@
 		// Hide hash from URL
 		const hash = location.hash.slice(1);
 		if (hash) {
-			change_hash();
+			set_hash();
 		}
 	}
 
-	async function change_hash(hash?: string) {
+	async function update_hash() {
+		// Only change hash when necessary to avoid polluting everyone's browser history
+		if (modified) {
+			const json = JSON.stringify({ name, files: repl.toJSON().files });
+			await set_hash(json);
+		}
+	}
+
+	async function set_hash(hash?: string) {
 		let url = `${location.pathname}${location.search}`;
 		if (hash) {
 			url += `#${await compress_and_encode_text(hash)}`;
@@ -126,11 +150,6 @@
 		}
 	}
 
-	const svelteUrl =
-		browser && version === 'local'
-			? `${location.origin}/playground/local`
-			: `https://unpkg.com/svelte@${version}`;
-
 	const relaxed = $derived(data.gist.relaxed || (data.user && data.user.id === data.gist.owner));
 </script>
 
@@ -143,12 +162,22 @@
 </svelte:head>
 
 <svelte:window
-	on:hashchange={() => {
+	onhashchange={() => {
 		if (!setting_hash) {
 			set_files();
 		}
 	}}
+	onbeforeunload={() => {
+		if (modified) {
+			// we can't save to the hash because it's an async operation, so we use
+			// a short-lived sessionStorage value instead
+			const json = JSON.stringify({ name, files: repl.toJSON().files });
+			sessionStorage.setItem(STORAGE_KEY, json);
+		}
+	}}
 />
+
+<svelte:body onmouseleave={update_hash} />
 
 <div class="repl-outer">
 	<AppControls
@@ -163,19 +192,10 @@
 	/>
 
 	{#if browser}
-		<div
-			style="display: contents"
-			onfocusout={() => {
-				// Only change hash on editor blur to not pollute everyone's browser history
-				if (modified) {
-					const json = JSON.stringify({ files: repl.toJSON().files });
-					change_hash(json);
-				}
-			}}
-		>
+		<div style="display: contents" onfocusout={update_hash}>
 			<Repl
 				bind:this={repl}
-				{svelteUrl}
+				svelteVersion={version}
 				{relaxed}
 				{can_escape}
 				injectedJS={mapbox_setup}
@@ -189,10 +209,10 @@
 <style>
 	.repl-outer {
 		position: relative;
-		height: calc(100% - var(--sk-nav-height) - var(--sk-banner-bottom-height));
-		height: calc(100dvh - var(--sk-nav-height) - var(--sk-banner-bottom-height));
+		height: calc(100% - var(--sk-nav-height) - var(--sk-banner-height));
+		height: calc(100dvh - var(--sk-nav-height) - var(--sk-banner-height));
 		overflow: hidden;
-		background-color: var(--sk-back-1);
+		background-color: var(--sk-bg-1);
 		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;

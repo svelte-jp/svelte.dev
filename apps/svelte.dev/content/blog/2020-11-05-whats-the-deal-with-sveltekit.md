@@ -94,4 +94,4 @@ npm init svelte@next
 
 ## Where can I learn more?
 
-Twitter で [@sveltejs](https://twitter.com/sveltejs) と [@SvelteSociety](https://twitter.com/SvelteSociety) をフォローしてください。また、[svelte.dev/chat](https://svelte.dev/chat) にお越しください。また、[Svelte Radio](https://www.svelteradio.com/) を購読してください。次回のエピソードでKevinと共同ホストがこのプロジェクトについて私に質問する予定です (今から来週の収録までの間に、質問があれば[このTwitterのスレッドに返信してください](https://twitter.com/Rich_Harris/status/1323376048571121665))。
+Twitter で [@sveltejs](https://twitter.com/sveltejs) と [@SvelteSociety](https://twitter.com/SvelteSociety) をフォローしてください。また、[svelte.dev/chat](/chat) にお越しください。また、[Svelte Radio](https://www.svelteradio.com/) を購読してください。次回のエピソードでKevinと共同ホストがこのプロジェクトについて私に質問する予定です (今から来週の収録までの間に、質問があれば[このTwitterのスレッドに返信してください](https://twitter.com/Rich_Harris/status/1323376048571121665))。

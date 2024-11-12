@@ -37,16 +37,21 @@ We'll introduce these files in a moment in more detail, but here are a few simpl
 <a href="/">Home</a>
 ```
 
+Pages can receive data from `load` functions via the `data` prop.
+
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 </script>
 
 <h1>{data.title}</h1>
 <div>{@html data.content}</div>
 ```
+
+> [!LEGACY]
+> Svelte 4 では、代わりに `export let data` を使用します
 
 > [!NOTE] SvelteKit では、ルート(routes)間のナビゲーションに、フレームワーク固有の `<Link>` コンポーネントではなく、`<a>` 要素を使用します。
 
@@ -153,21 +158,29 @@ SvelteKit は、ツリーを上がって (walk up the tree) 最も近いエラ�
 
 全てのページに適用するレイアウトを作成するには、`src/routes/+layout.svelte` というファイルを作成します。デフォルトのレイアウト (あなたが作成していない場合に SvelteKit が使用するもの) は以下のようなものです…
 
-```html
-<slot></slot>
+```svelte
+<script>
+	let { children } = $props();
+</script>
+
+{@render children()}
 ```
 
-…しかし、お望みのマークアップ(markup)、スタイル(styles)、動作(behaviour)を追加することができます。唯一の要求事項は、コンポーネントにページコンテンツのための `<slot>` を含めることです。例えば、nav bar を追加してみましょう:
+…しかし、お望みのマークアップ(markup)、スタイル(styles)、動作(behaviour)を追加することができます。唯一の要求事項は、コンポーネントにページコンテンツのための `@render` タグを含めることです。例えば、nav bar を追加してみましょう:
 
-```html
-/// file: src/routes/+layout.svelte
+```svelte
+<!---- file: src/routes/+layout.svelte --->
+<script>
+	let { children } = $props();
+</script>
+
 <nav>
 	<a href="/">Home</a>
 	<a href="/about">About</a>
 	<a href="/settings">Settings</a>
 </nav>
 
-<slot></slot>
+{@render children()}
 ```
 
 `/`、`/about`、`/settings` のためのページを作成する場合…
@@ -196,8 +209,8 @@ SvelteKit は、ツリーを上がって (walk up the tree) 最も近いエラ�
 ```svelte
 <!--- file: src/routes/settings/+layout.svelte --->
 <script>
-	/** @type {import('./$types').LayoutData} */
-	export let data;
+	/** @type {{ data: import('./$types').LayoutData, children: import('svelte').Snippet }} */
+	let { data, children } = $props();
 </script>
 
 <h1>Settings</h1>
@@ -208,7 +221,7 @@ SvelteKit は、ツリーを上がって (walk up the tree) 最も近いエラ�
 	{/each}
 </div>
 
-<slot></slot>
+{@render children()}
 ```
 
 `data` がどのように入力されるかは、すぐ下の次のセクションにある `+layout.js` の例を見ればわかります。
@@ -239,8 +252,8 @@ export function load() {
 ```svelte
 <!--- file: src/routes/settings/profile/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 
 	console.log(data.sections); // [{ slug: 'profile', title: 'Profile' }, ...]
 </script>
@@ -370,13 +383,13 @@ export async function fallback({ request }) {
 
 これまでの例を通してずっと、`$types.d.ts` ファイルからインポートしてきました。これは、TypeScript (または JavaScript を JSDoc の型アノテーションと) 使用している場合に最上位のファイル(root files)を扱う際に型の安全性をもたらすために SvelteKit が隠しディレクトリに作成するファイルです。
 
-例えば、`export let data` に `PageData` (または `LayoutData` の場合は `+layout.svelte` ファイル) にアノテーションを付けると、`data` の型は `load` の戻り値であると TypeScript に伝えることができます:
+例えば、`let { data } = $props()` に `PageData` (または `LayoutData` の場合は `+layout.svelte` ファイル) にアノテーションを付けると、`data` の型は `load` の戻り値であると TypeScript に伝えることができます:
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
 <script>
-	/** @type {import('./$types').PageData} */
-	export let data;
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
 </script>
 ```
 

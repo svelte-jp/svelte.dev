@@ -11,17 +11,17 @@ SvelteKitの完成度が[80%を超え](https://github.com/sveltejs/kit/milestone
 
 続いては新機能です！
 
-- [svelte.dev](https://svelte.dev/)は、[sveltesociety.dev](https://sveltesociety.dev)と並んでSvelteKit上で動作するようになりました。svelte.devは、ライブコードの編集、認証、マークダウンベースのブログなど、比較的複雑なサイトで、SvelteKitを実際にテストするのに適しています。
-- 新しいコンパイラオプションである`enableSourcemap`は、JSとCSSのソースマップに対するコンパイラの出力をより細かく制御することができます(**3.44.0**)。この新機能により、SvelteKitおよびVite Svelteプラグインは、`.svelte`テンプレート内の環境変数を適切に処理できるようになりました。([sveltejs/kit#720](https://github.com/sveltejs/kit/issues/720)および[sveltejs/vite-plugin-svelte#201](https://github.com/sveltejs/vite-plugin-svelte/pull/201)を参照)
-- Svelte言語ツールで、VS CodeのCSS設定の読み込みに対応しました。([#1219](https://github.com/sveltejs/language-tools/issues/1219))
-- `vite-plugin-svelte`では、新しい`experimental.prebundleSvelteLibraries`オプションを追加しました。このオプションは、アイコンライブラリやUIフレームワークのような多くのコンポーネントを含むSvelteライブラリのロードをより高速にします。このオプションは、`svelte.config.js`のルートで設定できます。是非お試しいただき、ご意見をお聞かせください！
-- SvelteKitは、`rel="external"`としてマークされていない限り、クライアント上のエンドポイントのみをルーティングします。 - これにより、クライアントJSのサイズが小さくなり、将来的にルーターのリファクタリングがしやすくなりました。([2656](https://github.com/sveltejs/kit/pull/2656))
-- SvelteKitがNode 12をサポートしなくなりました。([2604](https://github.com/sveltejs/kit/pull/2604))
-- SvelteKitがVite 2.6.0からVite 2.6.12にアップグレードされ、ViteがSvelteランタイムを破壊する問題が修正されました。(https://github.com/vitejs/vite/issues/4306) また、SvelteKitのテンプレートにおけるViteの問題を回避または診断しやすくするための、SvelteKitチームによる2つの修正が含まれています(https://github.com/vitejs/vite/pull/5192) および ([https://github.com/vitejs/vite/pull/5193](https://github.com/vitejs/vite/pull/5193))。Vite 2.7のベータ版が公開されており、SSRの修正が追加されています。
-
 ## New in Svelte and SvelteKit
 
-SvelteおよびSvelteKitのすべての更新を確認するには、それぞれ[Svelte](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md)および[SvelteKit changelog](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md)をご覧ください。
+- [svelte.dev](/) now runs on SvelteKit alongside [sveltesociety.dev](https://sveltesociety.dev). svelte.dev is a relatively complicated site with live code editing, authentication, and a markdown-based blog - making it a great way for us to really test out SvelteKit
+- A new compiler option, `enableSourcemap`, provides more control over the compiler output for JS and CSS sourcemaps (**3.44.0**). With this new feature, SvelteKit and the Vite Svelte plugin can now properly handle environment variables in `.svelte` templates (See [sveltejs/kit#720](https://github.com/sveltejs/kit/issues/720) and [sveltejs/vite-plugin-svelte#201](https://github.com/sveltejs/vite-plugin-svelte/pull/201))
+- The Svelte Language Tools now support reading the configuration of the VS Code CSS settings ([#1219](https://github.com/sveltejs/language-tools/issues/1219))
+- `vite-plugin-svelte` added a new `experimental.prebundleSvelteLibraries` option that makes it much faster to load Svelte libraries with many components like icon libraries and UI frameworks. The option can be set in the root of `svelte.config.js`. Please test it out and give us feedback!
+- SvelteKit will only route endpoints on the client, unless marked as `rel="external"` - reducing the size of the client JS and making it easier to refactor the router in the future ([2656](https://github.com/sveltejs/kit/pull/2656))
+- SvelteKit no longer supports Node 12 ([2604](https://github.com/sveltejs/kit/pull/2604))
+- SvelteKit was upgraded from Vite 2.6.0 to Vite 2.6.12 fixing an issue where Vite would corrupt the Svelte runtime (https://github.com/vitejs/vite/issues/4306). It also included two fixes from the SvelteKit team to avoid or make diagnosing Vite issues in SvelteKit templates easier (https://github.com/vitejs/vite/pull/5192 and https://github.com/vitejs/vite/pull/5193). Vite 2.7 is currently available in beta with additional fixes for SSR
+
+To see all updates to Svelte and SvelteKit, check out the [Svelte](https://github.com/sveltejs/svelte/blob/master/CHANGELOG.md) and [SvelteKit changelog](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md), respectively.
 
 ---
 

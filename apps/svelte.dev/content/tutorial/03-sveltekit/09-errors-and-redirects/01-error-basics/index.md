@@ -4,7 +4,7 @@ title: Basics
 
 SvelteKit には2種類のエラーがあります — _想定される(expected)_ エラーと _予期せぬ(unexpected)_ エラーです。
 
-想定されるエラーとは、`@sveltejs/kit` からインポートできる [`error`](https://kit.svelte.jp/docs/modules#sveltejs-kit-error) ヘルパーを使用して作成されるエラーのことです。`src/routes/expected/+page.server.js` をご覧ください。
+想定されるエラーとは、`@sveltejs/kit` からインポートできる [`error`](/docs/kit/@sveltejs-kit#error) ヘルパーを使用して作成されるエラーのことです。`src/routes/expected/+page.server.js` をご覧ください。
 
 ```js
 /// file: src/routes/expected/+page.server.js
@@ -15,7 +15,7 @@ export function load() {
 }
 ```
 
-それ以外のエラー — 例えば `src/routes/unexpected/+page.server.js` にあるようなエラー — は、予期せぬエラーとして扱われます。
+それ以外のエラー — 例えば `src/routes/unexpected/+page.server.js` にあるようなエラー — は、予期せぬエラーとして扱われます。
 
 ```js
 /// file: src/routes/unexpected/+page.server.js

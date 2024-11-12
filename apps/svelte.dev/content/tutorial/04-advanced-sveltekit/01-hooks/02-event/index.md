@@ -2,7 +2,7 @@
 title: The RequestEvent object
 ---
 
-`handle` に渡される `event` オブジェクトは、`+server.js` ファイルの [API routes](get-handlers) や `+page.server.js` ファイルの [form actions](the-form-element) や `+page.server.js` と `+layout.server.js` の `load` 関数に渡されるものと同じオブジェクトで、[`RequestEvent`](https://kit.svelte.jp/docs/types#public-types-requestevent) のインスタンスです。
+`handle` に渡される `event` オブジェクトは、`+server.js` ファイルの [API routes](get-handlers) や `+page.server.js` ファイルの [form actions](the-form-element) や `+page.server.js` と `+layout.server.js` の `load` 関数に渡されるものと同じオブジェクトで、[`RequestEvent`](/docs/kit/@sveltejs-kit#RequestEvent) のインスタンスです。
 
 便利なプロパティやメソッドを数多く持っており、いくつかはすでに見たことがあるでしょう:
 
