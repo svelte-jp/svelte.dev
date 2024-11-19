@@ -2,7 +2,7 @@
 title: Getting started
 ---
 
-We recommend using [SvelteKit](../kit), the official application framework from the Svelte team powered by [Vite](https://vite.dev/):
+[Vite](https://vite.dev/) によって運営されている Svelte チームによるオフィシャルなアプリケーションフレームワークである [SvelteKit](../kit) をお使いいただくことをおすすめします:
 
 ```bash
 npx sv create myapp
@@ -11,20 +11,20 @@ npm install
 npm run dev
 ```
 
-Don't worry if you don't know Svelte yet! You can ignore all the nice features SvelteKit brings on top for now and dive into it later.
+まだ Svelte についてよく知らなくても心配いりません! SvelteKit が提供する便利な機能等は一旦無視して、後から学び始めても問題ありません。
 
-## Alternatives to SvelteKit
+## SvelteKit の代替手段
 
-You can also use Svelte directly with Vite by running `npm create vite@latest` and selecting the `svelte` option. With this, `npm run build` will generate HTML, JS and CSS files inside the `dist` directory using [vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte). In most cases, you will probably need to [choose a routing library](faq#Is-there-a-router) as well.
+Svelteを直接Viteで使用することもできます。その場合、`npm create vite@latest` を実行し、`svelte` オプションを選択します。この方法では、`npm run build` を実行すると、[vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) を使用して、`dist` ディレクトリ内に HTML、JS、CSSファイルが生成されます。ほとんどの場合、[ルーティングライブラリ](faq#Is-there-a-router)を選択する必要があるでしょう。
 
-There are also plugins for [Rollup](https://github.com/sveltejs/rollup-plugin-svelte), [Webpack](https://github.com/sveltejs/svelte-loader) [and a few others](https://sveltesociety.dev/packages?category=build-plugins), but we recommend Vite.
+また、[Rollup](https://github.com/sveltejs/rollup-plugin-svelte)、[Webpack](https://github.com/sveltejs/svelte-loader)、[その他いくつかのプラグイン](https://sveltesociety.dev/packages?category=build-plugins)もありますが、Viteをお勧めします。
 
-## Editor tooling
+## エディタツール
 
-The Svelte team maintains a [VS Code extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode), and there are integrations with various other [editors](https://sveltesociety.dev/resources#editor-support) and tools as well.
+Svelteチームは、[VS Code 拡張機能](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)を提供しています。また、様々な[他のエディター](https://sveltesociety.dev/resources#editor-support)やツールとの統合も利用可能です。
 
-You can also check your code from the command line using [sv check](https://github.com/sveltejs/cli).
+さらに、[sv check](https://github.com/sveltejs/cli) を使ってコマンドラインからコードをチェックすることもできます。
 
-## Getting help
+## サポートを受ける
 
-Don't be shy about asking for help in the [Discord chatroom](/chat)! You can also find answers on [Stack Overflow](https://stackoverflow.com/questions/tagged/svelte).
+[Discord チャットルーム](/chat)で気軽に質問してください！また、[Stack Overflow](https://stackoverflow.com/questions/tagged/svelte) でも回答を見つけることができます。
