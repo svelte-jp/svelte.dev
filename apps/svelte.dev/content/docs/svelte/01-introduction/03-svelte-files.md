@@ -1,41 +1,41 @@
 ---
-title: .svelte files
+title: .svelte ファイル 
 ---
 
-Components are the building blocks of Svelte applications. They are written into `.svelte` files, using a superset of HTML.
+コンポーネントは Svelte アプリケーションの構成要素です。これらは `.svelte` ファイルに書かれ、HTML のスーパーセットを使って記述されます。
 
-All three sections — script, styles and markup — are optional.
+以下の3つのセクション — script, styles, markup — は任意です。
 
 <!-- prettier-ignore -->
 ```svelte
 /// file: MyComponent.svelte
 <script module>
-	// module-level logic goes here
-	// (you will rarely use this)
+	// モジュールレベルのロジックはここに書きます
+	// (ほとんど使うことはありません)
 </script>
 
 <script>
-	// instance-level logic goes here
+	// インスタンスレベルのロジックはここに書きます
 </script>
 
-<!-- markup (zero or more items) goes here -->
+<!-- マークアップ (0行以上) はここに書きます -->
 
 <style>
-	/* styles go here */
+	/* スタイルはここに書きます */
 </style>
 ```
 
 ## `<script>`
 
-A `<script>` block contains JavaScript (or TypeScript, when adding the `lang="ts"` attribute) that runs when a component instance is created. Variables declared (or imported) at the top level can be referenced in the component's markup.
+`<script>` ブロックは、コンポーネントインスタンスが作成されたときに実行される JavaScript (または `lang="ts` 属性を追加した時の　TypeScript) を含みます。トップレベルで宣言 (またはインポート) された変数は、コンポーネントのマークアップで参照できます。
 
-In addition to normal JavaScript, you can use _runes_ to declare [component props]($props) and add reactivity to your component. Runes are covered in the next section.
+通常のJavaScriptに加えて、_runes_ を使用して[コンポーネントのプロパティ]($props)を宣言したり、コンポーネントにリアクティビティを追加したりできます。Runes については次のセクションで説明します。
 
 <!-- TODO describe behaviour of `export` -->
 
 ## `<script module>`
 
-A `<script>` tag with a `module` attribute runs once when the module first evaluates, rather than for each component instance. Variables declared in this block can be referenced elsewhere in the component, but not vice versa.
+`<script>` タグに `module` 属性を付けると、モジュールが最初に評価される際に1回だけ実行され、各コンポーネントインスタンスごとに実行されるわけではありません。このブロックで宣言された変数は、コンポーネント内の他の場所から参照できますが、その逆はできません。
 
 ```svelte
 <script module>
@@ -50,22 +50,26 @@ A `<script>` tag with a `module` attribute runs once when the module first evalu
 
 You can `export` bindings from this block, and they will become exports of the compiled module. You cannot `export default`, since the default export is the component itself.
 
+このブロックから `export` バインディングを使用してエクスポートすることができ、それらはコンパイルされたモジュールのエクスポートとして扱われます。ただし、コンポーネント自体にデフォルトエクスポートがされるため `export default` は使用できません。
+
 > [!NOTE] If you are using TypeScript and import such exports from a `module` block into a `.ts` file, make sure to have your editor setup so that TypeScript knows about them. This is the case for our VS Code extension and the IntelliJ plugin, but in other cases you might need to setup our [TypeScript editor plugin](https://www.npmjs.com/package/typescript-svelte-plugin).
 
+> [!NOTE] TypeScriptを使用していて、`module` ブロックからエクスポートされたものを　`.ts` ファイルにインポートする場合は、TypeScriptがそれらを認識できるようにエディタの設定を行う必要があります。VS Code拡張機能やIntelliJプラグインを使用している場合はこの設定が必要となりますが、それ以外の場合は [TypeScript エディタープラグイン](https://www.npmjs.com/package/typescript-svelte-plugin) を設定する必要がある場合があります。
+
 > [!LEGACY]
-> In Svelte 4, this script tag was created using `<script context="module">`
+> Svelte 4 では、このスクリプトタグは `<script context="module">` を使用して作成されました。
 
 ## `<style>`
 
-CSS inside a `<style>` block will be scoped to that component.
+`<style>` ブロック内のCSSは、そのコンポーネントにスコープされます。
 
 ```svelte
 <style>
 	p {
-		/* this will only affect <p> elements in this component */
+		/* これはこのコンポネント内の <p> 要素にのみ影響します */
 		color: burlywood;
 	}
 </style>
 ```
 
-For more information, head to the section on [styling](scoped-styles).
+詳細については、[スタイリング](scoped-styles) のセクションをご覧ください。
