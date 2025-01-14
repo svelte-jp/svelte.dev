@@ -48,11 +48,7 @@ title: .svelte ファイル
 </script>
 ```
 
-You can `export` bindings from this block, and they will become exports of the compiled module. You cannot `export default`, since the default export is the component itself.
-
 このブロックから `export` バインディングを使用してエクスポートすることができ、それらはコンパイルされたモジュールのエクスポートとして扱われます。ただし、コンポーネント自体にデフォルトエクスポートがされるため `export default` は使用できません。
-
-> [!NOTE] If you are using TypeScript and import such exports from a `module` block into a `.ts` file, make sure to have your editor setup so that TypeScript knows about them. This is the case for our VS Code extension and the IntelliJ plugin, but in other cases you might need to setup our [TypeScript editor plugin](https://www.npmjs.com/package/typescript-svelte-plugin).
 
 > [!NOTE] TypeScriptを使用していて、`module` ブロックからエクスポートされたものを　`.ts` ファイルにインポートする場合は、TypeScriptがそれらを認識できるようにエディタの設定を行う必要があります。VS Code拡張機能やIntelliJプラグインを使用している場合はこの設定が必要となりますが、それ以外の場合は [TypeScript エディタープラグイン](https://www.npmjs.com/package/typescript-svelte-plugin) を設定する必要がある場合があります。
 
