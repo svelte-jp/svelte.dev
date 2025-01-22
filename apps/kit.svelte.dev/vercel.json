@@ -3,36 +3,36 @@
 	"redirects": [
 		{
 			"source": "/",
-			"destination": "https://svelte.dev/",
+			"destination": "https://svelte.jp/",
 			"permanent": true
 		},
 		{
 			"source": "/docs/layouts",
-			"destination": "https://svelte.dev/docs/kit/routing",
+			"destination": "https://svelte.jp/docs/kit/routing",
 			"permanent": true
 		},
 		{
 			"source": "/docs/loading",
-			"destination": "https://svelte.dev/docs/kit/load",
+			"destination": "https://svelte.jp/docs/kit/load",
 			"permanent": true
 		},
 		{
 			"source": "/docs/types",
-			"destination": "https://svelte.dev/docs/kit/@sveltejs-kit"
+			"destination": "https://svelte.jp/docs/kit/@sveltejs-kit"
 		},
 		{
 			"source": "/docs",
-			"destination": "https://svelte.dev/docs/kit",
+			"destination": "https://svelte.jp/docs/kit",
 			"permanent": true
 		},
 		{
 			"source": "/docs/(.*)",
-			"destination": "https://svelte.dev/docs/kit/$1",
+			"destination": "https://svelte.jp/docs/kit/$1",
 			"permanent": true
 		},
 		{
 			"source": "/(.*)",
-			"destination": "https://svelte.dev"
+			"destination": "https://svelte.jp"
 		}
 	]
 }
