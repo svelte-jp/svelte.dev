@@ -2,7 +2,7 @@
 title: Spread props
 ---
 
-この演習では、`PackageInfo.svelte` が期待する `name` prop を指定し忘れているため、`<code>` 要素が空になり、npm link が壊れています。
+この演習では、`App.svelte` で `PackageInfo.svelte` が期待する `name` prop を指定し忘れているため、`<code>` 要素が空になり、npm link が壊れています。
 
 以下のように prop を追加することで、これを修正できます…
 
@@ -23,7 +23,7 @@ title: Spread props
 <PackageInfo +++{...pkg}+++ />
 ```
 
-> [!NOTE] 逆に、rest プロパティを使用して、そのコンポーネントに渡されたオブジェクトの props を全て受け取ることができます...
+> [!NOTE] 逆に `PackageInfo.svelte` で、rest プロパティを使用して、そのコンポーネントに渡されたオブジェクトの props を全て受け取ることができます...
 >
 > ```js
 > let { name, ...stuff } = $props();
@@ -33,4 +33,10 @@ title: Spread props
 >
 > ```js
 > let stuff = $props();
+> ```
+>
+> ...こうすると、これらのオブジェクトパスからプロパティにアクセスできます:
+>
+> ```js
+> console.log(stuff.name, stuff.version, stuff.description, stuff.website);
 > ```

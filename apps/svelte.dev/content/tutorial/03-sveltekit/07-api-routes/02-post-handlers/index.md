@@ -74,14 +74,16 @@ export async function POST({ request, cookies }) {
 
 +++		const { id } = await response.json();
 
-		data.todos = [...data.todos, {
+		const todos = [...data.todos, {
 			id,
 			description
-		}];+++
+		}];
+
+		data = { ...data, todos };+++
 
 		input.value = '';
 	}}
 />
 ```
 
-> [!NOTE] ページをリロードしても同じ結果が取得できるような方法で `data` を変更する必要があります。
+> [!NOTE] ページをリロードしても同じ結果が取得できるような方法で `data` を変更する必要があります。`data` prop はリアクティブが深くない (not _deeply_ reactive) ので、置き換える必要があります — `data.todos = todos` のようなミューテーションでは再レンダリングが発生しません。

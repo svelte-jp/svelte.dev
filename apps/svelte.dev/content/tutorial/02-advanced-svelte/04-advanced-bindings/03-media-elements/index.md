@@ -8,7 +8,7 @@ title: Media elements
 
 ```svelte
 /// file: AudioPlayer.svelte
-<div class="player" class:paused>
+<div class={['player', { paused }]}>
 +++	<audio
 		{src}
 		bind:currentTime={time}

@@ -31,6 +31,8 @@ export function load({ cookies, url }) {
 	let { children } = $props();
 </script>
 
+{@render children()}
+
 <form method="POST" action="/logout">
 	<button>log out</button>
 </form>

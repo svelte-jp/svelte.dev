@@ -58,6 +58,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Docs • Svelte</title>
+</svelte:head>
+
 <div class="page">
 	<h1>ドキュメント</h1>
 	<p>
@@ -87,6 +91,14 @@
 			<p>
 				Playground に移動し、example を確認したり、Svelte アプリをブラウザ上で作ったり、
 				それを他の人にシェアすることができます。
+			</p>
+		</a>
+
+		<a href="/docs/llms">
+			<h2>私は Large Language Model (LLM) です、という方</h2>
+			<p>
+				もしあなたが AI(artificial intelligence) か、または AI に Svelte の使い方を教えたいなら、
+				プレーンテキストフォーマットのドキュメントを提供します。Beep boop.
 			</p>
 		</a>
 
