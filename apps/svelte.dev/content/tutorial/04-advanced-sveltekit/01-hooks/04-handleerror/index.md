@@ -15,7 +15,7 @@ export function handleError({ event, error }) {
 
 `/the-bad-place` に移動すると、この動作を見ることができます — エラーページが表示され、(URL バーの右にあるボタンを押して) ターミナルを開くと `src/routes/the-bad-place/+page.server.js` からのメッセージが表示されているはずです。
 
-エラーメッセージをユーザーに表示していないことにご注目ください。これは、エラーメッセージには機密情報が含まれている可能性があり、ユーザーを混乱させ、最悪の場合、悪意のある人間に利用される可能性があるからです。そのため、アプリケーションで利用できるエラーオブジェクト (`+error.svelte` ページでは `$page.error`、`src/error.html` フォールバック では `%sveltekit.error%`) はこれだけです:
+エラーメッセージをユーザーに表示していないことにご注目ください。これは、エラーメッセージには機密情報が含まれている可能性があり、ユーザーを混乱させ、最悪の場合、悪意のある人間に利用される可能性があるからです。そのため、アプリケーションで利用できるエラーオブジェクト (`+error.svelte` ページでは `page.error`、`src/error.html` フォールバック では `%sveltekit.error%`) はこれだけです:
 
 <!-- prettier-ignore-start -->
 ```js
@@ -44,10 +44,10 @@ export function handleError({ event, error }) {
 ```svelte
 /// file: src/routes/+error.svelte
 <script>
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 </script>
 
-<h1>{$page.status}</h1>
-<p>{$page.error.message}</p>
-<p>error code: {$page.error.code}</p>
+<h1>{page.status}</h1>
+<p>{page.error.message}</p>
+<p>error code: {page.error.code}</p>
 ```

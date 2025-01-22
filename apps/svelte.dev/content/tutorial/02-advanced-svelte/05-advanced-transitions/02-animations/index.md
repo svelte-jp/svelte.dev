@@ -23,7 +23,7 @@ title: Animations
 ```svelte
 /// file: TodoList.svelte
 <li
-	class:done={todo.done}
+	class={{ done: todo.done }}
 	in:receive={{ key: todo.id }}
 	out:send={{ key: todo.id }}
 	+++animate:flip+++
@@ -35,7 +35,7 @@ title: Animations
 ```svelte
 /// file: TodoList.svelte
 <li
-	class:done={todo.done}
+	class={{ done: todo.done }}
 	in:receive={{ key: todo.id }}
 	out:send={{ key: todo.id }}
 	animate:flip+++={{ duration: 200 }}+++

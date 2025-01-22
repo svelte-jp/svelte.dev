@@ -29,11 +29,7 @@ export const load: PageServerLoad = () => {
 };
 ```
 
-<<<<<<< HEAD
-SvelteKit は自動的にこの `fetchPost` の呼び出しを await してからページのレンダリングを開始します。なぜならそれがトップレベルだからです。しかし、ネストした `fetchComments` の呼び出しが完了するのは待ちません – ページはレンダリングされ、`data.streamed.comments` はリクエストが完了すると解決する promise となります。`+page.svelte` で、Svelte の [await block](/docs/logic-blocks#await) を使用してロード中の状態を表示することもできます:
-=======
-SvelteKit will automatically await the `fetchPost` call before it starts rendering the page, since it’s at the top level. However, it won’t wait for the nested `fetchComments` call to complete – the page will render and `data.streamed.comments` will be a promise that will resolve as the request completes. We can show a loading state in the corresponding `+page.svelte` using Svelte’s [await block](/docs/svelte/await):
->>>>>>> sveltejs/main
+SvelteKit は自動的にこの `fetchPost` の呼び出しを await してからページのレンダリングを開始します。なぜならそれがトップレベルだからです。しかし、ネストした `fetchComments` の呼び出しが完了するのは待ちません – ページはレンダリングされ、`data.streamed.comments` はリクエストが完了すると解決する promise となります。`+page.svelte` で、Svelte の [await block](/docs/svelte/await) を使用してロード中の状態を表示することもできます:
 
 ```svelte
 <script lang="ts">
@@ -125,11 +121,7 @@ const data = {
 
 注意事項: この機能には JavaScript が必要です。そのため、重要でないデータのみ、ストリーミングすることを推奨します。すべてのユーザーがエクスペリエンスのコアを利用できるようにするためです。
 
-<<<<<<< HEAD
-この機能の詳細については、[ドキュメント](https://kit.svelte.jp/docs/load#streaming-with-promises)をご覧ください。デモは [sveltekit-on-the-edge.vercel.app](https://sveltekit-on-the-edge.vercel.app/edge) (ロケーションデータをわざと遅延させ、ストリーミングしています) でご覧頂けますし、[ご自身で Vercel にデプロイ](https://vercel.com/templates/svelte/sveltekit-edge-functions)することもできます。Vercel では Edge Functions と Serverless Functions のどちらもストリーミングをサポートしています。
-=======
-For more on this feature, see [the documentation](/docs/kit/load#Streaming-with-promises). You can see a demo at [sveltekit-on-the-edge.vercel.app](https://sveltekit-on-the-edge.vercel.app/edge) (the location data is artificially delayed and streamed in) or [deploy your own on Vercel](https://vercel.com/templates/svelte/sveltekit-edge-functions), where streaming is supported in both Edge Functions and Serverless Functions.
->>>>>>> sveltejs/main
+この機能の詳細については、[ドキュメント](/docs/kit/load#Streaming-with-promises)をご覧ください。デモは [sveltekit-on-the-edge.vercel.app](https://sveltekit-on-the-edge.vercel.app/edge) (ロケーションデータをわざと遅延させ、ストリーミングしています) でご覧頂けますし、[ご自身で Vercel にデプロイ](https://vercel.com/templates/svelte/sveltekit-edge-functions)することもできます。Vercel では Edge Functions と Serverless Functions のどちらもストリーミングをサポートしています。
 
 私たちは、Qwik、Remix、Solid、Marko、React などの、このアイデアの先行実装からインスピレーションを受けました。深く感謝します。
 
@@ -162,19 +154,11 @@ For more on this feature, see [the documentation](/docs/kit/load#Streaming-with-
 
 フォームの input の値やスクロールポジションなどは一般的な例で、JSON-serializable なデータならなんでも snapshot に保存することができます。snapshot のデータは [sessionStorage](https://developer.mozilla.org/ja/docs/Web/API/Window/sessionStorage) に保存されるので、ページがリロードされたときや、ユーザーがまったく別のサイトに移動したときにも保持されます。`sessionStorage` に保存されるため、サーバーサイドレンダリング中にアクセスすることはできません。
 
-<<<<<<< HEAD
-詳細は、[ドキュメント](https://kit.svelte.jp/docs/snapshots)をご覧ください。
+詳細は、[ドキュメント](/docs/kit/snapshots)をご覧ください。
 
 ## Route-level deployment configuration
 
-SvelteKit はプラットフォームごとに固有の [adapter](https://kit.svelte.jp/docs/adapters) を使用してプロダクションへのデプロイ用にアプリのコードを変換しています。これまでは、デプロイメントの設定をアプリ全体レベルで行わなければなりませんでした。例えば、アプリを edge function としてデプロイするか、serverless function としてデプロイするか、どちらか一方は可能でしたが、両方同時に行うことはできませんでした。これでは、アプリの一部だけを edge にするというメリットを得ることができません – もし Node API を必要とするルート(route)がある場合、アプリ全体を edge にデプロイすることができないのです。リージョンの選択やメモリ割り当てなど、デプロイ設定の他の側面についても同様です: アプリ全体、すべてのルート(route)に適用される1つの値を選択しなければならなかったのです。
-=======
-For more, see [the documentation](/docs/kit/snapshots).
-
-## Route-level deployment configuration
-
-SvelteKit uses platform-specific [adapters](/docs/kit/adapters) to transform your app code for deployment to production. Until now, you had to configure your deployment on an app-wide level. For instance, you could either deploy your app as an edge function or a serverless function, but not both. This made it impossible to take advantage of the edge for parts of your app – if any route needed Node APIs, then you couldn’t deploy any of it to the edge. The same is true for other aspects of deployment configuration, such as regions and allocated memory: you had to choose one value that applied to every route in your entire app.
->>>>>>> sveltejs/main
+SvelteKit はプラットフォームごとに固有の [adapter](/docs/kit/adapters) を使用してプロダクションへのデプロイ用にアプリのコードを変換しています。これまでは、デプロイメントの設定をアプリ全体レベルで行わなければなりませんでした。例えば、アプリを edge function としてデプロイするか、serverless function としてデプロイするか、どちらか一方は可能でしたが、両方同時に行うことはできませんでした。これでは、アプリの一部だけを edge にするというメリットを得ることができません – もし Node API を必要とするルート(route)がある場合、アプリ全体を edge にデプロイすることができないのです。リージョンの選択やメモリ割り当てなど、デプロイ設定の他の側面についても同様です: アプリ全体、すべてのルート(route)に適用される1つの値を選択しなければならなかったのです。
 
 そしてこの度、`config` オブジェクトを `+server.js`、`+page(.server).js`、`+layout(.server).js` ファイルでエクスポートすることができるようになり、これらのルート(route)をどうやってデプロイするかコントロールできるようになりました。`+layout.js` でこれを行うと、そのすべての子ページに設定が適用されます。`config` の型は、デプロイ先の環境に依存するため、各 adapter ごとにユニークです。
 
@@ -187,11 +171,7 @@ export const config: Config = {
 };
 ```
 
-<<<<<<< HEAD
-Config はトップレベルでマージされるため、レイアウトで設定された値をツリーのさらに下のページで上書きすることができます。詳細は[ドキュメント](https://kit.svelte.jp/docs/page-options#config)をご覧ください。
-=======
-Configs are merged at the top level, so you can override values set in a layout for pages further down the tree. For more details, see [the documentation](/docs/kit/page-options#config).
->>>>>>> sveltejs/main
+Config はトップレベルでマージされるため、レイアウトで設定された値をツリーのさらに下のページで上書きすることができます。詳細は[ドキュメント](/docs/kit/page-options#config)をご覧ください。
 
 Vercel にデプロイする場合、最新バージョンの SvelteKit と adapter をインストールすることでこの機能のメリットを享受することができます。ルートレベル(route-level)の config をサポートする adapter は SvelteKit 1.5 以降が必要であるため、adapter のバージョンを大幅にアップグレードする必要があるかもしれません。
 
@@ -200,19 +180,11 @@ npm i @sveltejs/kit@latest
 npm i @sveltejs/adapter-auto@latest # or @sveltejs/adapter-vercel@latest
 ```
 
-<<<<<<< HEAD
-今現在は、[Vercel adapter](https://kit.svelte.jp/docs/adapter-vercel#deployment-configuration) のみがルート固有(route-specific)の config を実装していますが、他のプラットフォーム向けでもこれを実装するためのビルディングブロックがあります。もしあなたが adapter の作者なら、[この PR](https://github.com/sveltejs/kit/pull/8740) の変更点を参照し、要求事項を確認してください。
+今現在は、[Vercel adapter](/docs/kit/adapter-vercel#Deployment-configuration) のみがルート固有(route-specific)の config を実装していますが、他のプラットフォーム向けでもこれを実装するためのビルディングブロックがあります。もしあなたが adapter の作者なら、[この PR](https://github.com/sveltejs/kit/pull/8740) の変更点を参照し、要求事項を確認してください。
 
 ## Incremental static regeneration on Vercel
 
-ルートレベル(Route-level)の config では、もう1つ要望の多かった機能も使えるようになりました – Vercel にデプロイされる SvelteKit アプリで、[incremental static regeneration](https://kit.svelte.jp/docs/adapter-vercel#incremental-static-regeneration) (ISR) が使用できるようになりました。ISR は、プリレンダリングされたコンテンツにおけるコストとパフォーマンスの優位性と、動的なレンダリングコンテンツの柔軟性の両方を提供します。
-=======
-For now, only the [Vercel adapter](/docs/kit/adapter-vercel#Deployment-configuration) implements route-specific config, but the building blocks are there to implement this for other platforms. If you’re an adapter author, see the changes in [the PR](https://github.com/sveltejs/kit/pull/8740) to see what is required.
-
-## Incremental static regeneration on Vercel
-
-Route-level config also unlocked another much-requested feature – you can now use [incremental static regeneration](/docs/kit/adapter-vercel#Incremental-Static-Regeneration) (ISR) with SvelteKit apps deployed to Vercel. ISR provides the performance and cost advantages of prerendered content with the flexibility of dynamically rendered content.
->>>>>>> sveltejs/main
+ルートレベル(Route-level)の config では、もう1つ要望の多かった機能も使えるようになりました – Vercel にデプロイされる SvelteKit アプリで、[incremental static regeneration](/docs/kit/adapter-vercel#Incremental-Static-Regeneration) (ISR) が使用できるようになりました。ISR は、プリレンダリングされたコンテンツにおけるコストとパフォーマンスの優位性と、動的なレンダリングコンテンツの柔軟性の両方を提供します。
 
 ISR をルート(route)に追加するには、`config` オブジェクトに `isr` プロパティを追加します:
 
@@ -226,18 +198,10 @@ export const config = {
 
 ## And much more...
 
-<<<<<<< HEAD
-- [OPTIONS method](https://kit.svelte.jp/docs/routing#server) が `+server.js` ファイルでサポートされました。
+- [OPTIONS method](/docs/kit/routing#server) が `+server.js` ファイルでサポートされました。
 - [別のファイルに属するものをエクスポート](https://github.com/sveltejs/kit/pull/9055)したときや、+layout.svelte に[slot を置くのを忘れた](https://github.com/sveltejs/kit/pull/8475)ときのエラーメッセージが改善されました。
-- [app.html でパブリックな環境変数にアクセス](https://kit.svelte.jp/docs/project-structure#project-files-src)できるようになりました
-- レスポンスを作成する新たな [text ヘルパー](https://kit.svelte.jp/docs/modules#sveltejs-kit-text)が追加されました
+- [app.html でパブリックな環境変数にアクセス](/docs/kit/project-structure#Project-files-src)できるようになりました
+- レスポンスを作成する新たな [text ヘルパー](/docs/kit/@sveltejs-kit#text)が追加されました
 - そしてたくさんのバグフィックス – リリースノートの全文については[changelog](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md)をご覧ください。
-=======
-- The [OPTIONS method](/docs/kit/routing#server) is now supported in `+server.js` files
-- Better error messages when you [export something that belongs in a different file](https://github.com/sveltejs/kit/pull/9055) or [forget to put a slot](https://github.com/sveltejs/kit/pull/8475) in your +layout.svelte.
-- You can now [access public environment variables in app.html](/docs/kit/project-structure#Project-files-src)
-- A new [text helper](/docs/kit/@sveltejs-kit#text) for creating responses
-- And a ton of bug fixes – see [the changelog](https://github.com/sveltejs/kit/blob/master/packages/kit/CHANGELOG.md) for the full release notes.
->>>>>>> sveltejs/main
 
 SvelteKit にコントリビュートしてくれた皆様、SvelteKit をプロジェクトで使ってくださっている皆様、ありがとうございます。以前にもお伝えしましたが、Svelte はコミュニティプロジェクトであり、皆様のフィードバックやコントリビューションがなくては成り立たないものです。

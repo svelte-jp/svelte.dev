@@ -14,7 +14,7 @@ authorURL: https://dreamindani.com
 
 ## SvelteとLanguageツールの新着情報(New in Svelte & Language Tools)
 
-- Slotted components (`<svelte:fragment slot="...">`を含む) を使用すると、コンポーネントの利用者が特定のスロットにリッチなコンテンツを割り当てることができます (**Svelte 3.35.0, Language Tools [104.5.0](https://github.com/sveltejs/language-tools/releases/tag/extensions-104.5.0)**, [docs](/docs/special-elements#svelte-fragment) と [tutorial](https://svelte.jp/tutorial/svelte-fragment) をチェックしてみてください)
+- Slotted components (`<svelte:fragment slot="...">`を含む) を使用すると、コンポーネントの利用者が特定のスロットにリッチなコンテンツを割り当てることができます (**Svelte 3.35.0, Language Tools [104.5.0](https://github.com/sveltejs/language-tools/releases/tag/extensions-104.5.0)**)
 - Linked editing がSvelteファイル内のHTMLで機能するようになりました (**Language Tools, [104.6.0](https://github.com/sveltejs/language-tools/releases/tag/extensions-104.6.0)**)
 - 型定義 `svelte.d.ts` が正常に解決されるようになり、ライブラリの作成者がSvelteコンポーネントと一緒に型定義を配布できるようになりました (**Language Tools, [104.7.0](https://github.com/sveltejs/language-tools/releases/tag/extensions-104.7.0)**)
 - ViteでSvelteを使用するのに [vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) が利用可能になりました。`npm init @vitejs/app` はこのプラグインを使用したSvelteオプションが含まれています。

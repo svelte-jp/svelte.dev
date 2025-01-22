@@ -54,7 +54,9 @@ export async function DELETE({ params, cookies }) {
 				method: 'DELETE'
 			});
 
-			data.todos = data.todos.filter((t) => t !== todo);+++
+			const todos = data.todos.filter((t) => t !== todo);
+
+			data = { ...data, todos };+++
 		}}
 	></button>
 </label>
