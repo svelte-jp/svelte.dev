@@ -8,7 +8,7 @@ title: {#key ...}
 {#key expression}...{/key}
 ```
 
-Key blocks destroy and recreate their contents when the value of an expression changes. When used around components, this will cause them to be reinstantiated and reinitialised:
+key ブロックは、式の値が変化したときにその内容を破棄して再生成します。コンポーネントを囲んで使用した場合、コンポーネントの再インスタンス化され、再初期化されます:
 
 ```svelte
 {#key value}
@@ -16,7 +16,7 @@ Key blocks destroy and recreate their contents when the value of an expression c
 {/key}
 ```
 
-It's also useful if you want a transition to play whenever a value changes:
+値が変更されるたびにトランジションを再生したい場合にも便利です:
 
 ```svelte
 {#key value}

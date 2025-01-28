@@ -13,7 +13,7 @@ title: {#each ...}
 {#each expression as name, index}...{/each}
 ```
 
-Iterating over values can be done with an each block. The values in question can be arrays, array-like objects (i.e. anything with a `length` property), or iterables like `Map` and `Set` — in other words, anything that can be used with `Array.from`.
+値を繰り返し処理するには、each ブロックを使用します。対象の値は配列、配列のようなオブジェクト (例えば `length` プロパティを持つような)、または `Map` や `Set` のようなイテラブルである必要があります — つまり、`Array.from` を使用できるものであれば問題ありません。
 
 ```svelte
 <h1>Shopping list</h1>
@@ -24,7 +24,7 @@ Iterating over values can be done with an each block. The values in question can
 </ul>
 ```
 
-An each block can also specify an _index_, equivalent to the second argument in an `array.map(...)` callback:
+each ブロックは _インデックス_ も指定可能で、これは `array.map(...)` コールバックの第二引数に相当します:
 
 ```svelte
 {#each items as item, i}
@@ -44,7 +44,7 @@ An each block can also specify an _index_, equivalent to the second argument in 
 {#each expression as name, index (key)}...{/each}
 ```
 
-If a _key_ expression is provided — which must uniquely identify each list item — Svelte will use it to diff the list when data changes, rather than adding or removing items at the end. The key can be any object, but strings and numbers are recommended since they allow identity to persist when the objects themselves change.
+_key_ の式（各リストアイテムを一意に識別できる必要があります）が与えられた場合、Svelte は、データが変化したときに（末尾にアイテムを追加したり削除するのではなく）キーを使用してリストの差分を取ります。key はどんなオブジェクトでもよいですが、そのオブジェクト自体が変更されたときに同一性を維持できるため、文字列か数値を推奨します。
 
 ```svelte
 {#each items as item (item.id)}
@@ -57,7 +57,7 @@ If a _key_ expression is provided — which must uniquely identify each list ite
 {/each}
 ```
 
-You can freely use destructuring and rest patterns in each blocks.
+each ブロック内では分割代入や残余構文のパターンを自由に使用できます。
 
 ```svelte
 {#each items as { id, name, qty }, i (id)}
@@ -85,7 +85,7 @@ You can freely use destructuring and rest patterns in each blocks.
 {#each expression, index}...{/each}
 ```
 
-In case you just want to render something `n` times, you can omit the `as` part ([demo](/playground/untitled#H4sIAAAAAAAAE3WR0W7CMAxFf8XKNAk0WsSeUEaRpn3Guoc0MbQiJFHiMlDVf18SOrZJ48259_jaVgZmxBEZZ28thgCNFV6xBdt1GgPj7wOji0t2EqI-wa_OleGEmpLWiID_6dIaQkMxhm1UdwKpRQhVzWSaVORJNdvWpqbhAYVsYQCNZk8thzWMC_DCHMZk3wPSThNQ088I3mghD9UwSwHwlLE5PMIzVFUFq3G7WUZ2OyUvU3JOuZU332wCXTRmtPy1NgzXZtUFp8WFw9536uWqpbIgPEaDsJBW90cTOHh0KGi2XsBq5-cT6-3nPauxXqHnsHJnCFZ3CvJVkyuCQ0mFF9TZyCQ162WGvteLKfG197Y3iv_pz_fmS68Hxt8iPBPj5HscP8YvCNX7uhYCAAA=)):
+もし `n` 回レンダリングしたいだけの場合は、`as` 部分を省略することができます ([デモ](/playground/untitled#H4sIAAAAAAAAE3WR0W7CMAxFf8XKNAk0WsSeUEaRpn3Guoc0MbQiJFHiMlDVf18SOrZJ48259_jaVgZmxBEZZ28thgCNFV6xBdt1GgPj7wOji0t2EqI-wa_OleGEmpLWiID_6dIaQkMxhm1UdwKpRQhVzWSaVORJNdvWpqbhAYVsYQCNZk8thzWMC_DCHMZk3wPSThNQ088I3mghD9UwSwHwlLE5PMIzVFUFq3G7WUZ2OyUvU3JOuZU332wCXTRmtPy1NgzXZtUFp8WFw9536uWqpbIgPEaDsJBW90cTOHh0KGi2XsBq5-cT6-3nPauxXqHnsHJnCFZ3CvJVkyuCQ0mFF9TZyCQ162WGvteLKfG197Y3iv_pz_fmS68Hxt8iPBPj5HscP8YvCNX7uhYCAAA=)):
 
 ```svelte
 <div class="chess-board">
@@ -104,7 +104,7 @@ In case you just want to render something `n` times, you can omit the `as` part 
 {#each expression as name}...{:else}...{/each}
 ```
 
-An each block can also have an `{:else}` clause, which is rendered if the list is empty.
+each ブロックは `{:else}` 節を持つことができ、リストが空の場合にそれがレンダリングされます。
 
 ```svelte
 {#each todos as todo}
