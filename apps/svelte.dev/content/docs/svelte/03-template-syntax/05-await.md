@@ -23,7 +23,7 @@ title: {#await ...}
 {#await expression catch name}...{/await}
 ```
 
-Await blocks allow you to branch on the three possible states of a [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) — pending, fulfilled or rejected.
+await ブロックを使用すると、[`Promise`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise) の 3 つの可能な状態 — 待機 (pending)、成功 (fulfilled)、または失敗 (rejected) — に応じて処理を分岐させることができます。
 
 ```svelte
 {#await promise}
@@ -38,11 +38,11 @@ Await blocks allow you to branch on the three possible states of a [`Promise`](h
 {/await}
 ```
 
-> [!NOTE] During server-side rendering, only the pending branch will be rendered.
+> [!NOTE] サーバーサイドレンダリング中は、待機中の分岐のみがレンダリングされます。
 >
-> If the provided expression is not a `Promise`, only the `:then` branch will be rendered, including during server-side rendering.
+> 提供された式が `Promise` でない場合は、サーバーサイドレンダリング中も含め、`:then` の分岐のみがレンダリングされます。
 
-The `catch` block can be omitted if you don't need to render anything when the promise rejects (or no error is possible).
+promise が失敗した場合に何もレンダリングする必要がない場合 (またはエラーが発生しない場合)、`catch` ブロックを省略できます。
 
 ```svelte
 {#await promise}
@@ -54,7 +54,7 @@ The `catch` block can be omitted if you don't need to render anything when the p
 {/await}
 ```
 
-If you don't care about the pending state, you can also omit the initial block.
+待機中の状態を気にしない場合、最初のブロックを省略することもできます。
 
 ```svelte
 {#await promise then value}
@@ -62,7 +62,7 @@ If you don't care about the pending state, you can also omit the initial block.
 {/await}
 ```
 
-Similarly, if you only want to show the error state, you can omit the `then` block.
+同様に、エラー状態のみを表示したい場合は、`then` ブロックを省略できます。
 
 ```svelte
 {#await promise catch error}
@@ -70,7 +70,7 @@ Similarly, if you only want to show the error state, you can omit the `then` blo
 {/await}
 ```
 
-> [!NOTE] You can use `#await` with [`import(...)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) to render components lazily:
+> [!NOTE] `#await` を [`import(...)`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/import) と組み合わせることで、コンポーネントを遅延的 (lazily) にレンダリングすることができます:
 >
 > ```svelte
 > {#await import('./Component.svelte') then { default: Component }}
