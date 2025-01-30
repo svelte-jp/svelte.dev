@@ -5,62 +5,62 @@ title: Global styles
 
 ## :global(...)
 
-To apply styles to a single selector globally, use the `:global(...)` modifier:
+単一のセレクターに対してグローバルにスタイルを適用するには、`:global(...)` 修飾子を使用します:
 
 ```svelte
 <style>
 	:global(body) {
-		/* applies to <body> */
+		/* <body> に適用されます */
 		margin: 0;
 	}
 
 	div :global(strong) {
-		/* applies to all <strong> elements, in any component,
-		   that are inside <div> elements belonging
-		   to this component */
+		/* このコンポーネントに属する <div> 要素内にある
+		   すべての <strong> 要素 (どのコンポーネントのものであっても) に適用されます
+		    */
 		color: goldenrod;
 	}
 
 	p:global(.big.red) {
-		/* applies to all <p> elements belonging to this component
-		   with `class="big red"`, even if it is applied
-		   programmatically (for example by a library) */
+		/* `class="big red"` を持つ、このコンポーネントに属する
+		   すべての <p> 要素に適用されます。
+		   これはライブラリなどによってプログラム的に適用された場合でも有効です */
 	}
 </style>
 ```
 
-If you want to make @keyframes that are accessible globally, you need to prepend your keyframe names with `-global-`.
+@keyframes をグローバルにアクセス可能にしたい場合は、keyframe name の前に `-global-` を付ける必要があります。
 
-The `-global-` part will be removed when compiled, and the keyframe will then be referenced using just `my-animation-name` elsewhere in your code.
+`-global-` の部分はコンパイル時に削除され、その後はコード内のどこからでも `my-animation-name` という名前でその keyframe を参照できるようになります。
 
 ```svelte
 <style>
 	@keyframes -global-my-animation-name {
-		/* code goes here */
+		/* ここにコードを記述 */
 	}
 </style>
 ```
 
 ## :global
 
-To apply styles to a group of selectors globally, create a `:global {...}` block:
+一連のセレクターに対してグローバルにスタイルを適用するには、`:global {...}` ブロックを作成します:
 
 ```svelte
 <style>
 	:global {
-		/* applies to every <div> in your application */
+		/* アプリケーション内のすべての <div> に適用されます */
 		div { ... }
 
-		/* applies to every <p> in your application */
+		/* アプリケーション内のすべての <p> に適用されます */
 		p { ... }
 	}
 
 	.a :global {
-		/* applies to every `.b .c .d` element, in any component,
-		   that is inside an `.a` element in this component */
+		/* このコンポーネントの `.a` 要素内にある
+		   すべての `.b .c .d` 要素 (どのコンポーネントのものであっても) に適用されます */
 		.b .c .d {...}
 	}
 </style>
 ```
 
-> [!NOTE] The second example above could also be written as an equivalent `.a :global .b .c .d` selector, where everything after the `:global` is unscoped, though the nested form is preferred.
+> [!NOTE] 上記の 2 番目の例は `.a :global .b .c .d` セレクターとしても記述でき、この場合は `:global` の後に続く部分がスコープされません。なお、ネスト形式の方が推奨されます。
