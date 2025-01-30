@@ -27,11 +27,11 @@ npx sv check
 
 ## オプション <!--Options-->
 
-### `--workspace <path>` <!--Options-workspace-path-->
+### `--workspace <path>`
 
 ワークスペースへのパス。`node_modules`と`--ignore`で指定したディレクトリ以外のすべてのサブディレクトリがチェックされます。
 
-### `--output <format>` <!--Options-output-format-->
+### `--output <format>`
 
 エラーや警告の表示方法。詳細は[機械可読出力](#Machine-readable-output)を参照してください。
 
@@ -40,23 +40,23 @@ npx sv check
 - `machine`
 - `machine-verbose`
 
-### `--watch` <!--Options-watch-->
+### `--watch`
 
 プロセスを生存させ、変更を監視します。
 
-### `--preserveWatchOutput` <!--Options-preserveWatchOutput-->
+### `--preserveWatchOutput`
 
 ウォッチモードで画面がクリアされるのを防ぎます。
 
-### `--tsconfig <path>` <!--Options-tsconfig-path-->
+### `--tsconfig <path>`
 
 `tsconfig`または`jsconfig`ファイルへのパスを指定します。パスはワークスペースパスからの相対パスまたは絶対パスにすることができます。これを行うことで、設定ファイルの`files`/`include`/`exclude`パターンに一致したファイルのみに診断が適用されます。また、TypeScript および JavaScript ファイルからのエラーが報告されます。指定されていない場合は、プロジェクトディレクトリから上方に`jsconfig`/`tsconfig.json`ファイルを探します。
 
-### `--no-tsconfig` <!--Options-no-tsconfig-->
+### `--no-tsconfig`
 
 現在のディレクトリとその下にあるSvelteファイルのみをチェックし、`.js`/`.ts`ファイルを無視したい場合に使用します（型チェックされません）。
 
-### `--ignore <paths>` <!--Options-ignore-paths-->
+### `--ignore <paths>`
 
 ワークスペースのルートから相対的に無視するファイルやフォルダ。パスはカンマで区切り、引用符で囲む必要があります。例：
 
@@ -68,11 +68,11 @@ npx sv check --ignore "dist,build"
 
 `--no-tsconfig`と併用した場合にのみ効果があります。`--tsconfig`と併用した場合、診断されるファイルではなくウォッチされたファイルにのみ影響します。その診断は`tsconfig.json`によって決定されます。
 
-### `--fail-on-warnings` <!--Options-fail-on-warnings-->
+### `--fail-on-warnings`
 
 指定された場合、警告があると`sv check`はエラーコードで終了します。
 
-### `--compiler-warnings <warnings>` <!--Options-compiler-warnings-warnings-->
+### `--compiler-warnings <warnings>`
 
 `code`が[コンパイラ警告コード](../svelte/compiler-warnings)で、`behaviour`が`ignore`または`error`である`code:behaviour`ペアのリスト。例：
 
@@ -80,7 +80,7 @@ npx sv check --ignore "dist,build"
 npx sv check --compiler-warnings "css_unused_selector:ignore,a11y_missing_attribute:error"
 ```
 
-### `--diagnostic-sources <sources>` <!--Options-diagnostic-sources-sources-->
+### `--diagnostic-sources <sources>`
 
 コード診断を実行するソースのリストをカンマで区切って引用符で囲みます。デフォルトではすべてアクティブです：
 
@@ -95,7 +95,7 @@ npx sv check --compiler-warnings "css_unused_selector:ignore,a11y_missing_attrib
 npx sv check --diagnostic-sources "js,svelte"
 ```
 
-### `--threshold <level>` <!--Options-threshold-level-->
+### `--threshold <level>`
 
 診断をフィルタリングします：
 

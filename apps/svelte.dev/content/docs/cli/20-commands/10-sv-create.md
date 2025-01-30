@@ -13,7 +13,7 @@ npx sv create [options] [path]
 
 ## オプション <!--Options-->
 
-### `--template <name>` <!--Options-template-name-->
+### `--template <name>`
 
 使用するプロジェクトテンプレート：
 
@@ -21,24 +21,25 @@ npx sv create [options] [path]
 - `demo` — JavaScript無しで動作するワードパズルゲームを備えたデモアプリ
 - `library` — Svelteライブラリのためのテンプレートで、`svelte-package`でセットアップされています
 
-### `--types <option>` <!--Options-types-option-->
+### `--types <option>`
 
 プロジェクトに型チェックを追加するかどうか、またその方法：
 
 - `ts` — `.ts`ファイルをデフォルトとし、`.svelte`コンポーネントに対して`lang="ts"`を使用
 - `jsdoc` — [JSDoc構文](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)を使用して型を記述
 
-### `--no-types` <!--Options-no-types-->
+### `--no-types`
 
 型チェックの追加を防ぎます。推奨されません！
 
-### `--no-add-ons` <!--Options-no-add-ons-->
+### `--no-add-ons`
 
 対話型のアドオンプロンプト無しでコマンドを実行
 
-### `--no-install` <!--Options-no-install-->
+### `--no-install`
 
 依存関係のインストールをスキップ
+
 <!-- ## Programmatic interface
 
 ```js

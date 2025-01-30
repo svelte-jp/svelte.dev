@@ -15,30 +15,30 @@ npx sv migrate [migration]
 
 ## マイグレーション <!--Migrations-->
 
-### `app-state` <!--Migrations-app-state-->
+### `app-state`
 
 `.svelte`ファイル内で使用されている`$app/stores`を`$app/state`に移行します。詳細は[マイグレーションガイド](/docs/kit/migrating-to-sveltekit-2#SvelteKit-2.12:-$app-stores-deprecated)を参照してください。
 
-### `svelte-5` <!--Migrations-svelte-5-->
+### `svelte-5`
 
 Svelte 4アプリをSvelte 5にアップグレードし、個々のコンポーネントを[runes](../svelte/what-are-runes)やその他のSvelte 5の構文に更新します（[マイグレーションガイドを参照](../svelte/v5-migration-guide)）。
 
-### `self-closing-tags` <!--Migrations-self-closing-tags-->
+### `self-closing-tags`
 
 `.svelte`ファイル内のすべての自己終了要素以外の要素を置換します。詳細は[プルリクエスト](https://github.com/sveltejs/kit/pull/12128)を参照してください。
 
-### `svelte-4` <!--Migrations-svelte-4-->
+### `svelte-4`
 
 Svelte 3アプリをSvelte 4にアップグレードします（[マイグレーションガイドを参照](../svelte/v4-migration-guide)）。
 
-### `sveltekit-2` <!--Migrations-sveltekit-2-->
+### `sveltekit-2`
 
 SvelteKit 1アプリをSvelteKit 2にアップグレードします（[マイグレーションガイドを参照](../kit/migrating-to-sveltekit-2)）。
 
-### `package` <!--Migrations-package-->
+### `package`
 
 `@sveltejs/package`バージョン1を使用しているライブラリをバージョン2にアップグレードします。詳細は[プルリクエスト](https://github.com/sveltejs/kit/pull/8922)を参照してください。
 
-### `routes` <!--Migrations-routes-->
+### `routes`
 
 プレリリースのSvelteKitアプリをSvelteKit 1のファイルシステムルーティング規則を使用するようにアップグレードします。詳細は[プルリクエスト](https://github.com/sveltejs/kit/discussions/5774)を参照してください。
