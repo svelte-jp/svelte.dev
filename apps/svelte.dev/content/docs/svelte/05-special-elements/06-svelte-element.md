@@ -7,13 +7,13 @@ title: <svelte:element>
 <svelte:element this={expression} />
 ```
 
-The `<svelte:element>` element lets you render an element that is unknown at author time, for example because it comes from a CMS. Any properties and event listeners present will be applied to the element.
+`<svelte:element>` 要素を使用すると、開発中には不明な要素 (例えば CMS から提供される要素) をレンダリングできます。プロパティやイベントリスナーを指定した場合は、その要素に適用されます。
 
-The only supported binding is `bind:this`, since Svelte's built-in bindings do not work with generic elements.
+Svelte の組み込みバインディングはジェネリックな要素には対応していないため、唯一サポートされているバインディングは `bind:this` です。
 
-If `this` has a nullish value, the element and its children will not be rendered.
+`this` に nullish な値が設定されている場合、その要素とその子要素はレンダリングされません。
 
-If `this` is the name of a [void element](https://developer.mozilla.org/en-US/docs/Glossary/Void_element) (e.g., `br`) and `<svelte:element>` has child elements, a runtime error will be thrown in development mode:
+`this` に [void element（空要素）](https://developer.mozilla.org/ja/docs/Glossary/Void_element) (例えば `br`) のタグ名が指定されており、`<svelte:element>` に子要素が含まれている場合、開発モードの場合は実行時エラーが発生します:
 
 ```svelte
 <script>
@@ -25,10 +25,10 @@ If `this` is the name of a [void element](https://developer.mozilla.org/en-US/do
 </svelte:element>
 ```
 
-Svelte tries its best to infer the correct namespace from the element's surroundings, but it's not always possible. You can make it explicit with an `xmlns` attribute:
+Svelte は可能な限り要素の周囲の状況から適切な名前空間を推測しようとしますが、常に正しく推測できるとは限りません。そのため、`xmlns` 属性を使用して明示的に指定することができます:
 
 ```svelte
 <svelte:element this={tag} xmlns="http://www.w3.org/2000/svg" />
 ```
 
-`this` needs to be a valid DOM element tag, things like `#text` or `svelte:head` will not work.
+`this` には有効な DOM 要素のタグを指定する必要があります。例えば `#text` や `svelte:head` などは使用できません。

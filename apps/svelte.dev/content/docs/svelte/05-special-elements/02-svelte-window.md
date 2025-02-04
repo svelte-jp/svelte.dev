@@ -11,9 +11,9 @@ title: <svelte:window>
 <svelte:window bind:prop={value} />
 ```
 
-The `<svelte:window>` element allows you to add event listeners to the `window` object without worrying about removing them when the component is destroyed, or checking for the existence of `window` when server-side rendering.
+`<svelte:window>` 要素を使用すると、コンポーネントが破棄される際にイベントリスナーを削除する手間や、サーバーサイドレンダリング時に `window` の存在を確認する必要がなく、`window` オブジェクトにイベントリスナーを追加することができます。
 
-This element may only appear at the top level of your component — it cannot be inside a block or element.
+この要素はコンポーネントのトップレベルにのみ配置できます — ブロックや他の要素の中に含めることはできません。
 
 ```svelte
 <script>
@@ -25,7 +25,7 @@ This element may only appear at the top level of your component — it cannot be
 <svelte:window onkeydown={handleKeydown} />
 ```
 
-You can also bind to the following properties:
+以下のプロパティにもバインドできます:
 
 - `innerWidth`
 - `innerHeight`
@@ -36,10 +36,10 @@ You can also bind to the following properties:
 - `online` — an alias for `window.navigator.onLine`
 - `devicePixelRatio`
 
-All except `scrollX` and `scrollY` are readonly.
+`scrollX` と `scrollY` を除くすべてのプロパティは読取専用です。
 
 ```svelte
 <svelte:window bind:scrollY={y} />
 ```
 
-> [!NOTE] Note that the page will not be scrolled to the initial value to avoid accessibility issues. Only subsequent changes to the bound variable of `scrollX` and `scrollY` will cause scrolling. If you have a legitimate reason to scroll when the component is rendered, call `scrollTo()` in an `$effect`.
+> [!NOTE] アクセシビリティの問題を避けるため、ページは初期値にスクロールされません。`scrollX` や `scrollY` にバインドされた変数の変更があった場合のみスクロールが発生します。コンポーネントがレンダリングされたときにスクロールを発生させる正当な理由がある場合は、`$effect` 内で `scrollTo()` を呼び出してください。
