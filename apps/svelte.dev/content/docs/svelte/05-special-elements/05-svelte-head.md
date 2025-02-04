@@ -7,9 +7,9 @@ title: <svelte:head>
 <svelte:head>...</svelte:head>
 ```
 
-This element makes it possible to insert elements into `document.head`. During server-side rendering, `head` content is exposed separately to the main `body` content.
+この要素を使用すると、`document.head` 内に要素を挿入できます。サーバーサイドレンダリング時には、`head` の内容は `body` の主要なコンテンツとは別に出力されます。
 
-As with `<svelte:window>`, `<svelte:document>` and `<svelte:body>`, this element may only appear at the top level of your component and must never be inside a block or element.
+`<svelte:window>`、`<svelte:document>`、`<svelte:body>` と同様に、この要素はコンポーネントのトップレベルにのみ配置でき、ブロックや他の要素の中に含めることはできません。
 
 ```svelte
 <svelte:head>

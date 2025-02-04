@@ -8,21 +8,21 @@ title: <svelte:boundary>
 ```
 
 > [!NOTE]
-> This feature was added in 5.3.0
+> この機能は 5.3.0 で追加されました
 
-Boundaries allow you to guard against errors in part of your app from breaking the app as a whole, and to recover from those errors.
+boundary (境界) を使用すると、アプリの一部で発生したエラーがアプリ全体を壊すのを防ぎ、それらのエラーから回復することができます。
 
-If an error occurs while rendering or updating the children of a `<svelte:boundary>`, or running any [`$effect`]($effect) functions contained therein, the contents will be removed.
+`<svelte:boundary>` 内の子要素をレンダリングまたは更新するとき、あるいはそれに含まれる [`$effect`]($effect) 関数の実行中にエラーが発生すると、そのコンテンツは削除されます。
 
-Errors occurring outside the rendering process (for example, in event handlers) are _not_ caught by error boundaries.
+レンダリングプロセスの外で発生するエラー (例えば、イベントハンドラー内のエラー) は error boundary では捕捉されません。
 
-## Properties
+## プロパティ <!--Properties-->
 
-For the boundary to do anything, one or both of `failed` and `onerror` must be provided.
+boundary を機能させるには、`failed` または `onerror` のいずれか、または両方を提供する必要があります。
 
 ### `failed`
 
-If a `failed` snippet is provided, it will be rendered with the error that was thrown, and a `reset` function that recreates the contents ([demo](/playground/hello-world#H4sIAAAAAAAAE3VRy26DMBD8lS2tFCIh6JkAUlWp39Cq9EBg06CAbdlLArL87zWGKk8ORnhmd3ZnrD1WtOjFXqKO2BDGW96xqpBD5gXerm5QefG39mgQY9EIWHxueRMinLosti0UPsJLzggZKTeilLWgLGc51a3gkuCjKQ7DO7cXZotgJ3kLqzC6hmex1SZnSXTWYHcrj8LJjWTk0PHoZ8VqIdCOKayPykcpuQxAokJaG1dGybYj4gw4K5u6PKTasSbjXKgnIDlA8VvUdo-pzonraBY2bsH7HAl78mKSHZpgIcuHjq9jXSpZSLixRlveKYQUXhQVhL6GPobXAAb7BbNeyvNUs4qfRg3OnELLj5hqH9eQZqCnoBwR9lYcQxuVXeBzc8kMF8yXY4yNJ5oGiUzP_aaf_waTRGJib5_Ad3P_vbCuaYxzeNpbU0eUMPAOKh7Yw1YErgtoXyuYlPLzc10_xo_5A91zkQL_AgAA)):
+`failed` snippet が提供されると、スローされた error と、コンテンツを再作成する `reset` 関数を引数に取ってレンダリングされます ([デモ](/playground/hello-world#H4sIAAAAAAAAE3VRy26DMBD8lS2tFCIh6JkAUlWp39Cq9EBg06CAbdlLArL87zWGKk8ORnhmd3ZnrD1WtOjFXqKO2BDGW96xqpBD5gXerm5QefG39mgQY9EIWHxueRMinLosti0UPsJLzggZKTeilLWgLGc51a3gkuCjKQ7DO7cXZotgJ3kLqzC6hmex1SZnSXTWYHcrj8LJjWTk0PHoZ8VqIdCOKayPykcpuQxAokJaG1dGybYj4gw4K5u6PKTasSbjXKgnIDlA8VvUdo-pzonraBY2bsH7HAl78mKSHZpgIcuHjq9jXSpZSLixRlveKYQUXhQVhL6GPobXAAb7BbNeyvNUs4qfRg3OnELLj5hqH9eQZqCnoBwR9lYcQxuVXeBzc8kMF8yXY4yNJ5oGiUzP_aaf_waTRGJib5_Ad3P_vbCuaYxzeNpbU0eUMPAOKh7Yw1YErgtoXyuYlPLzc10_xo_5A91zkQL_AgAA)):
 
 ```svelte
 <svelte:boundary>
@@ -35,17 +35,17 @@ If a `failed` snippet is provided, it will be rendered with the error that was t
 ```
 
 > [!NOTE]
-> As with [snippets passed to components](snippet#Passing-snippets-to-components), the `failed` snippet can be passed explicitly as a property...
+> [コンポーネントに渡される snippet](snippet#Passing-snippets-to-components) と同様に、`failed` snippet はプロパティとして明示的に渡すことができます...
 >
 > ```svelte
 > <svelte:boundary {failed}>...</svelte:boundary>
 > ```
 >
-> ...or implicitly by declaring it directly inside the boundary, as in the example above.
+> ...または、上記の例のように boundary 内に直接記述することで暗黙的に渡すこともできます。
 
 ### `onerror`
 
-If an `onerror` function is provided, it will be called with the same two `error` and `reset` arguments. This is useful for tracking the error with an error reporting service...
+`onerror` 関数が提供されると、`failed` と同じ `error` と `reset` の2つの引数とともに呼び出されます。これはエラーレポートサービスでエラーを追跡するのに役立ちます...
 
 ```svelte
 <svelte:boundary onerror={(e) => report(e)}>
@@ -53,7 +53,7 @@ If an `onerror` function is provided, it will be called with the same two `error
 </svelte:boundary>
 ```
 
-...or using `error` and `reset` outside the boundary itself:
+...または、`error` と `reset` を boundary の外部で使用することもできます:
 
 ```svelte
 <script>
@@ -80,4 +80,4 @@ If an `onerror` function is provided, it will be called with the same two `error
 {/if}
 ```
 
-If an error occurs inside the `onerror` function (or if you rethrow the error), it will be handled by a parent boundary if such exists.
+`onerror` 関数内でエラーが発生した場合 (またはエラーを再スローした場合)、もし親の boundary が存在すればそこで処理されます。

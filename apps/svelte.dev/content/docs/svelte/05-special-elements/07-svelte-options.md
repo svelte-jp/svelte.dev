@@ -7,21 +7,21 @@ title: <svelte:options>
 <svelte:options option={value} />
 ```
 
-The `<svelte:options>` element provides a place to specify per-component compiler options, which are detailed in the [compiler section](svelte-compiler#compile). The possible options are:
+`<svelte:options>` 要素を使用すると、コンポーネントごとのコンパイラオプションを指定できます。詳細は [コンパイラのセクション](svelte-compiler#compile) に記載されています。使用可能なオプションは以下のとおりです:
 
-- `runes={true}` — forces a component into _runes mode_ (see the [Legacy APIs](legacy-overview) section)
-- `runes={false}` — forces a component into _legacy mode_
-- `namespace="..."` — the namespace where this component will be used, can be "html" (the default), "svg" or "mathml"
-- `customElement={...}` — the [options](custom-elements#Component-options) to use when compiling this component as a custom element. If a string is passed, it is used as the `tag` option
-- `css="injected"` — the component will inject its styles inline: During server side rendering, it's injected as a `<style>` tag in the `head`, during client side rendering, it's loaded via JavaScript
+- `runes={true}` — コンポーネントを _runes モード_ に強制します ([Legacy APIs](legacy-overview) セクションを参照)
+- `runes={false}` — コンポーネントを _レガシーモード_ に強制します
+- `namespace="..."` — このコンポーネントが使用される名前空間を指定します。デフォルトは "html" で、"svg" や "mathml" も指定可能です。
+- `customElement={...}` — このコンポーネントを custom element としてコンパイルする際に使用する [オプション](custom-elements#Component-options) を指定します。文字列を渡すと、それが `tag` オプションとして使用されます。
+- `css="injected"` — コンポーネントのスタイルをインラインで挿入します。サーバーサイドレンダリング時には `head` 内に `<style>` タグとして挿入され、クライアントサイドレンダリング時には JavaScript 経由で読み込まれます。
 
-> [!LEGACY] Deprecated options
-> Svelte 4 also included the following options. They are deprecated in Svelte 5 and non-functional in runes mode.
+> [!LEGACY] 非推奨のオプション
+> Svelte 4 には以下のオプションも含まれていましたが、Svelte 5 では非推奨となり、runes モードでは機能しません。
 >
-> - `immutable={true}` — you never use mutable data, so the compiler can do simple referential equality checks to determine if values have changed
-> - `immutable={false}` — the default. Svelte will be more conservative about whether or not mutable objects have changed
-> - `accessors={true}` — adds getters and setters for the component's props
-> - `accessors={false}` — the default
+> - `immutable={true}` — ミュータブルなデータを一切使用しない場合に指定します。そのため、コンパイラは値が変更されたかどうかを判断するために単純な参照等価性チェックを行うことができます
+> - `immutable={false}` — デフォルトです。Svelte は、ミュータブルなオブジェクトが変更されたかどうかについて、より保守的になります
+> - `accessors={true}` — コンポーネントの props に対してゲッターとセッターを追加します
+> - `accessors={false}` — デフォルト値
 
 ```svelte
 <svelte:options customElement="my-custom-element" />
