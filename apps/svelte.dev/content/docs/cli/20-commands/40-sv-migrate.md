@@ -10,6 +10,11 @@ title: sv migrate
 ## 使用方法 <!--Usage-->
 
 ```bash
+npx sv migrate
+```
+
+You can also specify a migration directly via the CLI:
+```bash
 npx sv migrate [migration]
 ```
 

@@ -12,9 +12,11 @@ declare var self: Window & typeof globalThis & { svelte: typeof import('svelte/c
 
 let inited: PromiseWithResolvers<typeof self.svelte>;
 
+let can_use_experimental_async = false;
+
 async function init(v: string) {
 	const svelte_url = v === 'local' ? '/svelte' : `https://unpkg.com/svelte@${v}`;
-	const match = /^(?:pr|commit)-(.+)/.exec(v);
+	const match = /^(?:pr|commit|branch)-(.+)/.exec(v);
 
 	let tarball: FileDescription[] | undefined;
 	let version: string;
@@ -45,6 +47,21 @@ async function init(v: string) {
 		: await fetch(`${svelte_url}/${entry}`).then((r) => r.text());
 
 	(0, eval)(compiler + `\n//# sourceURL=${entry}@` + version);
+
+	try {
+		self.svelte.compileModule('', {
+			generate: 'client',
+			// @ts-expect-error
+			experimental: {
+				async: true
+			}
+		});
+
+		can_use_experimental_async = true;
+	} catch (e) {
+		console.error(e);
+		// do nothing
+	}
 
 	return self.svelte;
 }
@@ -101,16 +118,28 @@ addEventListener('message', async (event) => {
 				dev: options.dev,
 				filename: file.name
 			};
+
 			if (!is_svelte_3_or_4) {
 				compilerOptions.modernAst = options.modernAst; // else Svelte 3/4 will throw an "unknown option" error
 			}
+
+			if (can_use_experimental_async) {
+				compilerOptions.experimental = { async: true };
+			}
+
 			result = svelte.compile(file.contents, compilerOptions);
 		} else {
-			result = svelte.compileModule(file.contents, {
+			const compilerOptions: any = {
 				generate: options.generate,
 				dev: options.dev,
 				filename: file.name
-			});
+			};
+
+			if (can_use_experimental_async) {
+				compilerOptions.experimental = { async: true };
+			}
+
+			result = svelte.compileModule(file.contents, compilerOptions);
 		}
 
 		postMessage({

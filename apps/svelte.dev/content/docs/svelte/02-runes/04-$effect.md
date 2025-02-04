@@ -67,7 +67,7 @@ effect は、コンポーネントが DOM にマウントされた後に実行�
 
 ### 依存関係を理解する <!--Understanding-dependencies-->
 
-`$effect` は、その関数内で _同期的に_ 読み取られたリアクティブな値 (`$state`, `$derived`, `$props`) を自動的に検出し、それらを依存関係として登録します。それらの依存関係が変更されたとき、`$effect` は再実行をスケジュールします。
+`$effect` は、その関数内で _同期的に_ 読み取られたリアクティブな値 (`$state`, `$derived`, `$props`) を自動的に (関数呼び出しによる関節的なものも含めて) 検出し、それらを依存関係として登録します。それらの依存関係が変更されたとき、`$effect` は再実行をスケジュールします。
 
 非同期的に読み取られる値 (例えば、`await` の後や `setTimeout` 内) は追跡されません。この例では、`color` が変更されると canvas が再描画されますが、`size` が変更されても再描画されません ([デモ](/playground/untitled#H4sIAAAAAAAAE31T246bMBD9lZF3pWSlBEirfaEQqdo_2PatVIpjBrDkGGQPJGnEv1e2IZfVal-wfHzmzJyZ4cIqqdCy9M-F0blDlnqArZjmB3f72XWRHVCRw_bc4me4aDWhJstSlllhZEfbQhekkMDKfwg5PFvihMvX5OXH_CJa1Zrb0-Kpqr5jkiwC48rieuDWQbqgZ6wqFLRcvkC-hYvnkWi1dWqa8ESQTxFRjfQWsOXiWzmr0sSLhEJu3p1YsoJkNUcdZUnN9dagrBu6FVRQHAM10sJRKgUG16bXcGxQ44AGdt7SDkTDdY02iqLHnJVU6hedlWuIp94JW6Tf8oBt_8GdTxlF0b4n0C35ZLBzXb3mmYn3ae6cOW74zj0YVzDNYXRHFt9mprNgHfZSl6mzml8CMoLvTV6wTZIUDEJv5us2iwMtiJRyAKG4tXnhl8O0yhbML0Wm-B7VNlSSSd31BG7z8oIZZ6dgIffAVY_5xdU9Qrz1Bnx8fCfwtZ7v8Qc9j3nB8PqgmMWlHIID6-bkVaPZwDySfWtKNGtquxQ23Qlsq2QJT0KIqb8dL0up6xQ2eIBkAg_c1FI_YqW0neLnFCqFpwmreedJYT7XX8FVOBfwWRhXstZrSXiwKQjUhOZeMIleb5JZfHWn2Yq5pWEpmR7Hv-N_wEqT8hEEAAA=))。
 

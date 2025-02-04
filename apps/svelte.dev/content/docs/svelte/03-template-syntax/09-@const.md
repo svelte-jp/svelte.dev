@@ -12,4 +12,4 @@ title: {@const ...}
 {/each}
 ```
 
-`{@const}` は、`{#if ...}`、`{#each ...}`、`{#snippet ...}` などのブロックや、`<Component />`、または `<svelte:boundary` の直下の子としてのみ使用可能です。
+`{@const}` は、`{#if ...}`、`{#each ...}`、`{#snippet ...}` などのブロックや、`<Component />`、または `<svelte:boundary>` の直下の子としてのみ使用可能です。
