@@ -38,6 +38,8 @@ We'll introduce these files in a moment in more detail, but here are a few simpl
 <a href="/">Home</a>
 ```
 
+> [!NOTE] SvelteKit uses `<a>` elements to navigate between routes, rather than a framework-specific `<Link>` component.
+
 Pages can receive data from `load` functions via the `data` prop.
 
 ```svelte
@@ -55,8 +57,6 @@ Pages can receive data from `load` functions via the `data` prop.
 > `PageProps` was added in 2.16.0. In earlier versions, you had to type the `data` property manually with `PageData` instead, see [$types](#\$types).
 >
 > Svelte 4 では、代わりに `export let data` を使用します
-
-> [!NOTE] SvelteKit では、ルート(routes)間のナビゲーションに、フレームワーク固有の `<Link>` コンポーネントではなく、`<a>` 要素を使用します。
 
 ### +page.js
 

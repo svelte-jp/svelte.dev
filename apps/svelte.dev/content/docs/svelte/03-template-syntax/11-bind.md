@@ -220,11 +220,10 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 - [`volume`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/volume)
 - [`muted`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/muted)
 
-...および以下の7つの読み取り専用バインディングがあります:
+...および以下の6つの読み取り専用バインディングがあります:
 
 - [`duration`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/duration)
 - [`buffered`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/buffered)
-- [`paused`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/paused)
 - [`seekable`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/seekable)
 - [`seeking`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/seeking_event)
 - [`ended`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/ended)
@@ -236,7 +235,7 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 
 ## `<video>`
 
-`<video>` 要素には、[#audio] 要素と同じバインディングがすべて含まれ、さらに読み取り専用の [`videoWidth`](https://developer.mozilla.org/ja/docs/Web/API/HTMLVideoElement/videoWidth) および [`videoHeight`](https://developer.mozilla.org/ja/docs/Web/API/HTMLVideoElement/videoHeight) バインディングがあります。
+`<video>` 要素には、[`<audio>`](#audio) 要素と同じバインディングがすべて含まれ、さらに読み取り専用の [`videoWidth`](https://developer.mozilla.org/ja/docs/Web/API/HTMLVideoElement/videoWidth) および [`videoHeight`](https://developer.mozilla.org/ja/docs/Web/API/HTMLVideoElement/videoHeight) バインディングがあります。
 
 ## `<img>`
 

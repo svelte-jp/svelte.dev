@@ -102,6 +102,14 @@
 			</p>
 		</a>
 
+		<a href="https://v4.svelte.jp">
+			<h2>以前のドキュメントをお探しの方</h2>
+			<p>
+				もしあなたが Svelte 3 や Svelte 4 を使用してサイトを構築しているなら、
+				あなたがアップグレードするまでは以前のサイトが役立つかもしれません。
+			</p>
+		</a>
+
 		<a href="/chat" class="external" target="_blank">
 			<h2>助けて！行き詰まった！という方</h2>
 			<p>
