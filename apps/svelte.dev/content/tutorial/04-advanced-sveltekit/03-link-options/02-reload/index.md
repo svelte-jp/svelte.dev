@@ -14,8 +14,4 @@ title: Reloading the page
 </nav>
 ```
 
-<<<<<<< HEAD
 link options とその値に関する詳細な情報については、[link options のドキュメント](/docs/kit/link-options)をご参照ください。
-=======
-For more information on available link options and their values, consult the [link options documentation](/docs/kit/link-options).
->>>>>>> sveltejs/main
