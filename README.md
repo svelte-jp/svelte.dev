@@ -72,6 +72,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yo-goto"><img src="https://avatars.githubusercontent.com/u/50942816?v=4?s=100" width="100px;" alt="PADAone"/><br /><sub><b>PADAone</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte-site-jp/commits?author=yo-goto" title="Svelte documentation from previous repository">📗</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yuki0418"><img src="https://avatars.githubusercontent.com/u/45615348?v=4?s=100" width="100px;" alt="Yuki Ishii"/><br /><sub><b>Yuki Ishii</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte.dev/commits?author=yuki0418" title="Documentation">📖</a></td>
 			<td align="center" valign="top" width="14.28%"><a href="https://github.com/tada-tsu"><img src="https://avatars.githubusercontent.com/u/34794025?v=4?s=100" width="100px;" alt="Tadatsugu Ohno"/><br /><sub><b>Tadatsugu Ohno</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte.dev/commits?author=tada-tsu" title="Documentation">📖</a></td>
+			<td align="center" valign="top" width="14.28%"><a href="https://github.com/akku1139"><img src="https://avatars.githubusercontent.com/u/151517253?v=4?s=100" width="100px;" alt="-akku-"/><br /><sub><b>-akku-</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte.dev/commits?author=akku1139" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
