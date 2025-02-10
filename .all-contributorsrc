@@ -245,6 +245,13 @@
 			"avatar_url": "https://avatars.githubusercontent.com/u/34794025?v=4",
 			"profile": "https://github.com/tada-tsu",
 			"contributions": ["doc"]
+		},
+		{
+			"login": "akku1139",
+			"name": "-akku-",
+			"avatar_url": "https://avatars.githubusercontent.com/u/151517253?v=4",
+			"profile": "https://github.com/akku1139",
+			"contributions": ["doc"]
 		}
 	],
 	"contributorsPerLine": 7
