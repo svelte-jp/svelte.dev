@@ -238,6 +238,13 @@
 			"avatar_url": "https://avatars.githubusercontent.com/u/45615348?v=4",
 			"profile": "https://github.com/yuki0418",
 			"contributions": ["doc"]
+		},
+		{
+			"login": "tada-tsu",
+			"name": "Tadatsugu Ohno",
+			"avatar_url": "https://avatars.githubusercontent.com/u/34794025?v=4",
+			"profile": "https://github.com/tada-tsu",
+			"contributions": ["doc"]
 		}
 	],
 	"contributorsPerLine": 7
