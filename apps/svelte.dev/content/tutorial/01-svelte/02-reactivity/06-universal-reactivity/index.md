@@ -2,9 +2,9 @@
 title: Universal reactivity
 ---
 
-In the preceding exercises, we used runes to add reactivity inside components. But we can also use runes _outside_ components, for example to share some global state.
+前の演習では、ルーンを使用してコンポーネント内にリアクティブ性を追加しました。ただし、たとえばグローバル状態を共有する場合など、コンポーネントの _外部_ でルーンを使用することもできます。
 
-The `<Counter>` components in this exercise are all importing the `counter` object from `shared.js`. But it's a normal object, and as such nothing happens when you click the buttons. Wrap the object in `$state(...)`:
+この演習の `<Counter>` コンポーネントはすべて、`shared.js` から `counter` オブジェクトをインポートします。ただし、これは通常のオブジェクトなので、ボタンをクリックしても何も起こりません。オブジェクトを `$state(...)` でラップします。
 
 ```js
 /// file: shared.js
@@ -13,9 +13,9 @@ export const counter = +++$state({+++
 +++})+++;
 ```
 
-This causes an error, because you can't use runes in normal `.js` files, only `.svelte.js` files. Let's fix that — rename the file to `shared.svelte.js`.
+ここでエラーが発生します。通常の `.js` ファイルではルーンを使用できず、`.svelte.js` ファイルでのみ使用できるためです。これを修正するには、ファイルの名前を `shared.svelte.js` に変更します。
 
-Then, update the import declaration in `Counter.svelte`:
+次に、`Counter.svelte` のインポート宣言を更新します。
 
 ```svelte
 /// file: Counter.svelte
@@ -24,6 +24,6 @@ Then, update the import declaration in `Counter.svelte`:
 </script>
 ```
 
-Now, when you click any button, all three update simultaneously.
+これで、いずれかのボタンをクリックすると、3 つすべてが同時に更新されます。
 
-> [!NOTE] You cannot export a `$state` declaration from a module if the declaration is reassigned (rather than just mutated), because the importers would have no way to know about it.
+> [!NOTE] 宣言が再割り当てされた場合（単に変更されるのではなく）、インポートする側がそれを知る方法がないため、モジュールから `$state` 宣言をエクスポートすることはできません。
