@@ -2,22 +2,22 @@
 title: Raw state
 ---
 
-In previous exercises, we learned that state is [deeply reactive](deep-state) — if you (for example) change a property of an object, or push to an array, it will cause the UI to update. This works by creating a [proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) that intercepts reads and writes.
+前回の演習では、状態が [深く反応する](deep-state) ことを学びました。つまり、(たとえば) オブジェクトのプロパティを変更したり、配列にプッシュしたりすると、UI が更新されます。これは、読み取りと書き込みをインターセプトする [プロキシ](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy) を作成することで機能します。
 
-Occasionally, that's not what you want. If you're not changing individual properties, or if it's important to maintain referential equality, then you can use _raw state_ instead.
+場合によっては、それが望ましくないこともあります。個々のプロパティを変更しない場合、または参照の等価性を維持することが重要である場合は、代わりに _raw state_ を使用できます。
 
-In this example, we have a chart of Svelte's steadily increasing stock price. We want the chart to update when new data comes in, which we could achieve by turning `data` into state...
+この例では、Svelte の株価が着実に上昇しているグラフがあります。新しいデータが入ったときにグラフを更新したいのですが、これは `data` を state に変換することで実現できます...
 
 ```js
 /// file: App.svelte
 let data = +++$state(poll())+++;
 ```
 
-...but there's no need to make it deeply reactive when it will be discarded a few milliseconds later. Instead, use `$state.raw`:
+...しかし、数ミリ秒後に破棄されるのであれば、それを深く反応させる必要はありません。代わりに、`$state.raw` を使用します。
 
 ```js
 /// file: App.svelte
 let data = +++$state.raw(poll())+++;
 ```
 
-> [!NOTE] Mutating raw state will have no direct effect. In general, mutating non-reactive state is strongly discouraged.
+> [!NOTE] _raw state_ を変更してもエフェクトは反応しません。一般に非反応状態を変更することは強く推奨されません。

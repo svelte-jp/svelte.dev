@@ -2,13 +2,13 @@
 title: Stores
 ---
 
-Prior to the introduction of runes in Svelte 5, stores were the idiomatic way to handle reactive state outside components. That's no longer the case, but you'll still encounter stores when using Svelte (including in SvelteKit, for now), so it's worth knowing how to use them.
+Svelte 5 でルーンが導入される前は、ストアはコンポーネント外部のリアクティブ状態を処理するための慣用的な方法でした。これはもう当てはまりませんが、Svelte (現時点では SvelteKit も含む) を使用するときにはまだストアに遭遇することになるため、その使い方を知っておくことは価値があります。
 
-> [!NOTE] We won't cover how to create your own custom stores — for that, [consult the documentation](/docs/svelte/stores).
+> [!NOTE] 独自のカスタム ストアを作成する方法については説明しません。その場合は、[ドキュメント](/docs/svelte/stores)を参照してください。
 
-Let's revisit the example from the [universal reactivity](universal-reactivity) exercise, but this time implement the shared state using a store.
+[ユニバーサル リアクティビティ](universal-reactivity) 演習の例をもう一度見てみましょう。ただし、今回はストアを使用して共有状態を実装します。
 
-In `shared.js` we're currently exporting `count`, which is a number. Turn it into a writable store:
+今 `shared.js` では、数値である `count` をエクスポートしています。これを書き込み可能なストアに変換します。
 
 ```js
 /// file: shared.js
@@ -17,7 +17,7 @@ In `shared.js` we're currently exporting `count`, which is a number. Turn it int
 export const count = +++writable(0)+++;
 ```
 
-To reference the value of the store, we prefix it with a `$` symbol. In `Counter.svelte`, update the text inside the `<button>` so that it no longer says `[object Object]`:
+ストアの値を参照するには、先頭に `$` 記号を付けます。`Counter.svelte` で、`<button>` 内のテキストを更新して、`[object Object]` と表示されないようにします。
 
 ```svelte
 /// file: Counter.svelte
@@ -26,13 +26,13 @@ To reference the value of the store, we prefix it with a `$` symbol. In `Counter
 </button>
 ```
 
-Finally, add the event handler. Because this is a writable store, we can update the value programmatically using its `set` or `update` method...
+最後に、イベント ハンドラーを追加します。これは書き込み可能なストアなので、`set` または `update` メソッドを使用してプログラムで値を更新できます...
 
 ```js
 count.update((n) => n + 1);
 ```
 
-...but since we're in a component we can continue using the `$` prefix:
+...ただし、コンポーネント内にいるので、`$` プレフィックスを引き続き使用できます。
 
 ```svelte
 /// file: Counter.svelte
