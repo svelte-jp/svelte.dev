@@ -2,7 +2,7 @@
 title: Implicit snippet props
 ---
 
-As an authoring convenience, snippets declared directly inside components become props _on_ those components. Take the `header` and `row` snippets and move them inside `<FilteredList>`:
+利便性のため、コンポーネント内で直接宣言されたスニペットは、そのコンポーネントのプロパティになります。`header` および `row` スニペットを `<FilteredList>` 内に移動します。
 
 ```svelte
 /// file: App.svelte
@@ -22,7 +22,7 @@ As an authoring convenience, snippets declared directly inside components become
 ---{#snippet row(d)}...{/snippet}---
 ```
 
-We can now remove them from the explicit props:
+明示的なプロパティからこれらを削除できるようになりました。
 
 ```svelte
 /// file: App.svelte
@@ -33,7 +33,7 @@ We can now remove them from the explicit props:
 </FilteredList>
 ```
 
-Any content inside a component that is _not_ part of a declared snippet becomes a special `children` snippet. Since `header` has no parameters, we can turn it into `children` by removing the block tags...
+宣言されたスニペットの一部ではないコンポーネント内のコンテンツは、特別な `children` スニペットになります。`header` にはパラメーターがないため、ブロック タグを削除することで `children` に変えることができます...
 
 ```svelte
 /// file: App.svelte
@@ -48,7 +48,7 @@ Any content inside a component that is _not_ part of a declared snippet becomes 
 ---{/snippet}---
 ```
 
-...and renaming the `header` prop to `children` on the other side:
+...そして反対側で `header` プロパティの名前を `children` に変更します。
 
 ```svelte
 /// file: FilteredList.svelte
