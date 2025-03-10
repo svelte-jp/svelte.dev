@@ -2,7 +2,7 @@
 title: Spreading events
 ---
 
-We can also [spread](spread-props) event handlers directly onto elements. Here, we've defined an `onclick` handler in `App.svelte` — all we need to do is pass the props to the `<button>` in `BigRedButton.svelte`:
+また、イベント ハンドラーを要素に直接 [_spread_](spread-props) することもできます。ここでは、`App.svelte` で `onclick` ハンドラーを定義しました。必要なのは、`BigRedButton.svelte` の `<button>` にプロパティを渡すだけです。
 
 ```svelte
 /// file: BigRedButton.svelte

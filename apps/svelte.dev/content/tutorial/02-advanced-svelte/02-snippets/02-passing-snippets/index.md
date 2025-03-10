@@ -2,11 +2,11 @@
 title: Passing snippets to components
 ---
 
-Since snippets — like functions — are just values, they can be passed to components as props.
+スニペットは関数と同様に単なる値なので、コンポーネントにプロパティとして渡すことができます。
 
-Take this `<FilteredList>` component. Its job is to filter the `data` that gets passed into it, but it has no opinions about how that data should be rendered — that's the responsibility of the parent component.
+この `<FilteredList>` コンポーネントを見てみましょう。このコンポーネントの役割は、渡される `data` をフィルタリングすることですが、そのデータをどのようにレンダリングするかについては何も関与しません。これは親コンポーネントの責任です。
 
-We've already got some snippets defined. Begin by passing them into the `<FilteredList>`:
+すでにいくつかのスニペットが定義されています。まずはそれらを `<FilteredList>` に渡します。
 
 ```svelte
 /// file: App.svelte
@@ -18,7 +18,7 @@ We've already got some snippets defined. Begin by passing them into the `<Filter
 ></FilteredList>
 ```
 
-Then, on the other side, declare `header` and `row` as props:
+次に、反対側で、`header` と `row` をプロパティとして宣言します。
 
 ```svelte
 /// file: FilteredList.svelte
@@ -29,7 +29,7 @@ Then, on the other side, declare `header` and `row` as props:
 </script>
 ```
 
-Finally, replace the placeholder content with render tags:
+最後に、プレースホルダーのコンテンツをレンダリング タグに置き換えます。
 
 ```svelte
 /// file: FilteredList.svelte
@@ -44,4 +44,4 @@ Finally, replace the placeholder content with render tags:
 </div>
 ```
 
-Never again will you have to memorize the hex code for `MistyRose` or `PeachPuff`.
+もう、`MistyRose` や `PeachPuff` の 16 進コードを記憶する必要はありません。

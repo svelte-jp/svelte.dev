@@ -2,9 +2,9 @@
 title: Capturing
 ---
 
-Normally, event handlers run during the [_bubbling_](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Event_bubbling) phase. Notice what happens if you type something into the `<input>` in this example — the inner handler runs first, as the event 'bubbles' from the target up to the document, followed by the outer handler.
+通常、イベントハンドラーは [_バブリング_](https://developer.mozilla.org/ja/docs/Learn/JavaScript/Building_blocks/Event_bubbling) フェーズで実行されます。この例で `<input>` に何かを入力すると何が起こるかに注目してください。イベントが _target_ から _document_ まで「バブル」すると、最初に内部ハンドラーが実行され、その後に外部ハンドラーが実行されます。
 
-Sometimes, you want handlers to run during the _capture_ phase instead. Add `capture` to the end of the event name:
+場合によっては、代わりに _capture_ フェーズ中にハンドラを実行したいことがあります。イベント名の末尾に `capture` を追加します。
 
 ```svelte
 /// file: App.svelte
@@ -13,4 +13,4 @@ Sometimes, you want handlers to run during the _capture_ phase instead. Add `cap
 </div>
 ```
 
-Now, the relative order is reversed. If both capturing and non-capturing handlers exist for a given event, the capturing handlers will run first.
+現在、相対的な順序は逆になっています。特定のイベントに対してキャプチャハンドラーと非キャプチャハンドラーの両方が存在する場合、キャプチャハンドラーが最初に実行されます。

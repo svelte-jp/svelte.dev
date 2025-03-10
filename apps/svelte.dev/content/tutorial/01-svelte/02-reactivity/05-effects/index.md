@@ -2,13 +2,13 @@
 title: Effects
 ---
 
-So far we've talked about reactivity in terms of state. But that's only half of the equation — state is only reactive if something is _reacting_ to it, otherwise it's just a sparkling variable.
+これまで、状態の観点から反応性について説明してきました。しかし、それは物事のまだ半分( _half of the equation_ )に過ぎません。状態は、何かがそれに _反応している場合_ にのみ反応性があり、そうでない場合は単なる特殊な変数( _sparkling variable_ )です。
 
-The thing that reacts is called an _effect_. You've already encountered effects — the ones that Svelte creates on your behalf to update the DOM in response to state changes — but you can also create your own with the `$effect` rune.
+反応するものは _effect_ と呼ばれます。すでにエフェクト (状態の変化に応じて DOM を更新するために Svelte が作成するエフェクト) について説明しましたが、`$effect` ルーンを使用して独自のエフェクトを作成することもできます。
 
-> [!NOTE] Most of the time, you shouldn't. `$effect` is best thought of as an escape hatch, rather than something to use frequently. If you can put your side effects in an [event handler](dom-events), for example, that's almost always preferable.
+> [!NOTE] ほとんどの場合、`$effect` を使用するべきではありません。`$effect` は頻繁に使用するものではなく、困った時の最終手段として考えるのが最適です。たとえば、副作用( _side effects_ )を [イベント ハンドラー](dom-events) に配置できるのであれば、ほとんどの場合それが望ましいです。
 
-Let's say we want to use `setInterval` to keep track of how long the component has been mounted. Create the effect:
+`setInterval` を使用して、コンポーネントがマウントされている時間を追跡するとします。エフェクトを作成します。
 
 ```svelte
 /// file: App.svelte
@@ -24,9 +24,9 @@ Let's say we want to use `setInterval` to keep track of how long the component h
 </script>
 ```
 
-Click the 'speed up' button a few times and notice that `elapsed` ticks up faster, because we're calling `setInterval` each time `interval` gets smaller.
+speed upボタンを数回クリックすると、`interval` が小さくなるたびに `setInterval` が呼び出されるため、`elapsed` がより速く増加することがわかります。
 
-If we then click the 'slow down' button... well, it doesn't work. That's because we're not clearing out the old intervals when the effect updates. We can fix that by returning a cleanup function:
+次にslow downボタンをクリックしても、うまくいきません。これは、エフェクトの更新時に古い間隔をクリアしていないためです。クリーンアップ関数を返すことでこれを修正できます。
 
 ```js
 /// file: App.svelte
@@ -41,8 +41,8 @@ $effect(() => {
 });
 ```
 
-The cleanup function is called immediately before the effect function re-runs when `interval` changes, and also when the component is destroyed.
+クリーンアップ関数は、`interval` が変更されたとき、およびコンポーネントが破棄されたときに、エフェクト関数が再実行される直前に呼び出されます。
 
-If the effect function doesn't read any state when it runs, it will only run once, when the component mounts.
+エフェクト関数が実行時に状態を読み取らない場合は、コンポーネントがマウントされるときに 1 回だけ実行されます。
 
-> [!NOTE] Effects do not run during server-side rendering.
+> [!NOTE] サーバー側のレンダリング中は`$effect`は実行されません。

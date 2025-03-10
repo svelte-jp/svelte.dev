@@ -2,11 +2,11 @@
 title: <svelte:boundary>
 ---
 
-To prevent errors from leaving your app in a broken state, you can contain them inside an _error boundary_ using the `<svelte:boundary>` element.
+エラーによってアプリが壊れた状態になるのを防ぐために、`<svelte:boundary>` 要素を使用して、エラーを _エラー境界_ 内に封じ込めることができます。
 
-In this example, `<FlakyComponent>` contains a bug — clicking the button will set `mouse` to `null`, meaning that the `{mouse.x}` and `{mouse.y}` expressions in the template will fail to render.
+この例では、`<FlakyComponent>` にバグが含まれています。ボタンをクリックすると、`mouse` が `null` に設定され、テンプレート内の `{mouse.x}` および `{mouse.y}` 式がレンダリングされなくなります。
 
-In an ideal world we'd simply fix the bug. But that's not always an option — sometimes the component belongs to someone else, and sometimes you just need to guard against the unexpected. Begin by wrapping `<FlakyComponent />` with `<svelte:boundary>`:
+理想的には、バグを修正するだけです。しかし、それが常に可能なわけではありません。コンポーネントが他の誰かの所有物である場合もあり、予期しない事態に備える必要がある場合もあります。まず、`<FlakyComponent />` を `<svelte:boundary>` でラップします。
 
 ```svelte
 <!--- file: App.svelte --->
@@ -15,7 +15,7 @@ In an ideal world we'd simply fix the bug. But that's not always an option — s
 +++</svelte:boundary>+++
 ```
 
-So far, nothing has changed, because the boundary doesn't specify a handler. Add a `failed` [snippet](snippets-and-render-tags) to provide some UI to show when an error occurs:
+境界でハンドラーが指定されていないため、これまでのところ何も変更されていません。エラーが発生したときに表示する UI を提供するために、`failed` [スニペット](snippets-and-render-tags) を追加します。
 
 ```svelte
 <!--- file: App.svelte --->
@@ -28,7 +28,7 @@ So far, nothing has changed, because the boundary doesn't specify a handler. Add
 </svelte:boundary>
 ```
 
-Now, when we click the button, the contents of the boundary are replaced with the snippet. We can attempt to reset things by making use of the second argument passed to `failed`:
+これで、ボタンをクリックすると、境界の内容がスニペットに置き換えられます。`failed` に渡された 2 番目の引数を利用してリセットを試みることができます。
 
 ```svelte
 <!--- file: App.svelte --->
@@ -42,7 +42,7 @@ Now, when we click the button, the contents of the boundary are replaced with th
 </svelte:boundary>
 ```
 
-We can also specify an `onerror` handler, which is called with the same arguments passed to the `failed` snippet:
+また、`failed` スニペットに渡されるのと同じ引数で呼び出される `onerror` ハンドラを指定することもできます。
 
 ```svelte
 <!--- file: App.svelte --->
@@ -56,4 +56,4 @@ We can also specify an `onerror` handler, which is called with the same argument
 </svelte:boundary>
 ```
 
-This is useful for sending information about the error to a reporting service, or adding UI outside the error boundary itself.
+これは、エラーに関する情報をレポート サービスに送信したり、エラー境界自体の外側に UI を追加したりする場合に役立ちます。

@@ -2,9 +2,9 @@
 title: Reactive built-ins
 ---
 
-Svelte ships with several reactive classes that you can use in place of JavaScript built-in objects — namely `Map`, `Set`, `Date`, `URL` and `URLSearchParams`.
+Svelte には、JavaScript 組み込みオブジェクトの代わりに使用できるいくつかのリアクティブ クラス (`Map`、`Set`、`Date`、`URL`、`URLSearchParams`) が付属しています。
 
-In this exercise, we _could_ declare `date` using `$state(new Date())` and reassign it inside the `setInterval`. But a nicer alternative is to use `SvelteDate` from [`svelte/reactivity`](/docs/svelte/svelte-reactivity):
+この演習では、`$state(new Date())` を使用して `date` を宣言し、`setInterval` 内で再割り当てします。ただし、より適切な代替案は、[`svelte/reactivity`](/docs/svelte/svelte-reactivity) の `SvelteDate` を使用することです。
 
 ```svelte
 /// file: App.svelte

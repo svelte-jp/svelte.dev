@@ -2,9 +2,9 @@
 title: Springs
 ---
 
-The `Spring` class is an alternative to `Tween` that often works better for values that are frequently changing.
+`Spring` クラスは `Tween` の代替であり、頻繁に変更される値に対してより適切に機能することがよくあります。
 
-In this example we have a circle that follows the mouse, and two values — the circle's coordinates, and its size. Let's convert them to springs:
+この例では、マウスに追従する円と、円の座標とサイズの 2 つの値があります。これらをスプリングに変換してみましょう。
 
 ```svelte
 /// file: App.svelte
@@ -16,7 +16,7 @@ In this example we have a circle that follows the mouse, and two values — the 
 </script>
 ```
 
-As with `Tween`, springs have a writable `target` property and a readonly `current` property. Update the event handlers...
+`Tween` と同様に、スプリングには書き込み可能な `target` プロパティと読み取り専用の `current` プロパティがあります。イベントハンドラーを更新します...
 
 ```svelte
 <svg
@@ -29,7 +29,7 @@ As with `Tween`, springs have a writable `target` property and a readonly `curre
 >
 ```
 
-...and the `<circle>` attributes:
+...そして `<circle>` 属性も更新します。
 
 ```svelte
 <circle
@@ -39,7 +39,7 @@ As with `Tween`, springs have a writable `target` property and a readonly `curre
 ></circle>
 ```
 
-Both springs have default `stiffness` and `damping` values, which control the spring's, well... springiness. We can specify our own initial values:
+どちらのスプリングにもデフォルトの `stiffness` と `damping` の値があり、スプリングの弾力性を制御します。独自の初期値を指定できます。
 
 ```js
 /// file: App.svelte
@@ -49,4 +49,4 @@ let coords = new Spring({ x: 50, y: 50 }, +++{
 }+++);
 ```
 
-Waggle your mouse around, and try dragging the sliders to get a feel for how they affect the spring's behaviour. Notice that you can adjust the values while the spring is still in motion.
+マウスを動かしてスライダーをドラッグし、スプリングの動作にどのような影響を与えるかを確認してください。スプリングが動いている間に値を調整できることに注意してください。

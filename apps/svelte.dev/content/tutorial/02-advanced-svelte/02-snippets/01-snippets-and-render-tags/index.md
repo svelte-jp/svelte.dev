@@ -2,13 +2,13 @@
 title: Snippets and render tags
 ---
 
-Snippets allow you to reuse content within a component, without extracting it out into a separate file.
+スニペットを使用すると、別のファイルに抽出することなく、コンポーネント内のコンテンツを再利用できます。
 
-In this exercise, we're creating a table of the [three wise monkeys](https://en.wikipedia.org/wiki/Three_wise_monkeys), along with their unicode escape sequences and HTML entities. So far, we have but a single monkey.
+この演習では、[三猿](https://en.wikipedia.org/wiki/Three_wise_monkeys)の表と、それぞれの Unicode エスケープ シーケンスおよび HTML エンティティを作成します。今のところ、猿は 1 匹だけです。
 
-We could duplicate the markup, of course. Or we could create an array of `{ emoji, description }` objects and pass it into an `{#each ...}` block. But a neater solution is to encapsulate the markup in a reusable block.
+もちろん、マークアップを複製することもできます。または、`{ emoji, description }` オブジェクトの配列を作成し、それを `{#each ...}` ブロックに渡すこともできます。しかし、よりすっきりした解決策は、マークアップを再利用可能なブロックにカプセル化することです。
 
-Begin by _declaring a snippet_:
+まず、_スニペットを宣言_ します。
 
 ```svelte
 /// file: App.svelte
@@ -22,7 +22,7 @@ Begin by _declaring a snippet_:
 +++{/snippet}+++
 ```
 
-The monkey is no longer visible until we _render_ it. Let's do that:
+猿はレンダリングするまで見えません。レンダリングしてみましょう。
 
 ```svelte
 /// file: App.svelte
@@ -33,7 +33,7 @@ The monkey is no longer visible until we _render_ it. Let's do that:
 </tbody>
 ```
 
-Before we can use the snippet for the rest of our monkeys, we need to pass data into the snippet. Snippets can have zero or more parameters:
+残りの猿に対してスニペットを使用する前に、スニペットにデータを渡す必要があります。スニペットには 0 個以上のパラメータを指定できます。
 
 ```svelte
 /// file: App.svelte
@@ -44,15 +44,15 @@ Before we can use the snippet for the rest of our monkeys, we need to pass data 
 </tbody>
 ```
 
-> [!NOTE] You can also use destructured parameters, if you like.
+> [!NOTE] 必要に応じて、デストラクチャパラメータを使用することもできます。
 
-Add the rest of the monkeys:
+残りの猿を追加します。
 
 - `'🙈', 'see no evil'`
 - `'🙉', 'hear no evil'`
 - `'🙊', 'speak no evil'`
 
-Finally, delete the `<script>` block we no longer need it:
+最後に、不要になった `<script>` ブロックを削除します。
 
 ```svelte
 /// file: App.svelte
@@ -62,4 +62,4 @@ Finally, delete the `<script>` block we no longer need it:
 </script>---
 ```
 
-> [!NOTE] Snippets can be declared anywhere in your component, but, like functions, are only visible to render tags in the same 'scope' or a child scope.
+> [!NOTE] スニペットはコンポーネント内のどこにでも宣言できますが、関数と同様に、同じ「スコープ」または子スコープ内のレンダリングタグに対してのみ使用できます。
