@@ -89,7 +89,7 @@ This is made possible by [adapters](/docs/kit/adapters). The default adapter, [a
 
 [StackBlitz](https://stackblitz.com/) の友人たちは、私たちにとって初となる [WebContainer](https://blog.stackblitz.com/posts/introducing-webcontainers/) を使用したインタラクティブなチュートリアルである [learn.svelte.dev](https://learn.svelte.dev) (日本語版: [learn.svelte.jp](https://learn.svelte.jp)) を実現するために熱心に取り組んでくれました。
 
-最後に、このプロジェクトは資金支援者の方々がいなければ実現できなかったことをお伝えします。そこには、[Open Collective](https://opencollective.com/svelte) の数百名の支援者の方々、二人のコア開発者 ([Rich](https://twitter.com/Rich_Harris/) と [Simon](https://twitter.com/dummdidumm_/)) を雇用し、フルタイムで Svelte に取り組ませてくれた Vercel、その他様々な方法 (例えば [Steph の](https://twitter.com/steph_dietz_) [Beginner SvelteKit](https://vercel.com/docs/beginner-sveltekit) コースなど) でプロジェクトを支援してくれた方々も含まれます。
+最後に、このプロジェクトは資金支援者の方々がいなければ実現できなかったことをお伝えします。そこには、[Open Collective](https://opencollective.com/svelte) の数百名の支援者の方々、二人のコア開発者 ([Rich](https://bsky.app/profile/rich-harris.dev) と [Simon](https://bsky.app/profile/dummdidumm.bsky.social)) を雇用し、フルタイムで Svelte に取り組ませてくれた Vercel、その他様々な方法 (例えば [Steph の](https://www.steph-dietz.com/) [Beginner SvelteKit](https://vercel.com/docs/beginner-sveltekit) コースなど) でプロジェクトを支援してくれた方々も含まれます。
 
 ## Migrating
 
@@ -99,6 +99,6 @@ SvelteKit のプレリリースバージョンで構築したアプリをお持�
 
 SvelteKit 1.0 は始まりであり、終わりではありません。今日はプロダクションで使用する準備は整っていますが、まだ始まったばかりです。ロードマップには、ビルトインの i18n サポート、incremental static regeneration、デプロイメントリージョンとランタイムのきめ細やかなコントロール、イメージ最適化(image optimisation)、その他多くの改善があります。また、来年には Svelte 4 の取り組みを始める予定です — 詳細はまた今度。
 
-But don’t let us have the final word. Svelte is a community project, and many of our best ideas aren’t really ours at all — they’re yours. Subscribe to Svelte Society on [Twitter](https://twitter.com/SvelteSociety) and [YouTube](https://youtube.com/sveltesociety) to stay up to date, and join us in our [Discord server](/chat) and on [GitHub](https://github.com/sveltejs) to contribute back.
+But don’t let us have the final word. Svelte is a community project, and many of our best ideas aren’t really ours at all — they’re yours. Subscribe to Svelte Society on [BlueSky](https://bsky.app/profile/sveltesociety.dev) and [YouTube](https://youtube.com/sveltesociety) to stay up to date, and join us in our [Discord server](/chat) and on [GitHub](https://github.com/sveltejs) to contribute back.
 
 あなたが作ったものを見るのが待ちきれません。

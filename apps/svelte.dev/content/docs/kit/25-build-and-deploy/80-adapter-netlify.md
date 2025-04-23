@@ -71,6 +71,10 @@ export default {
 
 Netlify の機能に依存することなく、SvelteKit が直接提供する機能を使ってアプリを構築することができます。こういった機能は SvelteKit のほうを選択すると、開発モードでその機能を使用でき、インテグレーションテストが可能になり、Netlify から切り替えることになった場合に他の adapter で動作させることができます。しかし、シナリオによっては Netlify のほうの機能を使用したほうが有益な場合もあります。例えば、すでに Netlify でホストされているアプリを SvelteKit に移行する場合です。
 
+### `_headers` and `_redirects`
+
+The [`_headers`](https://docs.netlify.com/routing/headers/#syntax-for-the-headers-file) and [`_redirects`](https://docs.netlify.com/routing/redirects/redirect-options/) files specific to Netlify can be used for static asset responses (like images) by putting them into the project root folder.
+
 ### リダイレクトルール(Redirect rules)
 
 コンパイル時に、リダイレクトルールは自動で `_redirects` ファイルに追記されます (もし存在しない場合は、作成されます)。つまり:

@@ -2,7 +2,7 @@
 title: SvelteKitとは (What's the deal with SvelteKit?)
 description: Svelteアプリの構築方法を再考しています。これはあなたが知っておくべきことです
 author: Rich Harris
-authorURL: https://twitter.com/rich_harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 <aside><p>もし Svelte Summit に参加<em>していない</em>場合は、こちらの <a href="https://www.youtube.com/c/SvelteSociety/videos">Svelte Society YouTube page</a> からご覧いただけます。</p></aside>
@@ -94,4 +94,4 @@ npm init svelte@next
 
 ## Where can I learn more?
 
-Twitter で [@sveltejs](https://twitter.com/sveltejs) と [@SvelteSociety](https://twitter.com/SvelteSociety) をフォローしてください。また、[svelte.dev/chat](/chat) にお越しください。また、[Svelte Radio](https://www.svelteradio.com/) を購読してください。次回のエピソードでKevinと共同ホストがこのプロジェクトについて私に質問する予定です (今から来週の収録までの間に、質問があれば[このTwitterのスレッドに返信してください](https://twitter.com/Rich_Harris/status/1323376048571121665))。
+BlueSky で [svelte.dev](https://bsky.app/profile/svelte.dev) と [sveltesociety.dev](https://bsky.app/profile/sveltesociety.dev) をフォローしてください。また、[svelte.dev/chat](/chat) にお越しください。また、[Svelte Radio](https://www.svelteradio.com/) を購読してください。次回のエピソードでKevinと共同ホストがこのプロジェクトについて私に質問する予定です (今から来週の収録までの間に、質問があれば[このTwitterのスレッドに返信してください](https://twitter.com/Rich_Harris/status/1323376048571121665))。

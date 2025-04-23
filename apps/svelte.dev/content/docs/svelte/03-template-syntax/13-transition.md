@@ -23,10 +23,6 @@ _transition_ は、state の変化の結果として DOM に要素が出入り�
 {/if}
 ```
 
-## Built-in transitions
-
-組み込みの transition は、[`svelte/transition`](svelte-transition) モジュールからインポートすることができます。
-
 ## Local vs global
 
 transition はデフォルトで local です。local transition は、それが属するブロックが作成または破棄されるときにのみ実行され、親ブロックが作成または破棄されるときには実行されません。
@@ -40,6 +36,10 @@ transition はデフォルトで local です。local transition は、それが
 	{/if}
 {/if}
 ```
+
+## Built-in transitions
+
+A selection of built-in transitions can be imported from the [`svelte/transition`](svelte-transition) module.
 
 ## Transition parameters
 

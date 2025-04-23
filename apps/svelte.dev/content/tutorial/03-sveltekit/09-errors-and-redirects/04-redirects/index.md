@@ -2,7 +2,7 @@
 title: Redirects
 ---
 
-`throw` のメカニズムを、あるページから別のページにリダイレクトするのにも使えます。
+`redirect` のメカニズムを、あるページから別のページにリダイレクトするのに使えます。
 
 `load` 関数を `src/routes/a/+page.server.js` に作成してください。
 
@@ -24,3 +24,5 @@ export function load() {
 - `303` — form actions で、送信に成功したあと続いて使用されます
 - `307` — 一時的なリダイレクトに使用されます
 - `308` — 恒久的なリダイレクトに使用されます
+
+> [!NOTE] `redirect(...)` は `error(...)` と同様に throw するため、redirect より後にあるコードは実行されません。

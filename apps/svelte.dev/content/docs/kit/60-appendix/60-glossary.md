@@ -11,11 +11,23 @@ SvelteKitのコアは、高度に設定可能(configurable)なレンダリング
 
 SvelteKit では、デフォルトでクライアントサイドレンダリングが使用されますが、[`csr = false` ページオプション](page-options#csr)で JavaScript をオフにすることができます。
 
-## ハイドレーション <!--Hydration-->
+## Edge
+
+Rendering on the edge refers to rendering an application in a content delivery network (CDN) near the user. Edge rendering allows the request and response for a page to travel a shorter distance thus improving latency.
+
+## ハイドレーション(Hydration) <!--Hydration-->
 
 Svelte コンポーネントは、何らかの状態を保存し、状態が更新されると DOM を更新します。SSR 中にデータをフェッチするとき、デフォルトでは SvelteKit はこのデータを保存し、サーバーレンダリングされた HTML と一緒にクライアントに送信します。それからコンポーネントは、同じ API エンドポイントを再度呼び出すことなく、クライアント側でそのデータを使用して初期化されます。そして Svelte はハイドレーション(Hydration)と呼ばれるプロセスで DOM が想定通りの状態にあることをチェックしてイベントリスナーをアタッチします。コンポーネントが完全にハイドレートされると、新しく作成された Svelte コンポーネントと同じように、プロパティの変更に反応(react)することができます。
 
 SvelteKit では、デフォルトでページがハイドレーションされますが、[`csr = false` ページオプション](page-options#csr)で JavaScript をオフにすることができます。
+
+## ISR
+
+Incremental static regeneration (ISR) allows you to generate static pages on your site as visitors request those pages without redeploying. This may reduces build times compared to [SSG](#SSG) sites with a large number of pages. You can do [ISR with `adapter-vercel`](adapter-vercel#Incremental-Static-Regeneration).
+
+## MPA
+
+Traditional applications that render each page view on the server — such as those written in languages other than JavaScript — are often referred to as multi-page apps (MPA).
 
 ## プリレンダリング <!--Prerendering-->
 
@@ -27,6 +39,10 @@ SvelteKit では、デフォルトでページがハイドレーションされ�
 
 SvelteKit では、[`prerender` ページオプション](page-options#prerender) と、`svelte.config.js` の [`prerender` コンフィグ](configuration#prerender) によってプリレンダリングをコントロールできます。
 
+## PWA
+
+A progressive web app (PWA) is an app that's built using web APIs and technologies, but functions like a mobile or desktop app. Sites served as [PWAs can be installed](https://web.dev/learn/pwa/installation), allowing you to add a shortcut to the application on your launcher, home screen, or start menu. Many PWAs will utilize [service workers](service-workers) to build offline capabilities.
+
 ## ルーティング <!--Routing-->
 
 デフォルトでは、(リンクをクリックしたりブラウザの 進む または 戻る ボタンを使って)新しいページにナビゲートするとき、SvelteKit はナビゲーションをインターセプトし、ブラウザが移動先のページのリクエストをサーバーにリクエストする代わりに、それを処理します。それから SvelteKit は新しいページのコンポーネントをレンダリングし、そのときに順番に必要な API エンドポイントをコールし、クライアントの表示コンテンツを更新します。このような、ナビゲーションが行われる際にそれに応じてクライアント側でページを更新するプロセスのことを、クライアントサイドルーティングと呼びます。
@@ -35,13 +51,13 @@ SvelteKit では、デフォルトでクライアントサイドルーティン�
 
 ## SPA
 
-シングルページアプリ(single-page app (SPA))とは、サーバーへの全てのリクエストで単一のHTMLをロードし、コンテンツのクライアントサイドレンダリングをリクエストされたURLに基づいて行うアプリケーションのことです。全てのナビゲーションはクライアントサイドで(クライアントサイドルーティングと呼ばれるプロセスで)処理され、ページごとのコンテンツは更新されるが共通のレイアウト要素はほとんど更新されません。SPA は SSR を提供しないため、上記のような欠点があります。しかし、SEOが重要ではない、ユーザーが一貫したコンピューティング環境からアプリケーションにアクセスすることがわかっているような、ログインの背後にある複雑なビジネスアプリケーションなどの場合は、これらの欠点による大きな影響を受けません。
+シングルページアプリ(single-page app (SPA))とは、サーバーへの全てのリクエストで単一のHTMLをロードし、コンテンツのクライアントサイドレンダリングをリクエストされたURLに基づいて行うアプリケーションのことです。全てのナビゲーションはクライアントサイドで(クライアントサイドルーティングと呼ばれるプロセスで)処理され、ページごとのコンテンツは更新されるが共通のレイアウト要素はほとんど更新されません。SPA は SSR を提供しないため、パフォーマンスと SEO 悪化します。しかし、SEOが重要ではない、ユーザーが一貫したコンピューティング環境からアプリケーションにアクセスすることがわかっているような、ログインの背後にある複雑なビジネスアプリケーションなどの場合は、これらの欠点による大きな影響を受けません。
 
 SvelteKit では、[`adapter-static` を使って SPA を構築](single-page-apps) することができます。
 
 ## SSG
 
-静的サイト生成(Static Site Generation (SSG))とは、全てのページがプリレンダリングされているサイトを指す用語です。SvelteKit は 静的サイト生成だけを行うために作られたわけではないので、その目的のために特別に作られたツールが非常に多くのページを効率的にレンダリングするのと同じようにはスケールしないかもしれません。しかし、目的に特化した SSG とは対照的に、SvelteKit はページごとに異なるレンダリングタイプをミックスしたりマッチさせたりすることができます。サイトを完全にプリレンダリングすることの利点の1つは、SSRを実行するためのサーバーを維持したり費用を払ったりする必要がないことです。一度生成すれば、そのサイトは CDN から提供することができ、"time to first byte" の優れたパフォーマンスにつながります。このデリバリーモデルはしばしば JAMstack と呼ばれます。
+静的サイト生成(Static Site Generation (SSG))とは、全てのページがプリレンダリングされているサイトを指す用語です。サイトを完全にプリレンダリングすることの利点の1つは、SSRを実行するためのサーバーを維持したり費用を払ったりする必要がないことです。一度生成すれば、そのサイトは CDN から提供することができ、"time to first byte" の優れたパフォーマンスにつながります。このデリバリーモデルはしばしば JAMstack と呼ばれます。
 
 SvelteKit では、[`adapter-static`](adapter-static) を使用したり、[`prerender` ページオプション](page-options#prerender) や `svelte.config.js` の [`prerender` コンフィグ](configuration#prerender) で全ページをプリレンダリングするようにしたりすることで SSG を行うことができます。
 

@@ -38,7 +38,7 @@ title: $props
 
 ## Fallback values
 
-分割代入を使用するとフォールバック値を宣言できます。これは親コンポーネントが特定の props を設定しない場合に使用されます:
+分割代入を使用するとフォールバック値を宣言できます。これは親コンポーネントが特定の props を設定しない場合に使用されます (フォールバック値がなく、親コンポーネントから設定されない場合、その値は `undefined` になります):
 
 ```js
 let { adjective = 'happy' } = $props();
@@ -200,3 +200,24 @@ props がリアクティブな state proxy の場合、変異(mutation)は反映
 > [!NOTE] ネイティブ DOM 要素用のインターフェースは `svelte/elements` モジュールで提供されています ([Typing wrapper components](typescript#Typing-wrapper-components) を参照してください)
 
 型を追加することをお勧めします。これにより、コンポーネントを使用する人々が、渡すべき props を簡単に発見できるようになります。
+
+
+## `$props.id()`
+
+This rune, added in version 5.20.0, generates an ID that is unique to the current component instance. When hydrating a server-rendered component, the value will be consistent between server and client.
+
+This is useful for linking elements via attributes like `for` and `aria-labelledby`.
+
+```svelte
+<script>
+	const uid = $props.id();
+</script>
+
+<form>
+	<label for="{uid}-firstname">First Name: </label>
+	<input id="{uid}-firstname" type="text" />
+
+	<label for="{uid}-lastname">Last Name: </label>
+	<input id="{uid}-lastname" type="text" />
+</form>
+```

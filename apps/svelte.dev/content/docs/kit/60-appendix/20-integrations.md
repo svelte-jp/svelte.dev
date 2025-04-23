@@ -50,4 +50,4 @@ SvelteKit プロジェクトは Vite で構築されているため、Vite plugi
 
 ## Integration FAQs
 
-SvelteKit FAQ に [SvelteKit で X をする方法](./faq#How-do-I-use-X-with-SvelteKit) があるので、もしまだ不明点があるようでしたら役に立つかもしれません。
+[SvelteKit FAQ](./faq) にて、SvelteKit で X をする方法に関する多くの質問に対する回答があるので、、もしまだ不明点があるようでしたら役に立つかもしれません。

@@ -2,7 +2,7 @@
 title: 仮想DOMは純粋なオーバーヘッド(Virtual DOM is pure overhead)
 description: "'仮想DOMは速い'という神話を完全に終わりにしよう"
 author: Rich Harris
-authorURL: https://twitter.com/Rich_Harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 ここ数年でJavaScriptフレームワークを使ったことがある人なら、'仮想DOMは速い' というフレーズを聞いたことがあるでしょう、これはしばしば、実際のDOMよりも速い、という意味で言われることがあります。これは驚くほどしぶといミームです — 例えば、どうやってSvelteは仮想DOMを使わずに高速にできるのかを尋ねられることがありました。

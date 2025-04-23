@@ -268,7 +268,7 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 <!-- for some reason puts the comment and html on same line -->
 <!-- prettier-ignore -->
 ```svelte
-<div contenteditable="true" bind:innerHTML={html} />
+<div contenteditable="true" bind:innerHTML={html}></div>
 ```
 
 ## Dimensions
@@ -308,7 +308,7 @@ DOM ノードへの参照を取得するには、`bind:this` を使用します�
 	});
 </script>
 
-<canvas bind:this={canvas} />
+<canvas bind:this={canvas}></canvas>
 ```
 
 コンポーネントも `bind:this` をサポートしており、プログラムでコンポーネントインスタンスを操作できます。

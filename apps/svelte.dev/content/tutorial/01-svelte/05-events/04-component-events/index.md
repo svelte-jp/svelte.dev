@@ -7,7 +7,7 @@ title: Component events
 ```svelte
 /// file: Stepper.svelte
 <script>
-	let { +++increment, decrement+++ } = $props();
+	let +++{ increment, decrement }+++ = $props();
 </script>
 ```
 
@@ -22,6 +22,7 @@ title: Component events
 `App.svelte` 内で、ハンドラーの内容を定義します。
 
 ```svelte
+/// file: App.svelte
 <Stepper
 	+++increment={() => value += 1}+++
 	+++decrement={() => value -= 1}+++

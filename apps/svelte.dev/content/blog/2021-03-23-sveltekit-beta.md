@@ -2,7 +2,7 @@
 title: SvelteKitがpublic betaに到達しました(SvelteKit is in public beta)
 description: 皆様からのフィードバックをお待ちしております
 author: Rich Harris
-authorURL: https://twitter.com/rich_harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 <aside><p>前回: <a href="/blog/whats-the-deal-with-sveltekit">What's the deal with SvelteKit?</a></p></aside>
@@ -40,7 +40,7 @@ Svelteにとっての [Next](https://nextjs.org/) のようなものだとお考
 
 Snowpack は開発ツールの完全に新しいカテゴリーを生み出しました。ここ数年の webpack や Rollup のように開発中のアプリを _バンドル_ するのではなく、Snowpack はブラウザのネイティブな `import` を使用して、動作中にSvelteコンポーネントなどを 1:1 で変換する _バンドルしない開発サーバー_ です。その結果、迅速な起動、シンプルなキャッシング、即時のホットモジュールリロードを実現しています。一度この方法を経験すると、もう今までの方法に戻りたくなくなります。
 
-Vite は Snowpack と同じカテゴリーに属します。Vite 1 はVue中心 (ViteとVueはどちらも [Evan You](https://twitter.com/youyuxi) が開発しています) でサーバーサイドレンダリングが難しかったためSvelteKitには適していませんでしたが、Vite 2 はフレームワークにとらわれず、SSRを中心に設計されています。また、CSSのコード分割など、以前は自分たちで実装しなければならなかった強力な機能を備えています。2つのテクノロジーを並べて評価したところ、ViteのほうがSvelteKitの要件にマッチしており、私たちが考えているフレームワークを実現できる可能性が高いと結論づけざるを得ませんでした。
+Vite は Snowpack と同じカテゴリーに属します。Vite 1 はVue中心 (ViteとVueはどちらも [Evan You](https://bsky.app/profile/evanyou.me) が開発しています) でサーバーサイドレンダリングが難しかったためSvelteKitには適していませんでしたが、Vite 2 はフレームワークにとらわれず、SSRを中心に設計されています。また、CSSのコード分割など、以前は自分たちで実装しなければならなかった強力な機能を備えています。2つのテクノロジーを並べて評価したところ、ViteのほうがSvelteKitの要件にマッチしており、私たちが考えているフレームワークを実現できる可能性が高いと結論づけざるを得ませんでした。
 
 開発の初期段階に緊密に協力してくれたこと、また、今後数年のWeb開発の道筋を示してくれたことの両方について、Snowpackチームに深い感謝の意を表します。とても素晴らしいツールなので、是非試してみてください。
 

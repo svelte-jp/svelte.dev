@@ -364,10 +364,10 @@ export async function POST({ request }) {
 `fallback` ハンドラをエクスポートすると、ハンドリングされていないリクエスト (`+server.js` にそれ専用のエクスポートがない `MOVE` などのメソッドを含む) にマッチします。
 
 ```js
-// @errors: 7031
 /// file: src/routes/api/add/+server.js
 import { json, text } from '@sveltejs/kit';
 
+/** @type {import('./$types').RequestHandler} */
 export async function POST({ request }) {
 	const { a, b } = await request.json();
 	return json(a + b);

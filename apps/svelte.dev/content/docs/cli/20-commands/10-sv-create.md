@@ -36,9 +36,19 @@ npx sv create [options] [path]
 
 対話型のアドオンプロンプト無しでコマンドを実行
 
+### `--install <package-manager>`
+
+パッケージマネージャーを指定して依存関係(dependencies) のインストールを行います:
+
+- `npm`
+- `pnpm`
+- `yarn`
+- `bun`
+- `deno`
+
 ### `--no-install`
 
-依存関係のインストールをスキップ
+依存関係のインストールを行いません。
 
 <!-- ## Programmatic interface
 
