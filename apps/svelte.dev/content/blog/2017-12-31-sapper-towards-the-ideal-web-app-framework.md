@@ -2,7 +2,7 @@
 title: "Sapper: 理想の Web アプリケーションフレームワークを目指して"
 description: 次の一歩を踏み出す
 author: Rich Harris
-authorURL: https://twitter.com/Rich_Harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 > せっかちな人のためのクイックスタート: [Sapper のドキュメント](https://sapper.svelte.dev)、[スターターテンプレート](https://github.com/sveltejs/sapper-template)

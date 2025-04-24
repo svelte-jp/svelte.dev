@@ -148,4 +148,8 @@ const sw = self as unknown as ServiceWorkerGlobalScope;
 
 ## その他のソリューション <!--Other-solutions-->
 
-SvelteKit の service worker 実装は意図的に低レベル(low-level)です。より本格的な、よりこだわりが強い(opinionated)ソリューションが必要な場合は、[Vite PWA plugin](https://vite-pwa-org.netlify.app/frameworks/sveltekit.html) のようなソリューションをご覧になることをおすすめしております、こちらは [Workbox](https://web.dev/learn/pwa/workbox) を使用しています。service worker に関する一般的な情報をもっとお探しであれば、[MDN web docs](https://developer.mozilla.org/ja/docs/Web/API/Service_Worker_API/Using_Service_Workers) をおすすめします。
+SvelteKit の service worker 実装は、簡単に動作するように設計されており、ほとんどのユーザーにとって良いソリューションでしょう。しかし、SvelteKit 以外の多くの PWA アプリケーションは [Workbox](https://web.dev/learn/pwa/workbox) というライブラリを活用しています。Workbox に慣れている方は [Vite PWA plugin](https://vite-pwa-org.netlify.app/frameworks/sveltekit.html) の方が好まれるかもしれません。
+
+## References
+
+For more general information on service workers, we recommend [the MDN web docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers).

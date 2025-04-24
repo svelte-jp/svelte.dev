@@ -155,6 +155,8 @@ JavaScript 式は中括弧 `{}` で囲むことでテキストとして含める
 {expression}
 ```
 
+`null` や `undefined` となる式は省略されます; それ以外はすべて [String](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/String#string_coercion) に変換されます。
+
 中括弧は、その [HTML エンティティ](https://developer.mozilla.org/ja/docs/Glossary/Entity) 文字列を使用することで Svelte テンプレート内に含めることができます。`{` の場合は `&lbrace;`, `&lcub;`, または `&#123;`、`}` の場合は `&rbrace;`, `&rcub;`, または `&#125;` を使用します。
 
 正規表現 (`RegExp`) の [リテラル表記](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/RegExp#リテラル記法とコンストラクター) を使用する場合、それを括弧で囲む必要があります。
@@ -186,7 +188,7 @@ JavaScript 式は中括弧 `{}` で囲むことでテキストとして含める
 `svelte-ignore` で始まるコメントは、その次にくるマークアップブロックに対する警告を無効にします。通常、これらはアクセシビリティに関する警告であることが多いですが、適切な理由がある場合にのみ無効化するようにしてください。
 
 ```svelte
-<!-- svelte-ignore a11y-autofocus -->
+<!-- svelte-ignore a11y_autofocus -->
 <input bind:value={name} autofocus />
 ```
 

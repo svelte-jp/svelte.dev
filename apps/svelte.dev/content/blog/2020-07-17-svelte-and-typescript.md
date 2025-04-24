@@ -2,7 +2,7 @@
 title: Svelte <3 TypeScript
 description: 型により強化されたWebアプリ
 author: Orta Therox
-authorURL: https://twitter.com/orta
+authorURL: https://bsky.app/profile/orta.io
 ---
 
 以前から最も多く要望をもらっていた機能がついに実現しました、Svelte は正式に TypeScript をサポートします。

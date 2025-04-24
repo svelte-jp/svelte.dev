@@ -55,6 +55,48 @@ derived state は `$derived` rune を使用して宣言します:
 
 state の一部を依存関係として扱わないようにするには、[`untrack`](svelte#untrack) を使用します。
 
+## Overriding derived values
+
+Derived expressions are recalculated when their dependencies change, but you can temporarily override their values by reassigning them (unless they are declared with `const`). This can be useful for things like _optimistic UI_, where a value is derived from the 'source of truth' (such as data from your server) but you'd like to show immediate feedback to the user:
+
+```svelte
+<script>
+	let { post, like } = $props();
+
+	let likes = $derived(post.likes);
+
+	async function onclick() {
+		// increment the `likes` count immediately...
+		likes += 1;
+
+		// and tell the server, which will eventually update `post`
+		try {
+			await like();
+		} catch {
+			// failed! roll back the change
+			likes -= 1;
+		}
+	}
+</script>
+
+<button {onclick}>🧡 {likes}</button>
+```
+
+> [!NOTE] Prior to Svelte 5.25, deriveds were read-only.
+
+## Deriveds and reactivity
+
+Unlike `$state`, which converts objects and arrays to [deeply reactive proxies]($state#Deep-state), `$derived` values are left as-is. For example, [in a case like this](/playground/untitled#H4sIAAAAAAAAE4VU22rjMBD9lUHd3aaQi9PdstS1A3t5XvpQ2Ic4D7I1iUUV2UjjNMX431eS7TRdSosxgjMzZ45mjt0yzffIYibvy0ojFJWqDKCQVBk2ZVup0LJ43TJ6rn2aBxw-FP2o67k9oCKP5dziW3hRaUJNjoYltjCyplWmM1JIIAn3FlL4ZIkTTtYez6jtj4w8WwyXv9GiIXiQxLVs9pfTMR7EuoSLIuLFbX7Z4930bZo_nBrD1bs834tlfvsBz9_SyX6PZXu9XaL4gOWn4sXjeyzftv4ZWfyxubpzxzg6LfD4MrooxELEosKCUPigQCMPKCZh0OtQE1iSxcsmdHuBvCiHZXALLXiN08EL3RRkaJ_kDVGle0HcSD5TPEeVtj67O4Nrg9aiSNtBY5oODJkrL5QsHtN2cgXp6nSJMWzpWWGasdlsGEMbzi5jPr5KFr0Ep7pdeM2-TCelCddIhDxAobi1jqF3cMaC1RKp64bAW9iFAmXGIHfd4wNXDabtOLN53w8W53VvJoZLh7xk4Rr3CoL-UNoLhWHrT1JQGcM17u96oES5K-kc2XOzkzqGCKL5De79OUTyyrg1zgwXsrEx3ESfx4Bz0M5UjVMHB24mw9SuXtXFoN13fYKOM1tyUT3FbvbWmSWCZX2Er-41u5xPoml45svRahl9Wb9aasbINJixDZwcPTbyTLZSUsAvrg_cPuCR7s782_WU8343Y72Qtlb8OYatwuOQvuN13M_hJKNfxann1v1U_B1KZ_D_mzhzhz24fw85CSz2irtN9w9HshBK7AQAAA==)...
+
+```svelte
+let items = $state([...]);
+
+let index = $state(0);
+let selected = $derived(items[index]);
+```
+
+...you can change (or `bind:` to) properties of `selected` and it will affect the underlying `items` array. If `items` was _not_ deeply reactive, mutating `selected` would have no effect.
+
 ## 更新の伝搬 <!--Update-propagation-->
 
 Svelte は _push-pull reactivity_ と呼ばれる仕組みを使用しています — state が更新されると、それに依存するすべてのもの (直接的または間接的であるかを問わず) に即座に変更が通知されますが ('push')、derived の値は実際に読み取られるまで再評価されません ('pull')。

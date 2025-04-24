@@ -7,8 +7,7 @@ SvelteKit アプリをデプロイする前に、それをデプロイ先の環�
 
 様々なプラットフォーム向けの公式の adapter があります。これらについて以降のページにドキュメントがあります。
 
-- [`@sveltejs/adapter-cloudflare`](adapter-cloudflare) for Cloudflare Pages
-- [`@sveltejs/adapter-cloudflare-workers`](adapter-cloudflare-workers) for Cloudflare Workers
+- [`@sveltejs/adapter-cloudflare`](adapter-cloudflare) for Cloudflare Workers and Cloudflare Pages
 - [`@sveltejs/adapter-netlify`](adapter-netlify) for Netlify
 - [`@sveltejs/adapter-node`](adapter-node) for Node servers
 - [`@sveltejs/adapter-static`](adapter-static) for static site generation (SSG)

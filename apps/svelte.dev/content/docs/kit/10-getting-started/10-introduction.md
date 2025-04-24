@@ -13,7 +13,7 @@ title: イントロダクション
 
 SvelteKit は、[Svelte](../svelte) を使用して堅牢でハイパフォーマンスな web アプリケーションを迅速に開発するためのフレームワークです。もしあなたが React 界隈から来たのであれば、SvelteKit は Next に似ているものです。Vue 界隈から来たのであれば、Nuxt に似ています。
 
-SvelteKit で構築することのできるアプリケーションの種類については、[FAQ](faq#What-can-I-make-with-SvelteKit) をご覧ください。
+SvelteKit で構築することのできるアプリケーションの種類については、[プロジェクトタイプに関するドキュメント](project-types) をご覧ください。
 
 ## Svelteとは <!--What-is-Svelte-->
 

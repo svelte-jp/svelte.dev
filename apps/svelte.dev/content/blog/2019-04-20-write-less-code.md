@@ -2,7 +2,7 @@
 title: コード量を減らす(Write less code)
 description: 注意が払われていない最も重要な指標について
 author: Rich Harris
-authorURL: https://twitter.com/Rich_Harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 全てのコードにはバグが存在する可能性があります(All code is buggy)。したがって、書かなければいけないコードが多ければ多いほど、アプリケーションがバグだらけになるのは理にかなっています。

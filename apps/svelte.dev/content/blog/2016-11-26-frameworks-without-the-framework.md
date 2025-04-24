@@ -2,7 +2,7 @@
 title: "フレームワークの無いフレームワーク: なぜもっと早く思いつかなかったのか"
 description: 純粋なJavaScriptでは、複雑さの壁にぶつかることなく本格的なアプリケーションを書くことはできません。しかしコンパイラならそれができます。
 author: Rich Harris
-authorURL: https://twitter.com/Rich_Harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 > 待って、この新しいフレームワークには _ランタイム_ があるの？ うーん。ありがとう、やめておくよ。
@@ -12,7 +12,7 @@ authorURL: https://twitter.com/Rich_Harris
 
 しかし、私は間違っていました。100kb の .js は 100kb の .jpg と同じではありません。アプリの起動時のパフォーマンスを低下させるのはネットワークの時間だけではありません。script の解析と評価にも時間がかかり、その間ブラウザーは完全に無反応になります。モバイルでは、このミリ秒単位の時間があっという間に積み上がります。
 
-これが問題であることに納得できないなら、Twitter で [Alex Russell](https://twitter.com/slightlylate) をフォローしてください。Alex は [最近、フレームワークコミュニティで多くの友人を作ろうとしませんが](https://twitter.com/slightlylate/status/728355959022587905)、彼は間違っていません。しかし、Angular、React、Ember などのフレームワークの代替として提案されている [Polymer](https://www.polymer-project.org/1.0/) は、フロントエンドの世界ではまだ普及していませんし、それは決してマーケティングが不足しているからではありません。
+これが問題であることに納得できないなら、Twitter で [Alex Russell](https://bsky.app/profile/infrequently.org) をフォローしてください。Alex は [最近、フレームワークコミュニティで多くの友人を作ろうとしませんが](https://twitter.com/slightlylate/status/728355959022587905)、彼は間違っていません。しかし、Angular、React、Ember などのフレームワークの代替として提案されている [Polymer](https://www.polymer-project.org/1.0/) は、フロントエンドの世界ではまだ普及していませんし、それは決してマーケティングが不足しているからではありません。
 
 おそらく、全てを再考する必要があります。
 
@@ -30,7 +30,7 @@ Svelte はまさにそれを実現するフレームワークです。HTML、CSS
 
 [Svelte による TodoMVC の実装](https://svelte-todomvc.surge.sh/) は 3.6kb (zipped) です。比較として、 _アプリコードを除いた_ React と ReactDOM はおよそ 45kb (zipped) です。ブラウザーが React を評価するのにかかる時間は、Svelteがインタラクティブな TodoMVC を起動して実行するのにかかる時間の約10倍です。
 
-そして [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark) によれば、アプリが起動して実行されると **Svelte はとてもつもなく高速です**。React よりも速いです。Vue よりも速いです。Angular、Ember、Ractive、Preact、Riot、Mithrilよりも速いです。今のところ、おそらく世界で最も高速な UI フレームワークである Inferno ([Dominic Gannaway](https://twitter.com/trueadm) は魔法使い(a wizard)なので) に匹敵します。(Svelte は要素の削除が遅いですが、[それについては取り組んでいます](https://github.com/sveltejs/svelte/issues/26))
+そして [js-framework-benchmark](https://github.com/krausest/js-framework-benchmark) によれば、アプリが起動して実行されると **Svelte はとてもつもなく高速です**。React よりも速いです。Vue よりも速いです。Angular、Ember、Ractive、Preact、Riot、Mithrilよりも速いです。今のところ、おそらく世界で最も高速な UI フレームワークである Inferno ([Dominic Gannaway](https://bsky.app/profile/trueadm.dev) は魔法使い(a wizard)なので) に匹敵します。(Svelte は要素の削除が遅いですが、[それについては取り組んでいます](https://github.com/sveltejs/svelte/issues/26))
 
 基本的には純粋な JS と同じくらい速いです。実際、それは _純粋な JS なので_ 当然です。ただ、純粋な JS を書く必要がないというだけです。
 

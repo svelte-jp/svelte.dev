@@ -21,7 +21,8 @@ npx sv add [add-ons]
 
 - `-C`, `--cwd` — Svelte(Kit)プロジェクトのルートへのパス
 - `--no-preconditions` — 前提条件の確認をスキップ <!-- TODO what does this mean? -->
-- `--no-install` — 依存関係のインストールをスキップ
+- `--install` — パッケージマネージャーを指定して依存関係(dependencies) のインストールを行う
+- `--no-install` — 依存関係のインストールを行わない
 
 ## 公式アドオン <!--Official-add-ons-->
 

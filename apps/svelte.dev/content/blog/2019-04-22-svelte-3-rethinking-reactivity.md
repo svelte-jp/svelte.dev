@@ -2,7 +2,7 @@
 title: "Svelte 3: リアクティビティ再考"
 description: ついにここまで来ました
 author: Rich Harris
-authorURL: https://twitter.com/Rich_Harris
+authorURL: https://bsky.app/profile/rich-harris.dev
 ---
 
 あとほんの数ヶ月後には、Svelte 3 の安定版リリースを発表することができ、大変嬉しく思っています。これは、Svelteコミュニティの多くの人々による数百時間の作業を表す巨大なリリースです。これには、あらゆる段階で設計の形成に貢献したベータテスターからの貴重なフィードバックが含まれます。 

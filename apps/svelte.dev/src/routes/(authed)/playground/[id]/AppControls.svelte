@@ -7,9 +7,8 @@
 	import type { Gist, User } from '$lib/db/types';
 	import { browser } from '$app/environment';
 	import ModalDropdown from '$lib/components/ModalDropdown.svelte';
-	import { untrack } from 'svelte';
 	import SecondaryNav from '$lib/components/SecondaryNav.svelte';
-	import type { File } from 'editor';
+	import type { File } from '@sveltejs/repl/workspace';
 	import type { Repl } from '@sveltejs/repl';
 
 	interface Props {
@@ -273,20 +272,15 @@
 
 		&.login {
 			width: auto;
-			background-image: url($lib/icons/user-light.svg);
-			background-position: 0.4rem 50%;
-			padding: 0 0.4rem 0 2.8rem;
+			padding: 0 0.4rem;
 
-			:root.dark & {
-				background-image: url($lib/icons/user-dark.svg);
-			}
-		}
-
-		&.download {
-			background-image: url($lib/icons/download-light.svg);
-
-			:root.dark & {
-				background-image: url($lib/icons/download-dark.svg);
+			&::before {
+				content: '';
+				width: 1.8rem;
+				height: 1.8rem;
+				margin: 0 0.5rem 0 0;
+				background: currentColor;
+				mask: url(icons/user) no-repeat 50% 50%;
 			}
 		}
 	}

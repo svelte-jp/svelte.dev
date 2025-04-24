@@ -2,7 +2,7 @@
 title: Streaming、snapshots、その他 SvelteKit 1.0 以降の新機能
 description: SvelteKit 最新バージョンのエキサイティングな改善
 author: Geoff Rich, Rich Harris
-authorURL: https://geoffrich.net, https://twitter.com/Rich_Harris
+authorURL: https://bsky.app/profile/geoffrich.net, https://bsky.app/profile/rich-harris.dev
 ---
 
 The Svelte team has been hard at work since the release of SvelteKit 1.0. Let’s talk about some of the major new features that have shipped since launch: [streaming non-essential data](/docs/kit/load#Streaming-with-promises), [snapshots](/docs/kit/snapshots), and [route-level config](/docs/kit/page-options#config).

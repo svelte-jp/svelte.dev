@@ -9,40 +9,16 @@ title: Frequently asked questions
 
 ## What can I make with SvelteKit?
 
-SvelteKit can be used to create most kinds of applications. Out of the box, SvelteKit supports many features including:
-
-- Dynamic page content with [load](load) functions and [API routes](routing#server).
-- SEO-friendly dynamic content with [server-side rendering (SSR)](glossary#SSR).
-- User-friendly progressively-enhanced interactive pages with SSR and [Form Actions](form-actions).
-- Static pages with [prerendering](page-options#prerender).
-
-SvelteKit can also be deployed to a wide spectrum of hosted architectures via [adapters](adapters). In cases where SSR is used (or server-side logic is added without prerendering), those functions will be adapted to the target backend. Some examples include:
-
-- Self-hosted dynamic web applications with a [Node.js backend](adapter-node).
-- Serverless web applications with backend loaders and APIs deployed as remote functions. See [zero-config deployments](adapter-auto) for popular deployment options.
-- [Static pre-rendered sites](adapter-static) such as a blog or multi-page site hosted on a CDN or static host. Statically-generated sites are shipped without a backend.
-- [Single-page Applications (SPAs)](single-page-apps) with client-side routing and rendering for API-driven dynamic content. SPAs are shipped without a backend and are not server-rendered. This option is commonly chosen when bundling SvelteKit with an app written in PHP, .Net, Java, C, Golang, Rust, etc.
-- A mix of the above; some routes can be static, and some routes can use backend functions to fetch dynamic information. This can be configured with [page options](page-options) that includes the option to opt out of SSR.
-
-In order to support SSR, a JS backend — such as Node.js or Deno-based server, serverless function, or edge function — is required.
-
-It is also possible to write custom adapters or leverage community adapters to deploy SvelteKit to more platforms such as specialized server environments, browser extensions, or native applications. See [integrations](./integrations) for more examples and integrations.
+See [the documentation regarding project types](project-types) for more details.
 
 ## package.json の詳細をアプリケーションに含めるにはどうすればよいですか？ <!--How-do-I-include-details-from-package.json-in-my-application-->
 
-SvelteKit では [`svelte.config.js`](./configuration) が ES module であることを想定しているため、JSON ファイルを直接要求することはできません。アプリケーションに、アプリケーションのバージョン番号やその他の情報を `package.json` から読み込みたい場合は、このように JSON を読み込むことができます:
+アプリケーションで、アプリケーションのバージョン番号やその他の情報を `package.json` から読み込みたい場合は、このように JSON を読み込むことができます:
 
-```js
+```ts
+// @errors: 2732
 /// file: svelte.config.js
-// @filename: index.js
-/// <reference types="@types/node" />
-import { URL } from 'node:url';
-// ---cut---
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-
-const path = fileURLToPath(new URL('package.json', import.meta.url));
-const pkg = JSON.parse(readFileSync(path, 'utf8'));
+import pkg from './package.json' with { type: 'json' };
 ```
 
 ## パッケージをインクルードしようとするとエラーが発生するのですが、どうすれば直せますか？ <!--How-do-I-fix-the-error-I-m-getting-trying-to-include-a-package-->
@@ -60,7 +36,7 @@ const pkg = JSON.parse(readFileSync(path, 'utf8'));
 
 それでもまだ問題が解消されない場合は、[Vite の issue tracker](https://github.com/vitejs/vite/issues) と 該当のライブラリの issue tracker を検索することを推奨します。[`optimizeDeps`](https://vitejs.dev/config/#dep-optimization-options) や [`ssr`](https://vitejs.dev/config/#ssr-options) の設定値をいじることで問題を回避できる場合もありますが、これはあくまで一時的な回避策とし、問題のあるライブラリの修正を優先したほうが良いでしょう。
 
-## SvelteKit で view transitions API を使うにはどうすればよいですか？ <!--How-do-I-use-the-view-transitions-API-with-SvelteKit-->
+## view transitions API を使うにはどうすればよいですか？ <!--How-do-I-use-the-view-transitions-API-->
 
 SvelteKit では [view transitions](https://developer.chrome.com/docs/web-platform/view-transitions/) 向けの特別なインテグレーションはありませんが、[`onNavigate`]($app-navigation#onNavigate) の中で `document.startViewTransition` を呼び出すことにより、クライアントサイドナビゲーション毎に view transition をトリガーすることができます。
 
@@ -82,15 +58,13 @@ onNavigate((navigation) => {
 
 もっと詳しく知りたければ、Svelte ブログの ["Unlocking view transitions"](/blog/view-transitions) をご参照ください。
 
-## SvelteKit で X を使うにはどうすればよいですか？ <!--How-do-I-use-X-with-SvelteKit-->
-
-[ドキュメントのインテグレーションのセクション](./integrations) をしっかり読み込んでください。それでも問題が解決しない場合のために、よくある問題の解決策を以下に示します。
-
-### データベースのセットアップはどう行えばよいですか？ <!--How-do-I-setup-a-database-->
+## データベースのセットアップはどう行えばよいですか？ <!--How-do-I-set-up-a-database-->
 
 データベースにクエリするコードを [サーバールート(server route)](./routing#server) に置いてください。.svelte ファイルの中でデータベースにクエリしないでください。コネクションをすぐにセットアップし、シングルトンとしてアプリ全体からクライアントにアクセスできるように `db.js` のようなものを作ると良いでしょう。`hooks.server.js` で1回セットアップするコードを実行し、データベースヘルパーを必要とするすべてのエンドポイントにインポートできます。
 
-### `document` や `window` に依存しているクライアントサイドオンリーなライブラリはどう使えばよいですか？ <!--How-do-I-use-a-client-side-only-library-that-depends-on-document-or-window-->
+You can use [the Svelte CLI](/docs/cli/overview) to automatically set up database integrations.
+
+## `document` や `window` にアクセスするクライアントサイドライブラリはどう使えばよいですか？ <!--How-do-I-use-a-client-side-library-accessing-document-or-window-->
 
 もし `document` や `window` 変数にアクセスする必要があったり、クライアントサイドだけで実行するコードが必要な場合は、`browser` チェックでラップしてください:
 
@@ -158,7 +132,7 @@ onMount(() => {
 {/await}
 ```
 
-### 別のバックエンド API サーバーを使用するにはどうすれば良いですか？ <!--How-do-I-use-a-different-backend-API-server-->
+## 別のバックエンド API サーバーを使用するにはどうすれば良いですか？ <!--How-do-I-use-a-different-backend-API-server-->
 
 外部の API サーバーにデータをリクエストするのに [`event.fetch`](./load#Making-fetch-requests) を使用することができますが、[CORS](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS) に対応しなければならず、一般的にはリクエストのプリフライトが必要になり、結果として高レイテンシーになるなど、複雑になることにご注意ください。別のサブドメインへのリクエストも、追加の DNS ルックアップや TLS セットアップなどのためにレイテンシーが増加する可能性があります。この方法を使いたい場合は、[`handleFetch`](./hooks#Server-hooks-handleFetch) が参考になるかもしれません。
 
@@ -176,7 +150,7 @@ export function GET({ params, url }) {
 
 (必要に応じて、`POST`/`PATCH` などのリクエストもプロキシし、`request.headers` も転送(forward)する必要があることにご注意ください)
 
-### ミドルウェア(middleware)を使うにはどうすればよいですか？ <!--How-do-I-use-middleware-->
+## ミドルウェア(middleware)を使うにはどうすればよいですか？ <!--How-do-I-use-middleware-->
 
 `adapter-node` は、プロダクションモードで使用するためのミドルウェアを自分のサーバで構築します。開発モードでは、Vite プラグインを使用して Vite にミドルウェア(middleware) を追加することができます。例えば:
 
@@ -209,6 +183,8 @@ export default config;
 ```
 
 順序を制御する方法など、詳しくは [Vite の `configureServer` のドキュメント](https://vitejs.dev/guide/api-plugin.html#configureserver) をご覧ください。
+
+## Yarn を使うには？ <!--How-do-I-use-Yarn-->
 
 ### Yarn 2 で動作しますか？ <!--Does-it-work-with-Yarn-2-->
 

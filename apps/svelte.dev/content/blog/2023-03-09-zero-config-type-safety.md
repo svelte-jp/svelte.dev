@@ -2,7 +2,7 @@
 title: Zero-effort type safety
 description: ボイラープレートなしで、より便利に、より正しく
 author: Simon Holthausen
-authorURL: https://twitter.com/dummdidumm_
+authorURL: https://bsky.app/profile/dummdidumm.bsky.social
 ---
 
 SvelteKit アプリに型アノテーションをたくさん書くと、ネットワークをまたいでも完全な型安全性が手に入ります — あなたのページの `data` には、その data を生成する `load` 関数の戻り値から推論された型があり、明示的に何かを宣言する必要はありません。これなしで今までどうやって生活してきたのだろう、と考えさせられるようなことの1つです。

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import RunesInfo from './RunesInfo.svelte';
-	import type { Workspace, File } from 'editor';
+	import type { Workspace, File } from '../Workspace.svelte';
 	import { tick } from 'svelte';
 	import { Checkbox, Toolbox } from '@sveltejs/site-kit/components';
 
@@ -159,8 +159,8 @@
 		class="raised add-new"
 		onclick={add_new}
 		aria-label="add new component"
-		title="add new component"
-	></button>
+		title="add new component"><span class="icon"></span></button
+	>
 
 	<div class="runes">
 		<RunesInfo {runes} />
@@ -168,6 +168,11 @@
 			<label class="option">
 				<span>Toggle Vim mode</span>
 				<Checkbox bind:checked={workspace.vim}></Checkbox>
+			</label>
+
+			<label class="option">
+				<span>Toggle Tailwind</span>
+				<Checkbox bind:checked={workspace.tailwind}></Checkbox>
 			</label>
 
 			<button disabled={!can_migrate} onclick={migrate}>Migrate to Svelte 5, if possible</button>
@@ -236,7 +241,7 @@
 			position: absolute;
 			left: 0em;
 			top: 0;
-			background: url(./file.svg) 50% 50% no-repeat;
+			background: url(icons/file) 50% 50% no-repeat;
 			background-size: 1em;
 		}
 
@@ -298,8 +303,12 @@
 	.add-new {
 		height: 3.2rem;
 		aspect-ratio: 1;
-		background: url(./file-new.svg) 50% 50% no-repeat;
-		background-size: 1em;
+
+		.icon {
+			background: currentColor;
+			mask: url(icons/file-new) 50% 50% no-repeat;
+			mask-size: 1.2em;
+		}
 	}
 
 	.runes {
