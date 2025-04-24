@@ -252,6 +252,13 @@
 			"avatar_url": "https://avatars.githubusercontent.com/u/151517253?v=4",
 			"profile": "https://github.com/akku1139",
 			"contributions": ["doc"]
+		},
+		{
+			"login": "jill64",
+			"name": "jill64",
+			"avatar_url": "https://avatars.githubusercontent.com/u/143883742?v=4",
+			"profile": "https://github.com/jill64",
+			"contributions": ["doc"]
 		}
 	],
 	"contributorsPerLine": 7
