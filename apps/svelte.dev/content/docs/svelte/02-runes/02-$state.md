@@ -224,7 +224,7 @@ let b = +++$state(2)+++;
 
 ...その現在の値にアクセスします。
 
-'関数(function)' は意味が広範囲にわたることにご注意ください — proxy のプロパティや [`get`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/get)/[`set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set) プロパティも包含しています...
+'関数(function)' は意味が広範囲にわたることにご注意ください — proxy のプロパティや [`get`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/get)/[`set`](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/set) プロパティも包含しています...
 
 ```js
 /// file: index.js
@@ -252,9 +252,9 @@ console.log(total.value); // 7
 
 ...もしこのようなコードを書いている場合は、代わりに [class](#Classes) を使用することをご検討ください。
 
-## Passing state across modules
+## モジュール間で state を渡す <!--Passing-state-across-modules-->
 
-You can declare state in `.svelte.js` and `.svelte.ts` files, but you can only _export_ that state if it's not directly reassigned. In other words you can't do this:
+`.svelte.js` や `.svelte.ts` ファイルでは state を宣言できますが、その state は直接再代入されていない場合に限り、エクスポートすることができます。言い換えると、以下のようなことはできないということです:
 
 ```js
 /// file: state.svelte.js
@@ -265,7 +265,7 @@ export function increment() {
 }
 ```
 
-That's because every reference to `count` is transformed by the Svelte compiler — the code above is roughly equivalent to this:
+その理由は、`count` に対するすべての参照は Svelte コンパイラによって変換されるからです — 上記のコードは大雑把に言えば以下と同じです:
 
 ```js
 /// file: state.svelte.js (compiler output)
@@ -288,9 +288,9 @@ export function increment() {
 }
 ```
 
-> [!NOTE] You can see the code Svelte generates by clicking the 'JS Output' tab in the [playground](/playground).
+> [!NOTE] Svelte が生成するコードは [playground](/playground) で 'JS Output' タブをクリックすると見ることができます。
 
-Since the compiler only operates on one file at a time, if another file imports `count` Svelte doesn't know that it needs to wrap each reference in `$.get` and `$.set`:
+Svelte のコンパイラは一度に1つのファイルのみ処理するため、もし別のファイルが `count` をインポートしている場合、Svelte はそれぞれの参照を `$.get` や `$.set` でラップする必要があるかどうかがわかりません:
 
 ```js
 // @filename: state.svelte.js
@@ -303,7 +303,7 @@ import { count } from './state.svelte.js';
 console.log(typeof count); // 'object', not 'number'
 ```
 
-This leaves you with two options for sharing state between modules — either don't reassign it...
+そのため、モジュール間で state を共有するには、2つの方法があります。1つ目は再代入をしないことです...
 
 ```js
 // This is allowed — since we're updating
@@ -318,7 +318,7 @@ export function increment() {
 }
 ```
 
-...or don't directly export it:
+...2つ目は、直接エクスポートしないことです:
 
 ```js
 let count = $state(0);
