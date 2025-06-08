@@ -5,7 +5,7 @@ title: bind:
 
 データは通常、親から子へと流れますが、`bind:` ディレクティブを使用すると、データを子から親へ流すことができます。
 
-一般的な構文は `bind:property={expression}` であり、`expression` は _lvalue_ (つまり、変数やオブジェクトのプロパティ) です。式がプロパティと同じ名前の識別子である場合、式を省略することができます — 言い換えると、以下は等価です:
+一般的な構文は `bind:property={expression}` であり、`expression` は [_lvalue_](https://press.rebus.community/programmingfundamentals/chapter/lvalue-and-rvalue/) (つまり、変数やオブジェクトのプロパティ) です。式がプロパティと同じ名前の識別子である場合、式を省略することができます — 言い換えると、以下は等価です:
 
 <!-- prettier-ignore -->
 ```svelte
@@ -118,28 +118,52 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 </form>
 ```
 
-## `<input bind:group>`
+## `<input bind:indeterminate>`
 
-相互に動作する input は、`bind:group` を使用できます。
+チェックボックスは、それがチェックされているかされていないかに関係なく、[indeterminate](https://developer.mozilla.org/ja/docs/Web/API/HTMLInputElement/indeterminate) 状態にすることができます:
 
 ```svelte
 <script>
+	let checked = $state(false);
+	let indeterminate = $state(true);
+</script>
+
+<form>
+	<input type="checkbox" bind:checked bind:indeterminate>
+
+	{#if indeterminate}
+		waiting...
+	{:else if checked}
+		checked
+	{:else}
+		unchecked
+	{/if}
+</form>
+```
+
+## `<input bind:group>`
+
+相互に動作する input は、`bind:group` を使用できます。 ([demo](/playground/untitled#H4sIAAAAAAAAE62T32_TMBDH_5XDQkpbrct7SCMGEvCEECDxsO7BSW6L2c227EvbKOv_jp0f6jYhQKJv5_P3PvdL1wstH1Bk4hMSGdgbRzUssFaM9VJciFtF6EV23QvubNRFR_BPUVfWXvodEkdfKT3-zl8Zzag5YETuK6csF1u9ZUIGNo4VkYQNvPYsGRfJF5JKJ8s3QRJE6WoFb2Nq6K-ck13u2Sl9Vxxhlc6QUBIFnz9Brm9ifJ6esun81XoNd860FmtwslYGlLYte5AO4aHlVhJ1gIeKWq92COt1iMtJlkhFPkgh1rHZiiF6K6BUus4G5KafGznCTlIbVUMfQZUWMJh5OrL-C_qjMYSwb1DyiH7iOEuCb1ZpWTUjfHqcwC_GWDVY3ZfmME_SGttSmD9IHaYatvWHIc6xLyqad3mq6KuqcCwnWn9p8p-p71BqP2IH81zc9w2in-od7XORP7ayCpd5YCeXI_-p59mObPF9WmwGpx3nqS2Gzw8TO3zOaS5_GqUXyQUkS3h8hOSz0ZhMESHGc0c4Hm3MAn00t1wrb0l2GZRkqvt4sXwczm6Qh8vnUJzI2LV4vAkvqWgfehTZrSSPx19WiVfFfAQAAA==)):
+
+```svelte
+<!--- file: BurritoChooser.svelte --->
+<script>
 	let tortilla = $state('Plain');
 
-	/** @type {Array<string>} */
+	/** @type {string[]} */
 	let fillings = $state([]);
 </script>
 
 <!-- grouped radio inputs are mutually exclusive -->
-<input type="radio" bind:group={tortilla} value="Plain" />
-<input type="radio" bind:group={tortilla} value="Whole wheat" />
-<input type="radio" bind:group={tortilla} value="Spinach" />
+<label><input type="radio" bind:group={tortilla} value="Plain" /> Plain</label>
+<label><input type="radio" bind:group={tortilla} value="Whole wheat" /> Whole wheat</label>
+<label><input type="radio" bind:group={tortilla} value="Spinach" /> Spinach</label>
 
 <!-- grouped checkbox inputs populate an array -->
-<input type="checkbox" bind:group={fillings} value="Rice" />
-<input type="checkbox" bind:group={fillings} value="Beans" />
-<input type="checkbox" bind:group={fillings} value="Cheese" />
-<input type="checkbox" bind:group={fillings} value="Guac (extra)" />
+<label><input type="checkbox" bind:group={fillings} value="Rice" /> Rice</label>
+<label><input type="checkbox" bind:group={fillings} value="Beans" /> Beans</label>
+<label><input type="checkbox" bind:group={fillings} value="Cheese" /> Cheese</label>
+<label><input type="checkbox" bind:group={fillings} value="Guac (extra)" /> Guac (extra)</label>
 ```
 
 > [!NOTE] `bind:group` は、input が同じ Svelte コンポーネント内にある場合にのみ機能します。
@@ -228,6 +252,7 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 - [`seeking`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/seeking_event)
 - [`ended`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/ended)
 - [`readyState`](https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement/readyState)
+- [`played`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/played)
 
 ```svelte
 <audio src={clip} bind:duration bind:currentTime bind:paused></audio>
@@ -255,6 +280,10 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 </details>
 ```
 
+## `window` and `document`
+
+To bind to properties of `window` and `document`, see [`<svelte:window>`](svelte-window) and [`<svelte:document>`](svelte-document).
+
 ## Contenteditable bindings
 
 `contenteditable` 属性を持つ要素は、以下のバインディングをサポートします:
@@ -279,6 +308,10 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 - [`clientHeight`](https://developer.mozilla.org/ja/docs/Web/API/Element/clientHeight)
 - [`offsetWidth`](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/offsetWidth)
 - [`offsetHeight`](https://developer.mozilla.org/ja/docs/Web/API/HTMLElement/offsetHeight)
+- [`contentRect`](https://developer.mozilla.org/ja/docs/Web/API/ResizeObserverEntry/contentRect)
+- [`contentBoxSize`](https://developer.mozilla.org/ja/docs/Web/API/ResizeObserverEntry/contentBoxSize)
+- [`borderBoxSize`](https://developer.mozilla.org/ja/docs/Web/API/ResizeObserverEntry/borderBoxSize)
+- [`devicePixelContentBoxSize`](https://developer.mozilla.org/ja/docs/Web/API/ResizeObserverEntry/devicePixelContentBoxSize)
 
 ```svelte
 <div bind:offsetWidth={width} bind:offsetHeight={height}>
@@ -286,7 +319,7 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 </div>
 ```
 
-> [!NOTE] `display: inline` 要素には width や height がありません (`<img>` や `<canvas>` のような「固有の」 dimension を持つ要素を除く)。そのため、`ResizeObserver` で観測することはできません。これらの要素の `display` スタイルを `inline-block` などに変更する必要があります。
+> [!NOTE] `display: inline` 要素には width や height がありません (`<img>` や `<canvas>` のような「固有の」 dimension を持つ要素を除く)。そのため、`ResizeObserver` で観測することはできません。これらの要素の `display` スタイルを `inline-block` などに変更する必要があります。CSS transformation は `ResizeObserver` コールバックをトリガーしないことにご注意ください。
 
 ## bind:this
 

@@ -83,12 +83,14 @@ Boolean の属性は、その値が [truthy](https://developer.mozilla.org/ja/do
 <Widget foo={bar} answer={42} text="hello" />
 ```
 
-_スプレッド属性_ を使用すると、複数の属性やプロパティを一度に要素やコンポーネントに渡すことができます。
+## Spread attributes
 
-要素やコンポーネントには、通常のものと混在させて、複数のスプレッド属性を使用できます。
+_スプレッド属性(Spread attributes)_ を使用すると、複数の属性やプロパティを一度に要素やコンポーネントに渡すことができます。
+
+要素やコンポーネントは複数のスプレッド属性を置くことができますし、通常の属性と一緒に使用することもできます。順序が重要です。`things.a` が存在する場合、`a="b"` より優先されますが、`c="d"` は `things.c` より優先されます。
 
 ```svelte
-<Widget {...things} />
+<Widget a="b" {...things} c="d" />
 ```
 
 ## Events
