@@ -219,9 +219,12 @@ async function get_bundle(
 			}
 
 			// importing a file from the same package via pkg.imports
-			if (importee[0] === '#' && current) {
-				const subpath = resolve_subpath(current, importee);
-				return normalize_path(current, subpath.slice(2));
+			if (importee[0] === '#') {
+				if (current) {
+					const subpath = resolve_subpath(current, importee);
+					return normalize_path(current, subpath.slice(2));
+				}
+				return await resolve_local(importee);
 			}
 
 			// importing an external package -> `npm://$/<name>@<version>/<path>`
@@ -304,7 +307,8 @@ async function get_bundle(
 				const compilerOptions: any = {
 					filename: name + '.svelte',
 					generate: is_gt_5 ? 'client' : 'dom',
-					dev: true
+					dev: true,
+					fragments: options.fragments
 				};
 
 				if (is_gt_5) {
@@ -313,6 +317,12 @@ async function get_bundle(
 
 				if (can_use_experimental_async) {
 					compilerOptions.experimental = { async: true };
+				}
+
+				if (compilerOptions.fragments == null) {
+					// if fragments is not set it probably means we are using
+					// a version that doesn't support it, so we need to remove it
+					delete compilerOptions.fragments;
 				}
 
 				result = svelte.compile(code, compilerOptions);

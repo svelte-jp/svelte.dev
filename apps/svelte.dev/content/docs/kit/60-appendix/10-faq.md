@@ -194,9 +194,7 @@ export default config;
 
 現時点の、最新の Yarn (version 3) の ESM サポート は [experimental](https://github.com/yarnpkg/berry/pull/2161) であるようです。
 
-結果は異なるかもしれませんが、下記が有効なようです。
-
-最初に新しいアプリケーションを作成します:
+結果は異なるかもしれませんが、下記が有効なようです。最初に新しいアプリケーションを作成します:
 
 ```sh
 yarn create svelte myapp
@@ -209,8 +207,6 @@ And enable Yarn Berry:
 yarn set version berry
 yarn install
 ```
-
-#### Yarn 3 global cache
 
 Yarn Berry の興味深い機能の1つに、ディスク上のプロジェクトごとに複数のコピーを持つのではなく、パッケージ用に単一のグローバルキャッシュを持つことができる、というのがあります。しかし、`enableGlobalCache` の設定を true にするとビルドが失敗するため、`.yarnrc.yml` ファイルに以下を追加することを推奨します:
 

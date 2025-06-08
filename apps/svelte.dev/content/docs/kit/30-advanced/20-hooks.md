@@ -127,13 +127,10 @@ export async function handleFetch({ request, fetch }) {
 }
 ```
 
-**Credentials**
+`event.fetch` で作られた Request はブラウザのクレデンシャルモデルに従います — 同一オリジン(same-origin)に対する Request の場合、`credentials` オプションに `"omit"` が設定されていない限り、`cookie` と `authorization` ヘッダーは転送されます。クロスオリジン(cross-origin)に対する Request の場合、その Request の URL がアプリのサブドメインである場合、`cookie` はその Request に含まれます。例えば、もしアプリの URL が `my-domain.com` で、API の URL が `api.my-domain.com` である場合、cookie はその Request に含まれるということです。
 
-同一オリジン(same-origin)リクエストの場合、SvelteKit の `fetch` 実装は、`credentials` オプションを `"omit"` にしない限り、 `cookie` と `authorization` ヘッダーを転送します。
 
-クロスオリジン(cross-origin)リクエストの場合、リクエスト URL がアプリのサブドメインに属するときは `cookie` はリクエストに含まれます。例えば、あなたのアプリが `my-domain.com` にあり、あなたの API が `api.my-domain.com` にある場合、cookie はリクエストに含まれることになります。
-
-もしあなたのアプリと API が兄弟関係にあるサブドメイン (例えば `www.my-domain.com` と `api.my-domain.com`) の場合は、`my-domain.com` のような共通の親ドメインに属する cookie は含まれません、なぜなら SvelteKit にはその cookie がどのドメインに属するか判断する方法がないからです。こういったケースでは、`handleFetch` を使って手動で cookie を含める必要があります:
+1つ注意点があります: もしあなたのアプリと API が兄弟関係にあるサブドメイン (例えば `www.my-domain.com` と `api.my-domain.com`) の場合は、`my-domain.com` のような共通の親ドメインに属する cookie は含まれません、なぜなら SvelteKit にはその cookie がどのドメインに属するか判断する方法がないからです。こういったケースでは、`handleFetch` を使って手動で cookie を含める必要があります:
 
 ```js
 /// file: src/hooks.server.js
@@ -154,7 +151,7 @@ export async function handleFetch({ event, request, fetch }) {
 
 ### handleError
 
-[予期せぬエラー](errors#Unexpected-errors)がロード中またはレンダリング中にスローされると、この関数が `error`、`event`、`status` コード、`message` を引数にとって呼び出されます。これによって以下の2つのことが可能になります:
+[予期せぬエラー](errors#Unexpected-errors)が、ロード中やレンダリング中、またはエンドポイントからスローされると、この関数が `error`、`event`、`status` コード、`message` を引数にとって呼び出されます。これによって以下の2つのことが可能になります:
 
 - エラーをログに残すことができます
 - エラーからメッセージやスタックトレースなどの機密情報を省略し、ユーザーに見せても安全なカスタムの表現を生成することができます。戻り値のデフォルトは `{ message }` で、`$page.error` の値となります。

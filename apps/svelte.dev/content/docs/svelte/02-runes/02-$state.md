@@ -21,9 +21,7 @@ title: $state
 
 もし `$state` を配列やシンプルなオブジェクトで使用した場合、リアクティブが深い (原文: deeply reactive) _state proxy_ になります。[proxy](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy) によって Svelte はプロパティが読み書き (`array.push(...)` のようなメソッド経由で行われたものを含む) されたときにコードを実行でき、きめ細やかな更新 (原文: granular updates) をトリガーすることができます。
 
-> [!NOTE] `Set` や `Map` のような Class は proxy されませんが、Svelte はそのような様々なビルトインのリアクティブな実装を提供しており、[`svelte/reactivity`](./svelte-reactivity) からインポートすることができます。
-
-state は、Svelte が配列やシンプルなオブジェクト以外のものを見つけるまで再帰的に proxy 化 されます。このような場合...
+state は、Svelte が配列やシンプルなオブジェクト(classなど)以外のものを見つけるまで再帰的に proxy 化 されます。このような場合...
 
 ```js
 let todos = $state([
@@ -68,16 +66,15 @@ todos[0].done = !todos[0].done;
 
 ### Classes
 
-class のフィールド (public か private かを問わず) にも `$state` を使用することができます :
+class インスタンスは proxy されません。その代わりに、class のフィールド (public か private かを問わず) にも `$state` を使用するか、または `constructor` の内側で最初に代入するときに `$state` を使用することができます:
 
 ```js
 // @errors: 7006 2554
 class Todo {
 	done = $state(false);
-	text = $state();
 
 	constructor(text) {
-		this.text = text;
+		this.text = $state(text);
 	}
 
 	reset() {
@@ -111,10 +108,9 @@ JavaScript でメソッドを呼び出すとき、[`this`](https://developer.moz
 // @errors: 7006 2554
 class Todo {
 	done = $state(false);
-	text = $state();
 
 	constructor(text) {
-		this.text = text;
+		this.text = $state(text);
 	}
 
 	+++reset = () => {+++
@@ -123,6 +119,8 @@ class Todo {
 	}
 }
 ```
+
+> Svelte provides reactive implementations of built-in classes like `Set` and `Map` that can be imported from [`svelte/reactivity`](svelte-reactivity).
 
 ## `$state.raw`
 
@@ -147,6 +145,8 @@ person = {
 ```
 
 変更する予定がない大きい配列やオブジェクトでこれを使用すると、パフォーマンスを改善することができます。リアクティブにするためのコストを避けられるからです。raw state には、リアクティブな state を含められることにご注意ください (例えば、リアクティブなオブジェクトの配列 (原文: a raw array of reactive objects))。
+
+As with `$state`, you can declare class fields using `$state.raw`.
 
 ## `$state.snapshot`
 
