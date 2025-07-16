@@ -259,6 +259,13 @@
 			"avatar_url": "https://avatars.githubusercontent.com/u/143883742?v=4",
 			"profile": "https://github.com/jill64",
 			"contributions": ["doc"]
+		},
+		{
+			"login": "kspace-trk",
+			"name": "Keigo Nakao",
+			"avatar_url": "https://avatars.githubusercontent.com/u/54620036?v=4",
+			"profile": "https://team-steg.com/",
+			"contributions": ["doc"]
 		}
 	],
 	"contributorsPerLine": 7
