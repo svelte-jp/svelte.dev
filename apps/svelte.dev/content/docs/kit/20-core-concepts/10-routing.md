@@ -13,11 +13,11 @@ SvelteKit の中心は、 _ファイルシステムベースのルーター_ で
 
 ルート(route)のディレクトリはそれぞれ1つ以上の _ルートファイル(route files)_ を格納します。ルートファイル(route files)には `+` という接頭辞が付いているので、それで見分けることができます。
 
-We'll introduce these files in a moment in more detail, but here are a few simple rules to help you remember how SvelteKit's routing works:
+これらのファイルについては後ほど詳しく紹介しますが、まずは SvelteKit のルーティングの仕組みを覚えるのに役立つ、いくつかの簡単なルールをご紹介します。:
 
-* All files can run on the server
-* All files run on the client except `+server` files
-* `+layout` and `+error` files apply to subdirectories as well as the directory they live in
+* 全てのファイルはサーバーで実行できます
+* `+server` ファイル以外のすべてのファイルは、クライアントで実行されます
+* `+layout` と `+error` ファイルは、配置されているディレクトリおよびそのサブディレクトリに適用されます
 
 ## +page
 
@@ -38,9 +38,9 @@ We'll introduce these files in a moment in more detail, but here are a few simpl
 <a href="/">Home</a>
 ```
 
-> [!NOTE] SvelteKit uses `<a>` elements to navigate between routes, rather than a framework-specific `<Link>` component.
+> [!NOTE] SvelteKit は、フレームワーク固有の `<Link>` コンポーネントではなく、`<a>` 要素を使用してルート間のナビゲーションを行います。
 
-Pages can receive data from `load` functions via the `data` prop.
+ページは、 `load` 関数から `data` prop を介してデータを受け取ることができます。
 
 ```svelte
 <!--- file: src/routes/blog/[slug]/+page.svelte --->
@@ -54,7 +54,7 @@ Pages can receive data from `load` functions via the `data` prop.
 ```
 
 > [!LEGACY]
-> `PageProps` was added in 2.16.0. In earlier versions, you had to type the `data` property manually with `PageData` instead, see [$types](#\$types).
+> `PageProps` は 2.16.0 で追加されました。以前のバージョンでは、代わりに `PageData` を使用して `data` プロパティを手動で型付けする必要がありました。詳細は [$types](#\$types) をご参照ください。
 >
 > Svelte 4 では、代わりに `export let data` を使用します
 
@@ -231,7 +231,7 @@ SvelteKit は、ツリーを上がって (walk up the tree) 最も近いエラ�
 ```
 
 > [!LEGACY]
-> `LayoutProps` was added in 2.16.0. In earlier versions, you had to [type the properties manually instead](#\$types).
+> `LayoutProps` は 2.16.0 で追加されました。以前のバージョンでは、[代わりにプロパティを手動で型付けする](#\$types)必要がありました。
 
 `data` がどのように入力されるかは、すぐ下の次のセクションにある `+layout.js` の例を見ればわかります。
 
@@ -311,7 +311,7 @@ export function GET({ url }) {
 
 > [!NOTE] `OPTIONS` ハンドラを作成する場合、Vite が `Access-Control-Allow-Origin` ヘッダーと `Access-Control-Allow-Methods` ヘッダーを注入することにご注意ください。本番環境では、あなたが明示的に追加しない限り注入されないはずです。
 
-> [!NOTE] `+layout` files have no effect on `+server.js` files. If you want to run some logic before each request, add it to the server [`handle`](hooks#Server-hooks-handle) hook.
+> [!NOTE] `+layout` ファイルは `+server.js` ファイルに影響を与えません。各リクエストの前になんらかのロジックを実行したい場合は、サーバーの [`handle`](hooks#Server-hooks-handle) フックに追加してください。
 
 ### Receiving data
 
@@ -405,7 +405,7 @@ export async function fallback({ request }) {
 ```
 
 > [!NOTE]
-> The `PageProps` and `LayoutProps` types, added in 2.16.0, are a shortcut for typing the `data` prop as `PageData` or `LayoutData`, as well as other props, such as `form` for pages, or `children` for layouts. In earlier versions, you had to type these properties manually. For example, for a page:
+> 2.16.0 で追加された `PageProps` と `LayoutProps` 型は、`data` prop を `PageData` または `LayoutData` として型付けするためのショートカットです。また、ページの `form` やレイアウトの `children` などの他の props についても型付けできます。以前のバージョンでは、これらのプロパティを手動で型付けする必要がありました。例えば、ページの場合：
 >
 > ```js
 > /// file: +page.svelte
@@ -413,7 +413,7 @@ export async function fallback({ request }) {
 > let { data, form } = $props();
 > ```
 >
-> Or, for a layout:
+> または、レイアウトの場合：
 >
 > ```js
 > /// file: +layout.svelte
