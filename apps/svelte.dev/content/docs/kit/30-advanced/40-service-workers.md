@@ -127,7 +127,7 @@ navigator.serviceWorker.register('/service-worker.js', {
 
 service worker に適切な型を設定するには、マニュアルで設定が必要です。`service-worker.js` の中で、ファイルの先頭に以下を追加してください:
 
-```original-js
+```js
 /// <reference types="@sveltejs/kit" />
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />
@@ -135,7 +135,7 @@ service worker に適切な型を設定するには、マニュアルで設定�
 
 const sw = /** @type {ServiceWorkerGlobalScope} */ (/** @type {unknown} */ (self));
 ```
-```generated-ts
+```ts
 /// <reference types="@sveltejs/kit" />
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />

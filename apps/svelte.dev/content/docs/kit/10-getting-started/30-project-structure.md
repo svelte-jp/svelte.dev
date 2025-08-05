@@ -5,7 +5,7 @@ title: プロジェクト構成
 
 一般的な SvelteKit プロジェクトはこのような構成です:
 
-```bash
+```tree
 my-project/
 ├ src/
 │ ├ lib/

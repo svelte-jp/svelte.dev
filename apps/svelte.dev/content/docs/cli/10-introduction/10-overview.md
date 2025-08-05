@@ -9,7 +9,7 @@ title: Overview
 
 `sv`を実行する最も簡単な方法は、[`npx`](https://docs.npmjs.com/cli/v8/commands/npx)（または他のパッケージマネージャを使用している場合は同等のコマンド - 例えば、[pnpm](https://pnpm.io/)を使用している場合は`pnpx`）を使うことです：
 
-```bash
+```sh
 npx sv <command> <args>
 ```
 

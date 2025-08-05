@@ -222,6 +222,21 @@ $effect(() => {
 
 これは、[`createSubscriber`](/docs/svelte/svelte-reactivity#createSubscriber) のような抽象化を実装するために使用されます。これにより、リアクティブな値を更新するリスナーが作成されますが、それらの値が追跡されている場合に _のみ_ 実行されます (例えば、イベントハンドラー内で読み取られる場合は除きます)。
 
+## `$effect.pending`
+
+When using [`await`](await-expressions) in components, the `$effect.pending()` rune tells you how many promises are pending in the current [boundary](svelte-boundary), not including child boundaries ([demo](/playground/untitled#H4sIAAAAAAAAE3WRMU_DMBCF_8rJdHDUqilILGkaiY2RgY0yOPYZWbiOFV8IleX_jpMUEAIWS_7u-d27c2ROnJBV7B6t7WDsequAozKEqmAbpo3FwKqnyOjsJ90EMr-8uvN-G97Q0sRaEfAvLjtH6CjbsDrI3nhqju5IFgkEHGAVSBDy62L_SdtvejPTzEU4Owl6cJJM50AoxcUG2gLiVM31URgChyM89N3JBORcF3BoICA9mhN2A3G9gdvdrij2UJYgejLaSCMsKLTivNj0SEOf7WEN7ZwnHV1dfqd2dTsQ5QCdk9bI10PkcxexXqcmH3W51Jt_le2kbH8os9Y3UaTcNLYpDx-Xab6GTHXpZ128MhpWqDVK2np0yrgXXqQpaLa4APDLBkIF8bd2sYql0Sn_DeE7sYr6AdNzvgljR-MUq7SwAdMHeUtgHR4CAAA=)):
+
+```svelte
+<button onclick={() => a++}>a++</button>
+<button onclick={() => b++}>b++</button>
+
+<p>{a} + {b} = {await add(a, b)}</p>
+
+{#if $effect.pending()}
+	<p>pending promises: {$effect.pending()}</p>
+{/if}
+```
+
 ## `$effect.root`
 
 `$effect.root` rune は高度な機能で、自動クリーンアップされない非トラッキングスコープ (non-tracked scope) を作成します。これは、手動で制御したいネストされた effect に便利です。また、この rune は、コンポーネント初期化フェーズの外部で effect を作成することも可能にします。

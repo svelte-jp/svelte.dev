@@ -123,7 +123,7 @@ Functions contained in the [`/functions` directory](https://developers.cloudflar
 
 ## Runtime APIs
 
-[`env`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters) オブジェクトにはあなたのプロジェクトの [bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) が含まれており、KV/DO namespaces などで構成されています。これは `platform` プロパティを介して [`context`](https://developers.cloudflare.com/workers/runtime-apis/context/)、[`caches`](https://developers.cloudflare.com/workers/runtime-apis/cache/)、[`cf`](https://developers.cloudflare.com/workers/runtime-apis/request/#incomingrequestcfproperties) と一緒に SvelteKit に渡されます。つまり、hooks とエンドポイントでこれらにアクセスできるということです:
+[`env`](https://developers.cloudflare.com/workers/runtime-apis/fetch-event#parameters) オブジェクトにはあなたのプロジェクトの [bindings](https://developers.cloudflare.com/workers/runtime-apis/bindings/) が含まれており、KV/DO namespaces などで構成されています。これは `platform` プロパティを介して [`ctx`](https://developers.cloudflare.com/workers/runtime-apis/context/)、[`caches`](https://developers.cloudflare.com/workers/runtime-apis/cache/)、[`cf`](https://developers.cloudflare.com/workers/runtime-apis/request/#incomingrequestcfproperties) と一緒に SvelteKit に渡されます。つまり、hooks とエンドポイントでこれらにアクセスできるということです:
 
 ```js
 // @errors: 7031

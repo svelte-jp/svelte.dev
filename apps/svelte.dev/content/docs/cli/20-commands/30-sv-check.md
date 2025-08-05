@@ -15,13 +15,13 @@ Node 16以降が必要です。
 
 プロジェクトに`svelte-check`パッケージをインストールする必要があります：
 
-```bash
+```sh
 npm i -D svelte-check
 ```
 
 ## 使用方法 <!--Usage-->
 
-```bash
+```sh
 npx sv check
 ```
 
@@ -60,7 +60,7 @@ npx sv check
 
 ワークスペースのルートから相対的に無視するファイルやフォルダ。パスはカンマで区切り、引用符で囲む必要があります。例：
 
-```bash
+```sh
 npx sv check --ignore "dist,build"
 ```
 
@@ -76,7 +76,7 @@ npx sv check --ignore "dist,build"
 
 `code`が[コンパイラ警告コード](../svelte/compiler-warnings)で、`behaviour`が`ignore`または`error`である`code:behaviour`ペアのリスト。例：
 
-```bash
+```sh
 npx sv check --compiler-warnings "css_unused_selector:ignore,a11y_missing_attribute:error"
 ```
 
@@ -91,7 +91,7 @@ npx sv check --compiler-warnings "css_unused_selector:ignore,a11y_missing_attrib
 
 例：
 
-```bash
+```sh
 npx sv check --diagnostic-sources "js,svelte"
 ```
 
