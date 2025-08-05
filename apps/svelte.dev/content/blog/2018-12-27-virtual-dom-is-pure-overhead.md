@@ -47,7 +47,7 @@ function HelloMessage(props) {
 	<figcaption>Screenshot from <a href="https://www.youtube.com/watch?v=x7cQ3mrcKaY">Rethinking Best Practices</a> at JSConfEU 2013</figcaption>
 </figure>
 
-しかし、ちょっと待ってください！　仮想DOMの操作は、実際のDOMに対する最終的な操作に _加えて_ 行われます。これを高速だと主張するには、より非効率なフレームワークと比較するか(2013年にはたくさんありました)、もしくは、実際には誰もやらないような架空の代替案に対して反論するしかありません。。
+しかし、ちょっと待ってください！　仮想DOMの操作は、実際のDOMに対する最終的な操作に _加えて_ 行われます。これを高速だと主張するには、より非効率なフレームワークと比較するか(2013年にはたくさんありました)、もしくは、実際には誰もやらないような架空の代替案に対して反論するしかありません。
 
 ```js
 // @noErrors

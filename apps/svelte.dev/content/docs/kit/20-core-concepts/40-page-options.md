@@ -89,7 +89,7 @@ export async function load({ fetch }) {
 
 SvelteKit は、 _エントリーポイント(entry points)_ を開始地点としてクローリングを行うことでページを自動的に発見します。デフォルトでは、動的でないルート(route)はすべてエントリーポイントとみなされます。例えば、以下のルートがある場合…
 
-```bash
+```sh
 /             # non-dynamic
 /blog         # non-dynamic
 /blog/[slug]  # dynamic, because of `[slug]`

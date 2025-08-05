@@ -21,7 +21,7 @@ title: $state
 
 もし `$state` を配列やシンプルなオブジェクトで使用した場合、リアクティブが深い (原文: deeply reactive) _state proxy_ になります。[proxy](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Proxy) によって Svelte はプロパティが読み書き (`array.push(...)` のようなメソッド経由で行われたものを含む) されたときにコードを実行でき、きめ細やかな更新 (原文: granular updates) をトリガーすることができます。
 
-state は、Svelte が配列やシンプルなオブジェクト(classなど)以外のものを見つけるまで再帰的に proxy 化 されます。このような場合...
+state は、Svelte が配列やシンプルなオブジェクト (class や `Object.create` で作成されたオブジェクト) 以外のものを見つけるまで再帰的に proxy 化 されます。このような場合...
 
 ```js
 let todos = $state([
@@ -51,7 +51,7 @@ todos.push({
 });
 ```
 
-> [!NOTE] proxy のプロパティを更新しても、元のオブジェクトは変更されません。
+> [!NOTE] proxy のプロパティを更新しても、元のオブジェクトは変更されません。もし state proxy 内で独自の proxy ハンドラを使用する必要がある場合は、[$state でラップした後にそのブジェクトをラップするとよいでしょう](https://svelte.dev/playground/hello-world?version=latest#H4sIAAAAAAAACpWR3WoDIRCFX2UqhWyIJL3erAulL9C7XnQLMe5ksbUqOpsfln33YuyGFNJC8UKdc2bOhw7Myk9kJXsJ0nttO9jcR5KEG9AWJDwHdzwxznbaYGTl68Do5JM_FRifuh-9X8Y9Gkq1rYx4q66cJbQUWcmqqIL2VDe2IYMEbvuOikBADi-GJDSkXG-phId0G-frye2DO2psQYDFQ0Ys8gQO350dUkEydEg82T0GOs0nsSG9g2IqgxACZueo2ZUlpdvoDC6N64qsg1QKY8T2bpZp8gpIfbCQ85Zn50Ud82HkeY83uDjspenxv3jXcSDyjPWf9L1vJf0GH666J-jLu1ery4dV257IWXBWGa0-xFDMQdTTn2ScxWKsn86ROsLwQxqrVR5QM84Ij8TKFD2-cUZSm4O2LSt30kQcvwCgCmfZnAIAAA==)。
 
 もしリアクティブな値を分割した場合、その参照はリアクティブではありません — 通常の JavaScript と同じように、分割時点で評価されます:
 
@@ -120,7 +120,9 @@ class Todo {
 }
 ```
 
-> Svelte provides reactive implementations of built-in classes like `Set` and `Map` that can be imported from [`svelte/reactivity`](svelte-reactivity).
+### Built-in classes
+
+Svelte provides reactive implementations of built-in classes like `Set`, `Map`, `Date` and `URL` that can be imported from [`svelte/reactivity`](svelte-reactivity).
 
 ## `$state.raw`
 

@@ -7,7 +7,7 @@ title: 高度なルーティング
 
 ルートセグメント(route segments)の数がわからない場合は、rest 構文を使用することができます。例えば GitHub のファイルビューアのようなものを実装する場合は…
 
-```bash
+```sh
 /[org]/[repo]/tree/[branch]/[...file]
 ```
 
@@ -102,7 +102,7 @@ src/routes/fruits/[page+++=fruit+++]
 
 あるパスに対し、マッチするルート(routes)は複数でも構いません。例えば、これらのルート(routes)はどれも `/foo-abc` にマッチします:
 
-```bash
+```sh
 src/routes/[...catchall]/+page.svelte
 src/routes/[[a=x]]/+page.svelte
 src/routes/[b]/+page.svelte
@@ -119,7 +119,7 @@ SvelteKit は、どのルート(route)に対してリクエストされている
 
 …この順序で並べると、`/foo-abc` の場合は `src/routes/foo-abc/+page.svelte` を呼び出し、`/foo-def` の場合は `src/routes/foo-[c]/+page.svelte` を呼び出します:
 
-```bash
+```sh
 src/routes/foo-abc/+page.svelte
 src/routes/foo-[c]/+page.svelte
 src/routes/[[a=x]]/+page.svelte

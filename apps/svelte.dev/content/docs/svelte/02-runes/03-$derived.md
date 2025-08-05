@@ -97,6 +97,27 @@ let selected = $derived(items[index]);
 
 ...`selected` のプロパティを変更 (または `selected` に `bind:`) すると、そのもとにある `items` 配列に影響します。もし `items` が深いリアクティブ(deeply reactive)でないなら、`selected` に対する変更は影響しません。
 
+## 構造分解 (Destructuring) <!--Destructuring-->
+
+`$derived` 宣言と構造分解 (destructuring) を使用すると、結果の変数はすべてリアクティブになります — こちらは…
+
+```js
+function stuff() { return { a: 1, b: 2, c: 3 } }
+// ---cut---
+let { a, b, c } = $derived(stuff());
+```
+
+…大まかには以下と同じです:
+
+```js
+function stuff() { return { a: 1, b: 2, c: 3 } }
+// ---cut---
+let _stuff = $derived(stuff());
+let a = $derived(_stuff.a);
+let b = $derived(_stuff.b);
+let c = $derived(_stuff.c);
+```
+
 ## 更新の伝搬 <!--Update-propagation-->
 
 Svelte は _push-pull reactivity_ と呼ばれる仕組みを使用しています — state が更新されると、それに依存するすべてのもの (直接的または間接的であるかを問わず) に即座に変更が通知されますが ('push')、derived の値は実際に読み取られるまで再評価されません ('pull')。

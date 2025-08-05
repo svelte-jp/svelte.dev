@@ -5,7 +5,7 @@ title: Getting started
 
 [SvelteKit](../kit) をお使いいただくことをおすすめします。[ほとんどの用途](../kit/project-types)でお使いいただけます。これは Svelte チームによるオフィシャルなアプリケーションフレームワークで、[Vite](https://vite.dev/)を活用しています。新しいプロジェクトを作成するには:
 
-```bash
+```sh
 npx sv create myapp
 cd myapp
 npm install

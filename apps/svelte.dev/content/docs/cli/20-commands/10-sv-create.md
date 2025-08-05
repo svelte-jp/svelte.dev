@@ -7,7 +7,7 @@ title: sv create
 
 ## 使用方法 <!--Usage-->
 
-```bash
+```sh
 npx sv create [options] [path]
 ```
 

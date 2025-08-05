@@ -27,7 +27,7 @@ export default {
 
 アプリケーションを実行するには、出力ディレクトリ、プロジェクトの `package.json`、`node_modules` の本番向けの依存関係(production dependencies)が必要です。本番向けの依存関係は、`package.json` と `package-lock.json` をコピーしてから `npm ci --omit dev` を実行すると生成することができます (あなたのアプリが何の依存関係も持たない場合はこのステップをスキップできます)。そして、このコマンドでアプリを起動することができます:
 
-```bash
+```sh
 node build
 ```
 
@@ -45,19 +45,19 @@ node build
 
 プロダクションでは、`.env` ファイルは自動的に読み取れらません。そうするには、プロジェクトに `dotenv` をインストールします…
 
-```bash
+```sh
 npm install dotenv
 ```
 
 …そしてビルドされたアプリを実行する前にそれを呼び出します:
 
-```bash
+```sh
 node +++-r dotenv/config+++ build
 ```
 
 If you use Node.js v20.6+, you can use the [`--env-file`](https://nodejs.org/en/learn/command-line/how-to-read-environment-variables-from-nodejs) flag instead:
 
-```bash
+```sh
 node +++--env-file=.env+++ build
 ```
 
@@ -65,13 +65,13 @@ node +++--env-file=.env+++ build
 
 デフォルトでは、サーバーは `0.0.0.0`、port 3000 でコネクションを受け付けます。これは環境変数の `PORT` と `HOST` を使ってカスタマイズすることができます。
 
-```
+```sh
 HOST=127.0.0.1 PORT=4000 node build
 ```
 
 その他の方法としては、指定したソケットパスでコネクションを受け付けるようサーバーを設定することができます。環境変数の `SOCKET_PATH` を使用して設定する場合、環境変数の `HOST` と `PORT` は無視されます。
 
-```
+```sh
 SOCKET_PATH=/tmp/socket node build
 ```
 
@@ -79,7 +79,7 @@ SOCKET_PATH=/tmp/socket node build
 
 HTTP は SvelteKit に現在リクエストされている URL を知るための信頼できる方法を提供しません。アプリがホストされている場所を Sveltekit に伝える最も簡単な方法は、環境変数 `ORIGIN` を設定することです:
 
-```
+```sh
 ORIGIN=https://my.site node build
 
 # or e.g. for local previewing and testing
@@ -88,7 +88,7 @@ ORIGIN=http://localhost:3000 node build
 
 これにより、パス名 `/stuff` に対するリクエストは正しく `https://my.site/stuff` に解決されます。別の方法として、リクエストプロトコルとホストを SvelteKit に伝えるヘッダーを指定し、そこから origin URL を組み立てることもできます:
 
-```
+```sh
 PROTOCOL_HEADER=x-forwarded-proto HOST_HEADER=x-forwarded-host node build
 ```
 
@@ -104,7 +104,7 @@ PROTOCOL_HEADER=x-forwarded-proto HOST_HEADER=x-forwarded-host node build
 
 hooks とエンドポイントに渡される [`RequestEvent`](@sveltejs-kit#RequestEvent) オブジェクトにはクライアントの IP アドレスを返す `event.getClientAddress()` 関数が含まれています。デフォルトでは、これは接続中の `remoteAddress` です。もしサーバーが1つ以上のプロキシー (例えばロードバランサー) の後ろにある場合、この値はクライアントの IP アドレスではなく、最も内側にあるプロキシーの IP アドレスを含むことになるため、アドレスを読み取るために `ADDRESS_HEADER` を指定する必要があります:
 
-```
+```sh
 ADDRESS_HEADER=True-Client-IP node build
 ```
 

@@ -35,8 +35,10 @@ title: style:
 <div style:color|important="red">...</div>
 ```
 
-`style:` ディレクティブが `style` 属性と組み合わせて使用される場合、ディレクティブが優先されます:
+`style:` ディレクティブが `style` 属性と組み合わせて使用される場合、ディレクティブが優先されます、
+たとえ `!important` プロパティが指定されていてもです:
 
 ```svelte
-<div style="color: blue;" style:color="red">This will be red</div>
+<div style:color="red" style="color: blue">This will be red</div>
+<div style:color="red" style="color: blue !important">This will still be red</div>
 ```
