@@ -2,14 +2,14 @@
 title: navigating
 ---
 
-The `navigating` object represents the current navigation. When a navigation starts — because of a link click, or a back/forward navigation, or a programmatic `goto` — the value of `navigating` will become an object with the following properties:
+`navigating`オブジェクトは、現在のナビゲーションを表します。リンクのクリック、戻る/進むナビゲーション、またはプログラムによる `goto` の呼び出しによってナビゲーションが開始されると、 `navigating` の値は以下のプロパティを持つオブジェクトになります。
 
-- `from` and `to` — objects with `params`, `route` and `url` properties
-- `type` — the type of navigation, e.g. `link`, `popstate` or `goto`
+- `from` と `to` — `params`、 `route` 、 `url` プロパティを持つオブジェクト
+- `type` — ナビゲーションのタイプ。 例: `link`, `popstate` 、 `goto`
 
-> [!NOTE] For complete type information visit the [`Navigation`](/docs/kit/@sveltejs-kit#Navigation) documentation.
+> [!NOTE] 型の完全な情報は、 [`Navigation`](/docs/kit/@sveltejs-kit#Navigation) ドキュメントにあります。
 
-It can be used to show a loading indicator for long-running navigations. In this exercise, `src/routes/+page.server.js` and `src/routes/about/+page.server.js` both have an artificial delay. Inside `src/routes/+layout.svelte`, import the `navigating` object and add a message to the nav bar:
+これは、時間のかかるナビゲーション中にローディングインジケーターを表示するために使えます。この演習では、 `src/routes/+page.server.js` と `src/routes/about/+page.server.js` にわざと遅延が設定されています。 `src/routes/+layout.svelte`に `navigating` オブジェクトをインポートし、ナビゲーションバーにメッセージを追加してください。
 
 ```svelte
 /// file: src/routes/+layout.svelte
@@ -36,4 +36,4 @@ It can be used to show a loading indicator for long-running navigations. In this
 {@render children()}
 ```
 
-> [!NOTE] Prior to SvelteKit 2.12, you had to use `$app/stores` for this, which provides a `$navigating` store with the same information. If you're currently using `$app/stores`, we advise you to migrate towards `$app/state` (requires Svelte 5).
+> [!NOTE] SvelteKit 2.12より前は、`$app/stores` が提供する `$navigating` storeが同じ役割を担っていました。いま `$app/stores` を使っている場合は、 `$app/state` への移行をおすすめします。(Svelte 5が必要です。)
