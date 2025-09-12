@@ -35,4 +35,4 @@ SvelteKit では、3つの読み取り専用 state オブジェクトを `$app/s
 {@render children()}
 ```
 
-> [!NOTE] Prior to SvelteKit 2.12, you had to use `$app/stores` for this, which provides a `$page` store with the same information. If you're currently using `$app/stores`, we advise you to migrate towards `$app/state` (requires Svelte 5).
+> [!NOTE] SvelteKit 2.12より前は、`$app/stores` が提供する `$page` storeが同じ役割を担っていました。いま `$app/stores` を使っている場合は、 `$app/state` への移行をおすすめします。(Svelte 5が必要です。)
