@@ -17,7 +17,7 @@ export async function handle({ event, resolve }) {
 }
 ```
 
-ページについては ([API routes](get-handlers) とは対照的に)、`transformPageChunk` で生成された HTML を変更することができます:
+ページについては ([API routes](get-handlers) とは対照的に)、生成された HTML を`transformPageChunk`で変更できます:
 
 ```js
 /// file: src/hooks.server.js
