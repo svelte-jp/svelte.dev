@@ -9,11 +9,11 @@ title: TypeScript
 - using `Component` and the other helper types
 - using `svelte-check` -->
 
-You can use TypeScript within Svelte components. IDE extensions like the [Svelte VS Code extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode) will help you catch errors right in your editor, and [`svelte-check`](https://www.npmjs.com/package/svelte-check) does the same on the command line, which you can integrate into your CI.
+Svelte コンポーネント内で TypeScript を使えます。[Svelte VS Code 拡張機能](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)のようなIDE拡張機能はエディタ上でエラーをキャッチするのに役立ちます。また、 [`svelte-check`](https://www.npmjs.com/package/svelte-check) はコマンドラインで同じことができ、CIに統合できます。
 
 ## `<script lang="ts">`
 
-To use TypeScript inside your Svelte components, add `lang="ts"` to your `script` tags:
+Svelte コンポーネント内で TypeScript を使うには、 `script` タグに `lang="ts"` を追加します。
 
 ```svelte
 <script lang="ts">
@@ -29,17 +29,17 @@ To use TypeScript inside your Svelte components, add `lang="ts"` to your `script
 </button>
 ```
 
-Doing so allows you to use TypeScript's _type-only_ features. That is, all features that just disappear when transpiling to JavaScript, such as type annotations or interface declarations. Features that require the TypeScript compiler to output actual code are not supported. This includes:
+これにより、 TypeScript の機能のうち _型のみ_ 使えます。つまり、型アノテーションやインターフェース宣言など、 JavaScript にトランスコンパイルすると消えてしまうすべての機能です。 TypeScript コンパイラが実際のコードを出力する必要のある機能はサポートされていません。これには以下が含まれます:
 
-- using enums
-- using `private`, `protected` or `public` modifiers in constructor functions together with initializers
-- using features that are not yet part of the ECMAScript standard (i.e. not level 4 in the TC39 process) and therefore not implemented yet within Acorn, the parser we use for parsing JavaScript
+- enumの使用
+- コンストラクタ関数で `private`、 `protected` 、 `public` 修飾子を初期化子(initializer)といっしょに使用する
+- ECMAScript 標準の一部ではない(つまりTC39プロセスでレベル4ではない)ため、 JavaScript 解析に用いるパーサー Acorn 内に実装されていない機能の使用
 
-If you want to use one of these features, you need to setup up a `script` preprocessor.
+これらいずれかの機能を使いたいときは、 `script` プリプロセッサをセットアップする必要があります。
 
-## Preprocessor setup
+## プリプロセッサのセットアップ<!--Preprocessor-setup-->
 
-To use non-type-only TypeScript features within Svelte components, you need to add a preprocessor that will turn TypeScript into JavaScript.
+Svelte コンポーネント内で型以外の TypeScript 機能を使うには、 TypeScript を JavaScript に変換するプリプロセッサを追加する必要があります。
 
 ```ts
 /// file: svelte.config.js
@@ -47,16 +47,16 @@ To use non-type-only TypeScript features within Svelte components, you need to a
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 const config = {
-	// Note the additional `{ script: true }`
+	// `{ script: true }` の追加に注目してください
 	preprocess: vitePreprocess({ script: true })
 };
 
 export default config;
 ```
 
-### Using SvelteKit or Vite
+### SvelteKit または Vite の使用 <!--Using-SvelteKit-or-Vite-->
 
-The easiest way to get started is scaffolding a new SvelteKit project by typing `npx sv create`, following the prompts and choosing the TypeScript option.
+もっとも簡単な TypeScript の始め方は、 `npx sv create` と入力してプロンプトに従い、TypeScriptオプションを選択して新しい SvelteKit プロジェクトの骨組みを自動生成することです。
 
 ```ts
 /// file: svelte.config.js
@@ -70,27 +70,27 @@ const config = {
 export default config;
 ```
 
-If you don't need or want all the features SvelteKit has to offer, you can scaffold a Svelte-flavoured Vite project instead by typing `npm create vite@latest` and selecting the `svelte-ts` option.
+SvelteKit が提供するすべての機能が必要ない、または望まないときは、代わりに `npm create vite@latest` と入力し、 `svelte-ts` オプションを選択することで、 Svelte 風味の Vite プロジェクトの骨組みを自動生成できます。
 
-In both cases, a `svelte.config.js` with `vitePreprocess` will be added. Vite/SvelteKit will read from this config file.
+どちらの場合も、`vitePreprocess` を含む `svelte.config.js` が追加されます。 Vite または SvelteKit は、この設定ファイルを読み取ります。
 
-### Other build tools
+### ほかのビルドツール <!--Other-build-tools-->
 
-If you're using tools like Rollup or Webpack instead, install their respective Svelte plugins. For Rollup that's [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) and for Webpack that's [svelte-loader](https://github.com/sveltejs/svelte-loader). For both, you need to install `typescript` and `svelte-preprocess` and add the preprocessor to the plugin config (see the respective READMEs for more info). If you're starting a new project, you can also use the [rollup](https://github.com/sveltejs/template) or [webpack](https://github.com/sveltejs/template-webpack) template to scaffold the setup from a script.
+代わりに Rollup や Webpack のようなツールを使っているときは、それぞれの Svelte プラグインをインストールしてください。 RollUpの場合は [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) 、 WebPackの場合は [svelte-loader](https://github.com/sveltejs/svelte-loader) です。両方とも、 `typescript` と `svelte-preprocess` をインストールし、プリプロセッサをプラグイン設定に追加する必要があります(詳細は各READMEを参照)。新しいプロジェクトを開始するときは、 [rollup](https://github.com/sveltejs/template) または [webpack](https://github.com/sveltejs/template-webpack) テンプレートを使って、スクリプトから初期設定を自動生成することもできます。
 
-> [!NOTE] If you're starting a new project, we recommend using SvelteKit or Vite instead
+> [!NOTE] 新しいプロジェクトを開始するときは、代わりに SvelteKit または Vite の使用をおすすめします。
 
-## tsconfig.json settings
+## tsconfig.json の設定<!--tsconfig.json-settings-->
 
-When using TypeScript, make sure your `tsconfig.json` is setup correctly.
+TypeScript を使うときは、 `tsconfig.json` が正しく設定されていることを確認してください。
 
-- Use a [`target`](https://www.typescriptlang.org/tsconfig/#target) of at least `ES2015` so classes are not compiled to functions
-- Set [`verbatimModuleSyntax`](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) to `true` so that imports are left as-is
-- Set [`isolatedModules`](https://www.typescriptlang.org/tsconfig/#isolatedModules) to `true` so that each file is looked at in isolation. TypeScript has a few features which require cross-file analysis and compilation, which the Svelte compiler and tooling like Vite don't do. 
+- クラスが関数にコンパイルされないように、 [`target`](https://www.typescriptlang.org/tsconfig/#target) を少なくとも `ES2015` 以降に設定してください。
+- インポートがそのまま残るように、 [`verbatimModuleSyntax`](https://www.typescriptlang.org/tsconfig/#verbatimModuleSyntax) を `true` に設定してください。
+- 各ファイルが個別に扱われるように、 [`isolatedModules`](https://www.typescriptlang.org/tsconfig/#isolatedModules) を `true` に設定してください。 TypeScript にはファイル間解析とコンパイルを必要とする機能がいくつかありますが、 Svelte コンパイラや Vite などのツールではこれをおこないません。
 
-## Typing `$props`
+## `$props` の型付け <!--Typing-$props-->
 
-Type `$props` just like a regular object with certain properties.
+`$props` を、特定のプロパティを持つ通常のオブジェクトと同じように型付けします。
 
 ```svelte
 <script lang="ts">
@@ -118,9 +118,9 @@ Type `$props` just like a regular object with certain properties.
 </button>
 ```
 
-## Generic `$props`
+## ジェネリックな $props <!--Generic-$props-->
 
-Components can declare a generic relationship between their properties. One example is a generic list component that receives a list of items and a callback property that receives an item from the list. To declare that the `items` property and the `select` callback operate on the same types, add the `generics` attribute to the `script` tag:
+コンポーネントのプロパティ間で、ジェネリクス(generics)を用いて型を関連づけることができます。例えば、汎用的なリストコンポーネントを考えてみましょう。このコンポーネントには、プロパティとして「アイテムのリスト」と「リストからアイテムを1つ受け取るコールバック関数」を渡すことができます。 そして、この `items` プロパティ(の配列)と `select` コールバック(の引数)が必ず同じ型であることを保証するために、 `script` タグに `generics` 属性を追加します。
 
 ```svelte
 <script lang="ts" generics="Item extends { text: string }">
@@ -139,11 +139,11 @@ Components can declare a generic relationship between their properties. One exam
 {/each}
 ```
 
-The content of `generics` is what you would put between the `<...>` tags of a generic function. In other words, you can use multiple generics, `extends` and fallback types.
+この `generics` 属性の書き方は、 TypeScript でジェネリック関数を定義するときの `<...>` (山括弧)内の構文とまったく同じです。言い換えると、複数のジェネリクス、 `extends` による型制約、デフォルトの型(フォールバック型)といった機能をそのまま利用できます。
 
-## Typing wrapper components
+## ネイティブHTML要素をラップするコンポーネントの型付け <!--Typing-wrapper-components-->
 
-In case you're writing a component that wraps a native element, you may want to expose all the attributes of the underlying element to the user. In that case, use (or extend from) one of the interfaces provided by `svelte/elements`. Here's an example for a `Button` component:
+コンポーネントを作るとき、ラップしたネイティブHTML要素( `button` など)の標準属性( `class` や `disabled` など)を、コンポーネントを使う側で自由に指定したい場合があるでしょう。そのときは `svelte/elements` が提供する型定義(インターフェース)を使用(または継承)してください。以下は `Button` コンポーネントの例です:
 
 ```svelte
 <script lang="ts">
@@ -157,7 +157,7 @@ In case you're writing a component that wraps a native element, you may want to 
 </button>
 ```
 
-Not all elements have a dedicated type definition. For those without one, use `SvelteHTMLElements`:
+すべての要素に専用の型定義が用意されているわけではありません。そのような要素には、 `SvelteHTMLElements` を使います:
 
 ```svelte
 <script lang="ts">
@@ -171,23 +171,23 @@ Not all elements have a dedicated type definition. For those without one, use `S
 </div>
 ```
 
-## Typing `$state`
+## `$state` の型付け <!--Typing-$state-->
 
-You can type `$state` like any other variable.
+`$state` はほかの変数と同じように型付けできます。
 
 ```ts
 let count: number = $state(0);
 ```
 
-If you don't give `$state` an initial value, part of its types will be `undefined`.
+もし `$state` に初期値を設定しない場合、その型は `undefined` とのユニオン型になります。
 
 ```ts
 // @noErrors
-// Error: Type 'number | undefined' is not assignable to type 'number'
+// エラー: 型 'number | undefined' を型 'number' に割り当てることはできません
 let count: number = $state();
 ```
 
-If you know that the variable _will_ be defined before you first use it, use an `as` casting. This is especially useful in the context of classes:
+変数の宣言時には値が決まっていなくても、後続の処理で _必ず_ 値がセットされる、とあなたが保証できるケースがあります。そのような場合は `as` キャストを使ってください。これはプロパティの初期化が `constructor` で行われるクラスで特に便利です:
 
 ```ts
 class Counter {
@@ -198,19 +198,19 @@ class Counter {
 }
 ```
 
-## The `Component` type
+## コンポーネント自体の型 <!--The-Component-type-->
 
-Svelte components are of type `Component`. You can use it and its related types to express a variety of constraints.
+Svelte コンポーネントは `Component` 型です。 `Component` 型と関連する型を使って、さまざまな制約を表現できます。
 
-Using it together with dynamic components to restrict what kinds of component can be passed to it:
+例えば動的コンポーネントと組み合わせ、渡せるコンポーネントの種類を制限します:
 
 ```svelte
 <script lang="ts">
 	import type { Component } from 'svelte';
 
 	interface Props {
-		// only components that have at most the "prop"
-		// property required can be passed
+		// "prop" プロパティが必須であるコンポーネントのみを
+		// DynamicComponentに渡すことができます
 		DynamicComponent: Component<{ prop: string }>;
 	}
 
@@ -220,9 +220,9 @@ Using it together with dynamic components to restrict what kinds of component ca
 <DynamicComponent prop="foo" />
 ```
 
-> [!LEGACY] In Svelte 4, components were of type `SvelteComponent`
+> [!LEGACY] Svelte 4 では、コンポーネントは `SvelteComponent` 型でした。
 
-To extract the properties from a component, use `ComponentProps`.
+コンポーネントからプロパティを抽出するには、 `ComponentProps` を使います。
 
 ```ts
 import type { Component, ComponentProps } from 'svelte';
@@ -233,12 +233,12 @@ function withProps<TComponent extends Component<any>>(
 	props: ComponentProps<TComponent>
 ) {}
 
-// Errors if the second argument is not the correct props expected
-// by the component in the first argument.
+// 第二引数が、第一引数のコンポーネントが期待するプロパティではないとき、
+// エラーが発生します。
 withProps(MyComponent, { foo: 'bar' });
 ```
 
-To declare that a variable expects the constructor or instance type of a component:
+コンポーネントのコンストラクタまたはインスタンス型を期待する変数を宣言するには:
 
 ```svelte
 <script lang="ts">
@@ -251,34 +251,34 @@ To declare that a variable expects the constructor or instance type of a compone
 <MyComponent bind:this={componentInstance} />
 ```
 
-## Enhancing built-in DOM types
+## 組み込みDOM型の強化 <!--Enhancing-built-in-DOM-types-->
 
-Svelte provides a best effort of all the HTML DOM types that exist. Sometimes you may want to use experimental attributes or custom events coming from an action. In these cases, TypeScript will throw a type error, saying that it does not know these types. If it's a non-experimental standard attribute/event, this may very well be a missing typing from our [HTML typings](https://github.com/sveltejs/svelte/blob/main/packages/svelte/elements.d.ts). In that case, you are welcome to open an issue and/or a PR fixing it.
+Svelteは、存在するすべてのHTML DOMの型をできる限り提供しています。しかし、場合によっては、実験的な属性やアクション (action) 由来のカスタムイベントを使いたいことがあるかもしれません。そのようなケースでは、 TypeScript はそれらの型を認識できないため、型エラーを発生させます。もしそれが(実験的でない)標準の属性やイベントである場合、 Svelte が提供する [HTMLの型定義](https://github.com/sveltejs/svelte/blob/main/packages/svelte/elements.d.ts) にその型が定義されていない可能性があります。そのときは、ぜひ issue を立てたり、修正のためのプルリクエストを送ってください。
 
-In case this is a custom or experimental attribute/event, you can enhance the typings by augmenting the `svelte/elements` module like this:
+もしこれがカスタムや実験的な属性・イベントであるときは、以下のように `svelte/elements` モジュールを拡張することで、型定義を強化できます:
 
 ```ts
 /// file: additional-svelte-typings.d.ts
 import { HTMLButtonAttributes } from 'svelte/elements';
 
 declare module 'svelte/elements' {
-	// add a new element
+	// Svelteが認識するHTML要素のリストに、新しい要素(ここでは'custom-button')を追加します
 	export interface SvelteHTMLElements {
 		'custom-button': HTMLButtonAttributes;
 	}
 
-	// add a new global attribute that is available on all html elements
+	// すべてのHTML要素で利用可能な新しいグローバル属性を追加します
 	export interface HTMLAttributes<T> {
 		globalattribute?: string;
 	}
 
-	// add a new attribute for button elements
+	// 特定の要素(ここでは<button>要素)に新しい属性を追加します
 	export interface HTMLButtonAttributes {
 		veryexperimentalattribute?: string;
 	}
 }
 
-export {}; // ensure this is not an ambient module, else types will be overridden instead of augmented
+export {}; // これがアンビエントモジュールでないことを保証します。そうしないと、型が拡張（augmented）されるのではなく、上書き（overridden）されてしまいます。
 ```
 
-Then make sure that the `d.ts` file is referenced in your `tsconfig.json`. If it reads something like `"include": ["src/**/*"]` and your `d.ts` file is inside `src`, it should work. You may need to reload for the changes to take effect.
+次に、その `d.ts` ファイルが `tsconfig.json` で参照されていることを確認してください。もし `"include": ["src/**/*"]` のような記述があり、 `d.ts` ファイルが `src` 内にあるなら、強化した型定義は機能するはずです。変更を有効にするには、リロードが必要かもしれません。
