@@ -77,6 +77,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
 	    <td align="center" valign="top" width="14.28%"><a href="https://github.com/jill64"><img src="https://avatars.githubusercontent.com/u/143883742?v=4?s=100" width="100px;" alt="jill64"/><br /><sub><b>jill64</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte.dev/commits?author=jill64" title="Documentation">📖</a></td>
 	    <td align="center" valign="top" width="14.28%"><a href="https://team-steg.com/"><img src="https://avatars.githubusercontent.com/u/54620036?v=4?s=100" width="100px;" alt="Keigo Nakao"/><br /><sub><b>Keigo Nakao</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte.dev/commits?author=kspace-trk " title="Documentation">📖</a></td>
+	    <td align="center" valign="top" width="14.28%"><a href="https://hitorishiro.com"><img src="https://avatars.githubusercontent.com/u/54262718?v=4?s=100" width="100px;" alt="Hitoshiro"/><br /><sub><b>Hitoshiro</b></sub></a><br /><a href="https://github.com/svelte-jp/svelte.dev/commits?author=HitoshiroKyoka" title="Documentation">📖</a></td>
     </tr>
   </tbody>
 </table>
