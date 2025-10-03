@@ -11,16 +11,19 @@ title: Integrations
 // svelte.config.js
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-export default {
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
   preprocess: [vitePreprocess()]
 };
+
+export default config;
 ```
 
 You will also need to use a preprocessor if you're using TypeScript with Svelte 4. TypeScript is supported natively in Svelte 5 if you're using only the type syntax. To use more complex TypeScript syntax in Svelte 5, you will need still need a preprocessor and can use `vitePreprocess({ script: true })`.
 
-## Adders
+## Add-ons
 
-`npx sv add` によって、様々な複雑なインテグレーションを単一のコマンドでセットアップすることができます:
+[`npx sv add`](/docs/cli/sv-add) を実行することで、様々な複雑なインテグレーションを単一のコマンドでセットアップすることができます:
 - prettier (formatting)
 - eslint (linting)
 - vitest (unit testing)
@@ -32,9 +35,9 @@ You will also need to use a preprocessor if you're using TypeScript with Svelte 
 - mdsvex (markdown)
 - storybook (frontend workshop)
 
-## Directory
+## Packages
 
-Svelte と SvelteKit で使用できる [パッケージ](https://sveltesociety.dev/packages) や [テンプレート](https://sveltesociety.dev/templates) のリストは [sveltesociety.dev](https://sveltesociety.dev/) でご覧いただけます。
+厳選された高品質な Svelte パッケージの一覧については [パッケージページ](/packages) をご覧ください。また、追加のライブラリ、テンプレート、リソースについては [sveltesociety.dev](https://sveltesociety.dev/) をご覧ください。
 
 ## Additional integrations
 
@@ -42,7 +45,7 @@ Svelte と SvelteKit で使用できる [パッケージ](https://sveltesociety.
 
 `svelte-preprocess` は、Pug、Babel、global styles のサポートなど、`vitePreprocess` には無い機能があります。しかし、`vitePreprocess` はより速く、設定が少ないため、デフォルトでは `vitePreprocess` が使用されます。SvelteKit は CoffeeScript を [サポートしていない](https://github.com/sveltejs/kit/issues/2920#issuecomment-996469815) ことにご注意ください。
 
-`svelte-preprocess` をインストールするには `npm install --save-dev svelte-preprocess` を実行し、ご自身で [`svelte.config.js` に追加する](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/usage.md#with-svelte-config) 必要があります。その後、`npm install -D sass` や `npm install -D less` など、[対応するライブラリのインストール](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/getting-started.md) が必要になることが多いようです。
+`svelte-preprocess` をインストールするには `npm i -D svelte-preprocess` を実行し、ご自身で [`svelte.config.js` に追加する](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/usage.md#with-svelte-config) 必要があります。その後、`npm i -D sass` や `npm i -D less` など、[対応するライブラリのインストール](https://github.com/sveltejs/svelte-preprocess/blob/main/docs/getting-started.md) が必要になることが多いようです。
 
 ## Vite plugins
 

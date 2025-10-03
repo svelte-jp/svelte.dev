@@ -12,11 +12,11 @@ SvelteKit を static site generator (SSG) として使用するには、[`adapte
 `npm i -D @sveltejs/adapter-static` を実行してインストールし、`svelte.config.js` にこの adapter を追加します:
 
 ```js
-// @errors: 2307
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-static';
 
-export default {
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
 	kit: {
 		adapter: adapter({
 			// default options are shown. On some platforms
@@ -29,13 +29,17 @@ export default {
 		})
 	}
 };
+
+export default config;
 ```
 
 …そして [`prerender`](page-options#prerender) オプションを最上位のレイアウト(root layout)に追加します:
 
 ```js
 /// file: src/routes/+layout.js
-// This can be false if you're using a fallback (i.e. SPA mode)
+// If you're using a fallback (i.e. SPA mode) you don't need to prerender all
+// pages by setting this here, but should prerender as many as possible to
+// avoid large performance and SEO impacts
 export const prerender = true;
 ```
 
@@ -50,13 +54,17 @@ export const prerender = true;
 これらのプラットフォームでは、adapter のオプションを省略することで、`adapter-static` が最適な設定を提供できるようになります:
 
 ```js
-// @errors: 2304
 /// file: svelte.config.js
-export default {
+import adapter from '@sveltejs/adapter-static';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
 	kit: {
 		adapter: adapter(---{...}---)
 	}
 };
+
+export default config;
 ```
 
 ## Options
@@ -71,7 +79,9 @@ export default {
 
 ### fallback
 
-[SPA モード](single-page-apps)向けにフォールバックページ(fallback page)を指定します。例えば、`index.html` や `200.html`、`404.html` などです。
+[シングルページアプリ (SPA)](single-page-apps)を作成するには、SvelteKit によって生成されるフォールバックページ (fallback page) の名前を指定する必要があります。これは、プリレンダリングされない URL のエントリーポインとして使用されます。一般的には `200.html` ですが、使用するデプロイメントプラットフォームによって異なる場合があります。プリレンダリングされるホームページとの競合を避けるため、`index.html` という名前は可能な限り避けるべきです。
+
+> このオプションはパフォーマンスと SEO に大きな悪影響を及ぼします。例えば、モバイルアプリでサイトをラップする場合など、特定の状況でのみ推奨されます。詳細と代替案については、[シングルページアプリ](single-page-apps) のドキュメントをご覧ください。
 
 ### precompress
 
@@ -90,7 +100,7 @@ GitHub Pages が提供するデフォルトの 404 ページを置き換える�
 GitHub Pages 向けの設定は以下のようになるでしょう:
 
 ```js
-// @errors: 2307 2322
+// @errors: 2322
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-static';
 
@@ -139,7 +149,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm i
 
       - name: build
         env:

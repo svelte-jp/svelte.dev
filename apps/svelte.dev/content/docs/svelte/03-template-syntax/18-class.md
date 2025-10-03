@@ -72,7 +72,7 @@ Svelte 5.16以降、`class` はオブジェクトや配列で指定でき、[cls
 </Button>
 ```
 
-Svelte はまた、要素の `class` 属性が受け入れる値の型である `ClassValue` 型を公開しています。これは、コンポーネントの props に型安全なクラス名を使用したい場合に便利です:
+Svelte 5.19 から、Svelte では要素の `class` 属性が受け入れる値の型である `ClassValue` 型も公開しています。これは、コンポーネントの props に型安全なクラス名を使用したい場合に便利です:
 
 ```svelte
 <script lang="ts">

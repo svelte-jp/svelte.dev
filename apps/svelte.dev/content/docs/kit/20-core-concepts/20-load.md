@@ -207,7 +207,7 @@ universal `load` 関数は、`LoadEvent` を引数にとって呼び出されま
 
 universal `load` 関数は、任意の値(カスタムクラスやコンポーネントコンストラクタなどを含む)を含むオブジェクトを返すことができます。
 
-server `load` 関数は、[devalue](https://github.com/rich-harris/devalue) でシリアライズできるデータ (つまり JSON で表現できるものに加え、`BigInt`、`Date`、`Map`、`Set`、`RegExp` や、繰り返し/循環参照など) を返さなければなりません。なぜならこれらのデータはネットワークで転送されるからです。データには [promise](#Streaming-with-promises) を含めることができ、その場合はブラウザにストリーミングされます。カスタムの型をシリアライズ/デシリアライズする必要がある場合は、[transport hooks](https://svelte.jp/docs/kit/hooks#Universal-hooks-transport) を使用してください。
+server `load` 関数は、[devalue](https://github.com/rich-harris/devalue) でシリアライズできるデータ (つまり JSON で表現できるものに加え、`BigInt`、`Date`、`Map`、`Set`、`RegExp` や、繰り返し/循環参照など) を返さなければなりません。なぜならこれらのデータはネットワークで転送されるからです。データには [promise](#Streaming-with-promises) を含めることができ、その場合はブラウザにストリーミングされます。カスタムの型をシリアライズ/デシリアライズする必要がある場合は、[transport hooks](hooks#Universal-hooks-transport) を使用してください。
 
 ### どちらを使用すべきか <!--When-to-use-which-->
 

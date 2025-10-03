@@ -28,6 +28,7 @@ npx sv add [add-ons]
 
 <!-- TODO: it'd be nice for this to live on the "add-ons" page, but we first need svelte.dev to support making pages from headings -->
 
+- [`devtools-json`](devtools-json)
 - [`drizzle`](drizzle)
 - [`eslint`](eslint)
 - [`lucia`](lucia)
@@ -39,4 +40,3 @@ npx sv add [add-ons]
 - [`sveltekit-adapter`](sveltekit-adapter)
 - [`tailwindcss`](tailwind)
 - [`vitest`](vitest)
-- [`devtools-json`](devtools-json)

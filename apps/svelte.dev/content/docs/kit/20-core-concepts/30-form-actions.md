@@ -441,7 +441,7 @@ form をプログレッシブに強化する最も簡単な方法は、`use:enha
 	/** @param {SubmitEvent & { currentTarget: EventTarget & HTMLFormElement}} event */
 	async function handleSubmit(event) {
 		event.preventDefault();
-		const data = new FormData(event.currentTarget);
+		const data = new FormData(event.currentTarget, event.submitter);
 
 		const response = await fetch(event.currentTarget.action, {
 			method: 'POST',
@@ -470,6 +470,7 @@ form をプログレッシブに強化する最も簡単な方法は、`use:enha
 もし `+page.server.js` と `+server.js` のどちらも存在する場合、デフォルトでは、`fetch` リクエストは `+server.js` のほうにルーティングされます。`+page.server.js` の action に `POST` をするには、カスタムの `x-sveltekit-action` ヘッダーを使用します:
 
 ```js
+// @errors: 2532 2304
 const response = await fetch(this.action, {
 	method: 'POST',
 	body: data,

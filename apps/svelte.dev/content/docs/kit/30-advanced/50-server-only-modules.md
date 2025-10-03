@@ -48,15 +48,18 @@ export const add = (a, b) => a + b;
 …SvelteKit はエラーとなります:
 
 ```
-Cannot import $lib/server/secrets.js into public-facing code:
-- src/routes/+page.svelte
-	- src/routes/utils.js
-		- $lib/server/secrets.js
+Cannot import $lib/server/secrets.ts into code that runs in the browser, as this could leak sensitive information.
+
+ src/routes/+page.svelte imports
+  src/routes/utils.js imports
+   $lib/server/secrets.ts
+
+If you're only using the import as a type, change it to `import type`.
 ```
 
 パブリックに公開されるコード `src/routes/+page.svelte` は、`add` を使用しているのみで、シークレットの `atlantisCoordinates` を使用していませんが、ブラウザがダウンロードする JavaScript にシークレットなコードが残ってしまう可能性があり、このインポートチェーンは安全ではないと考えられます。
 
-この機能は動的なインポート(dynamic imports)でも動作し、``await import(`./${foo}.js`)`` のような補完されたインポートに対しても有効ですが、小さい注意点があります。もしパブリックに公開されるコードとサーバー専用のモジュールの間に2つ以上の dynamic imports がある場合、コードが最初にロードされるときに不正なインポートが検出されない可能性があります。
+この機能は動的なインポート(dynamic imports)でも動作し、``await import(`./${foo}.js`)`` のような補完されたインポートに対しても有効です。
 
 > [!NOTE] Vitest のようなユニットテストフレームワークはサーバー専用のコードと公開されるコードを区別しません。そのため、テストの実行中、つまり `process.env.TEST === 'true'` となっているときは、不正なインポートの検出は無効化されます。
 

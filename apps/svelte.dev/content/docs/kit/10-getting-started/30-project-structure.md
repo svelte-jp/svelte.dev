@@ -20,7 +20,8 @@ my-project/
 │ ├ error.html
 │ ├ hooks.client.js
 │ ├ hooks.server.js
-│ └ service-worker.js
+| ├ service-worker.js
+│ └ tracing.server.js
 ├ static/
 │ └ [your static assets]
 ├ tests/
@@ -52,9 +53,12 @@ my-project/
 - `error.html` は、全てが失敗したときにレンダリングされるページです。以下のプレースホルダーを含めることができます:
   - `%sveltekit.status%` — HTTP ステータス
   - `%sveltekit.error.message%` — エラーメッセージ
+  - `%sveltekit.version%` — デプロイメントのバージョン。[`version`](configuration#version) 設定で指定することができます
 - `hooks.client.js` にはクライアントの [hooks](hooks) を記述します
 - `hooks.server.js` にはサーバーの [hooks](hooks) を記述します
 - `service-worker.js` には [service worker](service-workers) を記述します
+- `instrumentation.server.js` には [observability](observability) の設定と instrumentation コードが含まれます
+  - adapter のサポートが必要です。もしあなたが使用する adapter がこれをサポートしている場合は、あなたのアプリケーションコードの読み込みと実行の前に、必ず実行されることが保証されます。
 
 (プロジェクトに `.js` と `.ts` のどちらのファイルが含まれるかについては、プロジェクトの作成時に TypeScript の使用を選択したかどうかによります。)
 
@@ -80,7 +84,7 @@ my-project/
 
 ### tsconfig.json
 
-`npx sv create` の際に型チェックを追加した場合、このファイル (または `.ts` ファイルより型チェックされた `.js` ファイルのほうがお好みであれば `jsconfig.json`) で TypeScript の設定を行います。SvelteKit は特定の設定に依存しているため、独自の `.svelte-kit/tsconfig.json` ファイルを生成し、あなたの設定を `extends` (拡張)しています。
+`npx sv create` の際に型チェックを追加した場合、このファイル (または `.ts` ファイルより型チェックされた `.js` ファイルのほうがお好みであれば `jsconfig.json`) で TypeScript の設定を行います。SvelteKit は特定の設定に依存しているため、独自の `.svelte-kit/tsconfig.json` ファイルを生成し、あなたの設定を `extends` (拡張)しています。`include` や `exclude` のようなトップレベルのオプションを変更するには、生成された設定を拡張することをお勧めします。詳細は [`typescript.config` の設定](configuration#typescript) を参照してください。
 
 ### vite.config.js
 
