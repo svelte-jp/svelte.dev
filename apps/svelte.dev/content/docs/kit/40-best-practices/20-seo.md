@@ -15,7 +15,7 @@ SEO で最も重要なのは、高品質なコンテンツを作ること、そ�
 
 ### パフォーマンス <!--Performance-->
 
-[Core Web Vitals](https://web.dev/vitals/#core-web-vitals) のような指標は検索エンジンのランクに影響を与えます。Svelte と SvelteKit はオーバーヘッドが最小限であるため、ハイパフォーマンスなサイトを簡単に構築できです。Google の [PageSpeed Insights](https://pagespeed.web.dev/) や [Lighthouse](https://developers.google.com/web/tools/lighthouse) で、ご自身のサイトをテストすることができます。詳細は [パフォーマンスのページ](performance) をお読みください。
+[Core Web Vitals](https://web.dev/vitals/#core-web-vitals) のような指標は検索エンジンのランクに影響を与えます。Svelte と SvelteKit はオーバーヘッドが最小限であるため、ハイパフォーマンスなサイトを簡単に構築できです。Google の [PageSpeed Insights](https://pagespeed.web.dev/) や [Lighthouse](https://developers.google.com/web/tools/lighthouse) で、ご自身のサイトをテストすることができます。SvelteKit のデフォルトの [ハイブリッドレンダリング](glossary#Hybrid-app)モードや[画像の最適化](images)といったいくつかの重要な処置を講じることで、サイトの速度を大幅に改善することができます。詳細は [パフォーマンスのページ](performance) をお読みください。
 
 ### URLの正規化 <!--Normalized-urls-->
 

@@ -151,7 +151,7 @@ Checks whether this is an error thrown by `error`.
 ```dts
 function isHttpError<T extends number>(
 	e: unknown,
-	status?: T | undefined
+	status?: T
 ): e is HttpError_1 & {
 	status: T extends undefined ? never : T;
 };
@@ -182,10 +182,7 @@ Create a JSON `Response` object from the supplied data.
 <div class="ts-block">
 
 ```dts
-function json(
-	data: any,
-	init?: ResponseInit | undefined
-): Response;
+function json(data: any, init?: ResponseInit): Response;
 ```
 
 </div>
@@ -268,10 +265,7 @@ Create a `Response` object from the supplied body.
 <div class="ts-block">
 
 ```dts
-function text(
-	body: string,
-	init?: ResponseInit | undefined
-): Response;
+function text(body: string, init?: ResponseInit): Response;
 ```
 
 </div>
@@ -456,6 +450,24 @@ read?: (details: { config: any; route: { id: string } }) => boolean;
 Test support for `read` from `$app/server`.
 
 </div>
+</div>
+<div class="ts-block-property">
+
+```dts
+instrumentation?: () => boolean;
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- <span class="tag since">available since</span> v2.31.0
+
+</div>
+
+Test support for `instrumentation.server.js`. To pass, the adapter must support running `instrumentation.server.js` prior to the application code.
+
+</div>
 </div></div>
 
 </div>
@@ -482,39 +494,24 @@ The argument passed to [`afterNavigate`](/docs/kit/$app-navigation#afterNavigate
 <div class="ts-block">
 
 ```dts
-interface AfterNavigate extends Omit<Navigation, 'type'> {/*…*/}
+type AfterNavigate = (Navigation | NavigationEnter) & {
+	/**
+	 * The type of navigation:
+	 * - `enter`: The app has hydrated/started
+	 * - `form`: The user submitted a `<form method="GET">`
+	 * - `link`: Navigation was triggered by a link click
+	 * - `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+	 * - `popstate`: Navigation was triggered by back/forward navigation
+	 */
+	type: Exclude<NavigationType, 'leave'>;
+	/**
+	 * Since `afterNavigate` callbacks are called after a navigation completes, they will never be called with a navigation that unloads the page.
+	 */
+	willUnload: false;
+};
 ```
 
-<div class="ts-block-property">
-
-```dts
-type: Exclude<NavigationType, 'leave'>;
-```
-
-<div class="ts-block-property-details">
-
-The type of navigation:
-- `enter`: The app has hydrated/started
-- `form`: The user submitted a `<form>`
-- `link`: Navigation was triggered by a link click
-- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
-- `popstate`: Navigation was triggered by back/forward navigation
-
 </div>
-</div>
-
-<div class="ts-block-property">
-
-```dts
-willUnload: false;
-```
-
-<div class="ts-block-property-details">
-
-Since `afterNavigate` callbacks are called after a navigation completes, they will never be called with a navigation that unloads the page.
-
-</div>
-</div></div>
 
 ## AwaitedActions
 
@@ -541,21 +538,15 @@ The argument passed to [`beforeNavigate`](/docs/kit/$app-navigation#beforeNaviga
 <div class="ts-block">
 
 ```dts
-interface BeforeNavigate extends Navigation {/*…*/}
+type BeforeNavigate = Navigation & {
+	/**
+	 * Call this to prevent the navigation from starting.
+	 */
+	cancel: () => void;
+};
 ```
-
-<div class="ts-block-property">
-
-```dts
-cancel: () => void;
-```
-
-<div class="ts-block-property-details">
-
-Call this to prevent the navigation from starting.
 
 </div>
-</div></div>
 
 ## Builder
 
@@ -868,6 +859,71 @@ copy: (
 </div>
 
 Copy a file or directory.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+hasServerInstrumentationFile: () => boolean;
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- <span class="tag">returns</span> true if the server instrumentation file exists, false otherwise
+- <span class="tag since">available since</span> v2.31.0
+
+</div>
+
+Check if the server instrumentation file exists.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+instrument: (args: {
+	entrypoint: string;
+	instrumentation: string;
+	start?: string;
+	module?:
+		| {
+				exports: string[];
+		  }
+		| {
+				generateText: (args: { instrumentation: string; start: string }) => string;
+		  };
+}) => void;
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- `options` an object containing the following properties:
+- `options.entrypoint` the path to the entrypoint to trace.
+- `options.instrumentation` the path to the instrumentation file.
+- `options.start` the name of the start file. This is what `entrypoint` will be renamed to.
+- `options.module` configuration for the resulting entrypoint module.
+- `options.module.generateText` a function that receives the relative paths to the instrumentation and start files, and generates the text of the module to be traced. If not provided, the default implementation will be used, which uses top-level await.
+- <span class="tag since">available since</span> v2.31.0
+
+</div>
+
+Instrument `entrypoint` with `instrumentation`.
+
+Renames `entrypoint` to `start` and creates a new module at
+`entrypoint` which imports `instrumentation` and then dynamically imports `start`. This allows
+the module hooks necessary for instrumentation libraries to be loaded prior to any application code.
+
+Caveats:
+- "Live exports" will not work. If your adapter uses live exports, your users will need to manually import the server instrumentation on startup.
+- If `tla` is `false`, OTEL auto-instrumentation may not work properly. Use it if your environment supports it.
+- Use `hasServerInstrumentationFile` to check if the user has a server instrumentation file; if they don't, you shouldn't do this.
 
 </div>
 </div>
@@ -1425,6 +1481,62 @@ export async function load({ untrack, url }) {
 ```
 
 </div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+tracing: {/*…*/}
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- <span class="tag since">available since</span> v2.31.0
+
+</div>
+
+Access to spans for tracing. If tracing is not enabled or the function is being run in the browser, these spans will do nothing.
+
+<div class="ts-block-property-children"><div class="ts-block-property">
+
+```dts
+enabled: boolean;
+```
+
+<div class="ts-block-property-details">
+
+Whether tracing is enabled.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+root: Span;
+```
+
+<div class="ts-block-property-details">
+
+The root span for the request. This span is named `sveltekit.handle.root`.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+current: Span;
+```
+
+<div class="ts-block-property-details">
+
+The span associated with the current `load` function.
+
+</div>
+</div></div>
+
+</div>
 </div></div>
 
 ## LoadProperties
@@ -1448,7 +1560,21 @@ type LoadProperties<
 <div class="ts-block">
 
 ```dts
-interface Navigation {/*…*/}
+type Navigation =
+	| NavigationExternal
+	| NavigationFormSubmit
+	| NavigationPopState
+	| NavigationLink;
+```
+
+</div>
+
+## NavigationBase
+
+<div class="ts-block">
+
+```dts
+interface NavigationBase {/*…*/}
 ```
 
 <div class="ts-block-property">
@@ -1480,43 +1606,12 @@ Where navigation is going to/has gone to
 <div class="ts-block-property">
 
 ```dts
-type: Exclude<NavigationType, 'enter'>;
-```
-
-<div class="ts-block-property-details">
-
-The type of navigation:
-- `form`: The user submitted a `<form>`
-- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
-- `link`: Navigation was triggered by a link click
-- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
-- `popstate`: Navigation was triggered by back/forward navigation
-
-</div>
-</div>
-
-<div class="ts-block-property">
-
-```dts
 willUnload: boolean;
 ```
 
 <div class="ts-block-property-details">
 
 Whether or not the navigation will result in the page being unloaded (i.e. not a client-side navigation)
-
-</div>
-</div>
-
-<div class="ts-block-property">
-
-```dts
-delta?: number;
-```
-
-<div class="ts-block-property-details">
-
-In case of a history back/forward navigation, the number of steps to go back/forward
 
 </div>
 </div>
@@ -1531,6 +1626,58 @@ complete: Promise<void>;
 
 A promise that resolves once the navigation is complete, and rejects if the navigation
 fails or is aborted. In the case of a `willUnload` navigation, the promise will never resolve
+
+</div>
+</div></div>
+
+## NavigationEnter
+
+<div class="ts-block">
+
+```dts
+interface NavigationEnter extends NavigationBase {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+type: 'enter';
+```
+
+<div class="ts-block-property-details">
+
+The type of navigation:
+- `form`: The user submitted a `<form method="GET">`
+- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
+- `link`: Navigation was triggered by a link click
+- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+- `popstate`: Navigation was triggered by back/forward navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+delta?: undefined;
+```
+
+<div class="ts-block-property-details">
+
+In case of a history back/forward navigation, the number of steps to go back/forward
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+event?: undefined;
+```
+
+<div class="ts-block-property-details">
+
+Dispatched `Event` object when navigation occured by `popstate` or `link`.
 
 </div>
 </div></div>
@@ -1599,6 +1746,201 @@ The URL of the current page
 </div>
 </div></div>
 
+## NavigationExternal
+
+<div class="ts-block">
+
+```dts
+interface NavigationExternal extends NavigationBase {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+type: Exclude<NavigationType, 'enter' | 'popstate' | 'link' | 'form'>;
+```
+
+<div class="ts-block-property-details">
+
+The type of navigation:
+- `form`: The user submitted a `<form method="GET">`
+- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
+- `link`: Navigation was triggered by a link click
+- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+- `popstate`: Navigation was triggered by back/forward navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+delta?: undefined;
+```
+
+<div class="ts-block-property-details">
+
+In case of a history back/forward navigation, the number of steps to go back/forward
+
+</div>
+</div></div>
+
+## NavigationFormSubmit
+
+<div class="ts-block">
+
+```dts
+interface NavigationFormSubmit extends NavigationBase {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+type: 'form';
+```
+
+<div class="ts-block-property-details">
+
+The type of navigation:
+- `form`: The user submitted a `<form method="GET">`
+- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
+- `link`: Navigation was triggered by a link click
+- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+- `popstate`: Navigation was triggered by back/forward navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+event: SubmitEvent;
+```
+
+<div class="ts-block-property-details">
+
+The `SubmitEvent` that caused the navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+delta?: undefined;
+```
+
+<div class="ts-block-property-details">
+
+In case of a history back/forward navigation, the number of steps to go back/forward
+
+</div>
+</div></div>
+
+## NavigationLink
+
+<div class="ts-block">
+
+```dts
+interface NavigationLink extends NavigationBase {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+type: 'link';
+```
+
+<div class="ts-block-property-details">
+
+The type of navigation:
+- `form`: The user submitted a `<form method="GET">`
+- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
+- `link`: Navigation was triggered by a link click
+- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+- `popstate`: Navigation was triggered by back/forward navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+event: PointerEvent;
+```
+
+<div class="ts-block-property-details">
+
+The `PointerEvent` that caused the navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+delta?: undefined;
+```
+
+<div class="ts-block-property-details">
+
+In case of a history back/forward navigation, the number of steps to go back/forward
+
+</div>
+</div></div>
+
+## NavigationPopState
+
+<div class="ts-block">
+
+```dts
+interface NavigationPopState extends NavigationBase {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+type: 'popstate';
+```
+
+<div class="ts-block-property-details">
+
+The type of navigation:
+- `form`: The user submitted a `<form method="GET">`
+- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
+- `link`: Navigation was triggered by a link click
+- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+- `popstate`: Navigation was triggered by back/forward navigation
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+delta: number;
+```
+
+<div class="ts-block-property-details">
+
+In case of a history back/forward navigation, the number of steps to go back/forward
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+event: PopStateEvent;
+```
+
+<div class="ts-block-property-details">
+
+The `PopStateEvent` that caused the navigation
+
+</div>
+</div></div>
+
 ## NavigationTarget
 
 Information about the target of a specific navigation.
@@ -1606,13 +1948,17 @@ Information about the target of a specific navigation.
 <div class="ts-block">
 
 ```dts
-interface NavigationTarget {/*…*/}
+interface NavigationTarget<
+	Params extends
+		AppLayoutParams<'/'> = AppLayoutParams<'/'>,
+	RouteId extends AppRouteId | null = AppRouteId | null
+> {/*…*/}
 ```
 
 <div class="ts-block-property">
 
 ```dts
-params: Record<string, string> | null;
+params: Params | null;
 ```
 
 <div class="ts-block-property-details">
@@ -1636,7 +1982,7 @@ Info about the target route
 <div class="ts-block-property-children"><div class="ts-block-property">
 
 ```dts
-id: string | null;
+id: RouteId | null;
 ```
 
 <div class="ts-block-property-details">
@@ -1665,8 +2011,8 @@ The URL that is navigated to
 ## NavigationType
 
 - `enter`: The app has hydrated/started
-- `form`: The user submitted a `<form>` with a GET method
-- `leave`: The user is leaving the app by closing the tab or using the back/forward buttons to go to a different document
+- `form`: The user submitted a `<form method="GET">`
+- `leave`: The app is being left either because the tab is being closed or a navigation to a different document is occurring
 - `link`: Navigation was triggered by a link click
 - `goto`: Navigation was triggered by a `goto(...)` call or a redirect
 - `popstate`: Navigation was triggered by back/forward navigation
@@ -1705,38 +2051,23 @@ The argument passed to [`onNavigate`](/docs/kit/$app-navigation#onNavigate) call
 <div class="ts-block">
 
 ```dts
-interface OnNavigate extends Navigation {/*…*/}
+type OnNavigate = Navigation & {
+	/**
+	 * The type of navigation:
+	 * - `form`: The user submitted a `<form method="GET">`
+	 * - `link`: Navigation was triggered by a link click
+	 * - `goto`: Navigation was triggered by a `goto(...)` call or a redirect
+	 * - `popstate`: Navigation was triggered by back/forward navigation
+	 */
+	type: Exclude<NavigationType, 'enter' | 'leave'>;
+	/**
+	 * Since `onNavigate` callbacks are called immediately before a client-side navigation, they will never be called with a navigation that unloads the page.
+	 */
+	willUnload: false;
+};
 ```
 
-<div class="ts-block-property">
-
-```dts
-type: Exclude<NavigationType, 'enter' | 'leave'>;
-```
-
-<div class="ts-block-property-details">
-
-The type of navigation:
-- `form`: The user submitted a `<form>`
-- `link`: Navigation was triggered by a link click
-- `goto`: Navigation was triggered by a `goto(...)` call or a redirect
-- `popstate`: Navigation was triggered by back/forward navigation
-
 </div>
-</div>
-
-<div class="ts-block-property">
-
-```dts
-willUnload: false;
-```
-
-<div class="ts-block-property-details">
-
-Since `onNavigate` callbacks are called immediately before a client-side navigation, they will never be called with a navigation that unloads the page.
-
-</div>
-</div></div>
 
 ## Page
 
@@ -1934,14 +2265,16 @@ The return value of a remote `command` function. See [Remote functions](/docs/ki
 <div class="ts-block">
 
 ```dts
-type RemoteCommand<Input, Output> = (arg: Input) => Promise<
-	Awaited<Output>
-> & {
-	updates(
-		...queries: Array<
-			RemoteQuery<any> | RemoteQueryOverride
-		>
-	): Promise<Awaited<Output>>;
+type RemoteCommand<Input, Output> = {
+	(arg: Input): Promise<Awaited<Output>> & {
+		updates(
+			...queries: Array<
+				RemoteQuery<any> | RemoteQueryOverride
+			>
+		): Promise<Awaited<Output>>;
+	};
+	/** The number of pending command executions */
+	get pending(): number;
 };
 ```
 
@@ -1954,17 +2287,20 @@ The return value of a remote `form` function. See [Remote functions](/docs/kit/r
 <div class="ts-block">
 
 ```dts
-type RemoteForm<Result> = {
+type RemoteForm<
+	Input extends RemoteFormInput | void,
+	Output
+> = {
+	/** Attachment that sets up an event handler that intercepts the form submission on the client to prevent a full page reload */
+	[attachment: symbol]: (node: HTMLFormElement) => void;
 	method: 'POST';
 	/** The URL to send the form to. */
 	action: string;
-	/** Event handler that intercepts the form submission on the client to prevent a full page reload */
-	onsubmit: (event: SubmitEvent) => void;
 	/** Use the `enhance` method to influence what happens when the form is submitted. */
 	enhance(
 		callback: (opts: {
 			form: HTMLFormElement;
-			data: FormData;
+			data: Input;
 			submit: () => Promise<void> & {
 				updates: (
 					...queries: Array<
@@ -1972,11 +2308,11 @@ type RemoteForm<Result> = {
 					>
 				) => Promise<void>;
 			};
-		}) => void
+		}) => void | Promise<void>
 	): {
 		method: 'POST';
 		action: string;
-		onsubmit: (event: SubmitEvent) => void;
+		[attachment: symbol]: (node: HTMLFormElement) => void;
 	};
 	/**
 	 * Create an instance of the form for the given key.
@@ -1994,9 +2330,43 @@ type RemoteForm<Result> = {
 	 */
 	for(
 		key: string | number | boolean
-	): Omit<RemoteForm<Result>, 'for'>;
+	): Omit<RemoteForm<Input, Output>, 'for'>;
+	/**
+	 * This method exists to allow you to typecheck `name` attributes. It returns its argument
+	 * @example
+	 * ```svelte
+	 * <input name={login.field('username')} />
+	 * ```
+	 **/
+	field<
+		Name extends keyof UnionToIntersection<
+			FlattenKeys<Input, ''>
+		>
+	>(
+		string: Name
+	): Name;
+	/** Preflight checks */
+	preflight(
+		schema: StandardSchemaV1<Input, any>
+	): RemoteForm<Input, Output>;
+	/** Validate the form contents programmatically */
+	validate(options?: {
+		includeUntouched?: boolean;
+		/** Perform validation as if the form was submitted by the given button. */
+		submitter?: HTMLButtonElement | HTMLInputElement;
+	}): Promise<void>;
 	/** The result of the form submission */
-	get result(): Result | undefined;
+	get result(): Output | undefined;
+	/** The number of pending submissions */
+	get pending(): number;
+	/** The submitted values */
+	input: null | UnionToIntersection<
+		FlattenInput<Input, ''>
+	>;
+	/** Validation issues */
+	issues: null | UnionToIntersection<
+		FlattenIssues<Input, ''>
+	>;
 	/** Spread this onto a `<button>` or `<input type="submit">` */
 	buttonProps: {
 		type: 'submit';
@@ -2007,7 +2377,7 @@ type RemoteForm<Result> = {
 		enhance(
 			callback: (opts: {
 				form: HTMLFormElement;
-				data: FormData;
+				data: Input;
 				submit: () => Promise<void> & {
 					updates: (
 						...queries: Array<
@@ -2015,18 +2385,72 @@ type RemoteForm<Result> = {
 						>
 					) => Promise<void>;
 				};
-			}) => void
+			}) => void | Promise<void>
 		): {
 			type: 'submit';
 			formmethod: 'POST';
 			formaction: string;
 			onclick: (event: Event) => void;
 		};
+		/** The number of pending submissions */
+		get pending(): number;
 	};
 };
 ```
 
 </div>
+
+## RemoteFormInput
+
+<div class="ts-block">
+
+```dts
+interface RemoteFormInput {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+[key: string]: FormDataEntryValue | FormDataEntryValue[] | RemoteFormInput | RemoteFormInput[];
+```
+
+<div class="ts-block-property-details"></div>
+</div></div>
+
+## RemoteFormIssue
+
+<div class="ts-block">
+
+```dts
+interface RemoteFormIssue {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+name: string;
+```
+
+<div class="ts-block-property-details"></div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+path: Array<string | number>;
+```
+
+<div class="ts-block-property-details"></div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+message: string;
+```
+
+<div class="ts-block-property-details"></div>
+</div></div>
 
 ## RemotePrerenderFunction
 
@@ -2049,6 +2473,13 @@ type RemotePrerenderFunction<Input, Output> = (
 ```dts
 type RemoteQuery<T> = RemoteResource<T> & {
 	/**
+	 * On the client, this function will update the value of the query without re-fetching it.
+	 *
+	 * On the server, this can be called in the context of a `command` or `form` and the specified data will accompany the action response back to the client.
+	 * This prevents SvelteKit needing to refresh all queries on the page in a second server round-trip.
+	 */
+	set(value: T): void;
+	/**
 	 * On the client, this function will re-fetch the query from the server.
 	 *
 	 * On the server, this can be called in the context of a `command` or `form` and the refreshed data will accompany the action response back to the client.
@@ -2056,7 +2487,7 @@ type RemoteQuery<T> = RemoteResource<T> & {
 	 */
 	refresh(): Promise<void>;
 	/**
-	 * Temporarily override the value of a query. This is used with the `updates` method of a [command](https://svelte.dev/docs/kit/remote-functions#command-Single-flight-mutations) or [enhanced form submission](https://svelte.dev/docs/kit/remote-functions#form-enhance) to provide optimistic updates.
+	 * Temporarily override the value of a query. This is used with the `updates` method of a [command](https://svelte.dev/docs/kit/remote-functions#command-Updating-queries) or [enhanced form submission](https://svelte.dev/docs/kit/remote-functions#form-enhance) to provide optimistic updates.
 	 *
 	 * ```svelte
 	 * <script>
@@ -2068,7 +2499,7 @@ type RemoteQuery<T> = RemoteResource<T> & {
 	 *   await submit().updates(
 	 *     todos.withOverride((todos) => [...todos, { text: data.get('text') }])
 	 *   );
-	 * }}>
+	 * })}>
 	 *   <input type="text" name="text" />
 	 *   <button type="submit">Add Todo</button>
 	 * </form>
@@ -2354,6 +2785,62 @@ isSubRequest: boolean;
 <div class="ts-block-property-details">
 
 `true` for `+server.js` calls coming from SvelteKit without the overhead of actually making an HTTP request. This happens when you make same-origin `fetch` requests on the server.
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+tracing: {/*…*/}
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- <span class="tag since">available since</span> v2.31.0
+
+</div>
+
+Access to spans for tracing. If tracing is not enabled, these spans will do nothing.
+
+<div class="ts-block-property-children"><div class="ts-block-property">
+
+```dts
+enabled: boolean;
+```
+
+<div class="ts-block-property-details">
+
+Whether tracing is enabled.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+root: Span;
+```
+
+<div class="ts-block-property-details">
+
+The root span for the request. This span is named `sveltekit.handle.root`.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+current: Span;
+```
+
+<div class="ts-block-property-details">
+
+The span associated with the current `handle` hook, `load` function, or form action.
+
+</div>
+</div></div>
 
 </div>
 </div>
@@ -2871,6 +3358,62 @@ export async function load({ untrack, url }) {
 	}
 }
 ```
+
+</div>
+</div>
+
+<div class="ts-block-property">
+
+```dts
+tracing: {/*…*/}
+```
+
+<div class="ts-block-property-details">
+
+<div class="ts-block-property-bullets">
+
+- <span class="tag since">available since</span> v2.31.0
+
+</div>
+
+Access to spans for tracing. If tracing is not enabled, these spans will do nothing.
+
+<div class="ts-block-property-children"><div class="ts-block-property">
+
+```dts
+enabled: boolean;
+```
+
+<div class="ts-block-property-details">
+
+Whether tracing is enabled.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+root: Span;
+```
+
+<div class="ts-block-property-details">
+
+The root span for the request. This span is named `sveltekit.handle.root`.
+
+</div>
+</div>
+<div class="ts-block-property">
+
+```dts
+current: Span;
+```
+
+<div class="ts-block-property-details">
+
+The span associated with the current server `load` function.
+
+</div>
+</div></div>
 
 </div>
 </div></div>
@@ -3669,6 +4212,37 @@ type PrerenderMissingIdHandlerValue =
 
 ```dts
 type PrerenderOption = boolean | 'auto';
+```
+
+</div>
+
+## PrerenderUnseenRoutesHandler
+
+<div class="ts-block">
+
+```dts
+interface PrerenderUnseenRoutesHandler {/*…*/}
+```
+
+<div class="ts-block-property">
+
+```dts
+(details: { routes: string[]; message: string }): void;
+```
+
+<div class="ts-block-property-details"></div>
+</div></div>
+
+## PrerenderUnseenRoutesHandlerValue
+
+<div class="ts-block">
+
+```dts
+type PrerenderUnseenRoutesHandlerValue =
+	| 'fail'
+	| 'warn'
+	| 'ignore'
+	| PrerenderUnseenRoutesHandler;
 ```
 
 </div>

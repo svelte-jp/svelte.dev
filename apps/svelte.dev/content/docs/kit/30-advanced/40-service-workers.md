@@ -24,9 +24,23 @@ service worker の内部では、[`$service-worker` モジュール]($service-wo
 次の例では、ビルドされたアプリと `static` にあるファイルをすぐに(eagerly)キャッシュし、その他全てのリクエストはそれらの発生時にキャッシュします。これにより、各ページは一度アクセスするとオフラインで動作するようになります。
 
 ```js
-// @errors: 2339
+/// file: src/service-worker.js
+// Disables access to DOM typings like `HTMLElement` which are not available
+// inside a service worker and instantiates the correct globals
+/// <reference no-default-lib="true"/>
+/// <reference lib="esnext" />
+/// <reference lib="webworker" />
+
+// Ensures that the `$service-worker` import has proper type definitions
 /// <reference types="@sveltejs/kit" />
+
+// Only necessary if you have an import from `$env/static/public`
+/// <reference types="../.svelte-kit/ambient.d.ts" />
+
 import { build, files, version } from '$service-worker';
+
+// This gives `self` the correct types
+const self = /** @type {ServiceWorkerGlobalScope} */ (/** @type {unknown} */ (globalThis.self));
 
 // Create a unique cache name for this deployment
 const CACHE = `cache-${version}`;
@@ -122,29 +136,6 @@ navigator.serviceWorker.register('/service-worker.js', {
 ```
 
 > [!NOTE] `build` と `prerendered` は開発中は空配列です
-
-## 型安全性(Type safety)
-
-service worker に適切な型を設定するには、マニュアルで設定が必要です。`service-worker.js` の中で、ファイルの先頭に以下を追加してください:
-
-```js
-/// <reference types="@sveltejs/kit" />
-/// <reference no-default-lib="true"/>
-/// <reference lib="esnext" />
-/// <reference lib="webworker" />
-
-const sw = /** @type {ServiceWorkerGlobalScope} */ (/** @type {unknown} */ (self));
-```
-```ts
-/// <reference types="@sveltejs/kit" />
-/// <reference no-default-lib="true"/>
-/// <reference lib="esnext" />
-/// <reference lib="webworker" />
-
-const sw = self as unknown as ServiceWorkerGlobalScope;
-```
-
-これにより、`HTMLElement` のような service worker の中では使用できない DOM の型付けへのアクセスが無効になり、正しい global が初期化されます。`self` を `sw` に再代入することで、プロセス内で型をキャストすることができます (いくつか方法がありますが、これが追加のファイルを必要としない最も簡単な方法です)。ファイルの残りの部分では、`self` の代わりに `sw` を使用します。SvelteKit の型を参照することで、`$service-worker` import に適切な型定義があることを保証することができます。もし `$env/static/public` をインポートする場合は、そのインポートに `// @ts-ignore` を追加するか、`/// <reference types="../.svelte-kit/ambient.d.ts" />` を reference types に追加する必要があります。
 
 ## その他のソリューション <!--Other-solutions-->
 

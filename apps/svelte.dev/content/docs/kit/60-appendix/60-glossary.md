@@ -15,6 +15,10 @@ SvelteKit では、デフォルトでクライアントサイドレンダリン�
 
 Rendering on the edge refers to rendering an application in a content delivery network (CDN) near the user. Edge rendering allows the request and response for a page to travel a shorter distance thus improving latency.
 
+## Hybrid app
+
+SvelteKit uses a hybrid rendering mode by default where it loads the initial HTML from the server (SSR), and then updates the page contents on subsequent navigations via client-side rendering (CSR).
+
 ## ハイドレーション(Hydration) <!--Hydration-->
 
 Svelte コンポーネントは、何らかの状態を保存し、状態が更新されると DOM を更新します。SSR 中にデータをフェッチするとき、デフォルトでは SvelteKit はこのデータを保存し、サーバーレンダリングされた HTML と一緒にクライアントに送信します。それからコンポーネントは、同じ API エンドポイントを再度呼び出すことなく、クライアント側でそのデータを使用して初期化されます。そして Svelte はハイドレーション(Hydration)と呼ばれるプロセスで DOM が想定通りの状態にあることをチェックしてイベントリスナーをアタッチします。コンポーネントが完全にハイドレートされると、新しく作成された Svelte コンポーネントと同じように、プロパティの変更に反応(react)することができます。
@@ -51,7 +55,7 @@ SvelteKit では、デフォルトでクライアントサイドルーティン�
 
 ## SPA
 
-シングルページアプリ(single-page app (SPA))とは、サーバーへの全てのリクエストで単一のHTMLをロードし、コンテンツのクライアントサイドレンダリングをリクエストされたURLに基づいて行うアプリケーションのことです。全てのナビゲーションはクライアントサイドで(クライアントサイドルーティングと呼ばれるプロセスで)処理され、ページごとのコンテンツは更新されるが共通のレイアウト要素はほとんど更新されません。SPA は SSR を提供しないため、パフォーマンスと SEO 悪化します。しかし、SEOが重要ではない、ユーザーが一貫したコンピューティング環境からアプリケーションにアクセスすることがわかっているような、ログインの背後にある複雑なビジネスアプリケーションなどの場合は、これらの欠点による大きな影響を受けません。
+シングルページアプリ(single-page app (SPA))とは、サーバーへの全てのリクエストで単一のHTMLをロードし、クライアントサイドレンダリングをリクエストされたURLに基づいて行うアプリケーションのことです。全てのナビゲーションはクライアントサイドで(クライアントサイドルーティングと呼ばれるプロセスで)処理され、ページごとのコンテンツは更新されるが共通のレイアウト要素はほとんど更新されません。このサイト全体で、SPAを指すときは、初期リクエストの際に空のシェルを返すという定義を使用しています。初期リクエストで HTML を提供する[ハイブリッドアプリ](#Hybrid-app)と混同しないでください。SPA モードでは、レンダリングが開始される前に2つのネットワークラウンドトリップが必要になるため、パフォーマンスに大きな影響を与えます。SPA モードはパフォーマンスと SEO に大きな悪影響を与えるため、モバイルアプリにラップされる場合など、ごく限られた状況でのみ推奨されます。
 
 SvelteKit では、[`adapter-static` を使って SPA を構築](single-page-apps) することができます。
 
@@ -63,6 +67,6 @@ SvelteKit では、[`adapter-static`](adapter-static) を使用したり、[`pre
 
 ## SSR
 
-サーバーサイドレンダリング(Server-side rendering (SSR))とは、サーバー上でページコンテンツを生成することです。SSR は一般的に SEO の観点で好まれます。クライアントサイドで生成される動的なコンテンツをインデックスできる検索エンジンもありますが、その場合でもそれに時間がかかることがあります。知覚的なパフォーマンスも改善される傾向にあり、もしJavaScriptが失敗したり無効になっている場合でも([あなたが思うより頻繁に](https://kryogenix.org/code/browser/everyonehasjs.html)発生しています)、ユーザーがアプリにアクセスできるようになります。
+サーバーサイドレンダリング(Server-side rendering (SSR))とは、サーバー上でページコンテンツを生成することです。SSR やプリレンダリングによってサーバーからページコンテンツを返すことは、パフォーマンスと SEO の観点で非常に望ましいです。SPA で必要となる余分なラウンドトリップを回避することでパフォーマンスが大幅に向上し、また、JavaScript が失敗したり無効にされている場合でも、ユーザーがアプリにアクセスできるようになります (実際、JavaScript が動作しない状況は[想像以上に頻繁に発生します](https://kryogenix.org/code/browser/everyonehasjs.html))。一部の検索エンジンはクライアントサイドで動的に生成されたコンテンツをインデックスできますが、その場合でも時間がかかる可能性があります。
 
 SvelteKit では、デフォルトでページがサーバーサイドレンダリングされます。[`ssr` ページオプション](page-options#ssr) で SSR を無効化できます。

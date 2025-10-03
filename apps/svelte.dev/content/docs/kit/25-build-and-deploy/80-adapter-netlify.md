@@ -12,11 +12,11 @@ Netlify にデプロイする場合は、[`adapter-netlify`](https://github.com/
 `npm i -D @sveltejs/adapter-netlify` を実行してインストールし、`svelte.config.js` にこの adapter を追加します:
 
 ```js
-// @errors: 2307
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-netlify';
 
-export default {
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
 	kit: {
 		// default options are shown
 		adapter: adapter({
@@ -31,6 +31,8 @@ export default {
 		})
 	}
 };
+
+export default config;
 ```
 
 そして、プロジェクトの root に [netlify.toml](https://docs.netlify.com/configure-builds/file-based-configuration) ファイルを置くのを忘れないでください。このファイルの `build.publish` に基づいて静的なアセットをどこに書き込むか決定します。こちらのサンプルの設定をご覧ください:
@@ -49,14 +51,14 @@ export default {
 
 ## Netlify Edge Functions
 
-SvelteKit は [Netlify Edge Functions](https://docs.netlify.com/netlify-labs/experimental-features/edge-functions/) をサポートしています。`adapter` 関数に `edge: true` オプションを渡すと、サイト訪問者に近い場所にデプロイされる Deno ベースの edge function でサーバーサイドレンダリングが行われるようになります。`false` を設定した場合 (デフォルト)、サイトは Node ベースの Netlify Functions にデプロイされます。
+SvelteKit は [Netlify Edge Functions](https://docs.netlify.com/build/edge-functions/overview/) をサポートしています。`adapter` 関数に `edge: true` オプションを渡すと、サイト訪問者に近い場所にデプロイされる Deno ベースの edge function でサーバーサイドレンダリングが行われるようになります。`false` を設定した場合 (デフォルト)、サイトは Node ベースの Netlify Functions にデプロイされます。
 
 ```js
-// @errors: 2307
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-netlify';
 
-export default {
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
 	kit: {
 		adapter: adapter({
 			// will create a Netlify Edge Function using Deno-based
@@ -65,6 +67,8 @@ export default {
 		})
 	}
 };
+
+export default config;
 ```
 
 ## SvelteKit の機能を代替する Netlify の機能 <!--Netlify-alternatives-to-SvelteKit-functionality-->
@@ -93,10 +97,15 @@ The [`_headers`](https://docs.netlify.com/routing/headers/#syntax-for-the-header
 この adapter によって、SvelteKit エンドポイントは [Netlify Functions](https://docs.netlify.com/functions/overview/) としてホストされます。Netlify function ハンドラには追加のコンテキストがあり、[Netlify Identity](https://docs.netlify.com/visitor-access/identity/) 情報が含まれています。このコンテキストは、あなたの hooks や `+page.server` と `+layout.server` エンドポイント の中で `event.platform.context` フィールドを介してアクセスできます。adapter config の `edge` プロパティが `false` の場合は[serverless functions](https://docs.netlify.com/functions/overview/)、`true` の場合は [edge functions](https://docs.netlify.com/edge-functions/overview/#app) となります。
 
 ```js
-// @errors: 2705 7006
+// @errors: 2339
+// @filename: ambient.d.ts
+/// <reference types="@sveltejs/adapter-netlify" />
+// @filename: +page.server.js
+// ---cut---
 /// file: +page.server.js
+/** @type {import('./$types').PageServerLoad} */
 export const load = async (event) => {
-	const context = event.platform.context;
+	const context = event.platform?.context;
 	console.log(context); // shows up in your functions log in the Netlify app
 };
 ```
@@ -118,6 +127,6 @@ export const load = async (event) => {
 
 edge デプロイメントでは `fs` を使用することはできません。
 
-serverless デプロイメントでは `fs` を使用できますが、ファイルがプロジェクトからデプロイメントにコピーされないため、期待通りには動作しないでしょう。代わりに `$app/server` の [`read`]($app-server#read) 関数を使用してファイルにアクセスしてください。edge デプロイメントでは `read` は動作しません（将来的に変更される可能性があります）。
+serverless デプロイメントでは `fs` を使用できますが、ファイルがプロジェクトからデプロイメントにコピーされないため、期待通りには動作しないでしょう。代わりに `$app/server` の [`read`]($app-server#read) 関数を使用してファイルにアクセスしてください。この関数は、edge デプロイメントでも、デプロイされたパブリックアセットのロケーションからファイルを読み込むことで動作します。
 
 その代わりに、`fs` を使用する必要があるルート(route)については[プリレンダリング](page-options#prerender)する必要があります。

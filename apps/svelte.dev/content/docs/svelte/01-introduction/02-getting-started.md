@@ -16,11 +16,11 @@ npm run dev
 
 ## SvelteKit の代替手段 <!--Alternatives-to-SvelteKit-->
 
-Svelteを直接Viteで使用することもできます。その場合、`npm create vite@latest` を実行し、`svelte` オプションを選択します。この方法では、`npm run build` を実行すると、[vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) を使用して、`dist` ディレクトリ内に HTML、JS、CSSファイルが生成されます。ほとんどの場合、[ルーティングライブラリ](faq#Is-there-a-router)を選択する必要があるでしょう。
+Svelteを直接Viteで使用することもできます。その場合、`npm create vite@latest` を実行し、`svelte` オプションを選択します。この方法では、`npm run build` を実行すると、[vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) を使用して、`dist` ディレクトリ内に HTML、JS、CSSファイルが生成されます。ほとんどの場合、[ルーティングライブラリ](/packages#routing)を選択する必要があるでしょう。
 
 >[!NOTE] Vite は [single page apps (SPA)](../kit/glossary#SPA) をビルドするためよくスタンドアロンモードで使用されますが、[SPA は SvelteKit でも構築できます](../kit/single-page-apps)。
 
-また、[Rollup](https://github.com/sveltejs/rollup-plugin-svelte)、[Webpack](https://github.com/sveltejs/svelte-loader)、[その他いくつかのプラグイン](https://sveltesociety.dev/packages?category=build-plugins)もありますが、Viteをお勧めします。
+[他のバンドラー向けのプラグイン](/packages#bundler-plugins)もありますが、Viteをお勧めします。
 
 ## エディタツール <!--Editor-tooling-->
 

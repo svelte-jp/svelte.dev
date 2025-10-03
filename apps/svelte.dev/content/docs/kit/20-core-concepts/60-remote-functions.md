@@ -7,26 +7,34 @@ title: Remote functions
 	<p>Available since 2.27</p>
 </blockquote>
 
-Remote functions are a tool for type-safe communication between client and server. They can be _called_ anywhere in your app, but always _run_ on the server, and as such can safely access [server-only modules](server-only-modules) containing things like environment variables and database clients.
+Remote functions are a tool for type-safe communication between client and server. They can be _called_ anywhere in your app, but always _run_ on the server, meaning they can safely access [server-only modules](server-only-modules) containing things like environment variables and database clients.
 
 Combined with Svelte's experimental support for [`await`](/docs/svelte/await-expressions), it allows you to load and manipulate data directly inside your components.
 
-This feature is currently experimental, meaning it is likely to contain bugs and is subject to change without notice. You must opt in by adding the `kit.experimental.remoteFunctions` option in your `svelte.config.js`:
+This feature is currently experimental, meaning it is likely to contain bugs and is subject to change without notice. You must opt in by adding the `kit.experimental.remoteFunctions` option in your `svelte.config.js` and optionally, the `compilerOptions.experimental.async` option to use `await` in components:
 
 ```js
 /// file: svelte.config.js
-export default {
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
 	kit: {
 		experimental: {
 			+++remoteFunctions: true+++
 		}
+	},
+	compilerOptions: {
+		experimental: {
+			+++async: true+++
+		}
 	}
 };
+
+export default config;
 ```
 
 ## Overview
 
-Remote functions are exported from a `.remote.js` or `.remote.ts` file, and come in four flavours: `query`, `form`, `command` and `prerender`. On the client, the exported functions are transformed to `fetch` wrappers that invoke their counterparts on the server via a generated HTTP endpoint.
+Remote functions are exported from a `.remote.js` or `.remote.ts` file, and come in four flavours: `query`, `form`, `command` and `prerender`. On the client, the exported functions are transformed to `fetch` wrappers that invoke their counterparts on the server via a generated HTTP endpoint. Remote files must be placed in your `src` directory.
 
 ## query
 
@@ -88,6 +96,8 @@ While using `await` is recommended, as an alternative the query also has `loadin
 	const query = getPosts();
 </script>
 
+<h1>Recent posts</h1>
+
 {#if query.error}
 	<p>oops!</p>
 {:else if query.loading}
@@ -114,7 +124,7 @@ Query functions can accept an argument, such as the `slug` of an individual post
 
 	let { params } = $props();
 
-	const post = getPost(params.slug);
+	const post = $derived(await getPost(params.slug));
 </script>
 
 <h1>{post.title}</h1>
@@ -153,7 +163,7 @@ Both the argument and the return value are serialized with [devalue](https://git
 
 ### Refreshing queries
 
-Any query can be updated via its `refresh` method:
+Any query can be re-fetched via its `refresh` method, which retrieves the latest value from the server:
 
 ```svelte
 <button onclick={() => getPosts().refresh()}>
@@ -161,11 +171,64 @@ Any query can be updated via its `refresh` method:
 </button>
 ```
 
-> [!NOTE] Queries are cached while they're on the page, meaning `getPosts() === getPosts()`. As such, you don't need a reference like `const posts = getPosts()` in order to refresh the query.
+> [!NOTE] Queries are cached while they're on the page, meaning `getPosts() === getPosts()`. This means you don't need a reference like `const posts = getPosts()` in order to update the query.
+
+## query.batch
+
+`query.batch` works like `query` except that it batches requests that happen within the same macrotask. This solves the so-called n+1 problem: rather than each query resulting in a separate database call (for example), simultaneous queries are grouped together.
+
+On the server, the callback receives an array of the arguments the function was called with. It must return a function of the form `(input: Input, index: number) => Output`. SvelteKit will then call this with each of the input arguments to resolve the individual calls with their results.
+
+```js
+/// file: weather.remote.js
+// @filename: ambient.d.ts
+declare module '$lib/server/database' {
+	export function sql(strings: TemplateStringsArray, ...values: any[]): Promise<any[]>;
+}
+// @filename: index.js
+// ---cut---
+import * as v from 'valibot';
+import { query } from '$app/server';
+import * as db from '$lib/server/database';
+
+export const getWeather = query.batch(v.string(), async (cities) => {
+	const weather = await db.sql`
+		SELECT * FROM weather
+		WHERE city = ANY(${cities})
+	`;
+	const lookup = new Map(weather.map(w => [w.city, w]));
+
+	return (city) => lookup.get(city);
+});
+```
+
+```svelte
+<!--- file: Weather.svelte --->
+<script>
+	import CityWeather from './CityWeather.svelte';
+	import { getWeather } from './weather.remote.js';
+
+	let { cities } = $props();
+	let limit = $state(5);
+</script>
+
+<h2>Weather</h2>
+
+{#each cities.slice(0, limit) as city}
+	<h3>{city.name}</h3>
+	<CityWeather weather={await getWeather(city.id)} />
+{/each}
+
+{#if cities.length > limit}
+	<button onclick={() => limit += 5}>
+		Load more
+	</button>
+{/if}
+```
 
 ## form
 
-The `form` function makes it easy to write data to the server. It takes a callback that receives the current [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)...
+The `form` function makes it easy to write data to the server. It takes a callback that receives `data` constructed from the submitted [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData)...
 
 
 ```ts
@@ -197,30 +260,28 @@ export const getPosts = query(async () => { /* ... */ });
 
 export const getPost = query(v.string(), async (slug) => { /* ... */ });
 
-export const createPost = form(async (data) => {
-	// Check the user is logged in
-	const user = await auth.getUser();
-	if (!user) error(401, 'Unauthorized');
+export const createPost = form(
+	v.object({
+		title: v.pipe(v.string(), v.nonEmpty()),
+		content:v.pipe(v.string(), v.nonEmpty())
+	}),
+	async ({ title, content }) => {
+		// Check the user is logged in
+		const user = await auth.getUser();
+		if (!user) error(401, 'Unauthorized');
 
-	const title = data.get('title');
-	const content = data.get('content');
+		const slug = title.toLowerCase().replace(/ /g, '-');
 
-	// Check the data is valid
-	if (typeof title !== 'string' || typeof content !== 'string') {
-		error(400, 'Title and content are required');
+		// Insert into the database
+		await db.sql`
+			INSERT INTO post (slug, title, content)
+			VALUES (${slug}, ${title}, ${content})
+		`;
+
+		// Redirect to the newly created page
+		redirect(303, `/blog/${slug}`);
 	}
-
-	const slug = title.toLowerCase().replace(/ /g, '-');
-
-	// Insert into the database
-	await db.sql`
-		INSERT INTO post (slug, title, content)
-		VALUES (${slug}, ${title}, ${content})
-	`;
-
-	// Redirect to the newly created page
-	redirect(303, `/blog/${slug}`);
-});
+);
 ```
 
 ...and returns an object that can be spread onto a `<form>` element. The callback is called whenever the form is submitted.
@@ -248,7 +309,184 @@ export const createPost = form(async (data) => {
 </form>
 ```
 
-The form object contains `method` and `action` properties that allow it to work without JavaScript (i.e. it submits data and reloads the page). It also has an `onsubmit` handler that progressively enhances the form when JavaScript is available, submitting data *without* reloading the entire page.
+As with `query`, if the callback uses the submitted `data`, it should be [validated](#query-Query-arguments) by passing a [Standard Schema](https://standardschema.dev) as the first argument to `form`. The one difference is to `query` is that the schema inputs must all be of type `string` or `File`, since that's all the original `FormData` provides. You can however coerce the value into a different type — how to do that depends on the validation library you use.
+
+```ts
+/// file: src/routes/count.remote.js
+import * as v from 'valibot';
+import { form } from '$app/server';
+
+export const setCount = form(
+	v.object({
+		// Valibot:
+		count: v.pipe(v.string(), v.transform((s) => Number(s)), v.number()),
+		// Zod:
+		// count: z.coerce.number<string>()
+	}),
+	async ({ count }) => {
+		// ...
+	}
+);
+```
+
+The `name` attributes on the form controls must correspond to the properties of the schema — `title` and `content` in this case. If you schema contains objects, use object notation:
+
+```svelte
+<!--
+    results in a
+    {
+	   name: { first: string, last: string },
+	   jobs: Array<{ title: string, company: string }>
+	}
+    object
+-->
+<input name="name.first" />
+<input name="name.last" />
+{#each jobs as job, idx}
+	<input name="jobs[{idx}].title">
+	<input name="jobs[{idx}].company">
+{/each}
+```
+
+To indicate a repeated field, use a `[]` suffix:
+
+```svelte
+<label><input type="checkbox" name="language[]" value="html" /> HTML</label>
+<label><input type="checkbox" name="language[]" value="css" /> CSS</label>
+<label><input type="checkbox" name="language[]" value="js" /> JS</label>
+```
+
+If you'd like type safety and autocomplete when setting `name` attributes, use the form object's `field` method:
+
+```svelte
+<label>
+	<h2>Title</h2>
+	<input name={+++createPost.field('title')+++} />
+</label>
+```
+
+This will error during typechecking if `title` does not exist on your schema.
+
+The form object contains `method` and `action` properties that allow it to work without JavaScript (i.e. it submits data and reloads the page). It also has an [attachment](/docs/svelte/@attach) that progressively enhances the form when JavaScript is available, submitting data *without* reloading the entire page.
+
+### Validation
+
+If the submitted data doesn't pass the schema, the callback will not run. Instead, the form object's `issues` object will be populated:
+
+```svelte
+<form {...createPost}>
+	<label>
+		<h2>Title</h2>
+
++++		{#if createPost.issues.title}
+			{#each createPost.issues.title as issue}
+				<p class="issue">{issue.message}</p>
+			{/each}
+		{/if}+++
+
+		<input
+			name="title"
+			+++aria-invalid={!!createPost.issues.title}+++
+		/>
+	</label>
+
+	<label>
+		<h2>Write your post</h2>
+
++++		{#if createPost.issues.content}
+			{#each createPost.issues.content as issue}
+				<p class="issue">{issue.message}</p>
+			{/each}
+		{/if}+++
+
+		<textarea
+			name="content"
+			+++aria-invalid={!!createPost.issues.content}+++
+		></textarea>
+	</label>
+
+	<button>Publish!</button>
+</form>
+```
+
+You don't need to wait until the form is submitted to validate the data — you can call `validate()` programmatically, for example in an `oninput` callback (which will validate the data on every keystroke) or an `onchange` callback:
+
+```svelte
+<form {...createPost} oninput={() => createPost.validate()}>
+	<!-- -->
+</form>
+```
+
+By default, issues will be ignored if they belong to form controls that haven't yet been interacted with. To validate _all_ inputs, call `validate({ includeUntouched: true })`.
+
+For client-side validation, you can specify a _preflight_ schema which will populate `issues` and prevent data being sent to the server if the data doesn't validate:
+
+```svelte
+<script>
+	import * as v from 'valibot';
+	import { createPost } from '../data.remote';
+
+	const schema = v.object({
+		title: v.pipe(v.string(), v.nonEmpty()),
+		content: v.pipe(v.string(), v.nonEmpty())
+	});
+</script>
+
+<h1>Create a new post</h1>
+
+<form {...+++createPost.preflight(schema)+++}>
+	<!-- -->
+</form>
+```
+
+> [!NOTE] The preflight schema can be the same object as your server-side schema, if appropriate, though it won't be able to do server-side checks like 'this value already exists in the database'. Note that you cannot export a schema from a `.remote.ts` or `.remote.js` file, so the schema must either be exported from a shared module, or from a `<script module>` block in the component containing the `<form>`.
+
+### Live inputs
+
+The form object contains a `input` property which reflects its current value. As the user interacts with the form, `input` is automatically updated:
+
+```svelte
+<form {...createPost}>
+	<!-- -->
+</form>
+
+<div class="preview">
+	<h2>{createPost.input.title}</h2>
+	<div>{@html render(createPost.input.content)}</div>
+</div>
+```
+
+### Handling sensitive data
+
+In the case of a non-progressively-enhanced form submission (i.e. where JavaScript is unavailable, for whatever reason) `input` is also populated if the submitted data is invalid, so that the user does not need to fill the entire form out from scratch.
+
+You can prevent sensitive data (such as passwords and credit card numbers) from being sent back to the user by using a name with a leading underscore:
+
+```svelte
+<form {...register}>
+	<label>
+		Username
+		<input
+			name="username"
+			value={register.input.username}
+			aria-invalid={!!register.issues.username}
+		/>
+	</label>
+
+	<label>
+		Password
+		<input
+			type="password"
+			+++name="_password"+++
+			+++aria-invalid={!!register.issues._password}+++
+		/>
+	</label>
+
+	<button>Sign up!</button>
+</form>
+```
+
+In this example, if the data does not validate, only the first `<input>` will be populated when the page reloads.
 
 ### Single-flight mutations
 
@@ -261,21 +499,39 @@ import * as v from 'valibot';
 import { error, redirect } from '@sveltejs/kit';
 import { query, form } from '$app/server';
 const slug = '';
+const post = { id: '' };
+/** @type {any} */
+const externalApi = '';
 // ---cut---
 export const getPosts = query(async () => { /* ... */ });
 
 export const getPost = query(v.string(), async (slug) => { /* ... */ });
 
-export const createPost = form(async (data) => {
-	// form logic goes here...
+export const createPost = form(
+	v.object({/* ... */}),
+	async (data) => {
+		// form logic goes here...
 
-	// Refresh `getPosts()` on the server, and send
-	// the data back with the result of `createPost`
-	+++getPosts().refresh();+++
+		// Refresh `getPosts()` on the server, and send
+		// the data back with the result of `createPost`
+		+++await getPosts().refresh();+++
 
-	// Redirect to the newly created page
-	redirect(303, `/blog/${slug}`);
-});
+		// Redirect to the newly created page
+		redirect(303, `/blog/${slug}`);
+	}
+);
+
+export const updatePost = form(
+	v.object({/* ... */}),
+	async (data) => {
+		// form logic goes here...
+		const result = externalApi.update(post);
+
+		// The API already gives us the updated post,
+		// no need to refresh it, we can set it directly
+		+++await getPost(post.id).set(result);+++
+	}
+);
 ```
 
 The second is to drive the single-flight mutation from the client, which we'll see in the section on [`enhance`](#form-enhance).
@@ -313,11 +569,14 @@ export const getPosts = query(async () => { /* ... */ });
 export const getPost = query(v.string(), async (slug) => { /* ... */ });
 
 // ---cut---
-export const createPost = form(async (data) => {
-	// ...
+export const createPost = form(
+	v.object({/* ... */}),
+	async (data) => {
+		// ...
 
-	return { success: true };
-});
+		return { success: true };
+	}
+);
 ```
 
 ```svelte
@@ -328,7 +587,9 @@ export const createPost = form(async (data) => {
 
 <h1>Create a new post</h1>
 
-<form {...createPost}><!-- ... --></form>
+<form {...createPost}>
+	<!-- -->
+</form>
 
 {#if createPost.result?.success}
 	<p>Successfully published!</p>
@@ -364,9 +625,7 @@ We can customize what happens when the form is submitted with the `enhance` meth
 		showToast('Oh no! Something went wrong');
 	}
 })}>
-	<input name="title" />
-	<textarea name="content"></textarea>
-	<button>publish</button>
+	<!-- -->
 </form>
 ```
 
@@ -409,7 +668,7 @@ The override will be applied immediately, and released when the submission compl
 
 By default, submitting a form will send a request to the URL indicated by the `<form>` element's [`action`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form#attributes_for_form_submission) attribute, which in the case of a remote function is a property on the form object generated by SvelteKit.
 
-It's possible for a `<button>` inside the `<form>` to send the request to a _different_ URL, using the [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#formaction) attribute. For example, you might have a single form that allows you to login or register depending on which button was clicked.
+It's possible for a `<button>` inside the `<form>` to send the request to a _different_ URL, using the [`formaction`](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button#formaction) attribute. For example, you might have a single form that allows you to log in or register depending on which button was clicked.
 
 This attribute exists on the `buttonProps` property of a form object:
 
@@ -443,7 +702,7 @@ The `command` function, like `form`, allows you to write data to the server. Unl
 
 > [!NOTE] Prefer `form` where possible, since it gracefully degrades if JavaScript is disabled or fails to load.
 
-As with `query`, if the function accepts an argument it should be [validated](#query-Query-arguments) by passing a [Standard Schema](https://standardschema.dev) as the first argument to `command`.
+As with `query` and `form`, if the function accepts an argument, it should be [validated](#query-Query-arguments) by passing a [Standard Schema](https://standardschema.dev) as the first argument to `command`.
 
 ```ts
 /// file: likes.remote.js
@@ -504,9 +763,11 @@ Now simply call `addLike`, from (for example) an event handler:
 
 > [!NOTE] Commands cannot be called during render.
 
-### Single-flight mutations
+### Updating queries
 
-As with forms, any queries on the page (such as `getLikes(item.id)` in the example above) will automatically be refreshed following a successful command. But we can make things more efficient by telling SvelteKit which queries will be affected by the command, either inside the command itself...
+To update `getLikes(item.id)`, or any other query, we need to tell SvelteKit _which_ queries need to be refreshed (unlike `form`, which by default invalidates everything, to approximate the behaviour of a native form submission).
+
+We either do that inside the command itself...
 
 ```js
 /// file: likes.remote.js
@@ -530,6 +791,9 @@ export const addLike = command(v.string(), async (id) => {
 	`;
 
 	+++getLikes(id).refresh();+++
+	// Just like within form functions you can also do
+	// getLikes(id).set(...)
+	// in case you have the result already
 });
 ```
 
@@ -657,7 +921,7 @@ export const getPost = prerender(
 );
 ```
 
-> [!NOTE] Svelte does not yet support asynchronous server-side rendering, and as such it's likely that you're only calling remote functions from the browser, rather than during prerendering. Because of this you will need to use `inputs`, for now. We're actively working on this roadblock.
+> [!NOTE] Svelte does not yet support asynchronous server-side rendering, so it's likely that you're only calling remote functions from the browser, rather than during prerendering. Because of this, you will need to use `inputs`, for now. We're actively working on this roadblock.
 
 By default, prerender functions are excluded from your server bundle, which means that you cannot call them with any arguments that were _not_ prerendered. You can set `dynamic: true` to change this behaviour:
 
@@ -712,11 +976,9 @@ export const getStuff = query('unchecked', async ({ id }: { id: string }) => {
 });
 ```
 
-> [!NOTE] `form` does not accept a schema since you are always passed a `FormData` object. You are free to parse and validate this as you see fit.
-
 ## Using `getRequestEvent`
 
-Inside `query`, `form` and `command` you can use [`getRequestEvent`](https://svelte.dev/docs/kit/$app-server#getRequestEvent) to get the current [`RequestEvent`](@sveltejs-kit#RequestEvent) object. This makes it easy to build abstractions for interacting with cookies, for example:
+Inside `query`, `form` and `command` you can use [`getRequestEvent`]($app-server#getRequestEvent) to get the current [`RequestEvent`](@sveltejs-kit#RequestEvent) object. This makes it easy to build abstractions for interacting with cookies, for example:
 
 ```ts
 /// file: user.remote.ts
@@ -732,17 +994,17 @@ export const getProfile = query(async () => {
 	};
 });
 
-// this function could be called from multiple places
-function getUser() {
-	const { cookies, locals } = getRequestEvent();
+// this query could be called from multiple places, but
+// the function will only run once per request
+const getUser = query(() => {
+	const { cookies } = getRequestEvent();
 
-	locals.userPromise ??= findUser(cookies.get('session_id'));
-	return await locals.userPromise;
-}
+	return await findUser(cookies.get('session_id'));
+});
 ```
 
 Note that some properties of `RequestEvent` are different inside remote functions. There are no `params` or `route.id`, and you cannot set headers (other than writing cookies, and then only inside `form` and `command` functions), and `url.pathname` is always `/` (since the path that’s actually being requested by the client is purely an implementation detail).
 
 ## Redirects
 
-Inside `query`, `form` and `prerender` functions it is possible to use the [`redirect(...)`](https://svelte.dev/docs/kit/@sveltejs-kit#redirect) function. It is *not* possible inside `command` functions, as you should avoid redirecting here. (If you absolutely have to, you can return a `{ redirect: location }` object and deal with it in the client.)
+Inside `query`, `form` and `prerender` functions it is possible to use the [`redirect(...)`](@sveltejs-kit#redirect) function. It is *not* possible inside `command` functions, as you should avoid redirecting here. (If you absolutely have to, you can return a `{ redirect: location }` object and deal with it in the client.)

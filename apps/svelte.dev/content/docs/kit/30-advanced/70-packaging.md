@@ -140,7 +140,7 @@ Setting the `sideEffects` field in `package.json` can help the bundler to be mor
 }
 ```
 
-> If the scripts in your library have side effects, ensure that you update the `sideEffects` field. All scripts are marked as side effect free by default in newly created projects. If a file with side effects is incorrectly marked as having no side effects, it can result in broken functionality.
+> [!NOTE] If the scripts in your library have side effects, ensure that you update the `sideEffects` field. All scripts are marked as side effect free by default in newly created projects. If a file with side effects is incorrectly marked as having no side effects, it can result in broken functionality.
 
 If your package has files with side effects, you can specify them in an array:
 
@@ -243,6 +243,7 @@ You can create so-called declaration maps (`d.ts.map` files) by setting `"declar
 - `-w`/`--watch` — `src/lib` にあるファイルの変更を関ししてパッケージを再ビルドします
 - `-i`/`--input` — パッケージの全てのファイルを含む入力ディレクトリ。デフォルトは `src/lib` です
 - `-o`/`--output` — 処理されたファイルが書き込まれる出力ディレクトリ。`package.json` の `exports` はここにあるファイルを指さなければならず、`files` の配列にはこのフォルダを含めなければいけません。デフォルトは `dist` です
+- `-p`/`--preserve-output` — パッケージング前に出力ディレクトリの削除を止めるかどうか。デフォルトは `false` で、この場合は出力ディレクトリが最初に空にされます
 - `-t`/`--types` — 型定義 (`d.ts` ファイル) を作成するかどうか。エコシステムのライブラリの品質を向上させるため、作成することを強く推奨します。デフォルトは `true` です
 - `--tsconfig` - tsconfig または jsconfig へのパス。指定されない場合は、ワークスペースのパスで次の上位の tsconfig/jsconfig を検索します。
 

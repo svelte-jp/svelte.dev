@@ -96,7 +96,7 @@ Svelte は、バインドされた値を更新するイベントリスナーを�
 
 ## `<input bind:checked>`
 
-checkbox および radio の input には、`bind:checked` を使用してバインドできます:
+checkbox input には、`bind:checked` を使用してバインドできます:
 
 ```svelte
 <label>
@@ -117,6 +117,8 @@ checkbox および radio の input には、`bind:checked` を使用してバイ
 	<input type="reset" value="Reset">
 </form>
 ```
+
+> [!NOTE] radio input には、`bind:checked` ではなく `bind:group` を使用してください。
 
 ## `<input bind:indeterminate>`
 
