@@ -88,7 +88,7 @@ opencode mcp add
 - "Command (stdio)" を選択
 - 入力欄に `npx -y @sveltejs/mcp` と入力して `Enter` を押す
 - 名前を尋ねられたら `svelte` と入力
-- `Global` MCP サーバー として追加するか `Workspace` MCP サーバーとして追加するか選択
+- `Global` MCP サーバーとして追加するか `Workspace` MCP サーバーとして追加するか選択
 
 ## Cursor
 
