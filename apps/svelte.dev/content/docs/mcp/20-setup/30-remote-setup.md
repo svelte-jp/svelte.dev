@@ -9,7 +9,7 @@ title: Remote setup
 
 ## Claude Code
 
-Claude Code でリモート MCP バージョンを含めるには、シンプルに次のコマンドを実行します:
+Claude Code でリモート MCP バージョンを含めるには、次のコマンドを実行するだけです:
 
 ```bash
 claude mcp add -t http -s [scope] svelte https://mcp.svelte.dev/mcp
@@ -37,7 +37,7 @@ url = "https://mcp.svelte.dev/mcp"
 
 ## Gemini CLI
 
-Gemini CLI でリモート MCP バージョンを含めるには、シンプルに次のコマンドを実行します:
+Gemini CLI でリモート MCP バージョンを含めるには、次のコマンドを実行するだけです:
 
 ```bash
 gemini mcp add -t http -s [scope] svelte https://mcp.svelte.dev/mcp

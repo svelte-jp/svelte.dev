@@ -13,7 +13,7 @@ npx -y @sveltejs/mcp
 
 ## Claude Code
 
-Claude Code でローカル MCP バージョンを含めるには、シンプルに次のコマンドを実行します:
+Claude Code でローカル MCP バージョンを含めるには、次のコマンドを実行するだけです:
 
 ```bash
 claude mcp add -t stdio -s [scope] svelte npx -y @sveltejs/mcp
@@ -48,7 +48,7 @@ args = ["-y", "@sveltejs/mcp"]
 
 ## Gemini CLI
 
-Gemini CLI でローカル MCP バージョンを含めるには、シンプルに次のコマンドを実行します:
+Gemini CLI でローカル MCP バージョンを含めるには、次のコマンドを実行するだけです:
 
 ```bash
 gemini mcp add -t stdio -s [scope] svelte npx -y @sveltejs/mcp
