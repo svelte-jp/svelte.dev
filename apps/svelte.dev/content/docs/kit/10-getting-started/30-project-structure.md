@@ -50,10 +50,10 @@ my-project/
   - `%sveltekit.assets%` — [`paths.assets`](configuration#paths) が指定されている場合は [`paths.assets`](configuration#paths)、指定されていない場合は [`paths.base`](configuration#paths) への相対パス
   - `%sveltekit.nonce%` — マニュアルで含めるリンクやスクリプトの [CSP](configuration#csp) nonce (使用する場合)
   - `%sveltekit.env.[NAME]%` - これはレンダリング時に環境変数の `[NAME]` に置き換えられます。この環境変数は [`publicPrefix`](configuration#env) で始まる必要があります (通常は `PUBLIC_` です)。もしマッチしない場合は `''` にフォールバックします。
+  - `%sveltekit.version%` — アプリのバージョン。[`version`](configuration#version) 設定で指定することができます
 - `error.html` は、全てが失敗したときにレンダリングされるページです。以下のプレースホルダーを含めることができます:
   - `%sveltekit.status%` — HTTP ステータス
   - `%sveltekit.error.message%` — エラーメッセージ
-  - `%sveltekit.version%` — デプロイメントのバージョン。[`version`](configuration#version) 設定で指定することができます
 - `hooks.client.js` にはクライアントの [hooks](hooks) を記述します
 - `hooks.server.js` にはサーバーの [hooks](hooks) を記述します
 - `service-worker.js` には [service worker](service-workers) を記述します

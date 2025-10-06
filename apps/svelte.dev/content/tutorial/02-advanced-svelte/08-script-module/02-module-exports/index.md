@@ -2,25 +2,25 @@
 title: Exports
 ---
 
-`module` スクリプトブロックからエクスポートされたものはすべてモジュール自体からのエクスポートになります。`stopAll` 関数をエクスポートしましょう:
+`module` スクリプトブロックからエクスポートされたものはすべてモジュール自体からのエクスポートになります。`pauseAll` 関数をエクスポートしましょう:
 
 ```svelte
 /// file: AudioPlayer.svelte
 <script module>
 	let current;
 
-+++	export function stopAll() {
++++	export function pauseAll() {
 		current?.pause();
 	}+++
 </script>
 ```
 
-`App.svelte` で `stopAll` をインポートすることができます…
+`App.svelte` で `pauseAll` をインポートすることができます…
 
 ```svelte
 /// file: App.svelte
 <script>
-	import AudioPlayer, +++{ stopAll }+++ from './AudioPlayer.svelte';
+	import AudioPlayer, +++{ pauseAll }+++ from './AudioPlayer.svelte';
 	import { tracks } from './tracks.js';
 </script>
 ```
@@ -34,8 +34,8 @@ title: Exports
 		<AudioPlayer {...track} />
 	{/each}
 
-+++	<button onclick={stopAll}>
-		stop all
++++	<button onclick={pauseAll}>
+		pause all
 	</button>+++
 </div>
 ```
