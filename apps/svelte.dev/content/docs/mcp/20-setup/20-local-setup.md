@@ -16,7 +16,7 @@ npx -y @sveltejs/mcp
 Claude Code でローカル MCP バージョンを含めるには、次のコマンドを実行するだけです:
 
 ```bash
-claude mcp add -t stdio -s [scope] svelte npx -y @sveltejs/mcp
+claude mcp add -t stdio -s [scope] svelte -- npx -y @sveltejs/mcp
 ```
 
 `[scope]` には `user`、`project` または `local` を指定する必要があります。
