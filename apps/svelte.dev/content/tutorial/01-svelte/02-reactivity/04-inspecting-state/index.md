@@ -1,5 +1,6 @@
 ---
 title: Inspecting state
+tags: rune-inspect
 ---
 
 時間の経過とともに変化する状態の値を追跡できることは、多くの場合便利です。

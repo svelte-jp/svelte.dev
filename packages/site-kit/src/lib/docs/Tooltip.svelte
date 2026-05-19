@@ -95,15 +95,26 @@
 				font: var(--sk-font-body-small);
 			}
 
-			.tags {
+			.twoslash-popup-docs-tags {
 				display: grid;
-				grid-template-columns: 8rem 1fr;
+				grid-template-columns: auto 1fr;
+				column-gap: 1rem;
 				align-items: baseline;
 
 				.tag,
 				.param {
 					font: var(--sk-font-mono);
 				}
+			}
+
+			/* Disable highlight styles inside tooltips (popup content) */
+			.highlight,
+			.highlight.add,
+			.highlight.remove {
+				--color: transparent !important;
+				background: transparent !important;
+				outline: none !important;
+				border-radius: 0 !important;
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ---
 title: Styling
+tags: styles-scoped
 ---
 
 HTMLと同じように、コンポーネントには`<style>`タグを置くことができます。`<p>`要素にいくつかスタイルを追加してみましょう。

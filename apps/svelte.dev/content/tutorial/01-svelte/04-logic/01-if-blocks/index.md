@@ -1,5 +1,6 @@
 ---
 title: If blocks
+tags: template-if
 ---
 
 HTML には条件式やループのような _ロジック_ を表現する方法がありません。Svelteにはあります。

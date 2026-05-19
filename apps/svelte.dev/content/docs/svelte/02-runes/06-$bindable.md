@@ -5,7 +5,7 @@ title: $bindable
 
 通常、props は親から子へ一方向に流れます。これにより、アプリ内のデータの流れを簡単に理解することができます。
 
-Svelte では、コンポーネントの props を _バインド_ することができ、データを子から親へと _逆方向_ に流すこともできます。これは頻繁に行うべきことではありませんが、慎重かつ控えめに使用すればコードを簡素化できます。
+In Svelte, component props can be _bound_, which means that data can also flow _up_ from child to parent. This isn't something you should do often — overuse can make your data flow unpredictable and your components harder to maintain — but it can simplify your code if used sparingly and carefully.
 
 また、子コンポーネント内で state proxy を _変異_ (mutate) できることを意味します。
 

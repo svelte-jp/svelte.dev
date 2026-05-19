@@ -1,5 +1,6 @@
 ---
 title: Await blocks
+tags: template-await
 ---
 
 ほとんどの webアプリケーションでは、どこかの時点で非同期のデータを扱わなければなりません。Svelte ではマークアップの中で直接 [promises](https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Using_promises) の値を簡単に _await_ することができます。

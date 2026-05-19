@@ -1,5 +1,6 @@
 ---
 title: State
+tags: rune-state
 ---
 
 Svelteの中心には、DOMを（例えば、イベントに応じて）アプリケーションの状態(state)に同期し続けさせるための強力な _リアクティビティ(reactivity)_ システムがあります。

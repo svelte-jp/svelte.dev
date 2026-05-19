@@ -1,5 +1,6 @@
 ---
 title: The transition directive
+tags: transitions
 ---
 
 要素を DOM に優美に追加したり削除したりすることで、より魅力的なユーザーインターフェイスを作成できます。Svelte は `transition` ディレクティブを使用してこれを非常に簡単にします。

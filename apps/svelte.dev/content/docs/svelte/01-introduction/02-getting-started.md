@@ -16,7 +16,7 @@ npm run dev
 
 ## SvelteKit の代替手段 <!--Alternatives-to-SvelteKit-->
 
-Svelteを直接Viteで使用することもできます。その場合、`npm create vite@latest` を実行し、`svelte` オプションを選択します。この方法では、`npm run build` を実行すると、[vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) を使用して、`dist` ディレクトリ内に HTML、JS、CSSファイルが生成されます。ほとんどの場合、[ルーティングライブラリ](/packages#routing)を選択する必要があるでしょう。
+You can also use Svelte directly with Vite via [vite-plugin-svelte](https://github.com/sveltejs/vite-plugin-svelte) by running `npm create vite@latest` and selecting the `svelte` option (or, if working with an existing project, adding the plugin to your `vite.config.js` file). With this, `npm run build` will generate HTML, JS, and CSS files inside the `dist` directory. In most cases, you will probably need to [choose a routing library](/packages#routing) as well.
 
 >[!NOTE] Vite は [single page apps (SPA)](../kit/glossary#SPA) をビルドするためよくスタンドアロンモードで使用されますが、[SPA は SvelteKit でも構築できます](../kit/single-page-apps)。
 
@@ -24,9 +24,10 @@ Svelteを直接Viteで使用することもできます。その場合、`npm cr
 
 ## エディタツール <!--Editor-tooling-->
 
-Svelteチームは、[VS Code 拡張機能](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)を提供しています。また、様々な[他のエディター](https://sveltesociety.dev/resources#editor-support)やツールとの統合も利用可能です。
+The Svelte team maintains a [VS Code extension](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode), and there are integrations with various other [editors](https://sveltesociety.dev/collection/editor-support-c85c080efc292a34) and tools as well.
 
-さらに、[sv check](https://github.com/sveltejs/cli) を使ってコマンドラインからコードをチェックすることもできます。
+You can also check your code from the command line using [`npx sv check`](https://svelte.dev/docs/cli/sv-check).
+
 
 ## サポートを受ける <!--Getting-help-->
 

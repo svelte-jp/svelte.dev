@@ -1,5 +1,6 @@
 ---
 title: The class attribute
+tags: template-class
 ---
 
 他の属性と同じように、JavaScriptの属性でクラスを指定することができます。ここでは、`flipped` クラスを card に追加します:

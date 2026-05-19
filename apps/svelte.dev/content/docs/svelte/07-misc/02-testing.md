@@ -39,6 +39,21 @@ You can now write unit tests for code inside your `.js/.ts` files:
 
 ```js
 /// file: multiplier.svelte.test.js
+// @filename: multiplier.svelte.ts
+export function multiplier(initial: number, k: number) {
+	let count = $state(initial);
+
+	return {
+		get value() {
+			return count * k;
+		},
+		set: (c: number) => {
+			count = c;
+		}
+	};
+}
+// @filename: multiplier.svelte.test.js
+// ---cut---
 import { flushSync } from 'svelte';
 import { expect, test } from 'vitest';
 import { multiplier } from './multiplier.svelte.js';
@@ -81,6 +96,16 @@ Since Vitest processes your test files the same way as your source files, you ca
 
 ```js
 /// file: multiplier.svelte.test.js
+// @filename: multiplier.svelte.ts
+export function multiplier(getCount: () => number, k: number) {
+	return {
+		get value() {
+			return getCount() * k;
+		}
+	};
+}
+// @filename: multiplier.svelte.test.js
+// ---cut---
 import { flushSync } from 'svelte';
 import { expect, test } from 'vitest';
 import { multiplier } from './multiplier.svelte.js';
@@ -116,6 +141,10 @@ If the code being tested uses effects, you need to wrap the test inside `$effect
 
 ```js
 /// file: logger.svelte.test.js
+// @filename: logger.svelte.ts
+export function logger(fn: () => void) {}
+// @filename: logger.svelte.test.js
+// ---cut---
 import { flushSync } from 'svelte';
 import { expect, test } from 'vitest';
 import { logger } from './logger.svelte.js';
@@ -182,7 +211,7 @@ export default defineConfig({
 		/* ... */
 	],
 	test: {
-		// If you are testing components client-side, you need to setup a DOM environment.
+		// If you are testing components client-side, you need to set up a DOM environment.
 		// If not all your files should have this environment, you can use a
 		// `// @vitest-environment jsdom` comment at the top of the test files instead.
 		environment: 'jsdom'
@@ -214,7 +243,7 @@ test('Component', () => {
 	expect(document.body.innerHTML).toBe('<button>0</button>');
 
 	// Click the button, then flush the changes so you can synchronously write expectations
-	document.body.querySelector('button').click();
+	document.body.querySelector('button')?.click();
 	flushSync();
 
 	expect(document.body.innerHTML).toBe('<button>1</button>');
@@ -227,6 +256,7 @@ test('Component', () => {
 While the process is very straightforward, it is also low level and somewhat brittle, as the precise structure of your component may change frequently. Tools like [@testing-library/svelte](https://testing-library.com/docs/svelte-testing-library/intro/) can help streamline your tests. The above test could be rewritten like this:
 
 ```js
+// @errors: 2339
 /// file: component.test.js
 import { render, screen } from '@testing-library/svelte';
 import userEvent from '@testing-library/user-event';
@@ -271,9 +301,9 @@ You can create stories for component variations and test interactions with the [
 		}
 	});
 </script>
- 
+
 <Story name="Empty Form" />
- 
+
 <Story
 	name="Filled Form"
 	play={async ({ args, canvas, userEvent }) => {
@@ -295,7 +325,7 @@ E2E (short for 'end to end') tests allow you to test your full application throu
 
 You can use the Svelte CLI to [setup Playwright](/docs/cli/playwright) either during project creation or later on. You can also [set it up with `npm init playwright`](https://playwright.dev/docs/intro). Additionally, you may also want to install an IDE plugin such as [the VS Code extension](https://playwright.dev/docs/getting-started-vscode) to be able to execute tests from inside your IDE.
 
-If you've run `npm init playwright` or are not using Vite, you may need to adjust the Playwright config to tell Playwright what to do before running the tests - mainly starting your application at a certain port. For example:
+If you've run `npm init playwright` or are not using Vite, you may need to adjust the Playwright config to tell Playwright what to do before running the tests — mainly starting your application at a certain port. For example:
 
 ```js
 /// file: playwright.config.js

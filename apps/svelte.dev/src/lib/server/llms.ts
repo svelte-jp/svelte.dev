@@ -1,6 +1,7 @@
 import { minimatch } from 'minimatch';
 import { dev } from '$app/environment';
 import { index } from './content';
+import type { Topic } from '$lib/topics';
 
 interface GenerateLlmContentOptions {
 	ignore?: string[];
@@ -16,11 +17,6 @@ interface MinimizeOptions {
 	remove_prettier_ignore: boolean;
 }
 
-interface Topic {
-	slug: string;
-	title: string;
-}
-
 const defaults: MinimizeOptions = {
 	remove_legacy: false,
 	remove_note_blocks: false,
@@ -28,6 +24,14 @@ const defaults: MinimizeOptions = {
 	remove_playground_links: false,
 	remove_prettier_ignore: false
 };
+
+export function remove_playground_links(content: string): string {
+	return content.replaceAll(/\[([^\]]+)\]\((https:\/\/svelte\.dev)?\/playground.+\)/g, '$1');
+}
+
+export function remove_llm_ignore_blocks(content: string): string {
+	return content.replace(/<!--\s*llm-ignore-start\s*-->[\s\S]*?<!--\s*llm-ignore-end\s*-->/g, '');
+}
 
 export function generate_llm_content(options: GenerateLlmContentOptions): string {
 	let content = '';
@@ -45,9 +49,8 @@ export function generate_llm_content(options: GenerateLlmContentOptions): string
 				continue;
 			}
 
-			const doc_content = options.minimize
-				? minimize_content(document.body, options.minimize)
-				: document.body;
+			const body = remove_llm_ignore_blocks(document.body);
+			const doc_content = options.minimize ? minimize_content(body, options.minimize) : body;
 			if (doc_content.trim() === '') continue;
 			// replaces <tags> with `<tags>`
 			const doc_title = document.metadata.title.replace(
@@ -62,12 +65,6 @@ export function generate_llm_content(options: GenerateLlmContentOptions): string
 
 	return content;
 }
-
-export const topics: Topic[] = [
-	{ slug: 'svelte', title: 'Svelte' },
-	{ slug: 'kit', title: 'SvelteKit' },
-	{ slug: 'cli', title: 'the Svelte CLI' }
-];
 
 export function get_documentation_title(topic: Topic): string {
 	return `This is the developer documentation for ${topic.title}.`;

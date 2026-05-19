@@ -53,6 +53,23 @@ SvelteKit の中心は、 _ファイルシステムベースのルーター_ で
 <div>{@html data.content}</div>
 ```
 
+As of 2.24, pages also receive a `params` prop which is typed based on the route parameters. This is particularly useful alongside [remote functions](remote-functions):
+
+```svelte
+<!--- file: src/routes/blog/[slug]/+page.svelte --->
+<script>
+	import { getPost } from '../blog.remote';
+
+	/** @type {import('./$types').PageProps} */
+	let { params } = $props();
+
+	const post = $derived(await getPost(params.slug));
+</script>
+
+<h1>{post.title}</h1>
+<div>{@html post.content}</div>
+```
+
 > [!LEGACY]
 > `PageProps` は 2.16.0 で追加されました。以前のバージョンでは、代わりに `PageData` を使用して `data` プロパティを手動で型付けする必要がありました。詳細は [$types](#\$types) をご参照ください。
 >
@@ -320,9 +337,9 @@ export function GET({ url }) {
 ```svelte
 <!--- file: src/routes/add/+page.svelte --->
 <script>
-	let a = 0;
-	let b = 0;
-	let total = 0;
+	let a = $state(0);
+	let b = $state(0);
+	let total = $state(0);
 
 	async function add() {
 		const response = await fetch('/api/add', {

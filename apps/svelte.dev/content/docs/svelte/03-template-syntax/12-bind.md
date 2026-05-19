@@ -55,9 +55,11 @@ Svelte は、バインドされた値を更新するイベントリスナーを�
 <p>{message}</p>
 ```
 
-数値を扱う input (`type="number"` または `type="range"`) の場合、値は数値に変換されます ([デモ](/playground/untitled#H4sIAAAAAAAAE6WPwYoCMQxAfyWEPeyiOOqx2w74Hds9pBql0IllmhGXYf5dKqwiyILsLXnwwsuI-5i4oPkaUX8yo7kCnKNQV7dNzoty4qSVBSr8jG-Poixa0KAt2z5mbb14TaxA4OCtKCm_rz4-f2m403WltrlrYhMFTtcLNkoeFGqZ8yhDF7j3CCHKzpwoDexGmqCL4jwuPUJHZ-dxVcfmyYGe5MAv-La5pbxYFf5Z9Zf_UJXb-sEMquFgJJhBmGyTW5yj8lnRaD_w9D1dAKSSj7zqAQAA)):
+In the case of a numeric input (`type="number"` or `type="range"`), the value will be coerced to a number:
 
+<!-- codeblock:start {"title":"Numeric bindings"} -->
 ```svelte
+<!--- file: App.svelte --->
 <script>
 	let a = $state(1);
 	let b = $state(2);
@@ -75,6 +77,7 @@ Svelte は、バインドされた値を更新するイベントリスナーを�
 
 <p>{a} + {b} = {a + b}</p>
 ```
+<!-- codeblock:end -->
 
 入力が空または無効 (`type="number"` の場合) の場合、値は `undefined` になります。
 
@@ -145,16 +148,19 @@ checkbox input には、`bind:checked` を使用してバインドできます:
 
 ## `<input bind:group>`
 
-相互に動作する input は、`bind:group` を使用できます。 ([demo](/playground/untitled#H4sIAAAAAAAAE62T32_TMBDH_5XDQkpbrct7SCMGEvCEECDxsO7BSW6L2c227EvbKOv_jp0f6jYhQKJv5_P3PvdL1wstH1Bk4hMSGdgbRzUssFaM9VJciFtF6EV23QvubNRFR_BPUVfWXvodEkdfKT3-zl8Zzag5YETuK6csF1u9ZUIGNo4VkYQNvPYsGRfJF5JKJ8s3QRJE6WoFb2Nq6K-ck13u2Sl9Vxxhlc6QUBIFnz9Brm9ifJ6esun81XoNd860FmtwslYGlLYte5AO4aHlVhJ1gIeKWq92COt1iMtJlkhFPkgh1rHZiiF6K6BUus4G5KafGznCTlIbVUMfQZUWMJh5OrL-C_qjMYSwb1DyiH7iOEuCb1ZpWTUjfHqcwC_GWDVY3ZfmME_SGttSmD9IHaYatvWHIc6xLyqad3mq6KuqcCwnWn9p8p-p71BqP2IH81zc9w2in-od7XORP7ayCpd5YCeXI_-p59mObPF9WmwGpx3nqS2Gzw8TO3zOaS5_GqUXyQUkS3h8hOSz0ZhMESHGc0c4Hm3MAn00t1wrb0l2GZRkqvt4sXwczm6Qh8vnUJzI2LV4vAkvqWgfehTZrSSPx19WiVfFfAQAAA==)):
+Inputs that work together can use `bind:group`:
 
+<!-- codeblock:start {"title":"bind:group"} -->
 ```svelte
-<!--- file: BurritoChooser.svelte --->
+<!--- file: App.svelte --->
 <script>
 	let tortilla = $state('Plain');
 
 	/** @type {string[]} */
 	let fillings = $state([]);
 </script>
+
+<h1>Customize your burrito</h1>
 
 <!-- grouped radio inputs are mutually exclusive -->
 <label><input type="radio" bind:group={tortilla} value="Plain" /> Plain</label>
@@ -166,7 +172,17 @@ checkbox input には、`bind:checked` を使用してバインドできます:
 <label><input type="checkbox" bind:group={fillings} value="Beans" /> Beans</label>
 <label><input type="checkbox" bind:group={fillings} value="Cheese" /> Cheese</label>
 <label><input type="checkbox" bind:group={fillings} value="Guac (extra)" /> Guac (extra)</label>
+
+<p>Tortilla: {tortilla}</p>
+<p>Fillings: {fillings.join(', ') || 'None'}</p>
+
+<style>
+	label {
+		display: block;
+	}
+</style>
 ```
+<!-- codeblock:end -->
 
 > [!NOTE] `bind:group` は、input が同じ Svelte コンポーネント内にある場合にのみ機能します。
 
@@ -226,7 +242,7 @@ checkbox input には、`bind:checked` を使用してバインドできます:
 </select>
 ```
 
-`<select>` にデフォルト値を設定するには、初期選択すべき `<option>` (または `<select multiple>` の場合は複数の `<option>`) に `selected` 属性を追加します。`<select>` がフォームの一部である場合、フォームがリセットされるとその選択に戻ります。初回レンダリング時には、バインディングの値が `undefined` でない限り優先されます。
+You can give the `<select>` a default value by adding a `selected` attribute to the `<option>` (or options, in the case of `<select multiple>`) that should be initially selected. If the `<select>` is part of a form, it will revert to that selection when the form is reset. Note that for the initial render the value of the binding takes precedence if it's not `undefined`.
 
 ```svelte
 <select bind:value={selected}>
@@ -364,6 +380,8 @@ DOM ノードへの参照を取得するには、`bind:this` を使用します�
 	}
 </script>
 ```
+
+> [!NOTE] In case of using [the function bindings](#Function-bindings), the getter is required to ensure that the correct value is nullified on component or element destruction.
 
 ## bind:_property_ for components
 

@@ -15,10 +15,10 @@ SvelteKit はビルド中に、解析のために `+page/layout(.server).js` フ
 
 ```js
 +++import { building } from '$app/environment';+++
-import { setupMyDatabase } from '$lib/server/database';
+import { initialiseDatabase } from '$lib/server/database';
 
 +++if (!building) {+++
-	setupMyDatabase();
+	initialiseDatabase();
 +++}+++
 
 export function load() {

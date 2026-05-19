@@ -1,5 +1,6 @@
 ---
 title: The style directive
+tags: template-style
 ---
 
 `class` と同じように、`style` 属性を文字通りインラインで書くことができます。なぜなら Svelte は、実際にはちょっと素敵なものを加えただけの HTML だからです:

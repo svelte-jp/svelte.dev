@@ -1,5 +1,6 @@
 ---
 title: Effects
+tags: rune-effect
 ---
 
 これまで、状態の観点から反応性について説明してきました。しかし、それは物事のまだ半分( _half of the equation_ )に過ぎません。状態は、何かがそれに _反応している場合_ にのみ反応性があり、そうでない場合は単なる特殊な変数( _sparkling variable_ )です。

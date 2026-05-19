@@ -13,8 +13,6 @@ hooks ファイルは2つあり、どちらもオプションです:
 
 これらのモジュールのコードはアプリケーションの起動時に実行されるので、データベースクライアントの初期化などに有用です。
 
-> [!NOTE] これらのファイルの場所は [`config.kit.files.hooks`](configuration#files) で設定できます。
-
 ## Server hooks
 
 以下の hooks は `src/hooks.server.js` に追加することができます:
@@ -161,7 +159,7 @@ export const getTodo = query(v.string(), (id) => {
 });
 ```
 
-...but it is called with something that doesn't match the schema — such as a number (e.g `await getTodos(1)`) — then validation will fail, the server will respond with a [400 status code](https://http.dog/400), and the function will throw with the message 'Bad Request'.
+...but it is called with something that doesn't match the schema — such as a number (e.g. `await getTodos(1)`) — then validation will fail, the server will respond with a [400 status code](https://http.dog/400), and the function will throw with the message 'Bad Request'.
 
 To customise this message and add additional properties to the error object, implement `handleValidationError`:
 
@@ -186,11 +184,11 @@ Be thoughtful about what information you expose here, as the most likely reason 
 [予期せぬエラー](errors#Unexpected-errors)が、ロード中やレンダリング中、またはエンドポイントからスローされると、この関数が `error`、`event`、`status` コード、`message` を引数にとって呼び出されます。これによって以下の2つのことが可能になります:
 
 - エラーをログに残すことができます
-- エラーからメッセージやスタックトレースなどの機密情報を省略し、ユーザーに見せても安全なカスタムの表現を生成することができます。戻り値のデフォルトは `{ message }` で、`$page.error` の値となります。
+- エラーからメッセージやスタックトレースなどの機密情報を省略し、ユーザーに見せても安全なカスタムの表現を生成することができます。戻り値のデフォルトは `{ message }` で、`page.error` の値となります。
 
 あなたのコード (またはあなたのコードから呼び出されたライブラリのコード) からスローされたエラーの場合、ステータスは 500 となり、message は "Internal Error" になります。`error.message` にはユーザーに公開されるべきではない機密情報が含まれている可能性がありますが、`message` は安全です (一般的なユーザーにとっては無意味ではありますが)。
 
-`$page.error` オブジェクトに型安全な方法で情報を追加するには、`App.Error` interface を宣言することで想定する形にすることができます (適切なフォールバックの動作を保証するため、`message: string` を含む必要があります)。これにより、例えばユーザーがテクニカルサポートスタッフとの対応の際に引用することができるトラッキング ID を付加することができます:
+To add more information to the `page.error` object in a type-safe way, you can customize the expected shape by declaring an `App.Error` interface (which must include `message: string`, to guarantee sensible fallback behavior). This allows you to — for example — append a tracking ID for users to quote in correspondence with your technical support staff:
 
 ```ts
 /// file: src/app.d.ts
