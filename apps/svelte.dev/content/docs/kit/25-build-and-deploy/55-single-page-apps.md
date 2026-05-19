@@ -5,13 +5,13 @@ title: Single-page apps
 
 _フォールバックページ(fallback page)_ を指定することで、SvelteKit アプリを完全にクライアント側でレンダリングされるシングルページアプリ (SPA) にすることができます。このフォールバックページは、他の方法 (例えばプリレンダされたページを返すなど) で応答できない URL でアクセスされた場合にサーブされます。
 
-> [!NOTE] SPA mode has a large negative performance impact by forcing multiple network round trips (for the blank HTML document, then for the JavaScript, and then for any data needed for the page) before content can be shown. Unless you are serving the app from a local network (e.g.a mobile app that wraps a locally-served SPA) this will delay startup, especially when considering the latency of mobile devices. It also harms SEO by often causing sites to be downranked for performance (SPAs are much more likely to fail [Core Web Vitals](https://web.dev/explore/learn-core-web-vitals)), excluding search engines that don't render JS, and causing your site to receive less frequent updates from those that do. And finally, it makes your app inaccessible to users if JavaScript fails or is disabled (which happens [more often than you probably think](https://kryogenix.org/code/browser/everyonehasjs.html)).
+> [!NOTE] SPA mode has a large negative performance impact by forcing multiple network round trips (for the blank HTML document, then for the JavaScript, and then for any data needed for the page) before content can be shown. Unless you are serving the app from a local network (e.g. a mobile app that wraps a locally-served SPA) this will delay startup, especially when considering the latency of mobile devices. It also harms SEO by often causing sites to be downranked for performance (SPAs are much more likely to fail [Core Web Vitals](https://web.dev/explore/learn-core-web-vitals)), excluding search engines that don't render JS, and causing your site to receive less frequent updates from those that do. And finally, it makes your app inaccessible to users if JavaScript fails or is disabled (which happens [more often than you probably think](https://kryogenix.org/code/browser/everyonehasjs.html)).
 >
 > You can avoid these drawbacks by [prerendering](#Prerendering-individual-pages) as many pages as possible when using SPA mode (especially your homepage). If you can prerender all pages, you can simply use [static site generation](adapter-static) rather than a SPA. Otherwise, you should strongly consider using an adapter which supports server side rendering. SvelteKit has officially supported adapters for various providers with generous free tiers.
 
 ## Usage
 
-First, disable SSR for the pages you don't want to prerender. These pages will be served via the fallback page. E.g. to serve all pages via the fallback by default, you can update the root layout as shown below. You should [opt back into prerendering individual pages and directories](#Prerendering-individual-pages) where possible.
+First, disable SSR for the pages you don't want to prerender. These pages will be served via the fallback page; for example, to serve all pages via the fallback by default, you can update the root layout as shown below. You should [opt back into prerendering individual pages and directories](#Prerendering-individual-pages) where possible.
 ```js
 /// file: src/routes/+layout.js
 export const ssr = false;
@@ -20,6 +20,7 @@ export const ssr = false;
 サーバーサイドのロジック (すなわち `+page.server.js`、`+layout.server.js`、`+server.js` ファイル) がない場合は、[`adapter-static`](adapter-static) を使い _フォールバックページ(fallback page)_ を追加することで SPA を作ることができます。`adapter-static` を `npm i -D @sveltejs/adapter-static` でインストールし、それから `svelte.config.js` にこの adapter と `fallback` オプションを追加します:
 
 ```js
+// @errors: 2307
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-static';
 

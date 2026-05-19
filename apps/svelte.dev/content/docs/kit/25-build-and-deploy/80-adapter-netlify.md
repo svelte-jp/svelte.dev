@@ -12,6 +12,7 @@ Netlify にデプロイする場合は、[`adapter-netlify`](https://github.com/
 `npm i -D @sveltejs/adapter-netlify` を実行してインストールし、`svelte.config.js` にこの adapter を追加します:
 
 ```js
+// @errors: 2307
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-netlify';
 
@@ -54,6 +55,7 @@ export default config;
 SvelteKit は [Netlify Edge Functions](https://docs.netlify.com/build/edge-functions/overview/) をサポートしています。`adapter` 関数に `edge: true` オプションを渡すと、サイト訪問者に近い場所にデプロイされる Deno ベースの edge function でサーバーサイドレンダリングが行われるようになります。`false` を設定した場合 (デフォルト)、サイトは Node ベースの Netlify Functions にデプロイされます。
 
 ```js
+// @errors: 2307
 /// file: svelte.config.js
 import adapter from '@sveltejs/adapter-netlify';
 
@@ -77,14 +79,7 @@ Netlify の機能に依存することなく、SvelteKit が直接提供する�
 
 ### `_headers` and `_redirects`
 
-The [`_headers`](https://docs.netlify.com/routing/headers/#syntax-for-the-headers-file) and [`_redirects`](https://docs.netlify.com/routing/redirects/redirect-options/) files specific to Netlify can be used for static asset responses (like images) by putting them into the project root folder.
-
-### リダイレクトルール(Redirect rules)
-
-コンパイル時に、リダイレクトルールは自動で `_redirects` ファイルに追記されます (もし存在しない場合は、作成されます)。つまり:
-
-- `_redirects` のほうが[優先度が高い](https://docs.netlify.com/routing/redirects/#rule-processing-order)ため、`netlify.toml` にある `[[redirects]]` には決してマッチしません。そのため、ルールは常に [`_redirects` ファイル](https://docs.netlify.com/routing/redirects/#syntax-for-the-redirects-file)に記載してください。
-- `_redirects` には、`/* /foobar/:splat` のようなカスタムの "catch all" ルールを置くべきではありません。そうしないと、自動で追加されたルールが適用されなくなります。Netlify は[最初にマッチしたルール](https://docs.netlify.com/routing/redirects/#rule-processing-order)だけを処理するからです。
+The [`_headers`](https://docs.netlify.com/routing/headers/#syntax-for-the-headers-file) and [`_redirects`](https://docs.netlify.com/routing/redirects/redirect-options/) files specific to Netlify can be used for static asset responses (like images) by putting them into the project root folder. You can also use [`[[redirects]]`](https://docs.netlify.com/routing/redirects/#syntax-for-the-netlify-configuration-file) in your `netlify.toml`.
 
 ### Netlify Forms
 

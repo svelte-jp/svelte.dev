@@ -92,10 +92,4 @@ count += 1; $$invalidate('count', count);
 
 ## これから <!--Still-to-come-->
 
-<<<<<<< HEAD
-このリリースは大変なものでしたが、まだ完成には至っていません。 よりスマートでコンパクトなコードと長い機能のウィッシュリストを生成するためのアイデアがたくさんあります。Next.js スタイルのアプリフレームワークである [Sapper](https://sapper.svelte.dev) は、Svelte 3 を使用するためのアップデートの真っ最中です。[Svelte Native](https://svelte-native.technology/) のコミュニティプロジェクトは、Svelte で Android や iOS アプリを書くことができるようになり、順調に進んでいますが、コアからのより完全なサポートが必要です。他のフレームワークが持っているようなエディタ拡張機能、シンタックスハイライター、コンポーネントキット、devtools などの豊富な機能はまだありません。私たちは _本当に_ ファーストクラスの TypeScript サポートを追加したいと思っています。
-
-しかし、それらを待つ間でも Svelte 3 は Web アプリを構築するための最良の方法だと考えています。1時間ほどかけて[チュートリアル](/tutorial)を読んでみてください。いずれにしても、[Discord チャットルーム](https://svelte.dev/chat)や [GitHub](https://github.com/sveltejs/svelte) でお待ちしています。-- 誰でも歓迎します、特にあなたは。
-=======
 But in the meantime we think Svelte 3 is the best way to build web apps yet. Take an hour to go through the [tutorial](/tutorial) and we hope to convince you of the same. Either way, we'd love to see you in our [Discord chatroom](/chat) and on [GitHub](https://github.com/sveltejs/svelte) — everyone is welcome, especially you.
->>>>>>> sveltejs/main

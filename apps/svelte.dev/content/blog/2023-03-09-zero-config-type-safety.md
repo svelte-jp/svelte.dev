@@ -44,6 +44,12 @@ export async function load(event: ServerLoadEvent) {
 
 ```js
 /// file: src/routes/blog/[slug]/+page.server.ts
+const database = {
+	getPost(slug: string | undefined): Promise<string> {
+		return Promise.resolve('hello world');
+	}
+};
+// ---cut---
 ---import type { ServerLoadEvent } from '@sveltejs/kit';---
 +++import type { PageServerLoadEvent } from './$types';+++
 
@@ -133,7 +139,14 @@ src/
 自動型生成のおかげで、高度な型安全性を実現しています。ただ、もし型を書くのをすべて省略できるようになったとしたら素晴らしいと思いませんか？今日現在、まさにそれができるようになりました:
 
 ```js
+// @errors: 7006
 /// file: src/routes/blog/[slug]/+page.server.ts
+const database = {
+	getPost(slug: string | undefined): Promise<string> {
+		return Promise.resolve('hello world');
+	}
+};
+// ---cut---
 ---import type { PageServerLoadEvent } from './$types';---
 
 export async function load(event---: PageServerLoadEvent---) {

@@ -44,7 +44,7 @@ export const config = {
 以下のオプションはすべての function に適用されます:
 
 - `runtime`: `'edge'`、`'nodejs18.x'`、`'nodejs20.x'`、`'nodejs22.x'`。デフォルトでは、adapter はプロジェクトの Node のバージョンに対応した `'nodejs<version>.x'` を選択します。プロジェクトの Node バージョンは Vercel のダッシュボードから設定することができます。
-  > [!NOTE] このオプションは非推奨で、将来のバージョンで削除される予定です。その後は、すべての関数は Vercel のプロジェクトの設定で指定された Node バージョンを使用するようになります
+  > [!NOTE] This option is deprecated and will be removed in a future version, at which point all your functions will use whichever Node version is specified in the project configuration on Vercel
 - `regions`: [edge network regions](https://vercel.com/docs/concepts/edge-network/regions) の配列 (serverless functions のデフォルトは `["iad1"]`) か、`runtime` が `edge` (デフォルト) の場合は `'all'` です。serverless functions の場合の複数の regions のサポートは Enterprise Plan のみです。
 - `split`: `true` の場合、ルート(route)は個別の function としてデプロイされます。`split` を adapter レベルで `true` にする場合、すべてのルート(route)が個別の function としてデプロイされます。
 
@@ -177,6 +177,10 @@ When a new version of your app is deployed, assets belonging to the previous ver
 Cookie-based skew protection comes with one caveat: if a user has multiple versions of your app open in multiple tabs, requests from older versions will be routed to the newer one, meaning they will fall back to SvelteKit's built-in skew protection.
 
 ## Notes
+
+### Vercel utilities
+
+If you need Vercel-specific utilities like `waitUntil`, use the package [`@vercel/functions`](https://vercel.com/docs/functions/functions-api-reference/vercel-functions-package).
 
 ### Vercel functions
 

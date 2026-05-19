@@ -20,8 +20,8 @@ my-project/
 │ ├ error.html
 │ ├ hooks.client.js
 │ ├ hooks.server.js
-| ├ service-worker.js
-│ └ tracing.server.js
+│ ├ service-worker.js
+│ └ instrumentation.server.js
 ├ static/
 │ └ [your static assets]
 ├ tests/
@@ -66,7 +66,7 @@ my-project/
 
 ### static
 
-`robots.txt` や `favicon.png` など、そのままサーブされる静的なアセットをここに含めます。
+Any static assets that should be served without any alteration to the name — such as `robots.txt` — go in here. It's generally preferable to minimize the number of assets in `static/` and instead `import` them. Using an `import` allows [Vite's built-in handling](images#Vite's-built-in-handling) to give a unique name to an asset based on a hash of its contents so that it can be cached.
 
 ### tests
 

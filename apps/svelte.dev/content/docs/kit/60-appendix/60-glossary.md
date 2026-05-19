@@ -37,11 +37,12 @@ Traditional applications that render each page view on the server — such as th
 
 プリレンダリング(Prerendering)とは、ビルド時にページのコンテンツを計算し、表示のために HTML を保存しておくことを意味します。このアプローチは旧来のサーバーレンダリングページと同じ利点を持ちつつ、訪問者ごとにページを再計算する必要がないため、訪問者数の増加に対してほぼ無償でスケールします。トレードオフとしては、ビルドプロセスのコストがより高くなり、プリレンダリングされたコンテンツはアプリケーションの新しいバージョンをデプロイすることでしか更新できなくなります。
 
-全てのページがプリレンダリングできるわけではありません。基本的なルールは次の通りです: コンテンツがプリレンダリング可能であると言うためには、それを直接表示する2人のユーザーが、サーバーから同じコンテンツを取得できなけれならず、かつ、そのページには [actions](form-actions) が含まれていてはいけません。全てのユーザーが同じプリレンダリングコンテンツを見ることができるのであれば、ページのパラメータに基づいてロードされるコンテンツはプリレンダリングが可能である点にご注意ください。
+「コンテンツがプリレンダリング可能である」というのは、それを直接表示する2人のユーザーが、サーバーから同じコンテンツを取得でき、かつ、そのページには [actions](form-actions) が含まれていない、ということです。全てのユーザーが同じプリレンダリングコンテンツを見ることができるのであれば、ページのパラメータに基づいてロードされるコンテンツはプリレンダリングが可能です。全てのページをプリレンダリングすることは、[Static Site Generation](#SSG)とも呼ばれます。
 
 プリレンダリングされるページは静的なコンテンツに限りません。クライアントサイドでユーザ固有のデータをフェッチしてレンダリングする場合は、パーソナライズされたページを構築することができます。ただし、前述の通り、そのコンテンツに対して SSR を行わないことによるデメリットが発生することにご注意ください。
 
 SvelteKit では、[`prerender` ページオプション](page-options#prerender) と、`svelte.config.js` の [`prerender` コンフィグ](configuration#prerender) によってプリレンダリングをコントロールできます。
+
 
 ## PWA
 
@@ -63,7 +64,7 @@ SvelteKit では、[`adapter-static` を使って SPA を構築](single-page-app
 
 静的サイト生成(Static Site Generation (SSG))とは、全てのページがプリレンダリングされているサイトを指す用語です。サイトを完全にプリレンダリングすることの利点の1つは、SSRを実行するためのサーバーを維持したり費用を払ったりする必要がないことです。一度生成すれば、そのサイトは CDN から提供することができ、"time to first byte" の優れたパフォーマンスにつながります。このデリバリーモデルはしばしば JAMstack と呼ばれます。
 
-SvelteKit では、[`adapter-static`](adapter-static) を使用したり、[`prerender` ページオプション](page-options#prerender) や `svelte.config.js` の [`prerender` コンフィグ](configuration#prerender) で全ページをプリレンダリングするようにしたりすることで SSG を行うことができます。
+In SvelteKit, you can do static site generation by using [`adapter-static`](adapter-static) or by configuring every page to be [prerendered](#Prerendering) using [the `prerender` page option](page-options#prerender) or [`prerender` config](configuration#prerender) in `svelte.config.js`.
 
 ## SSR
 

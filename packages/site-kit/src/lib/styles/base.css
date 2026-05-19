@@ -47,6 +47,7 @@ ol {
 	font-feature-settings: "palt";
 	word-break: auto-phrase;
 	margin: 0.5lh 0;
+	text-wrap: pretty;
 
 	&:first-child {
 		margin-top: 0;

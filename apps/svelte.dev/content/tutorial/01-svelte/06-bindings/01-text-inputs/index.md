@@ -1,5 +1,6 @@
 ---
 title: Text inputs
+tags: template-bind
 ---
 
 原則、Svelteのデータフローはトップダウンです。親コンポーネントは子コンポーネントにプロパティをセットできますし、コンポーネントは要素に属性をセットできますが、その逆はできません。
@@ -13,4 +14,4 @@ title: Text inputs
 <input +++bind:+++value={name}>
 ```
 
-これは `name` の値が変更されると input の値が更新されるだけでなく、input の値が変更されると `name` の値が更新されることを意味します。
+This means that as well as changes to `name` updating the `<input>`, changes to the `<input>` will update `name`.

@@ -134,10 +134,37 @@ When logging a [proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/R
 
 The easiest way to log a value as it changes over time is to use the [`$inspect`](/docs/svelte/$inspect) rune. Alternatively, to log things on a one-off basis (for example, inside an event handler) you can use [`$state.snapshot`](/docs/svelte/$state#$state.snapshot) to take a snapshot of the current value.
 
+### derived_inert
+
+```
+Reading a derived belonging to a now-destroyed effect may result in stale values
+```
+
+A `$derived` value created inside an effect will stop updating when the effect is destroyed. You should create the `$derived` outside the effect, or inside an `$effect.root`.
+
 ### event_handler_invalid
 
 ```
 %handler% should be a function. Did you mean to %suggestion%?
+```
+
+### hydratable_missing_but_expected
+
+```
+Expected to find a hydratable with key `%key%` during hydration, but did not.
+```
+
+This can happen if you render a hydratable on the client that was not rendered on the server, and means that it was forced to fall back to running its function blockingly during hydration. This is bad for performance, as it blocks hydration until the asynchronous work completes.
+
+```svelte
+<script>
+  import { hydratable } from 'svelte';
+
+	if (BROWSER) {
+		// bad! nothing can become interactive until this asynchronous work is done
+		await hydratable('foo', get_slow_random_number);
+	}
+</script>
 ```
 
 ### hydration_attribute_changed
@@ -218,7 +245,7 @@ Hydration failed because the initial UI does not match what was rendered on the 
 
 This warning is thrown when Svelte encounters an error while hydrating the HTML from the server. During hydration, Svelte walks the DOM, expecting a certain structure. If that structure is different (for example because the HTML was repaired by the DOM because of invalid HTML), then Svelte will run into issues, resulting in this warning.
 
-During development, this error is often preceeded by a `console.error` detailing the offending HTML, which needs fixing.
+During development, this error is often preceded by a `console.error` detailing the offending HTML, which needs fixing.
 
 ### invalid_raw_snippet_render
 

@@ -5,7 +5,7 @@ title: Service workers
 
 Service Worker は、アプリ内部でネットワークリクエストを処理するプロキシサーバーとして機能します。これによりアプリをオフラインで動作させることが可能になります。もしオフラインサポートが不要な場合（または構築するアプリの種類によって現実的に実装できない場合）でも、ビルドした JS と CSS を事前にキャッシュしてナビゲーションを高速化するために Service Worker を使用する価値はあります。
 
-SvelteKit では、`src/service-worker.js` ファイル (や `src/service-worker/index.js`) がある場合、バンドルされ、自動的に登録されます。必要に応じて、[service worker の ロケーション](configuration#files) を変更することができます。 
+In SvelteKit, if you have a `src/service-worker.js` file (or `src/service-worker/index.js`) it will be bundled and automatically registered.
 
 service worker を独自のロジックで登録する必要がある場合や、その他のソリューションを使う場合は、[自動登録を無効化](configuration#serviceWorker) することができます。デフォルトの登録方法は次のようなものです:
 
@@ -99,7 +99,7 @@ self.addEventListener('fetch', (event) => {
 				throw new Error('invalid response from fetch');
 			}
 
-			if (response.status === 200) {
+			if (response.status === 200 && !response.headers.get('cache-control')?.includes('no-store')) {
 				cache.put(event.request, response.clone());
 			}
 

@@ -20,6 +20,7 @@ title: Inline handlers
 		m.x = event.clientX;
 		m.y = event.clientY;
 	}+++}
+	role="presentation"
 >
 	The pointer is at {m.x} x {m.y}
 </div>

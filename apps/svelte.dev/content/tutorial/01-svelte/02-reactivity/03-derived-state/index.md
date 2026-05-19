@@ -1,5 +1,6 @@
 ---
 title: Derived state
+tags: rune-derived
 ---
 
 しばしば、他の state から導出(derive)した state が必要になることがあるでしょう。このために、`$derived` Rune があります:

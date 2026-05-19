@@ -41,6 +41,10 @@ Svelte コンポーネント内で TypeScript を使うには、 `script` タグ
 
 Svelte コンポーネント内で型以外の TypeScript 機能を使うには、 TypeScript を JavaScript に変換するプリプロセッサを追加する必要があります。
 
+### Using Vite
+
+If you're using SvelteKit, or Vite _without_ SvelteKit, you can use `vitePreprocess` from `@sveltejs/vite-plugin-svelte` in your config file:
+
 ```ts
 /// file: svelte.config.js
 // @noErrors
@@ -54,29 +58,9 @@ const config = {
 export default config;
 ```
 
-### SvelteKit または Vite の使用 <!--Using-SvelteKit-or-Vite-->
+### Using other build tools
 
-もっとも簡単な TypeScript の始め方は、 `npx sv create` と入力してプロンプトに従い、TypeScriptオプションを選択して新しい SvelteKit プロジェクトの骨組みを自動生成することです。
-
-```ts
-/// file: svelte.config.js
-// @noErrors
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-
-const config = {
-	preprocess: vitePreprocess()
-};
-
-export default config;
-```
-
-SvelteKit が提供するすべての機能が必要ない、または望まないときは、代わりに `npm create vite@latest` と入力し、 `svelte-ts` オプションを選択することで、 Svelte 風味の Vite プロジェクトの骨組みを自動生成できます。
-
-どちらの場合も、`vitePreprocess` を含む `svelte.config.js` が追加されます。 Vite または SvelteKit は、この設定ファイルを読み取ります。
-
-### ほかのビルドツール <!--Other-build-tools-->
-
-代わりに Rollup や Webpack のようなツールを使っているときは、それぞれの Svelte プラグインをインストールしてください。 RollUpの場合は [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte) 、 WebPackの場合は [svelte-loader](https://github.com/sveltejs/svelte-loader) です。両方とも、 `typescript` と `svelte-preprocess` をインストールし、プリプロセッサをプラグイン設定に追加する必要があります(詳細は各READMEを参照)。新しいプロジェクトを開始するときは、 [rollup](https://github.com/sveltejs/template) または [webpack](https://github.com/sveltejs/template-webpack) テンプレートを使って、スクリプトから初期設定を自動生成することもできます。
+If you're using tools like Rollup (via [rollup-plugin-svelte](https://github.com/sveltejs/rollup-plugin-svelte)) or Webpack (via [svelte-loader](https://github.com/sveltejs/svelte-loader)) instead, install `typescript` and `svelte-preprocess` and add the preprocessor to the plugin config. See the respective plugin READMEs for more info.
 
 > [!NOTE] 新しいプロジェクトを開始するときは、代わりに SvelteKit または Vite の使用をおすすめします。
 

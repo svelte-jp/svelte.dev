@@ -1,5 +1,6 @@
 ---
 title: Component styles
+tags: styles-global, styles-custom-properties
 ---
 
 子コンポーネント内の style を指定したいことがよくあります。例えばこの演習では、このボックス(Box)を赤や緑、青にしたいです。

@@ -72,7 +72,7 @@ optional のルートパラメータ(route parameter)は rest パラメータに
 
 ## Matching
 
-`src/routes/fruits/[page]` というルート(route)は `/fruits/apple` にマッチしますが、`/fruits/rocketship` にもマッチしてしまいます。これを防ぎたい場合、パラメータ文字列(`"apple"` や `"rocketship"`)を引数に取ってそれが有効なら `true` を返す _matcher_ を [`params`](configuration#files) ディレクトリに追加することで、ルート(route)のパラメータを適切に定義することができます…
+A route like `src/routes/fruits/[page]` would match `/fruits/apple`, but it would also match `/fruits/rocketship`. We don't want that. You can ensure that route parameters are well-formed by adding a _matcher_ — which takes the parameter string (`"apple"` or `"rocketship"`) and returns `true` if it is valid — to your `src/params` directory...
 
 ```js
 /// file: src/params/fruit.js

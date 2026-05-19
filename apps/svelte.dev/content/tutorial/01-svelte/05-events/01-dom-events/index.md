@@ -6,7 +6,7 @@ title: DOM events
 
 ```svelte
 /// file: App.svelte
-<div +++onpointermove={onpointermove}+++>
+<div +++onpointermove={onpointermove}+++ role="presentation">
 	The pointer is at {Math.round(m.x)} x {Math.round(m.y)}
 </div>
 ```
@@ -15,7 +15,7 @@ title: DOM events
 
 ```svelte
 /// file: App.svelte
-<div +++{onpointermove}+++>
+<div +++{onpointermove}+++ role="presentation">
 	The pointer is at {Math.round(m.x)} x {Math.round(m.y)}
 </div>
 ```
