@@ -14,4 +14,4 @@ tags: template-bind
 <input +++bind:+++value={name}>
 ```
 
-This means that as well as changes to `name` updating the `<input>`, changes to the `<input>` will update `name`.
+これは、`name` の変更によって `<input>` が更新されるだけでなく、`<input>` の変更によって `name` も更新されることを意味します。
