@@ -4,18 +4,14 @@
   "repo_url": "https://github.com/TanStack/query",
   "authors": [
     "tannerlinsley",
-    "kevinvandy",
-    "tkdodo",
     "alemtuzlak",
-    "schiller-manuel",
-    "lachlancollins",
-    "kylemathews"
+    "kevinvandy"
   ],
   "homepage": "https://tanstack.com/query",
-  "version": "6.1.24",
-  "downloads": 98117,
-  "github_stars": 48501,
-  "updated": "2026-04-25T17:31:46.448Z",
+  "version": "6.1.48",
+  "downloads": 176948,
+  "github_stars": 50228,
+  "updated": "2026-08-27T16:06:01.410Z",
   "svelte_range": "^5.25.0",
   "typescript": true,
   "runes": false,
